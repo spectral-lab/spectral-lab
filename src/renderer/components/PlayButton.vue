@@ -6,35 +6,35 @@
 </template>
 
 <script>
-import { playAudioBuffer } from '../utils/helpers'
+import { playAudioBuffer } from '../utils/helpers';
 export default {
   data: function () {
     return {
       source: null
-    }
+    };
   },
   computed: {
     playing: function () {
-      return this.source != null
+      return this.source != null;
     }
   },
   methods: {
     handleClick () {
       if (this.source != null) {
-        this.source.stop()
-        this.source = null
-        return
+        this.source.stop();
+        this.source = null;
+        return;
       }
-      const ab = this.$store.state.sourceAudioBuffer
-      this.source = playAudioBuffer(ab)
+      const ab = this.$store.state.sourceAudioBuffer;
+      this.source = playAudioBuffer(ab);
       this.source.onended = () => {
         if (this.source != null) {
-          this.source = null
+          this.source = null;
         }
-      }
+      };
     }
   }
-}
+};
 </script>
 
 <style scoped>

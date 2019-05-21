@@ -10,7 +10,7 @@
 <script>
 export default {
   props: ['onClick', 'text', 'buttonActive', 'buttonText']
-}
+};
 </script>
 
 <style scoped>

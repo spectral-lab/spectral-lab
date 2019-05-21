@@ -1,23 +1,21 @@
 <template>
   <div id="main">
-    <video-bg :sources="[path]">
-      <slot>
-        <div id="mask">
-          <Instruction v-if="renderInstruction" />
-          <OpenFile v-if="renderOpenFile" />
-          <Viewer v-if="renderViewer" />
-        </div>
-      </slot>
-    </video-bg>
+    <slot>
+      <div id="mask">
+        <Instruction v-if="renderInstruction" />
+        <OpenFile v-if="renderOpenFile" />
+        <Viewer v-if="renderViewer" />
+      </div>
+    </slot>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import Instruction from '../pages/Instruction.vue'
-import OpenFile from '../pages/OpenFile.vue'
-import Viewer from '../pages/Viewer.vue'
-import pages from '../constants/pages'
+import { mapState } from 'vuex';
+import Instruction from '../pages/Instruction.vue';
+import OpenFile from '../pages/OpenFile.vue';
+import Viewer from '../pages/Viewer.vue';
+import pages from '../constants/pages';
 
 export default {
   computed: mapState({
@@ -25,22 +23,16 @@ export default {
     renderOpenFile: state => state.page === pages.OPEN_FILE,
     renderViewer: state => state.page === pages.VIEWER
   }),
-  data () {
-    return {
-      path: __static + '/bg_video.mp4'
-    }
-  },
   components: {
     Instruction,
     OpenFile,
     Viewer
   }
-}
+};
 </script>
 
 <style>
 body {
-  /* background: url('../../public/bg_image.jpg'); */
   background: rgb(43, 43, 43);
   background-size: cover;
   color: white;

@@ -14,15 +14,15 @@
 </template>
 
 <script>
-  import { SWITCH_PAGE } from '../constants/mutation-types'
-import pages from '../constants/pages'
+  import { SWITCH_PAGE } from '../constants/mutation-types';
+import pages from '../constants/pages';
 export default {
     methods: {
       handleClick () {
-        this.$store.commit(SWITCH_PAGE, {page: pages.OPEN_FILE})
+        this.$store.commit(SWITCH_PAGE, {page: pages.OPEN_FILE});
       }
     }
-  }
+  };
 </script>
 
 <style scoped>

@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import mutations from './mutations'
-import actions from './actions'
-import pages from '../constants/pages'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import mutations from './mutations';
+import actions from './actions';
+import pages from '../constants/pages';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 const InitialState = {
   page: pages.INSTRUCTION,
   sourceAudioBuffer: new AudioBuffer({
@@ -18,14 +18,14 @@ const InitialState = {
     magnitude2d: []
   },
   fileName: ''
-}
+};
 const store = new Vuex.Store({
   state: InitialState,
   mutations,
   actions
-})
+});
 
-export default store
+export default store;
 export {
   InitialState, mutations, actions
-}
+};

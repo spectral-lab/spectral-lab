@@ -5,34 +5,34 @@
 </template>
 
 <script>
-import { sumToMono, normalize, crop } from '../utils/audio'
-import loadFileAsArrayBuffer from '../utils/helpers/loadFileAsArrayBuffer'
+import { sumToMono, normalize, crop } from '../utils/audio';
+import loadFileAsArrayBuffer from '../utils/helpers/loadFileAsArrayBuffer';
 
 export default {
   methods: {
     handleDragOver (e) {
-      e.preventDefault()
+      e.preventDefault();
     },
     handleDrop: async function (e) {
-      e.preventDefault()
-      const f = e.dataTransfer.files[0]
-      const context = new AudioContext({latencyHint: 'interactive', sampleRate: 22050})
-      const DESIRED_DURATION = 10 // in seconds.
-      const loadEvent = await loadFileAsArrayBuffer(f)
-      const originalAudioBuffer = await context.decodeAudioData(loadEvent.target.result)
-      const monoAudioBuffer = sumToMono(originalAudioBuffer)
-      const croppedAudioBuffer = crop(monoAudioBuffer, DESIRED_DURATION)
-      const normalizedAudioBuffer = normalize(croppedAudioBuffer)
+      e.preventDefault();
+      const f = e.dataTransfer.files[0];
+      const context = new AudioContext({latencyHint: 'interactive', sampleRate: 22050});
+      const DESIRED_DURATION = 10; // in seconds.
+      const loadEvent = await loadFileAsArrayBuffer(f);
+      const originalAudioBuffer = await context.decodeAudioData(loadEvent.target.result);
+      const monoAudioBuffer = sumToMono(originalAudioBuffer);
+      const croppedAudioBuffer = crop(monoAudioBuffer, DESIRED_DURATION);
+      const normalizedAudioBuffer = normalize(croppedAudioBuffer);
       this.$store.dispatch({
         type: 'acceptAudio',
         payload: {
           audioBuffer: normalizedAudioBuffer,
           fileName: f.name
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped>

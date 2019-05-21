@@ -1,5 +1,5 @@
-import PeakLine from './PeakLine'
+import PeakLine from './PeakLine';
 
 export {
   PeakLine
-}
+};
