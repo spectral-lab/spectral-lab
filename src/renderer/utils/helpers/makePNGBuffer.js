@@ -1,10 +1,10 @@
 import { PNG } from 'pngjs';
 import { decibelCurve } from '.';
+import { flatten } from 'lodash';
 /**
  * @param  {Array.<Array.<number>>} imgAs2dArray Each element is in range from 0. to 1
  */
 const makePNGBuffer = (imgAs2dArray) => {
-  debugger;
   const png = new PNG({
     width: imgAs2dArray[0].length,
     height: imgAs2dArray.length,
@@ -13,10 +13,11 @@ const makePNGBuffer = (imgAs2dArray) => {
     inputHasAlpha: false
   });
   // @ts-ignore
-  png.data = imgAs2dArray.flat().map(magnitude => {
-    const ret = Math.round(decibelCurve(magnitude) * 255);
-    return [ret, ret, ret, 255]; // [R, G, B, A]
-  }).flat();
+  png.data = flatten(imgAs2dArray).reduce((acc, magnitude) => {
+    const luminance = Math.round(decibelCurve(magnitude) * 255);
+    acc.push(luminance, luminance, luminance, 255); // [R, G, B, A]
+    return acc;
+  }, []);
   return PNG.sync.write(png, {
     colorType: 0
   });
