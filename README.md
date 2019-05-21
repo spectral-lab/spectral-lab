@@ -1,1 +1,1 @@
-# spectral-extractor
+# spectral-lab
