@@ -3,9 +3,9 @@
 </template>
 
 <script>
-import store from './store'
-import Main from './components/Main.vue'
-import './utils/socket'
+import store from './store';
+import Main from './components/Main.vue';
+import './utils/socket';
 
 export default {
   name: 'app',
@@ -13,5 +13,5 @@ export default {
   components: {
     Main
   }
-}
+};
 </script>

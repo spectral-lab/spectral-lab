@@ -27,30 +27,30 @@
 </template>
 
 <script>
-import {formatAsPwt, makePNGBuffer} from '../utils/helpers'
-import { RECEIVED_PWT, RENDER_PEAK_LINES } from '../constants/events'
-import { PeakLine } from '../classes'
+import {formatAsPwt, makePNGBuffer} from '../utils/helpers';
+import { RECEIVED_PWT, RENDER_PEAK_LINES } from '../constants/events';
+import { PeakLine } from '../classes';
 export default {
   props: ['proceedToLoading', 'closeModal', 'backToPostForm'],
   data: function () {
     return {
       sensitivity: 5,
       degree: 0
-    }
+    };
   },
   methods: {
     postImage () {
-      const { spectrogram } = this.$store.state
+      const { spectrogram } = this.$store.state;
 
       // Make formData to post
-      const buff = makePNGBuffer(spectrogram.magnitude2d)
-      const blob = new Blob([buff], {type: 'images/png'})
-      const formData = new FormData()
-      formData.append('pngImage', blob)
-      formData.append('sensitivity', this.$data.sensitivity)
-      formData.append('degree', this.$data.degree)
+      const buff = makePNGBuffer(spectrogram.magnitude2d);
+      const blob = new Blob([buff], {type: 'images/png'});
+      const formData = new FormData();
+      formData.append('pngImage', blob);
+      formData.append('sensitivity', this.$data.sensitivity);
+      formData.append('degree', this.$data.degree);
 
-      this.proceedToLoading()
+      this.proceedToLoading();
 
       // Post
       fetch(process.env.VUE_APP_SERVER, {
@@ -64,22 +64,22 @@ export default {
          * All points detected as peak. Array is splited into chunks. Each chunk corresponds to each line.
          * @type {Array.<Array.<Array.<Number>>>}
          */
-          const featureLines = _featureLines
+          const featureLines = _featureLines;
           const peakLines = featureLines.map((pointsInOneLine, idx) => {
-            return new PeakLine(pointsInOneLine, spectrogram, idx)
-          })
-          this.$eventHub.$emit(RENDER_PEAK_LINES, peakLines)
-          return formatAsPwt(spectrogram, peakLines)
+            return new PeakLine(pointsInOneLine, spectrogram, idx);
+          });
+          this.$eventHub.$emit(RENDER_PEAK_LINES, peakLines);
+          return formatAsPwt(spectrogram, peakLines);
         })
         .then(pwt => {
-          this.$eventHub.$emit(RECEIVED_PWT, pwt)
-          this.closeModal()
-          this.backToPostForm()
+          this.$eventHub.$emit(RECEIVED_PWT, pwt);
+          this.closeModal();
+          this.backToPostForm();
         })
-        .catch(console.error)
+        .catch(console.error);
     }
   }
-}
+};
 </script>
 
 <style scoped>

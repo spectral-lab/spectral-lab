@@ -8,17 +8,17 @@
 </template>
 
 <script>
-import PlayButton from './PlayButton.vue'
+import PlayButton from './PlayButton.vue';
 export default {
   computed: {
     fileName () {
-      return this.$store.state.fileName
+      return this.$store.state.fileName;
     }
   },
   components: {
     PlayButton
   }
-}
+};
 </script>
 
 <style scoped>

@@ -23,24 +23,24 @@
 </template>
 
 <script>
-import Slider from '../components/Slider.vue'
-import Messages from '../components/Messages.vue'
-import Utilities from '../components/Utilities.vue'
-import Modal from '../components/Modal.vue'
-import { resample } from '../utils/audio'
-import { PeakLine } from '../classes' // eslint-disable-line no-unused-vars
-import { renderWaveform, renderSpectrogram, renderPeakLines } from '../utils/plot'
-import { SET_SPECTROGRAM } from '../constants/mutation-types'
-import { RENDER_PEAK_LINES } from '../constants/events'
+import Slider from '../components/Slider.vue';
+import Messages from '../components/Messages.vue';
+import Utilities from '../components/Utilities.vue';
+import Modal from '../components/Modal.vue';
+import { resample } from '../utils/audio';
+import { PeakLine } from '../classes'; // eslint-disable-line no-unused-vars
+import { renderWaveform, renderSpectrogram, renderPeakLines } from '../utils/plot';
+import { SET_SPECTROGRAM } from '../constants/mutation-types';
+import { RENDER_PEAK_LINES } from '../constants/events';
 
-const fadedOpacity = value => value >= 0.5 ? 1.0 : value * 2.0
+const fadedOpacity = value => value >= 0.5 ? 1.0 : value * 2.0;
 const MESSAGES = {
   LOADING: 'Now, building your spectrogram. Just a moment.',
   SPECTROGRAM_BUILT: 'Here is the Spectrogram. Check and click next.',
   COMPLETE: 'You have done! Now you can play Starling on Ableton Live'
-}
-const NEXT_BUTTON_TEXT = 'Next →'
-const EXTRACT_BUTTON_TEXT = 'Extract Again'
+};
+const NEXT_BUTTON_TEXT = 'Next →';
+const EXTRACT_BUTTON_TEXT = 'Extract Again';
 
 export default {
   data () {
@@ -50,76 +50,76 @@ export default {
       messageKey: 'LOADING',
       showButton: false,
       buttonText: NEXT_BUTTON_TEXT
-    }
+    };
   },
   computed: {
     waveform () {
-      const value = Number(this.viewerOpacity) / 100
+      const value = Number(this.viewerOpacity) / 100;
       return {
         opacity: fadedOpacity(value)
-      }
+      };
     },
     spectrogram () {
-      const value = Math.abs(1.0 - (Number(this.viewerOpacity) / 100))
+      const value = Math.abs(1.0 - (Number(this.viewerOpacity) / 100));
       return {
         opacity: fadedOpacity(value)
-      }
+      };
     },
     currentMessage () {
-      return MESSAGES[this.messageKey]
+      return MESSAGES[this.messageKey];
     }
   },
   mounted () {
-    this.plotWaveformAndSpectrogram()
-    this.$eventHub.$on(RENDER_PEAK_LINES, this.plotPeakLines)
+    this.plotWaveformAndSpectrogram();
+    this.$eventHub.$on(RENDER_PEAK_LINES, this.plotPeakLines);
   },
   beforeDestroy () {
-    this.$eventHub.$off(RENDER_PEAK_LINES)
+    this.$eventHub.$off(RENDER_PEAK_LINES);
   },
   methods: {
     handleClick () {
       switch (this.$data.messageKey) {
         case 'LOADING':
-          break
+          break;
         case 'COMPLETE':
         case 'SPECTROGRAM_BUILT':
-          this.openModal()
-          break
+          this.openModal();
+          break;
         default:
-          break
+          break;
       }
     },
     openModal () {
-      this.$data.showModal = true
+      this.$data.showModal = true;
     },
     closeModal () {
-      this.$data.showModal = false
-      this.$data.messageKey = 'COMPLETE'
-      this.$data.buttonText = EXTRACT_BUTTON_TEXT
+      this.$data.showModal = false;
+      this.$data.messageKey = 'COMPLETE';
+      this.$data.buttonText = EXTRACT_BUTTON_TEXT;
     },
     async plotWaveformAndSpectrogram () {
-      const audioBuffer = this.$store.state.sourceAudioBuffer
-      const DESIRED_SAMPLE_RATE = 22050
-      const windowSize = 1024
-      const resampleEvent = await resample(audioBuffer, DESIRED_SAMPLE_RATE)
-      const resampledAudioBuffer = resampleEvent.renderedBuffer
-      renderWaveform(resampledAudioBuffer, this.$refs.waveform)
+      const audioBuffer = this.$store.state.sourceAudioBuffer;
+      const DESIRED_SAMPLE_RATE = 22050;
+      const windowSize = 1024;
+      const resampleEvent = await resample(audioBuffer, DESIRED_SAMPLE_RATE);
+      const resampledAudioBuffer = resampleEvent.renderedBuffer;
+      renderWaveform(resampledAudioBuffer, this.$refs.waveform);
       const spectrogram = await renderSpectrogram(
         resampledAudioBuffer,
         this.$refs.spectrogram,
         windowSize,
         DESIRED_SAMPLE_RATE
-      )
+      );
       this.$store.commit({
         type: SET_SPECTROGRAM,
         spectrogram
-      })
-      this.$data.messageKey = 'SPECTROGRAM_BUILT'
-      this.$data.showButton = true
+      });
+      this.$data.messageKey = 'SPECTROGRAM_BUILT';
+      this.$data.showButton = true;
     },
     /** @param {Array.<PeakLine>} peakLines */
     plotPeakLines (peakLines) {
-      renderPeakLines(peakLines, this.$store.state.spectrogram, this.$refs.peakLines)
+      renderPeakLines(peakLines, this.$store.state.spectrogram, this.$refs.peakLines);
     }
   },
   components: {
@@ -128,7 +128,7 @@ export default {
     Messages,
     Utilities
   }
-}
+};
 </script>
 
 <style scoped>

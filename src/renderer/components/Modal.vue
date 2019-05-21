@@ -8,30 +8,30 @@
 </template>
 
 <script>
-import Loading from './Loading.vue'
-import PostForm from './PostForm.vue'
-import { POST_FORM, LOADING } from '../constants/modal-scenes'
+import Loading from './Loading.vue';
+import PostForm from './PostForm.vue';
+import { POST_FORM, LOADING } from '../constants/modal-scenes';
 
 export default {
   props: ['closeModal'],
   data: function () {
     return {
       scene: POST_FORM
-    }
+    };
   },
   methods: {
     proceedToLoading () {
-      this.scene = LOADING
+      this.scene = LOADING;
     },
     backToPostForm () {
-      this.scene = POST_FORM
+      this.scene = POST_FORM;
     }
   },
   components: {
     Loading,
     PostForm
   }
-}
+};
 </script>
 <style scoped>
 .modal-mask {
