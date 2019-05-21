@@ -53,7 +53,7 @@ export default {
       this.proceedToLoading();
 
       // Post
-      fetch(process.env.VUE_APP_SERVER, {
+      fetch('http://localhost:5000', {
         method: 'POST',
         body: formData,
         mode: 'cors'
