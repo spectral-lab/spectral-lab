@@ -1,0 +1,9 @@
+Flask
+flask_cors
+scikit-image == 0.14.2
+librosa
+numpy
+plotly
+pytz
+scikit-learn
+scipy
