@@ -53,7 +53,7 @@ export default {
       this.proceedToLoading();
 
       // Post
-      fetch('http://localhost:5000', {
+      fetch('http://localhost:6220', {
         method: 'POST',
         body: formData,
         mode: 'cors'
