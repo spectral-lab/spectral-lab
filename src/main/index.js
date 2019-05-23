@@ -47,7 +47,9 @@ app.on('window-all-closed', () => {
 });
 
 app.on('before-quit', () => {
-  serverProcess.kill();
+  if (serverProcess != null) {
+    serverProcess.kill();
+  }
 });
 
 app.on('activate', () => {
