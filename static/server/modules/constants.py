@@ -1,0 +1,1 @@
+IGNORE_RATE = 1 / 256
