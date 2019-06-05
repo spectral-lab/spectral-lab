@@ -1,14 +1,9 @@
 import { SET_AUDIO_BUFFER } from '../constants/mutation-types';
-
-const acceptAudio = ({ commit }, { payload }) => {
-  const { audioBuffer, fileName } = payload;
-  commit({
-    type: SET_AUDIO_BUFFER,
-    audioBuffer,
-    fileName
-  });
-};
+import { ACCEPT_AUDIO } from '../constants/action-types';
+import processAudioFile from '../utils/helpers/processAudioFile';
 
 export default {
-  acceptAudio
+  async [ACCEPT_AUDIO] ({commit}, {file}) {
+    commit(SET_AUDIO_BUFFER, await processAudioFile(file));
+  }
 };

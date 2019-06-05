@@ -5,17 +5,18 @@
     </v-btn>
     <v-toolbar-title>Audio file name</v-toolbar-title>
     <v-spacer />
-    <upload-button @file-update="updateFile" title="Open" noTitleUpdate>Open</upload-button>
+    <upload-button @file-update="handleFileUpdate" title="Open" noTitleUpdate>Open</upload-button>
   </v-toolbar>
 </template>
 
 <script>
 import UploadButton from 'vuetify-upload-button';
-import updateFile from '../utils/helpers/updateFile';
-
+import { ACCEPT_AUDIO } from '../constants/action-types';
 export default{
   methods: {
-    updateFile
+    handleFileUpdate (file) {
+      this.$store.dispatch(ACCEPT_AUDIO, { file });
+    }
   },
   components: {
     UploadButton
