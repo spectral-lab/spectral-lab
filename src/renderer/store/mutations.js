@@ -1,4 +1,4 @@
-import { SET_AUDIO_BUFFER, SET_SPECTROGRAM, SWITCH_PAGE } from '../constants/mutation-types';
+import { SET_AUDIO_BUFFER, SET_SPECTROGRAM } from '../constants/mutation-types';
 
 export default {
   [SET_AUDIO_BUFFER] (state, { audioBuffer, fileName }) {
@@ -7,8 +7,5 @@ export default {
   },
   [SET_SPECTROGRAM] (state, { spectrogram }) {
     state.spectrogram = spectrogram;
-  },
-  [SWITCH_PAGE] (state, { page }) {
-    state.page = page;
   }
 };

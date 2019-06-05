@@ -1,5 +1,4 @@
-import pages from '../constants/pages';
-import { SET_AUDIO_BUFFER, SWITCH_PAGE } from '../constants/mutation-types';
+import { SET_AUDIO_BUFFER } from '../constants/mutation-types';
 
 const acceptAudio = ({ commit }, { payload }) => {
   const { audioBuffer, fileName } = payload;
@@ -7,10 +6,6 @@ const acceptAudio = ({ commit }, { payload }) => {
     type: SET_AUDIO_BUFFER,
     audioBuffer,
     fileName
-  });
-  commit({
-    type: SWITCH_PAGE,
-    page: pages.VIEWER
   });
 };
 
