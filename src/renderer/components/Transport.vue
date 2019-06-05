@@ -1,8 +1,15 @@
 <template>
-  <div id="buttonContainer" @click="handleClick" class="play-button">
-    <img v-if="!playing" src="../assets/play.svg" alt="play">
-    <img v-if="playing" src="../assets/stop.svg" alt="stop">
-  </div>
+  <v-footer app fixed>
+    <v-spacer />
+    <v-btn
+      v-for="icon in icons"
+      :key="icon"
+      icon
+    >
+      <v-icon size="28px">{{ icon }}</v-icon>
+    </v-btn>
+    <v-spacer />
+  </v-footer>
 </template>
 
 <script>
@@ -10,7 +17,12 @@ import { playAudioBuffer } from '../utils/helpers';
 export default {
   data: function () {
     return {
-      source: null
+      source: null,
+      icons: [
+        'play_arrow',
+        'stop',
+        'fiber_manual_record'
+      ]
     };
   },
   computed: {

@@ -1,6 +1,6 @@
 'use strict';
 
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 import launchServer from './modules/launchServer';
 /**
  * Set `__static` path to static files in production
@@ -19,13 +19,15 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`;
 
 function createWindow () {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
   /**
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
-    useContentSize: true,
-    width: 1000
+    width,
+    height,
+    useContentSize: false,
+    titleBarStyle: 'hidden'
   });
 
   mainWindow.loadURL(winURL);

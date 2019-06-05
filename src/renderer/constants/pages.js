@@ -1,5 +1,0 @@
-export default {
-  OPEN_FILE: 'OPEN_FILE',
-  VIEWER: 'VIEWER',
-  INSTRUCTION: 'INSTRUCTION'
-};
