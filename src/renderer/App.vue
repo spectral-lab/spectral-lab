@@ -2,13 +2,12 @@
   <div id="app">
     <v-app id="inspire" dark>
       <title-bar />
-      <track-list />
       <v-content>
         <v-container fluid fill-height>
           <v-layout column>
             <v-flex>
               <audio-toolbar />
-              <main-toolbar />
+              <viewer-toolbar />
               <viewer />
             </v-flex>
           </v-layout>
@@ -23,7 +22,7 @@
 import store from './store';
 import Viewer from './components/Viewer.vue';
 import AudioToolbar from './components/AudioToolbar.vue';
-import MainToolbar from './components/MainToolbar.vue';
+import ViewerToolbar from './components/ViewerToolbar.vue';
 import Transport from './components/Transport';
 import TrackList from './components/TrackList';
 import TitleBar from './components/TitleBar';
@@ -34,7 +33,7 @@ export default {
   components: {
     Viewer,
     AudioToolbar,
-    MainToolbar,
+    ViewerToolbar,
     Transport,
     TrackList,
     TitleBar
