@@ -1,19 +1,19 @@
 import loadFileAsArrayBuffer from './loadFileAsArrayBuffer';
 import { sumToMono, normalize, crop } from '../audio';
 /**
- * @param  {File} f
- * @returns {{audioBuffer: AudioBuffer, fileName: String}}
+ * @param {File} file
+ * @param {AudioContext} audioCtx
+ * @returns {Promise<{buffer: AudioBuffer, filepath: String}>}
  */
-export default async (f) => {
-  const context = new AudioContext({latencyHint: 'interactive', sampleRate: 22050});
+export default async (file, audioCtx) => {
   const DESIRED_DURATION = 10; // in seconds.
-  const loadEvent = await loadFileAsArrayBuffer(f);
-  const originalAudioBuffer = await context.decodeAudioData(loadEvent.target.result);
+  const loadEvent = await loadFileAsArrayBuffer(file);
+  const originalAudioBuffer = await audioCtx.decodeAudioData(loadEvent.target.result);
   const monoAudioBuffer = sumToMono(originalAudioBuffer);
   const croppedAudioBuffer = crop(monoAudioBuffer, DESIRED_DURATION);
   const normalizedAudioBuffer = normalize(croppedAudioBuffer);
   return {
-    audioBuffer: normalizedAudioBuffer,
-    fileName: f.name
+    buffer: normalizedAudioBuffer,
+    filepath: file.path
   };
 };

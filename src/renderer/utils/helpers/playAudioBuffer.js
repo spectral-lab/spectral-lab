@@ -1,16 +1,17 @@
+
 /**
  * @param  {AudioBuffer} audioBuffer
+ * @param  {AudioContext} audioCtx
  */
-const playAudioBuffer = (audioBuffer) => {
+const playAudioBuffer = (audioBuffer, audioCtx) => {
   if (audioBuffer == null) {
     return;
   }
-  const context = new AudioContext({latencyHint: 'interactive', sampleRate: 22050});
-  const source = context.createBufferSource(); // creates a sound source
-  source.buffer = audioBuffer; // tell the source which sound to play
-  source.connect(context.destination); // connect the source to the context's destination (the speakers)
-  source.start(0);
-  return source;
+  const sourceNode = audioCtx.createBufferSource(); // creates a sound source node
+  sourceNode.buffer = audioBuffer; // tell the source node which sound to play
+  sourceNode.connect(audioCtx.destination); // connect the source to the context's destination (the speakers)
+  sourceNode.start(0);
+  return sourceNode;
 };
 
 export default playAudioBuffer;
