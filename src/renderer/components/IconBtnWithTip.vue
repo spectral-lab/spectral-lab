@@ -1,7 +1,7 @@
 <template>
   <v-tooltip bottom>
     <template v-slot:activator="{ on }">
-      <v-btn fab large v-on="on" color="primary" class="elevation-0">
+      <v-btn fab large v-on="on" @click="emitClickEvent" color="primary" class="elevation-0">
         <v-icon>{{icon}}</v-icon>
       </v-btn>
     </template>
@@ -14,6 +14,11 @@ export default {
   props: {
     icon: String,
     tip: String
+  },
+  methods: {
+    emitClickEvent () {
+      this.$emit('click');
+    }
   }
 };
 </script>
