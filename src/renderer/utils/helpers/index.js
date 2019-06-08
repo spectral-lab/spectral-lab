@@ -6,7 +6,6 @@ import genPWT from './genPWT';
 import normalizeMagnitude from './normalizeMagnitude';
 import makePNGBuffer from './makePNGBuffer';
 import formatAsPwt from './formatAsPwt';
-import calcYPos from './calcYPos';
 import decibelCurve from './decibelCurve';
 
 export {
@@ -18,6 +17,5 @@ export {
   normalizeMagnitude,
   makePNGBuffer,
   formatAsPwt,
-  calcYPos,
   decibelCurve
 };
