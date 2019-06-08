@@ -1,11 +1,11 @@
 import { PeakLine } from '../../classes'; // eslint-disable-line no-unused-vars
-import { calcYPos } from '../helpers';
+import { calcYPos } from './renderUtils';
 
 /**
  * @param  {Array.<PeakLine>} peakLines
  * @param  {HTMLCanvasElement} canvas
  */
-const peakLines = (peakLines, spectrogram, canvas) => {
+const renderPeakLines = (peakLines, spectrogram, canvas) => {
   const PEAKLINES_COLOR = 'rgb(0, 255 , 55)';
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -30,4 +30,4 @@ const peakLines = (peakLines, spectrogram, canvas) => {
   });
 };
 
-export default peakLines;
+export default renderPeakLines;

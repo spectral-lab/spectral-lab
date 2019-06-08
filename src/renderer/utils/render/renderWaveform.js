@@ -3,7 +3,7 @@
  * @param  {AudioBuffer} audioBuffer
  * @param  {HTMLCanvasElement} canvas
  */
-const waveform = (audioBuffer, canvas) => {
+const renderWaveform = (audioBuffer, canvas) => {
   const DESIRED_LENGTH = 30 * 1000;
   const WAVEFORM_COLOR = 'rgba(255, 243, 97, 1)';
   const channelData = thinOutArray(audioBuffer.getChannelData(0), DESIRED_LENGTH);
@@ -30,7 +30,7 @@ const waveform = (audioBuffer, canvas) => {
   ctx.stroke();
 };
 
-export default waveform;
+export default renderWaveform;
 
 // Subfunctions
 
