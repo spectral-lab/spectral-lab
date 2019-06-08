@@ -15,7 +15,7 @@ import { ACCEPT_AUDIO } from '../constants/action-types';
 import { playAudioBuffer } from '../utils/helpers';
 import path from 'path';
 
-export default{
+export default {
   data: function () {
     return {
       sourceNode: null

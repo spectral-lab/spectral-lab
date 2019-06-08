@@ -5,7 +5,7 @@ import actions from './actions';
 
 Vue.use(Vuex);
 const InitialState = {
-  audioCtx: new AudioContext({latencyHint: 'interactive', sampleRate: 22050}),
+  audioCtx: new AudioContext({ latencyHint: 'interactive', sampleRate: 22050 }),
   sourceAudio: {
     filepath: '',
     buffer: new AudioBuffer({
@@ -17,7 +17,7 @@ const InitialState = {
   spectrogram: {
     times: [],
     freqs: [],
-    magnitude2d: []
+    magnitude2d: [[]]
   }
 };
 const store = new Vuex.Store({

@@ -3,8 +3,13 @@ import { ACCEPT_AUDIO } from '../constants/action-types';
 import processAudioFile from '../utils/helpers/processAudioFile';
 
 export default {
-  async [ACCEPT_AUDIO] ({state, commit}, {file}) {
+  async [ACCEPT_AUDIO] ({ state, commit }, { file }) {
     const ctx = state.audioCtx;
-    commit(SET_SOURCE_AUDIO, await processAudioFile(file, ctx));
+    const { buffer, filepath } = await processAudioFile(file, ctx);
+    commit({
+      type: SET_SOURCE_AUDIO,
+      buffer,
+      filepath
+    });
   }
 };
