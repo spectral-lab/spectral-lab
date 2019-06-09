@@ -1,12 +1,31 @@
 <template>
-  <div class="container">
-    <canvas class="spectrogram" ref="spectrogram" width="1920" height="1080" />
+  <div>
+    <v-layout column>
+      <v-flex>
+        <viewer-toolbar @mousemode="handleMouseMode" />
+      </v-flex>
+      <v-flex class="canvas-container" id="canvas-container">
+        <canvas ref="spectrogram" :width="canvasWidth" :height="canvasHeight" />
+        <canvas ref="pianoRoll" :width="canvasWidth" :height="canvasHeight" />
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 
 <script>
 import { renderSpectrogram } from '../utils/render';
+import { debounce } from 'lodash';
+import ViewerToolbar from './ViewerToolbar.vue';
+import * as MOUSE_MODES from '../constants/mouse-modes';
+
 export default {
+  data () {
+    return {
+      canvasWidth: 300,
+      canvasHeight: 150,
+      mouseMode: MOUSE_MODES.SELECT
+    };
+  },
   mounted () {
     this.$store.watch(
       (state) => state.spectrogram,
@@ -15,17 +34,48 @@ export default {
       },
       { deep: true }
     );
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  },
+  created () {
+    this.debouncedRefreshCanvas = debounce(this.refreshCanvas, 120);
+  },
+  methods: {
+    refreshCanvas () {
+      this.canvasWidth = document.getElementById('canvas-container').offsetWidth;
+      this.canvasHeight = document.getElementById('canvas-container').offsetHeight;
+      this.$nextTick(() => {
+        renderSpectrogram(this.$store.state.spectrogram, this.$refs.spectrogram);
+      });
+    },
+    handleResize () {
+      this.debouncedRefreshCanvas();
+    },
+    handleMouseMode (m) {
+      this.mouseMode = m;
+    }
+  },
+  components: {
+    ViewerToolbar
   }
 };
 </script>
 
 <style scoped>
-.container {
+.canvas-container {
   background: black;
-}
-.spectrogram {
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 0;
+  height: 68vh;
   width: 100%;
-  height: 100%;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 </style>
 

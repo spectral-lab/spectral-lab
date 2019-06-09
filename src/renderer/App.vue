@@ -5,9 +5,8 @@
       <v-content>
         <v-container fluid fill-height>
           <v-layout column>
+            <audio-toolbar />
             <v-flex>
-              <audio-toolbar />
-              <viewer-toolbar />
               <viewer />
             </v-flex>
           </v-layout>
@@ -22,7 +21,6 @@
 import store from './store';
 import Viewer from './components/Viewer.vue';
 import AudioToolbar from './components/AudioToolbar.vue';
-import ViewerToolbar from './components/ViewerToolbar.vue';
 import Transport from './components/Transport';
 import TrackList from './components/TrackList';
 import TitleBar from './components/TitleBar';
@@ -33,7 +31,6 @@ export default {
   components: {
     Viewer,
     AudioToolbar,
-    ViewerToolbar,
     Transport,
     TrackList,
     TitleBar

@@ -1,12 +1,14 @@
 <template>
-  <v-toolbar color="grey darken-3" class="mb-2">
-    <v-btn @click="handleClick" icon color="primary">
-      <v-icon size="24px">{{icon}}</v-icon>
-    </v-btn>
-    <v-toolbar-title>{{filename}}</v-toolbar-title>
-    <v-spacer />
-    <upload-button @file-update="handleFileUpdate" title="Open" noTitleUpdate>Open</upload-button>
-  </v-toolbar>
+  <div>
+    <v-toolbar color="grey darken-3" class="mb-2">
+      <v-btn @click="handleClick" icon color="primary">
+        <v-icon size="24px">{{icon}}</v-icon>
+      </v-btn>
+      <v-toolbar-title>{{filename}}</v-toolbar-title>
+      <v-spacer />
+      <upload-button @file-update="handleFileUpdate" title="Open" noTitleUpdate>Open</upload-button>
+    </v-toolbar>
+  </div>
 </template>
 
 <script>
