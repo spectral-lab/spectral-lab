@@ -65,10 +65,12 @@
     }
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.9.0",
     "decibels": "^2.0.0",
     "dsp.js-browser": "^1.0.1",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
+    "material-design-icons-iconfont": "^5.0.1",
     "ndarray-normalize": "^1.0.0",
     "ndarray-ops": "^1.2.2",
     "ndarray-pack": "^1.2.1",
