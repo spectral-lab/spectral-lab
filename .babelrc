@@ -7,7 +7,8 @@
           "targets": { "node": 7 }
         }],
         "stage-0"
-      ]
+      ],
+      "plugins": ["transform-runtime"]
     },
     "renderer": {
       "presets": [
@@ -15,7 +16,8 @@
           "modules": false
         }],
         "stage-0"
-      ]
+      ],
+      "plugins": ["transform-runtime"]
     },
     "web": {
       "presets": [
@@ -23,8 +25,15 @@
           "modules": false
         }],
         "stage-0"
+      ],
+      "plugins": ["transform-runtime"]
+    },
+    "test": {
+      "presets": [
+        ["@babel/preset-env", {
+          "targets": { "node": 7 }
+        }]
       ]
     }
   },
-  "plugins": ["transform-runtime"]
 }
