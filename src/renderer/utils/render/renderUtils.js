@@ -9,7 +9,7 @@ import '../../typedef';
  * @param  {HTMLCanvasElement} param.canvas
  * @return {object} Rect object
  */
-export const createRect = ({rowIdx, columnIdx, spectrogram, canvas}) => {
+export const createRect = ({ rowIdx, columnIdx, spectrogram, canvas }) => {
   const { numberOfRows, numberOfColumns } = countRowsAndColumns(spectrogram);
   const magnitude = spectrogram.magnitude2d[rowIdx][columnIdx];
   const freqs = spectrogram.freqs;

@@ -32,7 +32,7 @@ const stft = (audioBuffer, sr) => new Promise(resolve => {
   }
   const magnitude2d = unpackFromNdArray(packIntoNdarray(spectra).transpose(1, 0));
 
-  resolve({times, freqs, magnitude2d});
+  resolve({ times, freqs, magnitude2d });
 });
 
 export default stft;
