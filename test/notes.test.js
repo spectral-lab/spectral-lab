@@ -111,6 +111,32 @@ test('INSERT MODULATION', () => {
   expect(state.data[0].modulations[0]).toHaveProperty('pitch', MODULATION_0.pitch);
 });
 
+test('INSERT MODULATION in ascending order', () => {
+  const state = {
+    data: [
+      Object.assign(NOTE_0, {
+        modulations: [
+          { offsetTime: 0.1, pitch: 0.1 },
+          { offsetTime: 0.2, pitch: 0.2 },
+          { offsetTime: 0.3, pitch: 0.3 }
+        ]
+      })
+    ]
+  };
+  INSERT_MODULATION(state, {id: NOTE_0.id, modulation: {offsetTime: 0.35, pitch: 0.35}});
+  expect(state.data[0].modulations[3]).toHaveProperty('offsetTime', 0.35);
+  expect(state.data[0].modulations[3]).toHaveProperty('pitch', 0.35);
+  INSERT_MODULATION(state, {id: NOTE_0.id, modulation: {offsetTime: 0.25, pitch: 0.25}});
+  expect(state.data[0].modulations[2]).toHaveProperty('offsetTime', 0.25);
+  expect(state.data[0].modulations[2]).toHaveProperty('pitch', 0.25);
+  INSERT_MODULATION(state, {id: NOTE_0.id, modulation: {offsetTime: 0.15, pitch: 0.15}});
+  expect(state.data[0].modulations[1]).toHaveProperty('offsetTime', 0.15);
+  expect(state.data[0].modulations[1]).toHaveProperty('pitch', 0.15);
+  INSERT_MODULATION(state, {id: NOTE_0.id, modulation: {offsetTime: 0.05, pitch: 0.05}});
+  expect(state.data[0].modulations[0]).toHaveProperty('offsetTime', 0.05);
+  expect(state.data[0].modulations[0]).toHaveProperty('pitch', 0.05);
+});
+
 test('MODULATE_NOTE with one modulation', (done) => {
   const dispatch = (type, { noteOn, modulation }) => {
     try {

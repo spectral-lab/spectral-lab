@@ -1,7 +1,7 @@
 import { CREATE_NOTE, MODULATE_NOTE } from '../action-types';
 import { APPEND_NOTE, INSERT_MODULATION } from '../mutation-types';
 import '../../typedef';
-import { pick, findIndex } from 'lodash';
+import { pick, findLastIndex } from 'lodash';
 import NoteFactory from '../../classes/NoteFactory';
 
 const noteFactory = new NoteFactory();
@@ -17,7 +17,7 @@ export const mutations = {
    */
   [INSERT_MODULATION] (state, { id, modulation }) {
     const targetNote = state.data.find(note => note.id === id);
-    const idx = Math.max(0, findIndex(targetNote.modulations, (m) => modulation.offsetTime < m.offsetTime));
+    const idx = findLastIndex(targetNote.modulations, (m) => m.offsetTime < modulation.offsetTime) + 1;
     targetNote.modulations = insert(idx, modulation, targetNote.modulations);
   }
 };
