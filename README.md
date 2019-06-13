@@ -14,7 +14,7 @@ This project was generated with [electron-vue](https://github.com/SimulatedGREG/
 
 ``` bash
 # install dependencies
-yarn run install:all
+yarn
 
 # serve with hot reload at localhost:9080
 yarn run dev

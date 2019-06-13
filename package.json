@@ -6,8 +6,8 @@
   "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
+    "postinstall": "[ -d static/server/venv ] || npm run install:server",
     "install:server": "cd static/server && python3 -m venv venv && ./venv/bin/python3 -m pip install -r requirements.txt",
-    "install:all": "yarn & yarn run install:server",
     "build": "node .electron-vue/build.js && electron-builder",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
