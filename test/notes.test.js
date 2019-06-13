@@ -2,8 +2,8 @@
 import { actions, mutations, getters, InitialState } from '../src/renderer/store/modules/notes';
 import * as defaults from '../src/renderer/constants/defaults';
 
-const { CREATE_NOTE } = actions;
-const { APPEND_NOTE, ADD_MODULATION } = mutations;
+const { CREATE_NOTE, MODULATE_NOTE } = actions;
+const { APPEND_NOTE, INSERT_MODULATION } = mutations;
 const { pitchTransition } = getters;
 
 const NOTEON_0 = {time: 0, pitch: 44.5, noteOnVelocity: 0.1};
@@ -16,7 +16,7 @@ const MODULATION_3 = {offsetTime: 0.13, pressure: 0.03, timbre: 0.003};
 const NOTE_0 = {
   id: 3,
   noteOn: {
-    time: 0,
+    time: 0.2,
     pitch: 60.6,
     noteOnVelocity: 0.1,
     timbre: 0.5,
@@ -88,28 +88,6 @@ test('CREATE_NOTE', (done) => {
   CREATE_NOTE({state, commit}, NOTEON_0);
 });
 
-test('modulates a note with MODULATION_0', () => {
-  const state = {
-    data: [{...NOTE_0}]
-  };
-  ADD_MODULATION(state, {id: NOTE_0.id, modulations: MODULATION_0});
-  expect(state.data[0].modulations).toHaveLength(1);
-  expect(state.data[0].modulations[0]).toHaveProperty('offsetTime', MODULATION_0.offsetTime);
-  expect(state.data[0].modulations[0]).toHaveProperty('pitch', MODULATION_0.pitch);
-});
-
-test('appends multiple modulations in `offsetTime` acending order', () => {
-  const state = {
-    data: [{...NOTE_0}]
-  };
-  ADD_MODULATION(state, {id: NOTE_0.id, modulations: [MODULATION_0, MODULATION_1, MODULATION_2, MODULATION_3]});
-  expect(state.data[0].modulations).toHaveLength(4);
-  expect(state.data[0].modulations[0]).toHaveProperty('offsetTime', MODULATION_3.offsetTime);
-  expect(state.data[0].modulations[1]).toHaveProperty('offsetTime', MODULATION_0.offsetTime);
-  expect(state.data[0].modulations[2]).toHaveProperty('offsetTime', MODULATION_1.offsetTime);
-  expect(state.data[0].modulations[3]).toHaveProperty('offsetTime', MODULATION_2.offsetTime);
-});
-
 test('excludes unwanted properties', (done) => {
   const commit = (_type, { noteOn }) => {
     try {
@@ -121,6 +99,88 @@ test('excludes unwanted properties', (done) => {
   };
   const state = InitialState;
   CREATE_NOTE({state, commit}, Object.assign({}, NOTEON_0, {unwanted: 0.5}));
+});
+
+test('INSERT MODULATION', () => {
+  const state = {
+    data: [{...NOTE_0}]
+  };
+  INSERT_MODULATION(state, {id: NOTE_0.id, modulation: MODULATION_0});
+  expect(state.data[0].modulations).toHaveLength(1);
+  expect(state.data[0].modulations[0]).toHaveProperty('offsetTime', MODULATION_0.offsetTime);
+  expect(state.data[0].modulations[0]).toHaveProperty('pitch', MODULATION_0.pitch);
+});
+
+test('MODULATE_NOTE with one modulation', (done) => {
+  const dispatch = (type, { noteOn, modulation }) => {
+    try {
+      expect(type).toBe('addModulation');
+      expect(modulation).toHaveProperty('time', MODULATION_0.time);
+      expect(modulation).toHaveProperty('pitch', MODULATION_0.pitch);
+    } catch (err) {
+      done(err);
+    }
+    done();
+  };
+  MODULATE_NOTE({ dispatch }, {id: NOTE_0.id, modulation: MODULATION_0});
+});
+
+test('MODULATE_NOTE with array of modulations', (done) => {
+  let count = 0;
+  const dispatch = (type, { modulations, id }) => {
+    try {
+      expect(type).toBe('addModulation');
+    } catch (err) {
+      done(err);
+    }
+    count++;
+    if (count === 4) done();
+  };
+  MODULATE_NOTE({ dispatch }, {id: NOTE_0.id, modulations: [MODULATION_0, MODULATION_1, MODULATION_2, MODULATION_3]});
+});
+
+test('addModulation', (done) => {
+  let hasFormatted = false;
+  const formattedModulation = { offsetTime: 0.1, pitch: 144 };
+  const dispatch = (type, { id, modulation }) => {
+    try {
+      expect(type).toBe('formatModulation');
+      expect(modulation).toHaveProperty('time', MODULATION_0.time);
+      expect(modulation).toHaveProperty('pitch', MODULATION_0.pitch);
+    } catch (err) {
+      done(err);
+    }
+    hasFormatted = true;
+    return formattedModulation;
+  };
+  const commit = (type, { id, modulation }) => {
+    try {
+      expect(type).toBe('INSERT_MODULATION');
+      expect(modulation).toHaveProperty('offsetTime', formattedModulation.offsetTime);
+      expect(modulation).toHaveProperty('pitch', formattedModulation.pitch);
+    } catch (err) {
+      done(err);
+    }
+    if (hasFormatted) done();
+  };
+  actions.addModulation({ dispatch, commit }, {id: NOTE_0.id, modulation: MODULATION_0});
+});
+
+test('formatModulation', async (done) => {
+  const state = {
+    data: [{...NOTE_0}]
+  };
+  const formatted0 = await actions.formatModulation({state}, {id: NOTE_0.id, modulation: {time: 0.5, pitch: 60}});
+  expect(formatted0).toEqual({offsetTime: 0.3, pitch: 60});
+  const formatted1 = await actions.formatModulation({state}, {id: NOTE_0.id, modulation: {offsetTime: 0.5, pitch: 60, unwanted: 123}});
+  expect(formatted1).toEqual({offsetTime: 0.5, pitch: 60});
+  expect(() => {
+    actions.formatModulation({state}, {id: NOTE_0.id, modulation: {offsetTime: 0.5, unwanted: 60}});
+  }).toThrow();
+  expect(() => {
+    actions.formatModulation({state}, {id: NOTE_0.id, modulation: {pitch: 60}});
+  }).toThrow();
+  done();
 });
 
 test('gets pitch transision', () => {
