@@ -1,5 +1,5 @@
 import '../typedef';
-import { defaultNoteOn } from '../constants/defaults';
+import { NOTE_ON } from '../constants/defaults';
 import { pick } from 'lodash';
 
 const properties = ['time', 'pitch', 'power', 'timbre'];
@@ -11,49 +11,70 @@ let id = 0;
  * */
 class Note {
   /**
-   * @param {Modulation} noteOn
+   * @param {Modulation} newNoteOn
    * */
-  constructor (noteOn) {
-    this.id = id;
+  constructor (newNoteOn) {
+    this._id = id;
     id++;
-    /** @type {Array.<Modulation>} */
-    this.transition = [Object.assign({}, defaultNoteOn, pick(noteOn, properties))];
+    this._noteOn = Object.assign({}, NOTE_ON, pick(newNoteOn, properties));
+    this._modulations = [];
+    this._duration = null;
   }
   /**
-   * @param  {Array.<Modulation>} modulations
+   * @param  {Array.<Modulation>} newModulations
    */
-  append (...modulations) {
-    modulations.forEach((modulation) => {
-      const modulationToAdd = Object.assign({}, pick(modulation, properties));
+  append (...newModulations) {
+    newModulations.forEach((mod) => {
+      const modulationToAdd = Object.assign({}, pick(mod, properties));
       if (modulationToAdd.hasOwnProperty('time')) {
         // @ts-ignore
-        this.transition.push(modulationToAdd);
+        this._modulations.push(modulationToAdd);
         return;
       }
       console.error('Modulation has not been appended. Modulation must have `time` property.');
     });
   }
   /**
-   * @param  {Array.<Modulation>} modulations
+   * @param  {Array.<Modulation>} transition
    */
-  static from (modulations) {
-    const note = new Note(modulations[0]);
-    note.append(...modulations.slice(1));
+  static from (transition) {
+    const note = new Note(transition[0]);
+    note.append(...transition.slice(1));
     return note;
   }
 
+  get duration () {
+    return this._duration;
+  }
+
+  get id () {
+    return this._id;
+  }
+
+  get noteOn () {
+    return Object.assign({}, this._noteOn);
+  }
+
+  get modulations () {
+    return [...this._modulations];
+  }
+
+  get transition () {
+    return [this._noteOn, ...this._modulations];
+  }
+
   get pitchTransition () {
-    const transition = this.transition.filter((modulation) => modulation.hasOwnProperty('pitch'));
+    const transition = [this._noteOn, ...this._modulations.filter((modulation) => modulation.hasOwnProperty('pitch'))];
     return transition.map(modulation => pick(modulation, ['time', 'pitch']));
   }
 
   get powerTransition () {
-    const transition = this.transition.filter((modulation) => modulation.hasOwnProperty('power'));
+    const transition = [this._noteOn, ...this._modulations.filter((modulation) => modulation.hasOwnProperty('power'))];
     return transition.map(modulation => pick(modulation, ['time', 'power']));
   }
 
   get timbreTransition () {
-    const transition = this.transition.filter((modulation) => modulation.hasOwnProperty('timbre'));
+    const transition = [this._noteOn, ...this._modulations.filter((modulation) => modulation.hasOwnProperty('timbre'))];
     return transition.map(modulation => pick(modulation, ['time', 'timbre']));
   }
 }
