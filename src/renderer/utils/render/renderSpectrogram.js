@@ -10,7 +10,7 @@ const renderSpectrogram = (spectrogram, canvas) => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   spectrogram.magnitude2d.forEach((arrayOfMag, rowIdx) => {
     arrayOfMag.forEach((_, columnIdx) => {
-      const rect = createRect({rowIdx, columnIdx, spectrogram, canvas});
+      const rect = createRect({ rowIdx, columnIdx, spectrogram, canvas });
       const HUE = 200;
       ctx.globalAlpha = rect.luminance;
       ctx.fillStyle = `hsl(${HUE},100%,${rect.luminance * 100}%)`;
