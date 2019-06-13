@@ -1,2 +1,4 @@
 export const SET_SOURCE_AUDIO = 'SET_SOURCE_AUDIO';
 export const SET_SPECTROGRAM = 'SET_SPECTROGRAM';
+export const APPEND_NOTE = 'APPEND_NOTE';
+export const ADD_MODULATION = 'ADD_MODULATION';
