@@ -29,7 +29,10 @@ export const mutations = {
         console.error('Modulation has not been applied. Modulation must have `offsetTime` or `time` property.');
         return;
       }
-      const modulationToAdd = Object.assign({}, pick(mod, modulationProperties));
+      const modulationToAdd = mod.offsetTime < 0 ? (
+        Object.assign({}, pick(mod, modulationProperties), { offsetTime: 0 })) : (
+        Object.assign({}, pick(mod, modulationProperties))
+      );
       const idx = findLastIndex(targetNote.modulations, (m) => m.offsetTime < modulationToAdd.offsetTime) + 1;
       targetNote.modulations = insert(idx, modulationToAdd, targetNote.modulations);
     });

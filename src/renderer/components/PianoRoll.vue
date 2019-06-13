@@ -30,7 +30,8 @@ export default {
   data () {
     return {
       /** @type {?number} */
-      drawingNoteId: null
+      drawingNoteId: null,
+      latestX: 0
     };
   },
   computed: {
@@ -74,6 +75,7 @@ export default {
           time: this.xToTime(layerX),
           pitch: this.yToPitch(layerY)
         });
+        this.latestX = layerX;
       }
     },
     handleMouseup (e) {
@@ -81,13 +83,16 @@ export default {
     },
     handleMousemove ({ layerX, layerY }) {
       if (this.isDrawing) {
+        const x = Math.max(layerX, this.latestX);
+        const y = layerY;
         this.$store.commit(ADD_MODULATION, {
           id: this.drawingNoteId,
           modulations: {
-            time: this.xToTime(layerX),
-            pitch: this.yToPitch(layerY)
+            time: this.xToTime(x),
+            pitch: this.yToPitch(y)
           }
         });
+        this.latestX = x;
       }
     },
     xToTime (x) {
