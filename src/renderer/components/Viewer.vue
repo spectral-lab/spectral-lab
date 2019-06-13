@@ -6,7 +6,12 @@
       </v-flex>
       <v-flex class="canvas-container" id="canvas-container">
         <canvas ref="spectrogram" :width="canvasWidth" :height="canvasHeight" />
-        <canvas ref="pianoRoll" :width="canvasWidth" :height="canvasHeight" />
+        <piano-roll
+          :width="canvasWidth" 
+          :height="canvasHeight" 
+          :mouseMode="mouseMode" 
+          :scale="scale"
+        />
       </v-flex>
     </v-layout>
   </div>
@@ -16,14 +21,20 @@
 import { renderSpectrogram } from '../utils/render';
 import { debounce } from 'lodash';
 import ViewerToolbar from './ViewerToolbar.vue';
+import PianoRoll from './PianoRoll.vue';
 import * as MOUSE_MODES from '../constants/mouse-modes';
+import { RERENDER } from '../constants/events';
 
 export default {
   data () {
     return {
       canvasWidth: 300,
       canvasHeight: 150,
-      mouseMode: MOUSE_MODES.SELECT
+      mouseMode: MOUSE_MODES.SELECT,
+      scale: {
+        pixelPerSecond: 100,
+        pixelPerNoteNum: 10
+      }
     };
   },
   mounted () {
@@ -39,13 +50,19 @@ export default {
   },
   created () {
     this.debouncedRefreshCanvas = debounce(this.refreshCanvas, 120);
+    this.$eventHub.$on(RERENDER, () => {
+      renderSpectrogram(this.$store.state.spectrogram, this.$refs.spectrogram);
+    });
+  },
+  beforeDestroy () {
+    this.$eventHub.$off(RERENDER);
   },
   methods: {
     refreshCanvas () {
       this.canvasWidth = document.getElementById('canvas-container').offsetWidth;
       this.canvasHeight = document.getElementById('canvas-container').offsetHeight;
       this.$nextTick(() => {
-        renderSpectrogram(this.$store.state.spectrogram, this.$refs.spectrogram);
+        this.$eventHub.$emit(RERENDER);
       });
     },
     handleResize () {
@@ -56,7 +73,8 @@ export default {
     }
   },
   components: {
-    ViewerToolbar
+    ViewerToolbar,
+    PianoRoll
   }
 };
 </script>
@@ -68,7 +86,7 @@ export default {
   top: 0;
   left: 0;
   padding: 0;
-  height: 68vh;
+  height: 60vh;
   width: 100%;
 }
 

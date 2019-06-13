@@ -53,7 +53,7 @@
 <script>
 import IconBtnWithTip from './IconBtnWithTip';
 import { stft, resample } from '../utils/audio';
-import { SET_SPECTROGRAM } from '../constants/mutation-types';
+import { SET_SPECTROGRAM } from '../store/mutation-types';
 import * as MOUSE_MODES from '../constants/mouse-modes';
 
 export default {
@@ -67,10 +67,7 @@ export default {
       const resampleEvent = await resample(audioBuffer, DESIRED_SAMPLE_RATE);
       const resampledAudioBuffer = resampleEvent.renderedBuffer;
       const spectrogram = await stft(resampledAudioBuffer, DESIRED_SAMPLE_RATE);
-      this.$store.commit({
-        type: SET_SPECTROGRAM,
-        spectrogram
-      });
+      this.$store.commit(SET_SPECTROGRAM, { spectrogram });
     },
     emitMouseMode (modeIdx) {
       switch (modeIdx) {

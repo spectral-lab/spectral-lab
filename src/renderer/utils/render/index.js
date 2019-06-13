@@ -1,8 +1,8 @@
 import renderWaveform from './renderWaveform';
 import renderSpectrogram from './renderSpectrogram';
-import renderPeakLines from './renderPeakLines';
+import renderPianoRoll from './renderPianoRoll';
 export {
   renderWaveform,
   renderSpectrogram,
-  renderPeakLines
+  renderPianoRoll
 };
