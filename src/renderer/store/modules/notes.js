@@ -1,13 +1,11 @@
 import { CREATE_NOTE, MODULATE_NOTE } from '../action-types';
 import { APPEND_NOTE, INSERT_MODULATION } from '../mutation-types';
 import '../../typedef';
-import { NOTE_ON } from '../../constants/defaults';
 import { pick, findIndex } from 'lodash';
+import NoteFactory from '../../classes/NoteFactory';
 
-const noteOnProperties = ['time', 'pitch', 'pressure', 'timbre', 'noteOnVelocity'];
+const noteFactory = new NoteFactory();
 const modulationProperties = ['offsetTime', 'pitch', 'pressure', 'timbre'];
-
-let id = 0;
 
 export const InitialState = { data: [] };
 export const mutations = {
@@ -18,23 +16,15 @@ export const mutations = {
    * @param  {Array.<Modulation>} newModulations
    */
   [INSERT_MODULATION] (state, { id, modulation }) {
-    debugger;
     const targetNote = state.data.find(note => note.id === id);
-    debugger;
     const idx = Math.max(0, findIndex(targetNote.modulations, (m) => modulation.offsetTime < m.offsetTime));
     targetNote.modulations = insert(idx, modulation, targetNote.modulations);
   }
 };
 
 export const actions = {
-  [CREATE_NOTE] ({ commit }, newNoteOn) {
-    const note = {
-      id,
-      noteOn: Object.assign({}, NOTE_ON, pick(newNoteOn, noteOnProperties)),
-      modulations: [],
-      duration: null
-    };
-    id++;
+  [CREATE_NOTE] ({ commit }, noteOn) {
+    const note = noteFactory.createNote(noteOn);
     commit(APPEND_NOTE, note);
     return note.id;
   },
