@@ -13,9 +13,8 @@
 <script>
 import { renderPianoRoll } from '../utils/render';
 import * as MOUSE_MODES from '../constants/mouse-modes';
-import { CREATE_NOTE } from '../store/action-types';
+import { CREATE_NOTE, MODULATE_NOTE } from '../store/action-types';
 import { RERENDER } from '../constants/events';
-import { ADD_MODULATION } from '../store/mutation-types';
 
 export default {
   props: {
@@ -85,9 +84,9 @@ export default {
       if (this.isDrawing) {
         const x = Math.max(layerX, this.latestX);
         const y = layerY;
-        this.$store.commit(ADD_MODULATION, {
+        this.$store.dispatch(MODULATE_NOTE, {
           id: this.drawingNoteId,
-          modulations: {
+          modulation: {
             time: this.xToTime(x),
             pitch: this.yToPitch(y)
           }
