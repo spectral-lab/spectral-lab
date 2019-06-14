@@ -1,4 +1,4 @@
-import { SET_SOURCE_AUDIO, SET_SPECTROGRAM } from '../constants/mutation-types';
+import { SET_SOURCE_AUDIO, SET_SPECTROGRAM } from './mutation-types';
 
 export default {
   [SET_SOURCE_AUDIO] (state, { buffer, filepath }) {

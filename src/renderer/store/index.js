@@ -2,10 +2,14 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import mutations from './mutations';
 import actions from './actions';
+import notes from './modules/notes';
 
 Vue.use(Vuex);
 const InitialState = {
-  audioCtx: new AudioContext({ latencyHint: 'interactive', sampleRate: 22050 }),
+  audioCtx: new AudioContext({
+    latencyHint: 'interactive',
+    sampleRate: 22050
+  }),
   sourceAudio: {
     filepath: '',
     buffer: new AudioBuffer({
@@ -21,9 +25,11 @@ const InitialState = {
   }
 };
 const store = new Vuex.Store({
+  strict: true,
   state: InitialState,
   mutations,
-  actions
+  actions,
+  modules: { notes }
 });
 
 export default store;

@@ -1,9 +1,5 @@
 import { cloneDeep } from 'lodash';
-import { PeakLine } from '../../classes'; // eslint-disable-line no-unused-vars
 
-/**
- * @param  {Array.<PeakLine>} originalLines
- */
 const fillBlankTime = (originalLines) => {
   const lines = cloneDeep(originalLines);
   lines.sort((a, b) => a.startTimeIdx - b.startTimeIdx);
