@@ -2,7 +2,7 @@
 import {
   int7ToUnsignedFloat, int14ToUnsignedFloat, int14ToSignedFloat,
   unsignedFloatToInt7, unsignedFloatToInt14, signedFloatToInt14
-} from '../src/renderer/utils/midi/dataByteUtils';
+} from '../../src/renderer/utils/midi/dataByteUtils';
 import { chain, range, zip } from 'lodash';
 
 const int7s = [
