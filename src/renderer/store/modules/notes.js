@@ -56,7 +56,7 @@ export const actions = {
     }
     const hasInValidModulation = ((m) => m.pitch == null && m.pressure == null && m.timbre == null)(modulation);
     if (hasInValidModulation) {
-      throw new Error('Modulation must have either `pitch`, `pressure`, or `timbre` property');
+      throw new Error('Modulation must have `pitch`, `pressure` or `timbre` property');
     }
     return modulation.offsetTime < 0 ? (
       Object.assign({}, pick(modulation, modulationProperties), { offsetTime: 0 })) : (

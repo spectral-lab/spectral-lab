@@ -46,7 +46,7 @@ export const dataBytesToUint14 = midiDataBytes => {
  * @param {number} input 14-bit integer to be converted.
  * @returns {Array.<number>} [lsb, msb] for a standard MIDI message.
  */
-export const Uint14ToDataBytes = input => {
+export const uint14ToDataBytes = input => {
   const msb = Math.floor(input / 128);
   const lsb = input - msb * 128;
   return [lsb, msb];
@@ -65,13 +65,13 @@ export const int14ToSignedFloat = v => v <= 8192
   : (v - 8192) / 8191;
 
 export const unsignedFloatToInt7 = v => v <= 0.5
-  ? v * 64 / 0.5
-  : (v - 0.5) * 63 / 0.5 + 64;
+  ? Math.round(v * 64 / 0.5)
+  : Math.round((v - 0.5) * 63 / 0.5 + 64);
 
 export const unsignedFloatToInt14 = v => v <= 0.5
-  ? v * 8192 / 0.5
-  : (v - 0.5) * 8191 / 0.5 + 8192;
+  ? Math.round(v * 8192 / 0.5)
+  : Math.round((v - 0.5) * 8191 / 0.5 + 8192);
 
 export const signedFloatToInt14 = v => v <= 0.5
-  ? (v + 1) * 8192
-  : v * 8191 + 8192;
+  ? Math.round((v + 1) * 8192)
+  : Math.round(v * 8191 + 8192);

@@ -2,7 +2,7 @@
 import {
   int7ToUnsignedFloat, int14ToUnsignedFloat, int14ToSignedFloat,
   unsignedFloatToInt7, unsignedFloatToInt14, signedFloatToInt14,
-  Uint14ToDataBytes
+  uint14ToDataBytes
 } from '../../src/renderer/utils/midi/dataByteUtils';
 import { chain, range, zip } from 'lodash';
 
@@ -78,8 +78,8 @@ test('signedFloatToInt14', () => {
   });
 });
 
-test('converts Uint14ToDataBytes', () => {
+test('converts uint14ToDataBytes', () => {
   int14s.forEach(({ int14, dataBytes }) => {
-    expect(Uint14ToDataBytes(int14)).toEqual(dataBytes);
+    expect(uint14ToDataBytes(int14)).toEqual(dataBytes);
   });
 });
