@@ -20,7 +20,7 @@ export const scale7To14Bit = input => {
 /**
  * Converts one or two MIDI data bytes into normalized 14-bit values.
  *
- * @param {Array<number>} midiDataBytes The encoded data from a standard MIDI message.
+ * @param {Array.<number>} midiDataBytes The encoded data from a standard MIDI message.
  * @returns {number} Normalized 14-bit integer representation of the inputs.
  */
 export const dataBytesToUint14 = midiDataBytes => {
@@ -38,6 +38,18 @@ export const dataBytesToUint14 = midiDataBytes => {
     `midiDataToMpeValue takes one or two 8-bit integers.\n` +
     `midiDataToMpeValue(${midiDataBytes}) is invalid.`
   );
+};
+
+/**
+ * Converts 14-bit number into two MIDI data bytes.
+ *
+ * @param {number} input 14-bit integer to be converted.
+ * @returns {Array.<number>} [lsb, msb] for a standard MIDI message.
+ */
+export const Uint14ToDataBytes = input => {
+  const msb = Math.floor(input / 128);
+  const lsb = input - msb * 128;
+  return [lsb, msb];
 };
 
 export const int7ToUnsignedFloat = v => v <= 64

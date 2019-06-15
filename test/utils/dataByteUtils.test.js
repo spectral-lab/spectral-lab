@@ -1,7 +1,8 @@
 // @ts-nocheck
 import {
   int7ToUnsignedFloat, int14ToUnsignedFloat, int14ToSignedFloat,
-  unsignedFloatToInt7, unsignedFloatToInt14, signedFloatToInt14
+  unsignedFloatToInt7, unsignedFloatToInt14, signedFloatToInt14,
+  Uint14ToDataBytes
 } from '../../src/renderer/utils/midi/dataByteUtils';
 import { chain, range, zip } from 'lodash';
 
@@ -12,9 +13,9 @@ const int7s = [
 ];
 
 const int14s = [
-  { int14: 0, unsigned: 0.0, signed: -1.0 },
-  { int14: 16383, unsigned: 1.0, signed: 1.0 },
-  { int14: 8192, unsigned: 0.5, signed: 0.0 }
+  { int14: 0, unsigned: 0.0, signed: -1.0, dataBytes: [0, 0] },
+  { int14: 16383, unsigned: 1.0, signed: 1.0, dataBytes: [127, 127] },
+  { int14: 8192, unsigned: 0.5, signed: 0.0, dataBytes: [0, 64] }
 ];
 
 test('int7ToUnsignedFloat', () => {
@@ -30,6 +31,7 @@ test('int7ToUnsignedFloat', () => {
     .value()
     .every(v => expect(v).toBeCloseTo(0.0078));
 });
+
 test('int14ToUnsignedFloat', () => {
   int14s.forEach(({ int14, unsigned }) => {
     expect(int14ToUnsignedFloat(int14)).toEqual(unsigned);
@@ -43,6 +45,7 @@ test('int14ToUnsignedFloat', () => {
     .value()
     .every(v => expect(v).toBeCloseTo(0.000061));
 });
+
 test('int14ToSignedFloat', () => {
   int14s.forEach(({ int14, signed }) => {
     expect(int14ToSignedFloat(int14)).toEqual(signed);
@@ -56,18 +59,27 @@ test('int14ToSignedFloat', () => {
       .every(v => expect(v).toBeCloseTo(0.00012, 0.00001));
   });
 });
+
 test('unsignedFloatToInt7', () => {
   int7s.forEach(({ int7, unsigned }) => {
     expect(unsignedFloatToInt7(unsigned)).toEqual(int7);
   });
 });
+
 test('unsignedFloatToInt14', () => {
   int14s.forEach(({ int14, unsigned }) => {
     expect(unsignedFloatToInt14(unsigned)).toEqual(int14);
   });
 });
+
 test('signedFloatToInt14', () => {
   int14s.forEach(({ int14, signed }) => {
     expect(signedFloatToInt14(signed)).toEqual(int14);
+  });
+});
+
+test('converts Uint14ToDataBytes', () => {
+  int14s.forEach(({ int14, dataBytes }) => {
+    expect(Uint14ToDataBytes(int14)).toEqual(dataBytes);
   });
 });
