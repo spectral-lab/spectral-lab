@@ -1,13 +1,5 @@
 import MemberChannel from './MemberChannel';
 
-const defaults = {
-  masterChannels: [1],
-  memberChannels: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-  pitchBendRange: 48,
-  nowCb: performance.now,
-  midiOutput: { output: console.log }
-};
-
 class OutputManager {
   /**
    * @param  {object} options
@@ -25,9 +17,12 @@ class OutputManager {
     this.memberChannels = options.memberChannels
       .map(midiChannel => new MemberChannel({ midiChannel, nowCb: this.now }));
   }
-  exec (noteAction) {
+  /**
+   * @param  {NoteOn | Modulation | NoteOff} noteAction
+   */
+  exec (noteAction, timestamp = 0) {
     const midiMessages = this.allocateChannel().deriveMidiMessages(noteAction, { pitchBendRange: this.pitchBendRange });
-    midiMessages.forEach(message => this.midiOutput.send(message));
+    midiMessages.forEach(message => this.midiOutput.send(message, timestamp));
   }
   allocateChannel () {
     const unoccupiedChannels = this.memberChannels.filter(memberChannel => !memberChannel.isOccupied());

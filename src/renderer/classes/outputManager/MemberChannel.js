@@ -31,17 +31,17 @@ class MemberChannel {
     switch (noteAction.type) {
       case NOTE_ON:
         const noteOn = Object.assign({}, defaults.NOTE_ON, noteAction);
-        if (this.isOccupied) {
-          return [...this.buildNoteOffMessages(), ...this.buildNoteOnRelatedMessages(noteOn)];
+        if (this.isOccupied()) {
+          return [...this.buildNoteOffMessages({}), ...this.buildNoteOnRelatedMessages(noteOn)];
         }
         return this.buildNoteOnRelatedMessages(noteOn);
       case MODULATION:
-        if (this.isOccupied) {
+        if (this.isOccupied()) {
           return this.buildModulationMessages(noteAction);
         }
         return [];
       case NOTE_OFF:
-        if (this.isOccupied) {
+        if (this.isOccupied()) {
           return this.buildNoteOffMessages(noteAction);
         }
         return [];
