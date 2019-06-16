@@ -2,7 +2,7 @@
 import {
   int7ToUnsignedFloat, int14ToUnsignedFloat, int14ToSignedFloat,
   unsignedFloatToInt7, unsignedFloatToInt14, signedFloatToInt14,
-  uint14ToDataBytes
+  uint14ToDataBytes, dataBytesToUint14
 } from '../../src/renderer/utils/midi/dataByteUtils';
 import { chain, range, zip } from 'lodash';
 
@@ -17,6 +17,30 @@ const int14s = [
   { int14: 16383, unsigned: 1.0, signed: 1.0, dataBytes: [127, 127] },
   { int14: 8192, unsigned: 0.5, signed: 0.0, dataBytes: [0, 64] }
 ];
+
+describe('dataBytesToUint14', () => {
+  test('with one byte', () => {
+    /* eslint-disable space-infix-ops */
+    expect(dataBytesToUint14([0])).toBe(0);
+    expect(dataBytesToUint14([32])).toBe(32*128);
+    expect(dataBytesToUint14([64])).toBe(64*128);
+    expect(dataBytesToUint14([65])).toBe(65*129);
+    expect(dataBytesToUint14([126])).toBe(126*129);
+    expect(dataBytesToUint14([127])).toBe(16383);
+  });
+  test('with two bytes', () => {
+    expect(dataBytesToUint14([0, 0])).toBe(0);
+    expect(dataBytesToUint14([127, 127])).toBe(16383);
+  });
+  test('with more than two bytes', () => {
+    expect(() => {
+      dataBytesToUint14([120, 40, 29]);
+    }).toThrowError(/midiDataToMpeValue takes one or two 8-bit integers/);
+    expect(() => {
+      dataBytesToUint14(Array(100));
+    }).toThrowError(/midiDataToMpeValue takes one or two 8-bit integers/);
+  });
+});
 
 test('int7ToUnsignedFloat', () => {
   int7s.forEach(({ int7, unsigned }) => {
