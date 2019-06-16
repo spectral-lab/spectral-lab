@@ -11,45 +11,43 @@ class MemberChannel {
   /**
    * @param  {object} param
    * @param  {number} param.midiChannel Integer from 1 to 16
-   * @param  {function} param.nowFn Function to get current time. e.g.`performance.now`
+   * @param  {function} param.nowCb Function to get current time. e.g.`performance.now`
    */
-  constructor ({ midiChannel, nowFn }) {
-    this.nowFn = nowFn;
-    this.timeOfLastNoteOff = nowFn();
+  constructor ({ midiChannel, nowCb }) {
+    this.now = nowCb;
+    this.timeOfLastNoteOff = this.now();
+    this.timeOfLastNoteOn = this.now();
     this.activeNoteOn = null;
     this.midiChannel = midiChannel;
     this.pitchBendRange = 48;
   };
   /**
-   * @param  {NoteOn | Modulation | NoteOff } noteAction
+   * @param  {NoteOn | Modulation | NoteOff} noteAction
    * @param  {object} [options]
    * @param  {number} [options.pitchBendRange] 0 to 96.
    */
-  deriveMidiMessage (noteAction, options = {}) {
+  deriveMidiMessages (noteAction, options = {}) {
     if (options.pitchBendRange != null) this.pitchBendRange = options.pitchBendRange;
     switch (noteAction.type) {
       case NOTE_ON:
         const noteOn = Object.assign({}, defaults.NOTE_ON, noteAction);
         if (this.isOccupied) {
-          return [this.buildNoteOffMessage(), ...this.buildNoteOnRelatedMessages(noteOn)];
+          return [...this.buildNoteOffMessages(), ...this.buildNoteOnRelatedMessages(noteOn)];
         }
         return this.buildNoteOnRelatedMessages(noteOn);
       case MODULATION:
         if (this.isOccupied) {
-          // TODO: force bend option (replace existing note with new one)
-          // TODO
-          return [];
+          return this.buildModulationMessages(noteAction);
         }
         return [];
       case NOTE_OFF:
         if (this.isOccupied) {
-          // TODO
-          return [];
+          return this.buildNoteOffMessages(noteAction);
         }
         return [];
     }
     throw new Error(
-      `deriveMidiMessage(${noteAction}) is invalid.\n` +
+      `deriveMidiMessages(${noteAction}) is invalid.\n` +
       `"type" property must be "NOTE_ON", "MODULATION" or "NOTE_OFF.`
     );
   };
@@ -58,18 +56,17 @@ class MemberChannel {
     return this.activeNoteOn != null;
   }
 
-  buildNoteOffMessage (noteOff = { noteOffVelocity: 0 }) {
+  buildNoteOffMessages (noteOff) {
     const noteOffVelocity = noteOff.noteOffVelocity || 0;
     const ret = noteOffMessage(this.activeNoteOn.noteNumber, noteOffVelocity, this.midiChannel);
-    this.timeOfLastNoteOff = this.nowFn();
+    this.timeOfLastNoteOff = this.now();
     this.activeNoteOn = null;
-    return ret;
+    return [ret];
   };
-  /**
-   * @param  {NoteOn} noteOn
-   */
+
   buildNoteOnRelatedMessages (noteOn) {
     this.activeNoteOn = noteOn;
+    this.timeOfLastNoteOn = this.now();
     return [
       pitchBendMessage(noteOn.pitchBend, this.pitchBendRange, this.midiChannel),
       channelPressureMessage(noteOn.pressure, this.midiChannel),
@@ -77,9 +74,7 @@ class MemberChannel {
       noteOnMessage(noteOn.noteNumber, noteOn.noteOnVelocity, this.midiChannel)
     ];
   }
-  /**
-   * @param  {Modulation} modulation
-   */
+
   buildModulationMessages (modulation) {
     return Object.keys(pick(modulation, [PITCH_BEND, PRESSURE, TIMBRE])).reduce((messages, key) => {
       switch (key) {
