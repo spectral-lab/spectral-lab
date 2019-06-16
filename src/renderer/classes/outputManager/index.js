@@ -1,5 +1,5 @@
 import MemberChannel from './MemberChannel';
-
+import NoteControl from './NoteControl';
 class OutputManager {
   /**
    * @param  {object} options
@@ -18,11 +18,13 @@ class OutputManager {
       .map(midiChannel => new MemberChannel({ midiChannel, nowCb: this.now }));
   }
   /**
-   * @param  {NoteOn | Modulation | NoteOff} noteAction
+   * @param  {NoteOn} noteOn
    */
-  exec (noteAction, timestamp = 0) {
-    const midiMessages = this.allocateChannel().deriveMidiMessages(noteAction, { pitchBendRange: this.pitchBendRange });
+  noteOn (noteOn, timestamp = 0) {
+    const channelToSend = this.allocateChannel();
+    const midiMessages = channelToSend.deriveMidiMessages(noteOn, { pitchBendRange: this.pitchBendRange });
     midiMessages.forEach(message => this.midiOutput.send(message, timestamp));
+    return this.createNoteControl(channelToSend);
   }
   allocateChannel () {
     const unoccupiedChannels = this.memberChannels.filter(memberChannel => !memberChannel.isOccupied());
@@ -37,6 +39,17 @@ class OutputManager {
   }
   findMemberChannel (midiChannel) {
     return this.memberChannels.find(channel => channel.midiChannel === midiChannel);
+  }
+  createNoteControl (memberChannel) {
+    const modulateCb = (modulation, timestamp = 0) => {
+      const midiMessages = memberChannel.deriveMidiMessages(modulation, { pitchBendRange: this.pitchBendRange });
+      midiMessages.forEach(message => this.midiOutput.send(message, timestamp));
+    };
+    const noteOffCb = (noteOff, timestamp = 0) => {
+      const midiMessages = memberChannel.deriveMidiMessages(noteOff, { pitchBendRange: this.pitchBendRange });
+      midiMessages.forEach(message => this.midiOutput.send(message, timestamp));
+    };
+    return new NoteControl(modulateCb, noteOffCb);
   }
 }
 
