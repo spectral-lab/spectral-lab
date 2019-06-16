@@ -68,9 +68,9 @@ class MemberChannel {
     this.activeNoteOn = noteOn;
     this.timeOfLastNoteOn = this.now();
     return [
-      pitchBendMessage(noteOn.pitchBend, this.pitchBendRange, this.midiChannel),
-      channelPressureMessage(noteOn.pressure, this.midiChannel),
       cc74Message(noteOn.timbre, this.midiChannel),
+      channelPressureMessage(noteOn.pressure, this.midiChannel),
+      pitchBendMessage(noteOn.pitchBend, this.pitchBendRange, this.midiChannel),
       noteOnMessage(noteOn.noteNumber, noteOn.noteOnVelocity, this.midiChannel)
     ];
   }

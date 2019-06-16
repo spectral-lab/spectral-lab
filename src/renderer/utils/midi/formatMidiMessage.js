@@ -11,7 +11,7 @@ import { deriveStatusByte } from '../../utils/midi/statusByteUtils';
 export const noteOffMessage = (noteNumber, noteOffVelocity, midiChannel) => [
   deriveStatusByte(NOTE_OFF, midiChannel),
   noteNumber,
-  noteOffVelocity
+  unsignedFloatToInt7(noteOffVelocity)
 ];
 
 /**
@@ -22,7 +22,7 @@ export const noteOffMessage = (noteNumber, noteOffVelocity, midiChannel) => [
 export const noteOnMessage = (noteNumber, noteOnVelocity, midiChannel) => [
   deriveStatusByte(NOTE_ON, midiChannel),
   noteNumber,
-  Math.max(noteOnVelocity, 1)
+  Math.max(unsignedFloatToInt7(noteOnVelocity), 1)
 ];
 
 /**
