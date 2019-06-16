@@ -1,17 +1,17 @@
 // @ts-nocheck
-import { actions, mutations, getters, InitialState } from '../src/renderer/store/modules/notes';
-import * as defaults from '../src/renderer/constants/defaults';
+import { actions, mutations, getters, InitialState } from '../../src/renderer/store/modules/notes';
+import * as defaults from '../../src/renderer/constants/defaults';
 
 const { CREATE_NOTE, MODULATE_NOTE } = actions;
 const { APPEND_NOTE, INSERT_MODULATION } = mutations;
 const { pitchTransition } = getters;
 
-const NOTEON_0 = {time: 0, pitch: 44.5, noteOnVelocity: 0.1};
-const NOTEON_1 = {time: 0.2, pressure: 0.02};
-const MODULATION_0 = {offsetTime: 0.2, pitch: 60};
-const MODULATION_1 = {offsetTime: 0.21, pressure: 0.03, timbre: 0.001};
-const MODULATION_2 = {offsetTime: 0.22, pressure: 0.04, timbre: 0.002};
-const MODULATION_3 = {offsetTime: 0.13, pressure: 0.03, timbre: 0.003};
+const NOTEON_0 = { time: 0, pitch: 44.5, noteOnVelocity: 0.1 };
+const NOTEON_1 = { time: 0.2, pressure: 0.02 };
+const MODULATION_0 = { offsetTime: 0.2, pitch: 60 };
+const MODULATION_1 = { offsetTime: 0.21, pressure: 0.03, timbre: 0.001 };
+const MODULATION_2 = { offsetTime: 0.22, pressure: 0.04, timbre: 0.002 };
+const MODULATION_3 = { offsetTime: 0.13, pressure: 0.03, timbre: 0.003 };
 
 const NOTE_0 = {
   id: 3,
@@ -85,7 +85,7 @@ test('CREATE_NOTE', (done) => {
     done();
   };
   const state = InitialState;
-  CREATE_NOTE({state, commit}, NOTEON_0);
+  CREATE_NOTE({ state, commit }, NOTEON_0);
 });
 
 test('excludes unwanted properties', (done) => {
@@ -98,14 +98,14 @@ test('excludes unwanted properties', (done) => {
     done();
   };
   const state = InitialState;
-  CREATE_NOTE({state, commit}, Object.assign({}, NOTEON_0, {unwanted: 0.5}));
+  CREATE_NOTE({ state, commit }, Object.assign({}, NOTEON_0, { unwanted: 0.5 }));
 });
 
 test('INSERT MODULATION', () => {
   const state = {
-    data: [{...NOTE_0}]
+    data: [{ ...NOTE_0 }]
   };
-  INSERT_MODULATION(state, {id: NOTE_0.id, modulation: MODULATION_0});
+  INSERT_MODULATION(state, { id: NOTE_0.id, modulation: MODULATION_0 });
   expect(state.data[0].modulations).toHaveLength(1);
   expect(state.data[0].modulations[0]).toHaveProperty('offsetTime', MODULATION_0.offsetTime);
   expect(state.data[0].modulations[0]).toHaveProperty('pitch', MODULATION_0.pitch);
@@ -123,16 +123,16 @@ test('INSERT MODULATION in ascending order', () => {
       })
     ]
   };
-  INSERT_MODULATION(state, {id: NOTE_0.id, modulation: {offsetTime: 0.35, pitch: 0.35}});
+  INSERT_MODULATION(state, { id: NOTE_0.id, modulation: { offsetTime: 0.35, pitch: 0.35 } });
   expect(state.data[0].modulations[3]).toHaveProperty('offsetTime', 0.35);
   expect(state.data[0].modulations[3]).toHaveProperty('pitch', 0.35);
-  INSERT_MODULATION(state, {id: NOTE_0.id, modulation: {offsetTime: 0.25, pitch: 0.25}});
+  INSERT_MODULATION(state, { id: NOTE_0.id, modulation: { offsetTime: 0.25, pitch: 0.25 } });
   expect(state.data[0].modulations[2]).toHaveProperty('offsetTime', 0.25);
   expect(state.data[0].modulations[2]).toHaveProperty('pitch', 0.25);
-  INSERT_MODULATION(state, {id: NOTE_0.id, modulation: {offsetTime: 0.15, pitch: 0.15}});
+  INSERT_MODULATION(state, { id: NOTE_0.id, modulation: { offsetTime: 0.15, pitch: 0.15 } });
   expect(state.data[0].modulations[1]).toHaveProperty('offsetTime', 0.15);
   expect(state.data[0].modulations[1]).toHaveProperty('pitch', 0.15);
-  INSERT_MODULATION(state, {id: NOTE_0.id, modulation: {offsetTime: 0.05, pitch: 0.05}});
+  INSERT_MODULATION(state, { id: NOTE_0.id, modulation: { offsetTime: 0.05, pitch: 0.05 } });
   expect(state.data[0].modulations[0]).toHaveProperty('offsetTime', 0.05);
   expect(state.data[0].modulations[0]).toHaveProperty('pitch', 0.05);
 });
@@ -148,7 +148,7 @@ test('MODULATE_NOTE with one modulation', (done) => {
     }
     done();
   };
-  MODULATE_NOTE({ dispatch }, {id: NOTE_0.id, modulation: MODULATION_0});
+  MODULATE_NOTE({ dispatch }, { id: NOTE_0.id, modulation: MODULATION_0 });
 });
 
 test('MODULATE_NOTE with array of modulations', (done) => {
@@ -162,7 +162,7 @@ test('MODULATE_NOTE with array of modulations', (done) => {
     count++;
     if (count === 4) done();
   };
-  MODULATE_NOTE({ dispatch }, {id: NOTE_0.id, modulations: [MODULATION_0, MODULATION_1, MODULATION_2, MODULATION_3]});
+  MODULATE_NOTE({ dispatch }, { id: NOTE_0.id, modulations: [MODULATION_0, MODULATION_1, MODULATION_2, MODULATION_3] });
 });
 
 test('addModulation', (done) => {
@@ -189,22 +189,22 @@ test('addModulation', (done) => {
     }
     if (hasFormatted) done();
   };
-  actions.addModulation({ dispatch, commit }, {id: NOTE_0.id, modulation: MODULATION_0});
+  actions.addModulation({ dispatch, commit }, { id: NOTE_0.id, modulation: MODULATION_0 });
 });
 
 test('formatModulation', async (done) => {
   const state = {
-    data: [{...NOTE_0}]
+    data: [{ ...NOTE_0 }]
   };
-  const formatted0 = await actions.formatModulation({state}, {id: NOTE_0.id, modulation: {time: 0.5, pitch: 60}});
-  expect(formatted0).toEqual({offsetTime: 0.3, pitch: 60});
-  const formatted1 = await actions.formatModulation({state}, {id: NOTE_0.id, modulation: {offsetTime: 0.5, pitch: 60, unwanted: 123}});
-  expect(formatted1).toEqual({offsetTime: 0.5, pitch: 60});
+  const formatted0 = await actions.formatModulation({ state }, { id: NOTE_0.id, modulation: { time: 0.5, pitch: 60 } });
+  expect(formatted0).toEqual({ offsetTime: 0.3, pitch: 60 });
+  const formatted1 = await actions.formatModulation({ state }, { id: NOTE_0.id, modulation: { offsetTime: 0.5, pitch: 60, unwanted: 123 } });
+  expect(formatted1).toEqual({ offsetTime: 0.5, pitch: 60 });
   expect(() => {
-    actions.formatModulation({state}, {id: NOTE_0.id, modulation: {offsetTime: 0.5, unwanted: 60}});
+    actions.formatModulation({ state }, { id: NOTE_0.id, modulation: { offsetTime: 0.5, unwanted: 60 } });
   }).toThrow();
   expect(() => {
-    actions.formatModulation({state}, {id: NOTE_0.id, modulation: {pitch: 60}});
+    actions.formatModulation({ state }, { id: NOTE_0.id, modulation: { pitch: 60 } });
   }).toThrow();
   done();
 });
