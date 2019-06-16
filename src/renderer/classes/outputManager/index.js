@@ -25,16 +25,23 @@ class OutputManager {
     this.memberChannels = options.memberChannels
       .map(midiChannel => new MemberChannel({ midiChannel, nowCb: this.now }));
   }
+  exec (noteAction) {
+    const midiMessages = this.allocateChannel().deriveMidiMessages(noteAction, { pitchBendRange: this.pitchBendRange });
+    midiMessages.forEach(message => this.midiOutput.send(message));
+  }
   allocateChannel () {
     const unoccupiedChannels = this.memberChannels.filter(memberChannel => !memberChannel.isOccupied());
     if (unoccupiedChannels.length === 0) {
-      const channelWithOldestLastNoteOn = unoccupiedChannels
-        .reduce((acc, memberChannel) => memberChannel.timeOfLastNoteOn < acc.timeOfLastNoteOn ? memberChannel : acc, unoccupiedChannels[0]);
+      const channelWithOldestLastNoteOn = this.memberChannels
+        .reduce((acc, memberChannel) => memberChannel.timeOfLastNoteOn < acc.timeOfLastNoteOn ? memberChannel : acc, this.memberChannels[0]);
       return channelWithOldestLastNoteOn;
     }
     const channelWithOldestLastNoteOff = unoccupiedChannels
       .reduce((acc, memberChannel) => memberChannel.timeOfLastNoteOff < acc.timeOfLastNoteOff ? memberChannel : acc, unoccupiedChannels[0]);
     return channelWithOldestLastNoteOff;
+  }
+  findMemberChannel (midiChannel) {
+    return this.memberChannels.find(channel => channel.midiChannel === midiChannel);
   }
 }
 
