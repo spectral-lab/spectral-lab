@@ -1,10 +1,10 @@
 import '../../typedef';
-import { NOTE_ON, MODULATION, NOTE_OFF } from './note-actions';
+import { NOTE_ON, MODULATION, NOTE_OFF } from '../../constants/note-action-types';
 import * as defaults from '../../constants/defaults';
 import {
   noteOffMessage, noteOnMessage, pitchBendMessage, channelPressureMessage, cc74Message
 } from '../../utils/midi/formatMidiMessage';
-import { PITCH_BEND, PRESSURE, TIMBRE } from './modulation-types';
+import { PITCH_BEND, PRESSURE, TIMBRE } from '../../constants/modulation-types';
 import { pick } from 'lodash';
 
 class MemberChannel {
@@ -30,18 +30,18 @@ class MemberChannel {
     if (options.pitchBendRange != null) this.pitchBendRange = options.pitchBendRange;
     switch (noteAction.type) {
       case NOTE_ON:
-        const noteOn = Object.assign({}, defaults.NOTE_ON, noteAction);
-        if (this.isOccupied()) {
+        const noteOn = Object.assign({}, defaults.noteOn, noteAction);
+        if (this.isOccupied) {
           return [...this.buildNoteOffMessages({}), ...this.buildNoteOnRelatedMessages(noteOn)];
         }
         return this.buildNoteOnRelatedMessages(noteOn);
       case MODULATION:
-        if (this.isOccupied()) {
+        if (this.isOccupied) {
           return this.buildModulationMessages(noteAction);
         }
         return [];
       case NOTE_OFF:
-        if (this.isOccupied()) {
+        if (this.isOccupied) {
           return this.buildNoteOffMessages(noteAction);
         }
         return [];
@@ -52,8 +52,8 @@ class MemberChannel {
     );
   };
 
-  isOccupied () {
-    return this.activeNoteOn != null;
+  get isOccupied () {
+    return Boolean(this.activeNoteOn);
   }
 
   buildNoteOffMessages (noteOff) {

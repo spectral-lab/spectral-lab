@@ -27,7 +27,7 @@ class OutputManager {
     return this.createNoteControl(channelToSend);
   }
   allocateChannel () {
-    const unoccupiedChannels = this.memberChannels.filter(memberChannel => !memberChannel.isOccupied());
+    const unoccupiedChannels = this.memberChannels.filter(memberChannel => !memberChannel.isOccupied);
     if (unoccupiedChannels.length === 0) {
       const channelWithOldestLastNoteOn = this.memberChannels
         .reduce((acc, memberChannel) => memberChannel.timeOfLastNoteOn < acc.timeOfLastNoteOn ? memberChannel : acc, this.memberChannels[0]);
