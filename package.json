@@ -79,7 +79,6 @@
     "ndarray-pack": "^1.2.1",
     "ndarray-unpack": "^1.0.0",
     "pngjs": "^3.4.0",
-    "socket.io-client": "^2.2.0",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vuetify": "^1.5.14",
