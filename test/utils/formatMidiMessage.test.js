@@ -15,6 +15,7 @@ test('pitchBendMessage', () => {
 test('pitchBendMessage with pitchBendRange=2', () => {
   const pitchBendRange = 2;
   const channel = 1;
+  console.log('Testing pitch bend which exceeds `pitchBendRange`.\nConsole outputs some warnings.');
   expect(pitchBendMessage(48, pitchBendRange, channel)).toEqual([224, 127, 127]);
   expect(pitchBendMessage(-48, pitchBendRange, channel)).toEqual([224, 0, 0]);
   expect(pitchBendMessage(0, pitchBendRange, channel)).toEqual([224, 0, 64]);
@@ -43,14 +44,14 @@ test('channelPressureMessage', () => {
 test('noteOffMessage', () => {
   const channel = 1;
   expect(noteOffMessage(72, 0, channel)).toEqual([128, 72, 0]);
-  expect(noteOffMessage(42, 30, channel)).toEqual([128, 42, 30]);
-  expect(noteOffMessage(60, 0, channel)).toEqual([128, 60, 0]);
+  expect(noteOffMessage(42, 1, channel)).toEqual([128, 42, 127]);
+  expect(noteOffMessage(60, 0.5, channel)).toEqual([128, 60, 64]);
 });
 
 test('noteOnMessage', () => {
   const channel = 1;
-  expect(noteOnMessage(72, 120, channel)).toEqual([144, 72, 120]);
-  expect(noteOnMessage(42, 30, channel)).toEqual([144, 42, 30]);
-  expect(noteOnMessage(60, 10, channel)).toEqual([144, 60, 10]);
-  expect(noteOnMessage(60, 0, channel)).toEqual([144, 60, 1]);
+  expect(noteOnMessage(72, 1, channel)).toEqual([144, 72, 127]);
+  expect(noteOnMessage(42, 0, channel)).toEqual([144, 42, 1]);
+  expect(noteOnMessage(60, 0.5, channel)).toEqual([144, 60, 64]);
+  expect(noteOnMessage(60, 1, channel)).toEqual([144, 60, 127]);
 });
