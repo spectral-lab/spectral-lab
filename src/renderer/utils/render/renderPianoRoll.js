@@ -15,7 +15,7 @@ const renderPianoRoll = ({ notes, canvas, timeToX, pitchToY, pitchTransition }) 
     ctx.fillStyle = NOTE_COLOR;
     const radius = noteOn.noteOnVelocity * 16;
     ctx.beginPath();
-    ctx.arc(timeToX(noteOn.time), pitchToY(noteOn.pitch), radius, 0, 2 * Math.PI);
+    ctx.arc(timeToX(noteOn.time), pitchToY(noteOn.noteNumber + noteOn.pitchBend), radius, 0, 2 * Math.PI);
     ctx.fill();
   };
   const drawPitchTransition = (transition) => {
