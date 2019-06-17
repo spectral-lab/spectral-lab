@@ -33,7 +33,7 @@ export default {
       mouseMode: MOUSE_MODES.SELECT,
       scale: {
         pixelPerSecond: 100,
-        pixelPerNoteNum: 10
+        pixelPerNoteNum: 7
       }
     };
   },
