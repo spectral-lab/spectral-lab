@@ -10,7 +10,7 @@
           :width="canvasWidth" 
           :height="canvasHeight" 
           :mouseMode="mouseMode" 
-          :scale="scale"
+          :areaToDisplay="areaToDisplay"
         />
       </v-flex>
     </v-layout>
@@ -31,9 +31,13 @@ export default {
       canvasWidth: 300,
       canvasHeight: 150,
       mouseMode: MOUSE_MODES.SELECT,
-      scale: {
-        pixelPerSecond: 100,
-        pixelPerNoteNum: 7
+      areaToDisplay: {
+        upperLeftCorner: {
+          time: 0,
+          pitch: 120
+        },
+        numberOfSeconds: 10,
+        numberOfNoteNumbers: 100
       }
     };
   },

@@ -1,7 +1,9 @@
 import { NOTE_COLOR } from '../../constants/colors';
+import '../../typedef';
+
 /**
  * @param  {object} param
- * @param  {any} param.notes notes module of store
+ * @param  {Array.<Note>} param.notes
  * @param  {HTMLCanvasElement} param.canvas
  * @param  {function} param.timeToX
  * @param  {function} param.pitchToY
@@ -33,7 +35,7 @@ const renderPianoRoll = ({ notes, canvas, timeToX, pitchToY, pitchTransition }) 
     });
     ctx.stroke();
   };
-  notes.data.forEach(note => {
+  notes.forEach(note => {
     drawNoteOn(note.noteOn);
     drawPitchTransition(pitchTransition(note.id));
   });
