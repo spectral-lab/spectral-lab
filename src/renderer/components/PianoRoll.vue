@@ -21,9 +21,13 @@ export default {
     width: Number,
     height: Number,
     mouseMode: String,
-    scale: {
-      pixelPerSecond: Number,
-      pixelPerNoteNum: Number
+    areaToDisplay: {
+      upperLeftCorner: {
+        time: Number,
+        pitch: Number
+      },
+      numberOfSeconds: Number,
+      numberOfNoteNumbers: Number
     }
   },
   data () {
@@ -38,7 +42,13 @@ export default {
       return this.drawingNoteId !== null;
     },
     notes () {
-      return this.$store.state.notes;
+      return this.$store.getters.notes;
+    },
+    pixelPerSecond () {
+      return this.width / this.areaToDisplay.numberOfSeconds;
+    },
+    pixelPerNoteNumer () {
+      return this.height / this.areaToDisplay.numberOfNoteNumbers;
     }
   },
   created () {
@@ -53,7 +63,7 @@ export default {
     this.$store.watch(
       (state) => state.notes,
       (newNotes) => {
-        this.render(newNotes);
+        this.render(newNotes.data);
       },
       { deep: true }
     );
@@ -95,16 +105,16 @@ export default {
       }
     },
     xToTime (x) {
-      return x / this.scale.pixelPerSecond;
+      return this.areaToDisplay.upperLeftCorner.time + x / this.pixelPerSecond;
     },
     timeToX (time) {
-      return time * this.scale.pixelPerSecond;
+      return (time - this.areaToDisplay.upperLeftCorner.time) * this.pixelPerSecond;
     },
     yToPitch (y) {
-      return (this.height - y) / this.scale.pixelPerNoteNum;
+      return this.areaToDisplay.upperLeftCorner.pitch - y / this.pixelPerNoteNumer;
     },
     pitchToY (pitch) {
-      return this.height - pitch * this.scale.pixelPerNoteNum;
+      return (this.areaToDisplay.upperLeftCorner.pitch - pitch) * this.pixelPerNoteNumer;
     },
     pitchTransition (id) {
       return this.$store.getters.pitchTransition(id);
