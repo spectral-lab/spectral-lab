@@ -1,3 +1,5 @@
+import '../../typedef';
+
 class NoteControl {
   constructor (modulateCb, noteOffCb) {
     this.released = false;

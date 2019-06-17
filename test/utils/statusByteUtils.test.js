@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { NOTE_ON, NOTE_OFF, PITCH_BEND, CONTROL_CHANGE, CHANNEL_PRESSURE } from '../../src/renderer/utils/midi/midi-message-types';
+import { NOTE_ON, NOTE_OFF, PITCH_BEND, CONTROL_CHANGE, CHANNEL_PRESSURE } from '../../src/renderer/constants/midi-message-types';
 import { deriveStatusByte } from '../../src/renderer/utils/midi/statusByteUtils';
 
 test('deriveStatusByte', () => {
