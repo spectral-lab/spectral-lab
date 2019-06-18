@@ -1,3 +1,10 @@
 {
-  "python.pythonPath": "static/server/venv/bin/python3"
+  "python.pythonPath": "static/server/venv/bin/python3",
+  "eslint.validate": [
+    {
+      "language": "vue",
+      "autoFix": true
+    }
+  ],
+  "vetur.format.defaultFormatter.js": "none",
 }

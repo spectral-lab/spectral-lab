@@ -10,12 +10,11 @@
             </v-layout>
             <v-layout row align-center>
               <v-flex>
-                <icon-btn-with-tip @click="buildSpectrogram" icon="build" tip="Build a spectrogram of the source audio." />
-              </v-flex>
-              <v-flex>
-                <v-btn fab color="primary" class="elevation-0">
-                  <v-icon>delete_forever</v-icon>
-                </v-btn>
+                <icon-btn-with-tip
+                  @click="buildSpectrogram"
+                  icon="build"
+                  tip="Build a spectrogram of the source audio."
+                />
               </v-flex>
             </v-layout>
           </v-layout>
@@ -39,9 +38,17 @@
               </v-btn-toggle>
             </v-flex>
             <v-flex>
-              <v-btn fab color="primary" class="elevation-0">
-                <v-icon>fa-flask</v-icon>
-              </v-btn>
+              <icon-btn-with-tip
+                @click="extractNotes"
+                icon="fa-flask"
+                tip="Extract notes from spectrogram"
+              />
+            </v-flex>
+            <v-flex>
+              <icon-btn-with-tip
+                icon="delete"
+                tip="Delete note (under construction)"
+              />
             </v-flex>
           </v-layout>
         </v-layout>
@@ -55,6 +62,9 @@ import IconBtnWithTip from './IconBtnWithTip';
 import { stft, resample } from '../utils/audio';
 import { SET_SPECTROGRAM } from '../store/mutation-types';
 import * as MOUSE_MODES from '../constants/mouse-modes';
+import { makePNGBuffer, postImage, parsePointAsNoteOn, parsePointAsModulation }
+  from '../utils/helpers/postImageUtils';
+import { CREATE_NOTE, MODULATE_NOTE } from '../store/action-types';
 
 export default {
   components: {
@@ -78,6 +88,23 @@ export default {
           this.$emit('mousemode', MOUSE_MODES.PEN);
           break;
       }
+    },
+    async extractNotes () {
+      const { spectrogram } = this.$store.state;
+      if (spectrogram.times.length === 0) return;
+      const buff = makePNGBuffer(spectrogram.magnitude2d);
+      const extractedLines = await postImage(buff, { sensitivity: 5, degree: 6 });
+      extractedLines.forEach(async (line) => {
+        const noteId = await this.$store.dispatch(
+          CREATE_NOTE,
+          parsePointAsNoteOn(line[0], spectrogram)
+        );
+        const modulationPoints = line.slice(1);
+        modulationPoints.forEach(point => {
+          const modulation = parsePointAsModulation(point, spectrogram);
+          this.$store.dispatch(MODULATE_NOTE, { modulation, id: noteId });
+        });
+      });
     }
   }
 };

@@ -36,7 +36,7 @@ export default {
           time: 0,
           pitch: 120
         },
-        numberOfSeconds: 10,
+        numberOfSeconds: 5,
         numberOfNoteNumbers: 100
       }
     };

@@ -14,7 +14,7 @@ export default {
    * @param  {object} commit
    * @param  {object} materials either (time and pitch) or (time and noteNumber) is necessary
    * @example
-   * const noteId = this.$store.dispatch('CREATE_NOTE', {
+   * const noteId = await this.$store.dispatch('CREATE_NOTE', {
    *   time: 0.2,
    *   noteNumber: 60,
    *   pitchBend: 0.6,
@@ -25,7 +25,7 @@ export default {
    *
    * // or
    *
-   * const noteId = this.$store.dispatch('CREATE_NOTE', {
+   * const noteId = await this.$store.dispatch('CREATE_NOTE', {
    *   time: 0.2,
    *   // `pitch` property will be converted to `noteNumber` + `pitchBend`
    *   pitch: 60.6
@@ -44,7 +44,7 @@ export default {
    * @param  {number} payload.id ID of target note to modulate
    * @param  {object} payload.modulation
    * @example
-   * const noteId = this.$store.dispatch('CREATE_NOTE', {time: 0.2, pitch: 60.6});
+   * const noteId = await this.$store.dispatch('CREATE_NOTE', {time: 0.2, pitch: 60.6});
    * this.$store.dispatch('MODULATE_NOTE', {
    *   id: noteId,
    *   modulation: {
@@ -54,7 +54,7 @@ export default {
    * });
    *
    * // or
-   * const noteId = this.$store.dispatch('CREATE_NOTE', {time: 0.2, pitch: 60.6});
+   * const noteId = await this.$store.dispatch('CREATE_NOTE', {time: 0.2, pitch: 60.6});
    * this.$store.dispatch('MODULATE_NOTE', {
    *   id: noteId,
    *   modulation: {
@@ -67,6 +67,7 @@ export default {
     const formatted = await dispatch('formatModulation', { modulation, id });
     commit(INSERT_MODULATION, { id, modulation: formatted });
   },
+  // Lowercase actions should not be dispatched from the outside of this module
   formatModulation ({ state }, { modulation, id }) {
     const _modulation = Object.assign({}, modulation);
     _modulation.type = noteActionTypes.MODULATION;
