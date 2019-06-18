@@ -1,4 +1,4 @@
-import { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF } from '../../mutation-types';
+import { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF, DELETE_NOTE } from '../../mutation-types';
 import { findLastIndex } from 'lodash';
 
 const insert = (n, ins, arr) => [...arr.slice(0, n), ins, ...arr.slice(n)];
@@ -18,5 +18,8 @@ export default {
   [SET_NOTE_OFF] (state, { id, noteOff }) {
     const targetNote = state.data.find(note => note.id === id);
     targetNote.noteOff = { ...noteOff };
+  },
+  [DELETE_NOTE] (state, id) {
+    state.data = state.data.filter(note => note.id !== id);
   }
 };
