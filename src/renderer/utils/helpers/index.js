@@ -3,7 +3,6 @@ import ftom from './ftom';
 import playAudioBuffer from './playAudioBuffer';
 import fillBlankTime from './fillBlankTime';
 import normalizeMagnitude from './normalizeMagnitude';
-import makePNGBuffer from './makePNGBuffer';
 import decibelCurve from './decibelCurve';
 
 export {
@@ -12,6 +11,5 @@ export {
   playAudioBuffer,
   fillBlankTime,
   normalizeMagnitude,
-  makePNGBuffer,
   decibelCurve
 };
