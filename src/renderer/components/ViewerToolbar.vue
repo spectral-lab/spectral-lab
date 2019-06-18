@@ -62,9 +62,11 @@ import IconBtnWithTip from './IconBtnWithTip';
 import { stft, resample } from '../utils/audio';
 import { SET_SPECTROGRAM } from '../store/mutation-types';
 import * as MOUSE_MODES from '../constants/mouse-modes';
-import { makePNGBuffer, postImage, parsePointAsNoteOn, parsePointAsModulation }
-  from '../utils/helpers/postImageUtils';
-import { CREATE_NOTE, MODULATE_NOTE } from '../store/action-types';
+import {
+  makePNGBuffer, postImage,
+  parsePointAsNoteOn, parsePointAsModulation, parsePointAsNoteOff
+} from '../utils/helpers/postImageUtils';
+import { CREATE_NOTE, MODULATE_NOTE, RELEASE_NOTE } from '../store/action-types';
 
 export default {
   components: {
@@ -99,10 +101,14 @@ export default {
           CREATE_NOTE,
           parsePointAsNoteOn(line[0], spectrogram)
         );
-        const modulationPoints = line.slice(1);
+        const modulationPoints = line.slice(1, -1);
         modulationPoints.forEach(point => {
           const modulation = parsePointAsModulation(point, spectrogram);
           this.$store.dispatch(MODULATE_NOTE, { modulation, id: noteId });
+        });
+        this.$store.dispatch(RELEASE_NOTE, {
+          noteOff: parsePointAsNoteOff(line[line.length - 1], spectrogram),
+          id: noteId
         });
       });
     }
