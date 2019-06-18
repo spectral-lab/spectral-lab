@@ -1,6 +1,7 @@
 {
   "python.pythonPath": "static/server/venv/bin/python3",
   "eslint.validate": [
+    "javascript",
     {
       "language": "vue",
       "autoFix": true

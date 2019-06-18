@@ -13,7 +13,7 @@
 <script>
 import { renderPianoRoll } from '../utils/render';
 import * as MOUSE_MODES from '../constants/mouse-modes';
-import { CREATE_NOTE, MODULATE_NOTE } from '../store/action-types';
+import { CREATE_NOTE, MODULATE_NOTE, RELEASE_NOTE } from '../store/action-types';
 import { RERENDER } from '../constants/events';
 
 export default {
@@ -87,9 +87,6 @@ export default {
         this.latestX = layerX;
       }
     },
-    handleMouseup (e) {
-      this.drawingNoteId = null;
-    },
     handleMousemove ({ layerX, layerY }) {
       if (this.isDrawing) {
         const x = Math.max(layerX, this.latestX);
@@ -103,6 +100,19 @@ export default {
         });
         this.latestX = x;
       }
+    },
+    handleMouseup ({ layerX }) {
+      if (this.isDrawing) {
+        const x = Math.max(layerX, this.latestX);
+        this.$store.dispatch(RELEASE_NOTE, {
+          id: this.drawingNoteId,
+          noteOff: {
+            time: this.xToTime(x)
+          }
+        });
+        this.latestX = x;
+      }
+      this.drawingNoteId = null;
     },
     xToTime (x) {
       return this.areaToDisplay.upperLeftCorner.time + x / this.pixelPerSecond;

@@ -71,6 +71,7 @@ export default {
         note.modulations.forEach(modulation => {
           noteControl.modulate(Object.assign({}, modulation), window.performance.now() + (noteOn.time + modulation.offsetTime) * 1000);
         });
+        noteControl.noteOff(Object.assign({}, note.noteOff), window.performance.now() + (noteOn.time + note.noteOff.offsetTime) * 1000);
       });
     }
   }

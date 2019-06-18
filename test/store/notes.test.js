@@ -2,8 +2,8 @@
 import { actions, mutations, getters, InitialState } from '../../src/renderer/store/modules/notes';
 import * as defaults from '../../src/renderer/constants/defaults';
 
-const { CREATE_NOTE, MODULATE_NOTE } = actions;
-const { APPEND_NOTE, INSERT_MODULATION } = mutations;
+const { CREATE_NOTE, MODULATE_NOTE, RELEASE_NOTE } = actions;
+const { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF } = mutations;
 const { pitchTransition } = getters;
 
 const MATERIALS_0 = { time: 0, pitch: 44.5, noteOnVelocity: 0.1 };
@@ -70,6 +70,15 @@ describe('commits mutations', () => {
     INSERT_MODULATION(state, { id: NOTE_0.id, modulation: { offsetTime: 0.05, pitch: 0.05 } });
     expect(state.data[0].modulations[0]).toHaveProperty('offsetTime', 0.05);
     expect(state.data[0].modulations[0]).toHaveProperty('pitch', 0.05);
+  });
+
+  test('SET_NOTE_OFF', () => {
+    const state = {
+      data: [{ ...NOTE_0 }]
+    };
+    SET_NOTE_OFF(state, { id: NOTE_0.id, noteOff: { offsetTime: 0.2, noteOffVelocity: 0.5 } });
+    expect(state.data[0].noteOff).toHaveProperty('offsetTime', 0.2);
+    expect(state.data[0].noteOff).toHaveProperty('noteOffVelocity', 0.5);
   });
 });
 
@@ -143,47 +152,75 @@ describe('dispatches actions', () => {
   });
 
   test('MODULATE_NOTE', (done) => {
-    let hasFormatted = false;
-    const formattedModulation = { offsetTime: 0.1, pitch: 144 };
-    const dispatch = (type, { id, modulation }) => {
-      try {
-        expect(type).toBe('formatModulation');
-        expect(modulation).toHaveProperty('time', MODULATION_0.time);
-        expect(modulation).toHaveProperty('pitch', MODULATION_0.pitch);
-      } catch (err) {
-        done(err);
-      }
-      hasFormatted = true;
-      return formattedModulation;
-    };
-    const commit = (type, { id, modulation }) => {
-      try {
-        expect(type).toBe('INSERT_MODULATION');
-        expect(modulation).toHaveProperty('offsetTime', formattedModulation.offsetTime);
-        expect(modulation).toHaveProperty('pitch', formattedModulation.pitch);
-      } catch (err) {
-        done(err);
-      }
-      if (hasFormatted) done();
-    };
-    MODULATE_NOTE({ dispatch, commit }, { id: NOTE_0.id, modulation: MODULATION_0 });
-  });
-
-  test('formatModulation', async (done) => {
     const state = {
       data: [{ ...NOTE_0 }]
     };
-    const formatted0 = await actions.formatModulation({ state }, { id: NOTE_0.id, modulation: { time: 0.5, pitch: 60 } });
-    expect(formatted0).toEqual({ type: 'MODULATION', offsetTime: 0.3, pitchBend: 0 });
-    const formatted1 = await actions.formatModulation({ state }, { id: NOTE_0.id, modulation: { offsetTime: 0.5, pitch: 60, unwanted: 123 } });
-    expect(formatted1).toEqual({ type: 'MODULATION', offsetTime: 0.5, pitchBend: 0 });
-    expect(() => {
-      actions.formatModulation({ state }, { id: NOTE_0.id, modulation: { offsetTime: 0.5, unwanted: 60 } });
-    }).toThrow();
-    expect(() => {
-      actions.formatModulation({ state }, { id: NOTE_0.id, modulation: { pitch: 60 } });
-    }).toThrow();
-    done();
+    const expectedMod = { type: 'MODULATION', offsetTime: 0.2, pitchBend: 0.5 };
+    const commit = (type, { id, modulation }) => {
+      try {
+        expect(type).toBe('INSERT_MODULATION');
+        expect(id).toBe(NOTE_0.id);
+        expect(modulation).toEqual(expectedMod);
+      } catch (err) {
+        done(err);
+      }
+      done();
+    };
+    MODULATE_NOTE({ state, commit }, { id: NOTE_0.id, modulation: { pitchBend: 0.5, offsetTime: 0.2 } });
+  });
+
+  test('MODULATE_NOTE with shorthand', (done) => {
+    const state = {
+      data: [{ ...NOTE_0 }]
+    };
+    const expectedMod = { type: 'MODULATION', offsetTime: 2, pitchBend: 2 };
+    const commit = (type, { id, modulation }) => {
+      try {
+        expect(type).toBe('INSERT_MODULATION');
+        expect(id).toBe(NOTE_0.id);
+        expect(modulation).toEqual(expectedMod);
+      } catch (err) {
+        done(err);
+      }
+      done();
+    };
+    MODULATE_NOTE({ state, commit }, { id: NOTE_0.id, modulation: { pitch: 62, time: 2.2 } });
+  });
+
+  test('RELEASE_NOTE', (done) => {
+    const state = {
+      data: [{ ...NOTE_0 }]
+    };
+    const expectedNoteOff = { type: 'NOTE_OFF', offsetTime: 0.2, noteOffVelocity: 0.5 };
+    const commit = (type, { id, noteOff }) => {
+      try {
+        expect(type).toBe('SET_NOTE_OFF');
+        expect(id).toBe(NOTE_0.id);
+        expect(noteOff).toEqual(expectedNoteOff);
+      } catch (err) {
+        done(err);
+      }
+      done();
+    };
+    RELEASE_NOTE({ state, commit }, { id: NOTE_0.id, noteOff: { offsetTime: 0.2, noteOffVelocity: 0.5 } });
+  });
+
+  test('RELEASE_NOTE with shorthand', (done) => {
+    const state = {
+      data: [{ ...NOTE_0 }]
+    };
+    const expectedNoteOff = { type: 'NOTE_OFF', offsetTime: 2, noteOffVelocity: 0 };
+    const commit = (type, { id, noteOff }) => {
+      try {
+        expect(type).toBe('SET_NOTE_OFF');
+        expect(id).toBe(NOTE_0.id);
+        expect(noteOff).toEqual(expectedNoteOff);
+      } catch (err) {
+        done(err);
+      }
+      done();
+    };
+    RELEASE_NOTE({ state, commit }, { id: NOTE_0.id, noteOff: { time: 2.2 } });
   });
 });
 
