@@ -3,7 +3,7 @@ import { actions, mutations, getters, InitialState } from '../../src/renderer/st
 import * as defaults from '../../src/renderer/constants/defaults';
 
 const { CREATE_NOTE, MODULATE_NOTE, RELEASE_NOTE } = actions;
-const { APPEND_NOTE, INSERT_MODULATION } = mutations;
+const { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF } = mutations;
 const { pitchTransition } = getters;
 
 const MATERIALS_0 = { time: 0, pitch: 44.5, noteOnVelocity: 0.1 };
@@ -70,6 +70,15 @@ describe('commits mutations', () => {
     INSERT_MODULATION(state, { id: NOTE_0.id, modulation: { offsetTime: 0.05, pitch: 0.05 } });
     expect(state.data[0].modulations[0]).toHaveProperty('offsetTime', 0.05);
     expect(state.data[0].modulations[0]).toHaveProperty('pitch', 0.05);
+  });
+
+  test('SET_NOTE_OFF', () => {
+    const state = {
+      data: [{ ...NOTE_0 }]
+    };
+    SET_NOTE_OFF(state, { id: NOTE_0.id, noteOff: { offsetTime: 0.2, noteOffVelocity: 0.5 } });
+    expect(state.data[0].noteOff).toHaveProperty('offsetTime', 0.2);
+    expect(state.data[0].noteOff).toHaveProperty('noteOffVelocity', 0.5);
   });
 });
 
@@ -185,7 +194,7 @@ describe('dispatches actions', () => {
     const expectedNoteOff = { type: 'NOTE_OFF', offsetTime: 0.2, noteOffVelocity: 0.5 };
     const commit = (type, { id, noteOff }) => {
       try {
-        expect(type).toBe('INSERT_NOTE_OFF');
+        expect(type).toBe('SET_NOTE_OFF');
         expect(id).toBe(NOTE_0.id);
         expect(noteOff).toEqual(expectedNoteOff);
       } catch (err) {
@@ -203,7 +212,7 @@ describe('dispatches actions', () => {
     const expectedNoteOff = { type: 'NOTE_OFF', offsetTime: 2, noteOffVelocity: 0 };
     const commit = (type, { id, noteOff }) => {
       try {
-        expect(type).toBe('INSERT_NOTE_OFF');
+        expect(type).toBe('SET_NOTE_OFF');
         expect(id).toBe(NOTE_0.id);
         expect(noteOff).toEqual(expectedNoteOff);
       } catch (err) {

@@ -1,5 +1,5 @@
 import { CREATE_NOTE, MODULATE_NOTE, RELEASE_NOTE } from '../../action-types';
-import { APPEND_NOTE, INSERT_MODULATION, INSERT_NOTE_OFF } from '../../mutation-types';
+import { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF } from '../../mutation-types';
 import NoteFactory from '../../../classes/NoteFactory';
 import '../../../typedef';
 import { formatModulation, formatNoteOff } from '../../../utils/helpers/formatNoteAction';
@@ -90,6 +90,6 @@ export default {
   [RELEASE_NOTE] ({ state, commit }, { id, noteOff }) {
     const targetNote = state.data.find(note => note.id === id);
     const formatted = formatNoteOff({ noteOff, targetNote });
-    commit(INSERT_NOTE_OFF, { id, noteOff: formatted });
+    commit(SET_NOTE_OFF, { id, noteOff: formatted });
   }
 };
