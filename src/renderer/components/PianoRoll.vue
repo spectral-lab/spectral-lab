@@ -107,7 +107,8 @@ export default {
         this.$store.dispatch(RELEASE_NOTE, {
           id: this.drawingNoteId,
           noteOff: {
-            time: this.xToTime(x)
+            // shift time by 5ms to avoid overlapping with preceding modulation.
+            time: this.xToTime(x) + 5 / 1e3
           }
         });
         this.latestX = x;
