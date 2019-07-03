@@ -1,10 +1,8 @@
-import fs from 'fs';
+import fs from 'fs-extra';
 import path from 'path';
 
 const copyServerFiles = (dest) => {
-  if (!fs.existsSync(dest)) {
-    fs.mkdirSync(dest);
-  }
+  fs.ensureDirSync(dest);
   fs.copyFileSync(path.join(__static, '/server/app.py'), path.join(dest, 'app.py'));
   copyFolderRecursiveSync(path.join(__static, '/server/venv'), dest);
   copyFolderRecursiveSync(path.join(__static, '/server/modules'), dest);

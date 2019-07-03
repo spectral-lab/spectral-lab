@@ -2,12 +2,14 @@ import { spawn, spawnSync } from 'child_process';
 import path from 'path';
 import { app } from 'electron';
 import copyServerFiles from './copyServerFiles';
+import fs from 'fs-extra';
 
 const launchServer = () => {
   return new Promise((resolve) => {
     const dest = path.join(app.getPath('userData'), '/server');
-    copyServerFiles(dest);
-
+    if (!fs.existsSync(dest)) {
+      copyServerFiles(dest);
+    };
     spawnSync('chmod', ['-R', 'a+rwx', path.join(dest, '/venv/bin/python3')]);
     const serverProcess = spawn(path.join(dest, '/venv/bin/python3'), [path.join(dest, '/app.py')]);
     serverProcess.stdout.on('data', (data) => {
