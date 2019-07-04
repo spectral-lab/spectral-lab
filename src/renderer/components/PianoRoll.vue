@@ -28,16 +28,29 @@ export default {
   },
   watch: {
     pixelPerSecond () {
-      this.scrollBox.children.forEach(note => {
-        note.children.forEach(noteAction => {
-          noteAction.x = timeToX(10, this.pixelPerSecond);
+      this.scrollBox.children.forEach(noteContainer => {
+        console.log(noteContainer);
+        const transition = this.$store.getters.pitchTransition(noteContainer.noteId);
+        noteContainer.children.forEach((noteAction, idx) => {
+          if (transition.length <= idx) {
+            console.warn(`idx ${idx} exceeds transition length`);
+            return;
+          }
+          const { time } = transition[idx];
+          noteAction.x = timeToX(time, this.pixelPerSecond);
         });
       });
     },
     pixelPerNoteNumber () {
-      this.scrollBox.children.forEach(note => {
-        note.children.forEach(noteAction => {
-          noteAction.y = pitchToY(10, this.pixelPerNoteNumber);
+      this.scrollBox.children.forEach(noteContainer => {
+        const transition = this.$store.getters.pitchTransition(noteContainer.noteId);
+        noteContainer.children.forEach((noteAction, idx) => {
+          if (transition.length <= idx) {
+            console.warn(`idx ${idx} exceeds transition length`);
+            return;
+          };
+          const { pitch } = transition[idx];
+          noteAction.y = pitchToY(pitch, this.pixelPerNoteNumber);
         });
       });
     }
@@ -47,7 +60,7 @@ export default {
     this.initScrollBox();
     this.initKeyboard();
     this.subscribeNotes();
-    this.drawPoleStar();
+    // this.drawPoleStar();
   },
   methods: {
     initApp () {
@@ -135,15 +148,15 @@ export default {
     removeNote (noteId) {
       this.scrollBox.removeChild(this.getContainerByNoteId(noteId));
     },
+    getContainerByNoteId (noteId) {
+      return this.scrollBox.children.find(noteContainer => noteContainer.noteId === noteId);
+    },
     drawPoleStar () {
       const poleStar = new PIXI.Graphics();
       this.scrollBox.addChild(poleStar);
       poleStar.beginFill(0xFFFFFF);
       poleStar.drawStar(0, 0, 5, 10);
       poleStar.endFill();
-    },
-    getContainerByNoteId (noteId) {
-      return this.scrollBox.children.find(noteContainer => noteContainer.noteId === noteId);
     }
   }
 };
