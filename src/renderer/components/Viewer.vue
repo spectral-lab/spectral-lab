@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { renderSpectrogram } from '../utils/render';
+import { renderSpectrogram } from '../modules/render';
 import { debounce } from 'lodash';
 import ViewerToolbar from './ViewerToolbar.vue';
 import PianoRoll from './PianoRoll.vue';

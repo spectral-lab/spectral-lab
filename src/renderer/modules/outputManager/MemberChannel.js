@@ -3,7 +3,7 @@ import { NOTE_ON, MODULATION, NOTE_OFF } from '../../constants/note-action-types
 import * as defaults from '../../constants/defaults';
 import {
   noteOffMessage, noteOnMessage, pitchBendMessage, channelPressureMessage, cc74Message
-} from '../../utils/midi/formatMidiMessage';
+} from '../midi/formatMidiMessage';
 import { PITCH_BEND, PRESSURE, TIMBRE } from '../../constants/modulation-types';
 import { pick } from 'lodash';
 

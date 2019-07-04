@@ -1,8 +1,8 @@
 import { CREATE_NOTE, MODULATE_NOTE, RELEASE_NOTE, DELETE_ALL_NOTES } from '../../action-types';
 import { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF, DELETE_NOTE } from '../../mutation-types';
-import NoteFactory from '../../../classes/NoteFactory';
+import NoteFactory from '../../../modules/NoteFactory';
 import '../../../typedef';
-import { formatModulation, formatNoteOff } from '../../../utils/helpers/formatNoteAction';
+import { formatModulation, formatNoteOff } from '../../../modules/helpers/formatNoteAction';
 
 const noteFactory = new NoteFactory();
 

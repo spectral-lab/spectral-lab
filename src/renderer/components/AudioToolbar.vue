@@ -14,7 +14,7 @@
 <script>
 import UploadButton from 'vuetify-upload-button';
 import { ACCEPT_AUDIO } from '../store/action-types';
-import { playAudioBuffer } from '../utils/helpers';
+import { playAudioBuffer } from '../modules/helpers';
 import path from 'path';
 
 export default {

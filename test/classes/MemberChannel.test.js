@@ -1,5 +1,5 @@
 // @ts-nocheck
-import MemberChannel from '../../src/renderer/classes/outputManager/MemberChannel';
+import MemberChannel from '../../src/renderer/modules/outputManager/MemberChannel';
 
 const noteOn = {
   pitchBend: 0,
