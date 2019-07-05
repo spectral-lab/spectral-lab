@@ -7,7 +7,7 @@
           <v-layout column>
             <audio-toolbar />
             <v-flex>
-              <viewer />
+              <piano-roll />
             </v-flex>
           </v-layout>
         </v-container>
@@ -19,7 +19,7 @@
 
 <script>
 import store from './store';
-import Viewer from './components/Viewer.vue';
+import PianoRoll from './components/PianoRoll';
 import AudioToolbar from './components/AudioToolbar.vue';
 import Transport from './components/Transport';
 import TrackList from './components/TrackList';
@@ -29,7 +29,7 @@ export default {
   name: 'app',
   store,
   components: {
-    Viewer,
+    PianoRoll,
     AudioToolbar,
     Transport,
     TrackList,

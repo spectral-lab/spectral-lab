@@ -29,7 +29,7 @@ export default {
       if (p === '') return 'no source audio';
       return path.basename(p);
     },
-    icon: function () {
+    icon () {
       if (this.sourceNode != null) return 'stop';
       return 'play_arrow';
     }
