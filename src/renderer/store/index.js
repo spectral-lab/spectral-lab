@@ -5,6 +5,7 @@ import actions from './actions';
 import notes from './modules/notes';
 import createLogger from 'vuex/dist/logger';
 import { INSERT_MODULATION, SET_NOTE_OFF } from './mutation-types';
+import { bpm, tpb } from '../constants/defaults';
 
 Vue.use(Vuex);
 const InitialState = {
@@ -24,7 +25,9 @@ const InitialState = {
     times: [],
     freqs: [],
     magnitude2d: [[]]
-  }
+  },
+  bpm,
+  tpb
 };
 const logger = createLogger({
   filter (mutation) {

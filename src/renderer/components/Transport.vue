@@ -19,7 +19,7 @@
 
 <script>
 import OutputManager from '../modules/outputManager';
-import { range } from 'lodash';
+import * as defaults from '../constants/defaults';
 
 export default {
   data: function () {
@@ -31,6 +31,12 @@ export default {
   computed: {
     playButtonColor () {
       return this.isPlaying ? 'success' : 'white';
+    },
+    bpm () {
+      return this.$store.state.bpm;
+    },
+    tpb () {
+      return this.$store.state.tpb;
     }
   },
   mounted () {
@@ -49,30 +55,20 @@ export default {
       // release velocity = 64, timestamp = now + 1000ms.
     },
     playNotes () {
-      const outputManager = new OutputManager({
-        midiOutput: this.midiOutput,
-        // midiOutput: {
-        //   send: (midiMessage, timestamp) => {
-        //     setTimeout(() => {
-        //       console.log(midiMessage);
-        //     });
-        //     this.midiOutput.send(midiMessage, timestamp);
-        //   }
-        // },
-        pitchBendRange: 48,
-        nowCb: () => window.performance.now(),
-        memberChannels: range(2, 17),
-        masterChannels: [1]
-      });
+      const options = Object.assign({}, defaults.outputManagerOptions, { midiOutput: this.midiOutput });
+      const outputManager = new OutputManager(options);
       const notes = this.$store.getters.notes;
       notes.forEach((note) => {
-        const noteOn = Object.assign({}, note.noteOn);
-        const noteControl = outputManager.noteOn(noteOn, window.performance.now() + noteOn.time * 1000);
+        const noteControl = outputManager.noteOn(note.noteOn, window.performance.now() + this.tickToMs(note.noteOn.time));
         note.modulations.forEach(modulation => {
-          noteControl.modulate(Object.assign({}, modulation), window.performance.now() + (noteOn.time + modulation.offsetTime) * 1000);
+          noteControl.modulate(modulation, window.performance.now() + this.tickToMs(note.noteOn.time + modulation.offsetTime));
         });
-        noteControl.noteOff(Object.assign({}, note.noteOff), window.performance.now() + (noteOn.time + note.noteOff.offsetTime) * 1000);
+        noteControl.noteOff(note.noteOff, window.performance.now() + this.tickToMs(note.noteOn.time + note.noteOff.offsetTime));
       });
+    },
+    tickToMs (tick) {
+      console.log(tick / this.tpb / this.bpm * 60 * 1e3);
+      return tick / this.tpb / this.bpm * 60 * 1e3;
     }
   }
 };

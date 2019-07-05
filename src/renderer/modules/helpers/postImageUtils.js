@@ -45,11 +45,12 @@ export const makePNGBuffer = (imgAs2dArray) => {
 /**
  * @param  {Array.<number>} noteOnPoint
  * @param  {object} spectrogram
+ * @param  {function} secToTick
  */
-export const parsePointAsNoteOn = (noteOnPoint, spectrogram) => {
+export const parsePointAsNoteOn = (noteOnPoint, spectrogram, secToTick) => {
   const timeIdx = noteOnPoint[0]; // float
   const timeInterval = spectrogram.times[1] - spectrogram.times[0];
-  const time = spectrogram.times[Math.floor(timeIdx)] + timeInterval * (timeIdx - Math.floor(timeIdx));
+  const time = secToTick(spectrogram.times[Math.floor(timeIdx)] + timeInterval * (timeIdx - Math.floor(timeIdx)));
   const freqIdx = noteOnPoint[1]; // float
   const freqInterval = spectrogram.freqs[1] - spectrogram.freqs[0];
   const freq = spectrogram.freqs[Math.floor(freqIdx)] + freqInterval * (freqIdx - Math.floor(freqIdx));
@@ -61,11 +62,12 @@ export const parsePointAsNoteOn = (noteOnPoint, spectrogram) => {
 /**
  * @param  {Array.<number>} modulationPoint
  * @param  {object} spectrogram
+ * @param  {function} secToTick
  */
-export const parsePointAsModulation = (modulationPoint, spectrogram) => {
+export const parsePointAsModulation = (modulationPoint, spectrogram, secToTick) => {
   const timeIdx = modulationPoint[0]; // float
   const timeInterval = spectrogram.times[1] - spectrogram.times[0];
-  const time = spectrogram.times[Math.floor(timeIdx)] + timeInterval * (timeIdx - Math.floor(timeIdx));
+  const time = secToTick(spectrogram.times[Math.floor(timeIdx)] + timeInterval * (timeIdx - Math.floor(timeIdx)));
   const freqIdx = modulationPoint[1]; // float
   const freqInterval = spectrogram.freqs[1] - spectrogram.freqs[0];
   const freq = spectrogram.freqs[Math.floor(freqIdx)] + freqInterval * (freqIdx - Math.floor(freqIdx));
@@ -77,11 +79,12 @@ export const parsePointAsModulation = (modulationPoint, spectrogram) => {
 /**
  * @param  {Array.<number>} noteOffPoint
  * @param  {object} spectrogram
+ * @param  {function} secToTick
  */
-export const parsePointAsNoteOff = (noteOffPoint, spectrogram) => {
+export const parsePointAsNoteOff = (noteOffPoint, spectrogram, secToTick) => {
   const timeIdx = noteOffPoint[0]; // float
   const timeInterval = spectrogram.times[1] - spectrogram.times[0];
-  const time = spectrogram.times[Math.floor(timeIdx)] + timeInterval * (timeIdx - Math.floor(timeIdx));
+  const time = secToTick(spectrogram.times[Math.floor(timeIdx)] + timeInterval * (timeIdx - Math.floor(timeIdx)));
   const noteOffVelocity = decibelCurve(noteOffPoint[2]);
   return { time, noteOffVelocity };
 };

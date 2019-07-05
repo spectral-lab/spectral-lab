@@ -73,6 +73,14 @@ export default {
   components: {
     IconBtnWithTip
   },
+  computed: {
+    bpm () {
+      return this.$store.state.bpm;
+    },
+    tpb () {
+      return this.$store.state.tpb;
+    }
+  },
   methods: {
     async buildSpectrogram () {
       const audioBuffer = this.$store.state.sourceAudio.buffer;
@@ -100,21 +108,24 @@ export default {
       extractedLines.forEach(async (line) => {
         const noteId = await this.$store.dispatch(
           CREATE_NOTE,
-          parsePointAsNoteOn(line[0], spectrogram)
+          parsePointAsNoteOn(line[0], spectrogram, this.secToTick)
         );
         const modulationPoints = line.slice(1, -1);
         modulationPoints.forEach(point => {
-          const modulation = parsePointAsModulation(point, spectrogram);
+          const modulation = parsePointAsModulation(point, spectrogram, this.secToTick);
           this.$store.dispatch(MODULATE_NOTE, { modulation, id: noteId });
         });
         this.$store.dispatch(RELEASE_NOTE, {
-          noteOff: parsePointAsNoteOff(line[line.length - 1], spectrogram),
+          noteOff: parsePointAsNoteOff(line[line.length - 1], spectrogram, this.secToTick),
           id: noteId
         });
       });
     },
     deleteAllNotes () {
       this.$store.dispatch(DELETE_ALL_NOTES);
+    },
+    secToTick (sec) {
+      return sec / 60 * this.bpm * this.tpb;
     }
   }
 };

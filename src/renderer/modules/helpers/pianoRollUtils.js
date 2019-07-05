@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-export const timeToX = (time, pixelPerSecond) => time * pixelPerSecond;
+export const timeToX = (time, pixelPerTick) => time * pixelPerTick;
 export const pitchToY = (pitch, pixelPerNoteNumber) => pitch * pixelPerNoteNumber;
 export const removeAllChildren = container => {
   for (var i = container.children.length - 1; i >= 0; i--) {
