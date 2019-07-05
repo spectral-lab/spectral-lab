@@ -51,7 +51,7 @@ export default {
         this.noteDisplay.x += ev.wheelDeltaX * 0.5;
         this.noteDisplay.y += ev.wheelDeltaY * 0.5;
       });
-      this.noteDisplay.type = 'notedisplay';
+      this.noteDisplay.type = 'noteDisplay';
       this.$nextTick(() => {
         this.$emit('init', this.noteDisplay);
       });

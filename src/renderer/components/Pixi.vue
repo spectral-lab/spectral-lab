@@ -1,8 +1,8 @@
 <template>
   <div ref="pixiContainer" class="pixi-container">
     <ruler v-bind="{ pixelPerTick }" @init="addToStage" />
-    <midi-keyboard v-bind="{ pixelPerNoteNumber }" @init="addToStage" />
-    <bg-grid v-bind="{ pixelPerTick, pixelPerNoteNumber }" @init="addToStage" />
+    <midi-keyboard v-bind="{ pixelPerNoteNumber, midiKeyboardWidth }" @init="addToStage" />
+    <bg-grid v-bind="{ pixelPerTick, pixelPerNoteNumber, midiKeyboardWidth }" @init="addToStage" />
     <note-display v-bind="{ pixelPerTick, pixelPerNoteNumber }" @init="addToStage" />
     <automation-lane v-bind="{ pixelPerTick }" @init="addToStage" />
     <playback-line v-bind="{ pixelPerTick }" @init="addToStage" />
@@ -18,23 +18,17 @@ import NoteDisplay from './PixiNoteDisplay';
 import Ruler from './PixiRuler';
 import AutomationLane from './PixiAutomationLane';
 import PlaybackLine from './PixiPlaybackLine';
+import { pixelPerTick, pixelPerNoteNumber, midiKeyboardWidth } from '../constants/pixi-initial-data';
 
 export default {
   props: {
-    mouseMode: String,
-    areaToDisplay: {
-      upperLeftCorner: {
-        time: Number,
-        pitch: Number
-      },
-      numberOfTicks: Number,
-      numberOfNoteNumbers: Number
-    }
+    mouseMode: String
   },
   data () {
     return {
-      pixelPerTick: 1,
-      pixelPerNoteNumber: 2
+      pixelPerTick,
+      pixelPerNoteNumber,
+      midiKeyboardWidth
     };
   },
   mounted () {
@@ -45,7 +39,6 @@ export default {
   },
   methods: {
     addToStage (container) {
-      console.log('addToStage:', container);
       this.app.stage.addChild(container);
     },
     initScroll () {
@@ -54,7 +47,6 @@ export default {
       });
       this.app.view.addEventListener('wheel', (event) => {
         this.app.stage.children.forEach(child => {
-          console.log(child);
           child.emit('scroll', event);
         });
       });
@@ -68,7 +60,6 @@ export default {
         resizeTo: this.$refs.pixiContainer,
         autoDensity: true
       });
-      console.log('initApp', this.app);
       this.app.ticker.maxFPS = 5;
       this.$refs.pixiContainer.appendChild(this.app.view);
     },
