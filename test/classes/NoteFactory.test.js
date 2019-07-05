@@ -1,5 +1,5 @@
 // @ts-nocheck
-import NoteFactory from '../../src/renderer/classes/NoteFactory';
+import NoteFactory from '../../src/renderer/modules/NoteFactory';
 
 const MATERIALS_0 = { time: 0.1, pitch: 44.5, noteOnVelocity: 0.1 };
 const MATERIALS_1 = { time: 0.2, noteNumber: 60, pitchBend: 11.1, pressure: 0.02 };

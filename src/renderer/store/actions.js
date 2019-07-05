@@ -1,6 +1,6 @@
 import { SET_SOURCE_AUDIO } from './mutation-types';
 import { ACCEPT_AUDIO } from './action-types';
-import processAudioFile from '../utils/helpers/processAudioFile';
+import processAudioFile from '../modules/helpers/processAudioFile';
 
 export default {
   async [ACCEPT_AUDIO] ({ state, commit }, { file }) {

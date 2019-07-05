@@ -1,5 +1,5 @@
 // @ts-nocheck
-import OutputManager from '../../src/renderer/classes/outputManager';
+import OutputManager from '../../src/renderer/modules/outputManager';
 import { NOTE_ON, MODULATION, NOTE_OFF } from '../../src/renderer/constants/note-action-types';
 
 const options = {

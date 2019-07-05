@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import OutputManager from '../classes/outputManager';
+import OutputManager from '../modules/outputManager';
 import { range } from 'lodash';
 
 export default {

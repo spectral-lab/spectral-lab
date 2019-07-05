@@ -1,7 +1,7 @@
 
 import { NOTE_OFF, NOTE_ON, PITCH_BEND, CONTROL_CHANGE, CHANNEL_PRESSURE } from '../../constants/midi-message-types';
-import { uint14ToDataBytes, signedFloatToInt14, unsignedFloatToInt7 } from '../../utils/midi/dataByteUtils';
-import { deriveStatusByte } from '../../utils/midi/statusByteUtils';
+import { uint14ToDataBytes, signedFloatToInt14, unsignedFloatToInt7 } from './dataByteUtils';
+import { deriveStatusByte } from './statusByteUtils';
 
 /**
  * @param  {number} noteNumber

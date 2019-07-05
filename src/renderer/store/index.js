@@ -3,6 +3,8 @@ import Vuex from 'vuex';
 import mutations from './mutations';
 import actions from './actions';
 import notes from './modules/notes';
+import createLogger from 'vuex/dist/logger';
+import { INSERT_MODULATION, SET_NOTE_OFF } from './mutation-types';
 
 Vue.use(Vuex);
 const InitialState = {
@@ -24,12 +26,19 @@ const InitialState = {
     magnitude2d: [[]]
   }
 };
+const logger = createLogger({
+  filter (mutation) {
+    const blackListedTypes = [INSERT_MODULATION, SET_NOTE_OFF];
+    return blackListedTypes.includes(mutation.type) === false;
+  }
+});
 const store = new Vuex.Store({
   strict: true,
   state: InitialState,
   mutations,
   actions,
-  modules: { notes }
+  modules: { notes },
+  plugins: [logger]
 });
 
 export default store;

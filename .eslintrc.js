@@ -27,6 +27,7 @@ module.exports = {
     'no-unused-vars': process.env.NODE_ENV === 'production' ? 2 : 1,
     'no-multiple-empty-lines': process.env.NODE_ENV === 'production' ? 2 : 1,
     'no-trailing-spaces': process.env.NODE_ENV === 'production' ? 2 : 1,
-    'object-curly-spacing': process.env.NODE_ENV === 'production' ? ["error", "always"] : ["warn", "always"]
+    'object-curly-spacing': process.env.NODE_ENV === 'production' ? ["error", "always"] : ["warn", "always"],
+    'comma-spacing': process.env.NODE_ENV === 'production' ? 2 : 1
   }
 }
