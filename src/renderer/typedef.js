@@ -16,7 +16,7 @@
 /**
  * @typedef NoteOn
  * @property {string} type
- * @property {number} time
+ * @property {number} time In tick
  * @property {number} noteNumber
  * @property {number} noteOnVelocity
  * @property {number} pitchBend
@@ -27,7 +27,7 @@
 /**
  * @typedef Modulation
  * @property {string} type
- * @property {number} offsetTime In second default=0
+ * @property {number} offsetTime In tick default=0
  * @property {number} [pitchBend] In midi note number. Negative float is acceptable. default=0
  * @property {number} [pressure] from 0.0 to 1.0. default=0.5
  * @property {number} [timbre] from 0.0 to 1.0. default=0.5

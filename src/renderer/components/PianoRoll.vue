@@ -33,7 +33,7 @@ export default {
           time: 0,
           pitch: 120
         },
-        numberOfSeconds: 5,
+        numberOfTicks: 50,
         numberOfNoteNumbers: 100
       }
     };

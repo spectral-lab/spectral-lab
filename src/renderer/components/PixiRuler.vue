@@ -4,7 +4,7 @@
 /** This Component manages the PIXI Container which represents the Ruler. */
 export default {
   props: {
-    pixelPerSecond: Number
+    pixelPerTick: Number
   }
 };
 </script>

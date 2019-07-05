@@ -8,11 +8,11 @@ import { timeToX, pitchToY, createInteractiveCircle } from '../modules/helpers/p
 /** This Component manages the PIXI Container which represents the Note Display. */
 export default {
   props: {
-    pixelPerSecond: Number,
+    pixelPerTick: Number,
     pixelPerNoteNumber: Number
   },
   watch: {
-    pixelPerSecond (val) {
+    pixelPerTick (val) {
       this.noteDisplay.children.forEach(pixiNote => {
         console.log(pixiNote);
         const transition = this.$store.getters.pitchTransition(pixiNote.noteId);
@@ -79,7 +79,7 @@ export default {
       pixiNote.noteId = note.id;
       this.noteDisplay.addChild(pixiNote);
       const circle = createInteractiveCircle(7, 0xDE3249, () => console.log('dragEnd'));
-      circle.x = timeToX(note.noteOn.time, this.pixelPerSecond);
+      circle.x = timeToX(note.noteOn.time, this.pixelPerTick);
       circle.y = pitchToY(note.noteOn.noteNumber + note.noteOn.pitchBend, this.pixelPerNoteNumber);
       pixiNote.addChild(circle);
     },
@@ -91,7 +91,7 @@ export default {
       const circle = createInteractiveCircle(4, 0xDFF633, () => console.log('dragEnd'));
       const time = noteOn.time + modulation.offsetTime;
       const pitch = noteOn.noteNumber + modulation.pitchBend;
-      circle.x = timeToX(time, this.pixelPerSecond);
+      circle.x = timeToX(time, this.pixelPerTick);
       circle.y = pitchToY(pitch, this.pixelPerNoteNumber);
       pixiNote.addChild(circle);
     },
@@ -102,7 +102,7 @@ export default {
       const noteOn = pitchTransition[0];
       const time = noteOn.time + noteOff.offsetTime;
       const { pitch } = pitchTransition[pitchTransition.length - 1];
-      circle.x = timeToX(time, this.pixelPerSecond);
+      circle.x = timeToX(time, this.pixelPerTick);
       circle.y = pitchToY(pitch, this.pixelPerNoteNumber);
       pixiNote.addChild(circle);
     },

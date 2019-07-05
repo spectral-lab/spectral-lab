@@ -1,18 +1,17 @@
 <template>
   <div ref="pixiContainer" class="pixi-container">
-    <ruler v-bind="{ pixelPerSecond }" @init="addToStage" />
+    <ruler v-bind="{ pixelPerTick }" @init="addToStage" />
     <midi-keyboard v-bind="{ pixelPerNoteNumber }" @init="addToStage" />
-    <bg-grid v-bind="{ pixelPerSecond, pixelPerNoteNumber }" @init="addToStage" />
-    <note-display v-bind="{ pixelPerSecond, pixelPerNoteNumber }" @init="addToStage" />
-    <automation-lane v-bind="{ pixelPerSecond }" @init="addToStage" />
-    <playback-line v-bind="{ pixelPerSecond }" @init="addToStage" />
+    <bg-grid v-bind="{ pixelPerTick, pixelPerNoteNumber }" @init="addToStage" />
+    <note-display v-bind="{ pixelPerTick, pixelPerNoteNumber }" @init="addToStage" />
+    <automation-lane v-bind="{ pixelPerTick }" @init="addToStage" />
+    <playback-line v-bind="{ pixelPerTick }" @init="addToStage" />
   </div>
 </template>
 
 <script>
 import * as PIXI from 'pixi.js';
 import hotkeys from 'hotkeys-js';
-import { timeToX, pitchToY } from '../modules/helpers/pianoRollUtils';
 import BgGrid from './PixiBgGrid';
 import MidiKeyboard from './PixiMidiKeyboard';
 import NoteDisplay from './PixiNoteDisplay';
@@ -28,13 +27,13 @@ export default {
         time: Number,
         pitch: Number
       },
-      numberOfSeconds: Number,
+      numberOfTicks: Number,
       numberOfNoteNumbers: Number
     }
   },
   data () {
     return {
-      pixelPerSecond: 500,
+      pixelPerTick: 1,
       pixelPerNoteNumber: 2
     };
   },
@@ -74,8 +73,8 @@ export default {
       this.$refs.pixiContainer.appendChild(this.app.view);
     },
     initKeyboard () {
-      hotkeys('h', () => { this.pixelPerSecond = this.pixelPerSecond * 1.2; });
-      hotkeys('g', () => { this.pixelPerSecond = this.pixelPerSecond / 1.2; });
+      hotkeys('h', () => { this.pixelPerTick = this.pixelPerTick * 1.2; });
+      hotkeys('g', () => { this.pixelPerTick = this.pixelPerTick / 1.2; });
       hotkeys('shift+h', () => { this.pixelPerNoteNumber = this.pixelPerNoteNumber * 1.2; });
       hotkeys('shift+g', () => { this.pixelPerNoteNumber = this.pixelPerNoteNumber / 1.2; });
     },
