@@ -27,15 +27,7 @@ import { renderSpectrogram } from '../modules/render';
 export default {
   data () {
     return {
-      mouseMode: MOUSE_MODES.SELECT,
-      areaToDisplay: {
-        upperLeftCorner: {
-          time: 0,
-          pitch: 120
-        },
-        numberOfTicks: 50,
-        numberOfNoteNumbers: 100
-      }
+      mouseMode: MOUSE_MODES.SELECT
     };
   },
   mounted () {
