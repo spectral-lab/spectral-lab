@@ -10,7 +10,8 @@ export default {
   },
   methods: {
     save () {
-      fs.writeJson(dialog.showSaveDialog(), this.$store.state);
+      const path = dialog.showSaveDialog();
+      if (path) fs.writeJson(path, this.$store.state);
     }
   }
 };
