@@ -3,7 +3,9 @@
 <script>
 import * as PIXI from 'pixi.js';
 import { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF, DELETE_NOTE } from '../store/mutation-types';
+import { ADD_NOTE } from '../store/action-types';
 import { timeToX, pitchToY, createInteractiveCircle } from '../modules/helpers/pianoRollUtils';
+import mockState from '../../../test/data/mockState.json';
 
 /** This Component manages the PIXI Container which represents the Note Display. */
 export default {
@@ -13,7 +15,7 @@ export default {
   },
   watch: {
     pixelPerTick (val) {
-      this.noteDisplay.children.forEach(pixiNote => {
+      this.noteLayer.children.forEach(pixiNote => {
         console.log(pixiNote);
         const transition = this.$store.getters.pitchTransition(pixiNote.noteId);
         pixiNote.children.forEach((noteAction, idx) => {
@@ -27,7 +29,7 @@ export default {
       });
     },
     pixelPerNoteNumber (val) {
-      this.noteDisplay.children.forEach(pixiNote => {
+      this.noteLayer.children.forEach(pixiNote => {
         const transition = this.$store.getters.pitchTransition(pixiNote.noteId);
         pixiNote.children.forEach((noteAction, idx) => {
           if (transition.length <= idx) {
@@ -41,19 +43,23 @@ export default {
     }
   },
   mounted () {
-    this.initNoteDisplay();
+    this.initNoteLayer();
     this.subscribeNotes();
+    this.loadMockNotes();
+  },
+  beforeDestroy () {
+    this.unsubscribe();
   },
   methods: {
-    initNoteDisplay () {
-      this.noteDisplay = new PIXI.Container();
-      this.noteDisplay.on('scroll', (ev) => {
-        this.noteDisplay.x += ev.wheelDeltaX * 0.5;
-        this.noteDisplay.y += ev.wheelDeltaY * 0.5;
+    initNoteLayer () {
+      this.noteLayer = new PIXI.Container();
+      this.noteLayer.on('scroll', (ev) => {
+        this.noteLayer.x += ev.wheelDeltaX * 0.5;
+        this.noteLayer.y += ev.wheelDeltaY * 0.5;
       });
-      this.noteDisplay.type = 'noteDisplay';
+      this.noteLayer.type = 'noteLayer';
       this.$nextTick(() => {
-        this.$emit('init', this.noteDisplay);
+        this.$emit('init', this.noteLayer);
       });
     },
     subscribeNotes () {
@@ -75,19 +81,25 @@ export default {
       });
     },
     drawNote (note) {
+      console.log(note);
       const pixiNote = new PIXI.Container();
       pixiNote.noteId = note.id;
-      this.noteDisplay.addChild(pixiNote);
+      this.noteLayer.addChild(pixiNote);
+      this.drawNoteOn({ noteOn: note.noteOn, id: note.id });
+      note.modulations.forEach(modulation => this.drawModulation({ modulation, id: note.id }));
+      this.drawNoteOff({ noteOff: note.noteOff, id: note.id });
+    },
+    drawNoteOn ({ noteOn, id }) {
+      const pixiNote = this.getPixiNoteById(id);
       const circle = createInteractiveCircle(7, 0xDE3249, () => console.log('dragEnd'));
-      circle.x = timeToX(note.noteOn.time, this.pixelPerTick);
-      circle.y = pitchToY(note.noteOn.noteNumber + note.noteOn.pitchBend, this.pixelPerNoteNumber);
+      circle.x = timeToX(noteOn.time, this.pixelPerTick);
+      circle.y = pitchToY(noteOn.noteNumber + noteOn.pitchBend, this.pixelPerNoteNumber);
       pixiNote.addChild(circle);
     },
     drawModulation ({ modulation, id }) {
       if (modulation.pitchBend == null) return;
-      const noteId = id;
       const { noteOn } = this.$store.getters.getNoteById(id);
-      const pixiNote = this.getContainerByNoteId(noteId);
+      const pixiNote = this.getPixiNoteById(id);
       const circle = createInteractiveCircle(4, 0xDFF633, () => console.log('dragEnd'));
       const time = noteOn.time + modulation.offsetTime;
       const pitch = noteOn.noteNumber + modulation.pitchBend;
@@ -96,7 +108,8 @@ export default {
       pixiNote.addChild(circle);
     },
     drawNoteOff ({ noteOff, id }) {
-      const pixiNote = this.getContainerByNoteId(id);
+      if (noteOff == null) return;
+      const pixiNote = this.getPixiNoteById(id);
       const circle = createInteractiveCircle(4, 0x223212, () => console.log('dragEnd'));
       const pitchTransition = this.$store.getters.pitchTransition(id);
       const noteOn = pitchTransition[0];
@@ -106,11 +119,16 @@ export default {
       circle.y = pitchToY(pitch, this.pixelPerNoteNumber);
       pixiNote.addChild(circle);
     },
-    removeNote (noteId) {
-      this.noteDisplay.removeChild(this.getContainerByNoteId(noteId));
+    loadMockNotes () {
+      mockState.notes.data.forEach(note => {
+        this.$store.dispatch(ADD_NOTE, note);
+      });
     },
-    getContainerByNoteId (noteId) {
-      return this.noteDisplay.children.find(pixiNote => pixiNote.noteId === noteId);
+    removeNote (noteId) {
+      this.noteLayer.removeChild(this.getPixiNoteById(noteId));
+    },
+    getPixiNoteById (noteId) {
+      return this.noteLayer.children.find(pixiNote => pixiNote.noteId === noteId);
     }
   }
 };
