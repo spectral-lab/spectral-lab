@@ -1,18 +1,19 @@
 <template>
   <div id="app">
+    <keyboard-manager/>
     <v-app id="inspire" dark>
-      <title-bar />
+      <title-bar/>
       <v-content>
         <v-container fluid fill-height>
           <v-layout column>
-            <audio-toolbar />
+            <audio-toolbar/>
             <v-flex>
-              <piano-roll />
+              <piano-roll/>
             </v-flex>
           </v-layout>
         </v-container>
       </v-content>
-      <transport />
+      <transport/>
     </v-app>
   </div>
 </template>
@@ -24,6 +25,7 @@ import AudioToolbar from './components/AudioToolbar.vue';
 import Transport from './components/Transport';
 import TrackList from './components/TrackList';
 import TitleBar from './components/TitleBar';
+import KeyboardManager from './components/KeyboardManager';
 
 export default {
   name: 'app',
@@ -33,7 +35,8 @@ export default {
     AudioToolbar,
     Transport,
     TrackList,
-    TitleBar
+    TitleBar,
+    KeyboardManager
   }
 };
 </script>
