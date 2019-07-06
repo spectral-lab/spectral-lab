@@ -1,8 +1,9 @@
 // @ts-nocheck
 import { actions, mutations, getters, InitialState } from '../../src/renderer/store/modules/notes';
 import * as defaults from '../../src/renderer/constants/defaults';
+import mockState from '../data/mockState';
 
-const { CREATE_NOTE, MODULATE_NOTE, RELEASE_NOTE } = actions;
+const { CREATE_NOTE, MODULATE_NOTE, RELEASE_NOTE, ADD_NOTE } = actions;
 const { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF } = mutations;
 const { pitchTransition } = getters;
 
@@ -127,7 +128,7 @@ describe('dispatches actions', () => {
         expect(noteOn).toHaveProperty('pitchBend', -0.5);
         expect(noteOn).toHaveProperty('noteOnVelocity', MATERIALS_0.noteOnVelocity);
         expect(noteOn).toHaveProperty('timbre', defaults.noteOn.timbre);
-        expect(noteOn).toHaveProperty('timbre', defaults.noteOn.pressure);
+        expect(noteOn).toHaveProperty('pressure', defaults.noteOn.pressure);
         expect(modulations).toEqual([]);
       } catch (err) {
         done(err);
@@ -149,6 +150,34 @@ describe('dispatches actions', () => {
     };
     const state = InitialState;
     CREATE_NOTE({ state, commit }, Object.assign({}, MATERIALS_0, { unwanted: 0.5 }));
+  });
+
+  test('ADD_NOTE', (done) => {
+    const numberOfNotes = mockState.notes.data.length;
+    let count = 0;
+    const commit = (type, note) => {
+      try {
+        expect(type).toBe('APPEND_NOTE');
+        expect(note).toHaveProperty('noteOn');
+        expect(note).toHaveProperty('noteOff');
+        expect(note).toHaveProperty('modulations');
+        expect(Array.isArray(note.modulations)).toBe(true);
+        expect(note.noteOn).toHaveProperty('type', 'NOTE_ON');
+        expect(note.noteOn).toHaveProperty('time');
+        expect(note.noteOn).toHaveProperty('noteNumber');
+        expect(note.noteOn).toHaveProperty('pitchBend');
+        expect(note.noteOn).toHaveProperty('noteOnVelocity');
+        expect(note.noteOn).toHaveProperty('timbre');
+        expect(note.noteOn).toHaveProperty('pressure');
+        count++;
+      } catch (err) {
+        done(err);
+      }
+      if (count === numberOfNotes) done();
+    };
+    mockState.notes.data.forEach(note => {
+      ADD_NOTE({ commit }, note);
+    });
   });
 
   test('MODULATE_NOTE', (done) => {

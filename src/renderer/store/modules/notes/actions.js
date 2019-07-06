@@ -1,4 +1,4 @@
-import { CREATE_NOTE, MODULATE_NOTE, RELEASE_NOTE, DELETE_ALL_NOTES } from '../../action-types';
+import { CREATE_NOTE, MODULATE_NOTE, RELEASE_NOTE, DELETE_ALL_NOTES, ADD_NOTE } from '../../action-types';
 import { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF, DELETE_NOTE } from '../../mutation-types';
 import NoteFactory from '../../../modules/NoteFactory';
 import '../../../typedef';
@@ -29,6 +29,25 @@ export default {
    */
   [CREATE_NOTE] ({ commit }, materials) {
     const note = noteFactory.createNote(materials);
+    commit(APPEND_NOTE, note);
+    return note.id;
+  },
+  /**
+  * @param  {object} context
+  * @param  {object} materials
+  * @param  {object} materials.noteOn
+  * @param  {object} [materials.noteOff]
+  * @param  {Array.<Modulation>} [materials.modulations]
+  * @example
+  * // New id will be assigned even if the second argument already has an id.
+  * const noteId = await this.$store.dispatch('ADD_NOTE', {
+  *   "noteOn": {...},
+  *   "noteOff": {...},
+  *   "modulations": [{...}, {...}]
+  * });
+  */
+  [ADD_NOTE] ({ commit }, materials) {
+    const note = noteFactory.assignId(materials);
     commit(APPEND_NOTE, note);
     return note.id;
   },

@@ -9,6 +9,9 @@ class NoteFactory {
   constructor () {
     this.id = 0;
   }
+  assignId (note) {
+    return Object.assign({}, note, { id: this.id });
+  }
   /**
    * @param {object} materials
    * @returns {Note}
