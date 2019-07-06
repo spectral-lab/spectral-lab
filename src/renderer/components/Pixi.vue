@@ -1,9 +1,9 @@
 <template>
   <div ref="pixiContainer" class="pixi-container">
-    <ruler v-bind="{ pixelPerTick }" @init="addToStage" />
-    <midi-keyboard v-bind="{ pixelPerNoteNumber, midiKeyboardWidth }" @init="addToStage" />
-    <bg-grid v-bind="{ pixelPerTick, pixelPerNoteNumber, midiKeyboardWidth }" @init="addToStage" />
-    <note-display v-bind="{ pixelPerTick, pixelPerNoteNumber }" @init="addToStage" />
+    <ruler v-bind="{ pixelPerTick, rulerHeight, midiKeyboardWidth, totalTime }" @init="addToStage" />
+    <midi-keyboard v-bind="{ pixelPerNoteNumber, midiKeyboardWidth, rulerHeight }" @init="addToStage" />
+    <bg-grid v-bind="{ pixelPerTick, pixelPerNoteNumber, midiKeyboardWidth, rulerHeight, totalTime }" @init="addToStage" />
+    <note-layer v-bind="{ pixelPerTick, pixelPerNoteNumber }" @init="addToStage" />
     <automation-lane v-bind="{ pixelPerTick }" @init="addToStage" />
     <playback-line v-bind="{ pixelPerTick }" @init="addToStage" />
   </div>
@@ -14,11 +14,11 @@ import * as PIXI from 'pixi.js';
 import hotkeys from 'hotkeys-js';
 import BgGrid from './PixiBgGrid';
 import MidiKeyboard from './PixiMidiKeyboard';
-import NoteDisplay from './PixiNoteDisplay';
+import NoteLayer from './PixiNoteLayer';
 import Ruler from './PixiRuler';
 import AutomationLane from './PixiAutomationLane';
 import PlaybackLine from './PixiPlaybackLine';
-import { pixelPerTick, pixelPerNoteNumber, midiKeyboardWidth } from '../constants/pixi-initial-data';
+import { pixelPerTick, pixelPerNoteNumber, midiKeyboardWidth, rulerHeight } from '../constants/pixi-initial-data';
 
 export default {
   props: {
@@ -28,18 +28,37 @@ export default {
     return {
       pixelPerTick,
       pixelPerNoteNumber,
-      midiKeyboardWidth
+      midiKeyboardWidth,
+      rulerHeight
     };
   },
   mounted () {
     this.initApp();
     this.initScroll();
     this.initKeyboard();
-    this.drawPoleStar();
+  },
+  computed: {
+    totalTime () {
+      const totalBars = 1;
+      return totalBars * 4 * this.$store.state.tpb;
+    }
   },
   methods: {
-    addToStage (container) {
-      this.app.stage.addChild(container);
+    /** @param {PIXI.Container} pixiContainer **/
+    addToStage (pixiContainer) {
+      this.positionChildren(pixiContainer);
+      this.app.stage.addChild(pixiContainer);
+    },
+    /** @param {PIXI.Container} container **/
+    positionChildren (container) {
+      switch (container.type) {
+        case 'bgGrid':
+          container.position.set(3, 3);
+          break;
+        case 'bgescape':
+          container.position.set(2, 5);
+          break;
+      }
     },
     initScroll () {
       this.$refs.pixiContainer.addEventListener('wheel', function (event) {
@@ -68,24 +87,13 @@ export default {
       hotkeys('g', () => { this.pixelPerTick = this.pixelPerTick / 1.2; });
       hotkeys('shift+h', () => { this.pixelPerNoteNumber = this.pixelPerNoteNumber * 1.2; });
       hotkeys('shift+g', () => { this.pixelPerNoteNumber = this.pixelPerNoteNumber / 1.2; });
-    },
-    drawPoleStar () {
-      const poleStar = new PIXI.Graphics();
-      this.app.stage.addChild(poleStar);
-      poleStar.beginFill(0xFFFFFF);
-      poleStar.drawStar(0, 0, 5, 10);
-      poleStar.endFill();
-      poleStar.on('scroll', (ev) => {
-        poleStar.x += ev.wheelDeltaX * 0.5;
-        poleStar.y += ev.wheelDeltaY * 0.5;
-      });
     }
   },
   components: {
     AutomationLane,
     BgGrid,
     MidiKeyboard,
-    NoteDisplay,
+    NoteLayer,
     Ruler,
     PlaybackLine
   }

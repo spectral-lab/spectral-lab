@@ -7,7 +7,8 @@ import * as PIXI from 'pixi.js';
 export default {
   props: {
     pixelPerNoteNumber: Number,
-    midiKeyboardWidth: Number
+    midiKeyboardWidth: Number,
+    rulerHeight: Number
   },
   watch: {
     pixelPerNoteNumber (val) {
@@ -26,6 +27,7 @@ export default {
       this.midiKeyboard.on('scroll', (ev) => {
         this.midiKeyboard.y += ev.wheelDeltaY * 0.5;
       });
+      this.midiKeyboard.y = this.rulerHeight;
       this.midiKeyboard.type = 'midiKeyboard';
       this.$nextTick(() => {
         this.$emit('init', this.midiKeyboard);

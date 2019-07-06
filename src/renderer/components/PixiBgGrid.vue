@@ -7,7 +7,9 @@ export default {
   props: {
     pixelPerTick: Number,
     pixelPerNoteNumber: Number,
-    midiKeyboardWidth: Number
+    midiKeyboardWidth: Number,
+    rulerHeight: Number,
+    totalTime: Number // in tick
   },
   watch: {
     pixelPerNoteNumber (val) {
@@ -19,12 +21,6 @@ export default {
       this.bgGrid.children.forEach(child => {
         child.width = this.totalTime * val;
       });
-    }
-  },
-  computed: {
-    totalTime () {
-      const totalBars = 1;
-      return totalBars * 4 * this.$store.state.tpb;
     }
   },
   mounted () {
@@ -40,6 +36,7 @@ export default {
       });
       this.bgGrid.type = 'bgGrid';
       this.bgGrid.x = this.midiKeyboardWidth;
+      this.bgGrid.y = this.rulerHeight;
       this.$nextTick(() => {
         this.$emit('init', this.bgGrid);
       });
