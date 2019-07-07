@@ -2,6 +2,7 @@
 
 <script>
 import * as PIXI from 'pixi.js';
+import { PLAYBACK_LINE } from '../constants/pixi-section-types';
 /** This Component manages the PIXI Container which represents the Playback Line. */
 export default {
   props: {
@@ -13,7 +14,7 @@ export default {
   methods: {
     initPlaybackLine () {
       this.playbackLine = new PIXI.Container();
-      this.playbackLine.type = 'playbackLine';
+      this.playbackLine.type = PLAYBACK_LINE;
       this.$nextTick(() => {
         this.$emit('init', this.playbackLine);
       });

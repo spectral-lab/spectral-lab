@@ -2,6 +2,7 @@
 
 <script>
 import * as PIXI from 'pixi.js';
+import { RULER, RULER_BG } from '../constants/pixi-section-types';
 /** This Component manages the PIXI Container which represents the Ruler. */
 export default {
   props: {
@@ -20,11 +21,8 @@ export default {
   methods: {
     initRuler () {
       this.ruler = new PIXI.Container();
-      this.ruler.on('scroll', (ev) => {
-        this.ruler.x += ev.wheelDeltaX * 0.5;
-      });
-      this.ruler.x = this.midiKeyboardWidth;
-      this.ruler.type = 'ruler';
+      this.ruler.x = Number(this.midiKeyboardWidth);
+      this.ruler.type = RULER;
       this.$nextTick(() => {
         this.$emit('init', this.ruler);
       });
@@ -39,7 +37,7 @@ export default {
       rightRect.beginFill(0x4d5054);
       rightRect.drawRect(this.midiKeyboardWidth, 0, this.totalTime * this.pixelPerTick, this.rulerHeight);
       bg.addChild(leftRect, rightRect);
-      bg.type = 'bg';
+      bg.type = RULER_BG;
       rightRect.endFill();
       this.$nextTick(() => {
         this.$emit('init', bg);

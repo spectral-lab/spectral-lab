@@ -6,6 +6,7 @@ import { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF, DELETE_NOTE } from '../st
 import { ADD_NOTE } from '../store/action-types';
 import { timeToX, pitchToY, createInteractiveCircle } from '../modules/helpers/pianoRollUtils';
 import mockState from '../../../test/data/mockState.json';
+import { NOTE_LAYER } from '../constants/pixi-section-types';
 
 /** This Component manages the PIXI Container which represents the Note Display. */
 export default {
@@ -53,11 +54,7 @@ export default {
   methods: {
     initNoteLayer () {
       this.noteLayer = new PIXI.Container();
-      this.noteLayer.on('scroll', (ev) => {
-        this.noteLayer.x += ev.wheelDeltaX * 0.5;
-        this.noteLayer.y += ev.wheelDeltaY * 0.5;
-      });
-      this.noteLayer.type = 'noteLayer';
+      this.noteLayer.type = NOTE_LAYER;
       this.$nextTick(() => {
         this.$emit('init', this.noteLayer);
       });
@@ -81,7 +78,6 @@ export default {
       });
     },
     drawNote (note) {
-      console.log(note);
       const pixiNote = new PIXI.Container();
       pixiNote.noteId = note.id;
       this.noteLayer.addChild(pixiNote);

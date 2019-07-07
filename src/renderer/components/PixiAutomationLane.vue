@@ -2,12 +2,13 @@
 
 <script>
 import * as PIXI from 'pixi.js';
+import { AUTOMATION_LANE, AUTOMATION_LANE_SELECTOR } from '../constants/pixi-section-types';
+
 /** This Component manages the PIXI Container which represents the Automation Lane. */
 export default {
   props: {
-    pixelPerTick: Number,
     automationLaneHeight: Number,
-    totalTime: Number
+    midiKeyboardWidth: Number
   },
   watch: {
     pixelPerTick (val) {}
@@ -19,29 +20,19 @@ export default {
   methods: {
     initAutomationLane () {
       this.automationLane = new PIXI.Container();
-      this.automationLane.on('scroll', (ev) => {
-        this.automationLane.x += ev.wheelDeltaX * 0.5;
-      });
-      this.automationLane.type = 'automationLane';
+      this.automationLane.type = AUTOMATION_LANE;
       this.$nextTick(() => {
         this.$emit('init', this.automationLane);
       });
     },
     initBg () {
-      const bg = new PIXI.Container();
-      const leftRect = new PIXI.Graphics();
-      leftRect.beginFill(0x123456);
-      leftRect.drawRect(0, 0, 100, 20);
-      leftRect.endFill();
-      const rightRect = new PIXI.Graphics();
-      rightRect.beginFill(0x734567);
-      rightRect.drawRect(10, 0, 10, 50);
-      bg.addChild(leftRect, rightRect);
-      bg.type = 'automationLaneBg';
-      rightRect.endFill();
-      bg.addChild(leftRect, rightRect);
+      const rect = new PIXI.Graphics();
+      rect.beginFill(0x123456);
+      rect.drawRect(0, 0, this.midiKeyboardWidth, this.automationLaneHeight);
+      rect.endFill();
+      rect.type = AUTOMATION_LANE_SELECTOR;
       this.$nextTick(() => {
-        this.$emit('init', bg);
+        this.$emit('init', rect);
       });
     }
   }
