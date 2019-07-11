@@ -174,39 +174,32 @@ export default {
       this.handleVerticalScroll(event, section);
     },
     handleHorizontalScroll (event, section) {
-      // if (section.type === NOTE_LAYER) console.log(section.type, 'x', section.x);
       const targetX = section.x + event.wheelDeltaX * 0.5;
       if (targetX + this.rulerWidth < this.stageWidth) {
+        // Not to make a blank between midiKeyboard and Automation Selector
         section.position.x = this.stageWidth - this.rulerWidth;
-        // if (section.type === NOTE_LAYER) console.log(section.type, 'x', section.x, targetX);
         return;
       }
       if (targetX > this.midiKeyboardWidth) {
+        // Not to make a blank between midiKeyboard and Automation Selector
         section.position.x = Number(this.midiKeyboardWidth);
-        // if (section.type === NOTE_LAYER) console.log(section.type, 'x', section.x, targetX);
         return;
       }
       section.position.x = targetX;
-      // if (section.type === NOTE_LAYER) console.log(section.type, 'x', section.x, targetX);
     },
     handleVerticalScroll (event, section) {
-      // if (section.type === NOTE_LAYER) console.log(section.type, 'y', section.y);
-      // debugger;
-      console.log(this.stageHeight - this.automationLaneHeight - this.midiKeyboardHeight, this.rulerHeight);
       const targetY = section.y + event.wheelDeltaY * 0.5;
       if (targetY + this.midiKeyboardHeight < this.stageHeight - this.automationLaneHeight) {
+        // Not to make blank between midiKeyboard and Automation Selector
         section.position.y = this.stageHeight - this.automationLaneHeight - this.midiKeyboardHeight;
-        // debugger;
         return;
       }
       if (targetY > this.rulerHeight) {
+        // Not to make blank between midiKeyboard and Automation Selector
         section.position.y = Number(this.rulerHeight);
-        // debugger;
         return;
       }
       section.position.y = targetY;
-      // if (section.type === NOTE_LAYER) console.log(section.type, 'y', section.y, targetY);
-      // debugger;
     },
     updateStageWidthAndHeight () {
       console.log(this.stageWidth, this.stageHeight);
