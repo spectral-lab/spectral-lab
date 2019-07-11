@@ -6,7 +6,15 @@
       <v-content>
         <v-container fluid fill-height>
           <v-layout column>
-            <audio-toolbar/>
+            <v-flex>
+              <audio-info/>
+            </v-flex>
+            <v-flex>
+              <toolbar/>
+            </v-flex>
+            <v-flex>
+              <info-bar/>
+            </v-flex>
             <v-flex>
               <piano-roll/>
             </v-flex>
@@ -21,20 +29,22 @@
 <script>
 import store from './store';
 import PianoRoll from './components/PianoRoll';
-import AudioToolbar from './components/AudioToolbar.vue';
+import AudioInfo from './components/AudioInfo';
 import Transport from './components/Transport';
-import TrackList from './components/TrackList';
 import TitleBar from './components/TitleBar';
 import KeyboardManager from './components/KeyboardManager';
+import Toolbar from './components/Toolbar';
+import InfoBar from './components/InfoBar';
 
 export default {
   name: 'app',
   store,
   components: {
     PianoRoll,
-    AudioToolbar,
+    Toolbar,
+    InfoBar,
+    AudioInfo,
     Transport,
-    TrackList,
     TitleBar,
     KeyboardManager
   }
