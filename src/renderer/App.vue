@@ -16,7 +16,7 @@
               <info-bar/>
             </v-flex>
             <v-flex>
-              <piano-roll/>
+              <piano-roll-container/>
             </v-flex>
           </v-layout>
         </v-container>
@@ -28,7 +28,7 @@
 
 <script>
 import store from './store';
-import PianoRoll from './components/PianoRoll';
+import PianoRollContainer from './components/PianoRollContainer';
 import AudioInfo from './components/AudioInfo';
 import Transport from './components/Transport';
 import TitleBar from './components/TitleBar';
@@ -40,7 +40,7 @@ export default {
   name: 'app',
   store,
   components: {
-    PianoRoll,
+    PianoRollContainer,
     Toolbar,
     InfoBar,
     AudioInfo,
