@@ -1,0 +1,6 @@
+export const RULER = 'RULER';
+export const NOTE_DISPLAY = 'NOTE_DISPLAY';
+export const MIDI_KEYBOARD = 'MIDI_KEYBOARD';
+export const AUTOMATION_LANE = 'AUTOMATION_LANE';
+export const AUTOMATION_LANE_SELECTOR = 'AUTOMATION_LANE_SELECTOR';
+export const BORDER = 'BORDER';

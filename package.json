@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.9.0",
+    "change-case": "^3.1.0",
     "decibels": "^2.0.0",
     "dsp.js-browser": "^1.0.1",
     "express": "^4.16.4",
