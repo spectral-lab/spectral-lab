@@ -1,7 +1,7 @@
-import * as defaultStyles from './constants/default-styles';
+import * as style from './style';
 import { clamp } from 'lodash';
 import { paramCase, constantCase } from 'change-case';
-const { GRID_TEMPLATE_ROWS } = defaultStyles;
+const { GRID_TEMPLATE_ROWS, stringifyProperty } = style;
 
 /**
  * @property {HTMLElement} elt
@@ -16,11 +16,16 @@ export const assignStylesTo = (elt, styles) => {
     elt.style[property] = styles[property];
   });
 };
-export const initDivElement = (name) => {
+/**
+ * @param {string} className
+ * @param {string} [id]
+ * @returns {HTMLDivElement}
+ */
+export const initDivElement = (className, id) => {
   const elt = document.createElement('div');
-  elt.classList.add(paramCase(name));
-  elt.id = paramCase(name);
-  assignStylesTo(elt, defaultStyles[constantCase(name)]);
+  elt.classList.add(paramCase(className));
+  elt.id = id || paramCase(className);
+  assignStylesTo(elt, style[constantCase(className)]);
   return elt;
 };
 export const getOffsetTop = element => {
@@ -53,39 +58,8 @@ export const makeDraggable = (borderElt, gridContainer) => {
       0,
       Math.max(gridContainer.clientHeight - 48, 1)
     );
-    const templateRows = [...GRID_TEMPLATE_ROWS];
-    templateRows.find(row => row.type === 'automation-lane').height = height;
-    gridContainer.style.gridTemplateRows = templateRows.map(row => row.height + row.unit).join(' ');
-  });
-};
-/**
- * @param {HTMLElement} a
- * @param {HTMLElement} b
- */
-export const syncHorizontalScroll = (a, b) => {
-  let prev = 0;
-  a.addEventListener('scroll', ({ target }) => {
-    if (target.scrollLeft === prev) return;
-    b.scrollLeft = target.scrollLeft;
-    prev = target.scrollLeft;
-  });
-  b.addEventListener('scroll', ({ target }) => {
-    if (target.scrollLeft === prev) return;
-    a.scrollLeft = target.scrollLeft;
-    prev = target.scrollLeft;
-  });
-};
-
-export const syncVerticalScroll = (a, b) => {
-  let prev = 0;
-  a.addEventListener('scroll', ({ target }) => {
-    if (target.scrollTop === prev) return;
-    b.scrollTop = target.scrollTop;
-    prev = target.scrollTop;
-  });
-  b.addEventListener('scroll', ({ target }) => {
-    if (target.scrollTop === prev) return;
-    a.scrollTop = target.scrollTop;
-    prev = target.scrollTop;
+    const tmpRows = [...GRID_TEMPLATE_ROWS];
+    tmpRows.find(row => row.type === 'automation-lane').val = height;
+    gridContainer.style.gridTemplateRows = stringifyProperty(tmpRows);
   });
 };
