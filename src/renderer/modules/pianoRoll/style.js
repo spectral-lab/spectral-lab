@@ -1,37 +1,43 @@
 export const GRID_TEMPLATE_ROWS = [
   {
     type: 'ruler',
-    height: 40,
+    val: 40,
     unit: 'px'
   },
   {
     type: 'key-and-note-display',
-    height: 1,
+    val: 1,
     unit: 'fr'
   },
   {
     type: 'border-upper-half',
-    height: 4,
+    val: 4,
     unit: 'px'
   },
   {
     type: 'border-lower-half',
-    height: 4,
+    val: 4,
     unit: 'px'
   },
   {
     type: 'automation-lane',
-    height: 120,
+    val: 120,
     unit: 'px'
   }
 ];
+
+/**
+ * @param {Array.<{val: number, unit: string}>} array
+ * @returns {string}
+ */
+export const stringifyProperty = array => array.map(item => item.val + item.unit).join(' ');
 
 export const VIEW = {
   background: 'black',
   height: '100%',
   display: 'grid',
   gridTemplateColumns: '100px 1fr',
-  gridTemplateRows: GRID_TEMPLATE_ROWS.map(row => row.height + row.unit).join(' ')
+  gridTemplateRows: stringifyProperty(GRID_TEMPLATE_ROWS)
 };
 export const AUTOMATION_LANE = {
   gridColumnStart: 2,
@@ -76,6 +82,7 @@ export const MIDI_KEYBOARD = {
 
 export const BORDER = {
   cursor: 'row-resize',
+  zIndex: 10,
   gridColumnStart: 1,
   gridColumnEnd: 'end',
   gridRowStart: 3,
@@ -83,17 +90,29 @@ export const BORDER = {
 };
 
 export const NOTE_CONTAINER = {
-  position: 'relative',
-  height: '200%',
-  width: '200%',
+  height: '1000px',
+  width: '1500px',
   borderRadius: '10%',
-  background: 'lightgrey'
+  background: 'lightgrey',
+  position: 'relative'
+};
+
+export const NOTE_LAYER = {
+  width: '100%',
+  height: '100%',
+  position: 'absolute'
+};
+
+export const GRID_LAYER = {
+  width: '100%',
+  height: '100%',
+  position: 'absolute'
 };
 
 export const KEY_CONTAINER = {
   position: 'relative',
-  height: '200%',
-  width: '100%',
+  height: '1000px',
+  width: '100px',
   borderRadius: '10%',
   background: 'lightgrey'
 };
@@ -101,9 +120,15 @@ export const KEY_CONTAINER = {
 export const AUTOMATION_CONTAINER = {
   position: 'relative',
   height: '100%',
-  width: '200%',
+  width: '1500px',
   borderRadius: '30%',
   background: 'magenta'
+};
+
+export const AUTOMATION_LAYER = {
+  width: '100%',
+  height: '100%',
+  position: 'absolute'
 };
 
 export const RULER_CONTAINER = {
