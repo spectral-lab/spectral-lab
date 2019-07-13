@@ -50,3 +50,11 @@ export default {
   }
 };
 </script>
+
+<style>
+.scrollbar-hidden::-webkit-scrollbar  {
+  display:none;
+  width:0px;
+  background-color:transparent;
+}
+</style>
