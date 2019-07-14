@@ -1,6 +1,6 @@
 export const manageScroll = (sectionElts) => {
   syncHorizontalScroll(sectionElts.noteDisplay, sectionElts.ruler);
-  syncHorizontalScroll(sectionElts.noteDisplay, sectionElts.automationLane);
+  syncHorizontalScroll(sectionElts.noteDisplay, sectionElts.automationLaneContent);
   syncVerticalScroll(sectionElts.noteDisplay, sectionElts.midiKeyboard);
 };
 

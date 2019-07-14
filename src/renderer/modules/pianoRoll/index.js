@@ -25,13 +25,17 @@ const pianoRoll = (options) => {
   };
 };
 
-const manageDragAndScrollAndZoom = (view, sectionElts) => {
-  makeDraggable(sectionElts.border, view);
-  manageScroll(sectionElts, view);
-  manageZoom(view);
+/**
+ * @param {HTMLElement} wrapperElement
+ * @param {object} sections
+ */
+export const manageDragAndScrollAndZoom = (wrapperElement, sections) => {
+  makeDraggable(sections.border, wrapperElement);
+  manageScroll(sections, wrapperElement);
+  manageZoom(wrapperElement);
 };
 
-const composeAddNote = noteLayer => note => {
+export const composeAddNote = noteLayer => note => {
   const noteOnElt = initDivElement('note-on', `note-on-${note.id}`);
   noteLayer.appendChild(noteOnElt);
   const { time, noteNumber, pitchBend } = note.noteOn;

@@ -1,17 +1,17 @@
 <template>
-    <div ref="pianoRollContainer" class="piano-roll-container"></div>
+    <div ref="pianoRollContainer" class="piano-roll-container">
+        <piano-roll ref="pianoRoll"/>
+    </div>
 </template>
 
 <script>
-import pianoRoll from '../modules/pianoRoll';
+import PianoRoll from './PianoRoll';
 import { ADD_NOTE } from '../store/action-types';
 import mockState from '../../../test/data/mockState';
 import { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF, DELETE_NOTE } from '../store/mutation-types';
 
 export default {
   mounted () {
-    this.pianoRoll = pianoRoll();
-    this.$refs.pianoRollContainer.appendChild(this.pianoRoll.view);
     this.subscribeNotes();
     this.loadMockNotes();
   },
@@ -23,7 +23,7 @@ export default {
       this.unsubscribe = this.$store.subscribe((mutation) => {
         switch (mutation.type) {
           case APPEND_NOTE:
-            this.pianoRoll.addNote(mutation.payload);
+            this.$refs.pianoRoll.addNote(mutation.payload);
             break;
           case INSERT_MODULATION:
             break;
@@ -39,6 +39,9 @@ export default {
         this.$store.dispatch(ADD_NOTE, note);
       });
     }
+  },
+  components: {
+    PianoRoll
   }
 };
 </script>
