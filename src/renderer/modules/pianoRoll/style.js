@@ -90,8 +90,8 @@ export const BORDER = {
 };
 
 export const NOTE_CONTAINER = {
-  height: '1000px',
-  width: '1500px',
+  height: '100%',
+  width: '100%',
   borderRadius: '10%',
   background: 'lightgrey',
   position: 'relative'
@@ -111,8 +111,8 @@ export const GRID_LAYER = {
 
 export const KEY_CONTAINER = {
   position: 'relative',
-  height: '1000px',
-  width: '100px',
+  height: '100%',
+  width: '100%',
   borderRadius: '10%',
   background: 'lightgrey'
 };
@@ -120,7 +120,7 @@ export const KEY_CONTAINER = {
 export const AUTOMATION_CONTAINER = {
   position: 'relative',
   height: '100%',
-  width: '1500px',
+  width: '100%',
   borderRadius: '30%',
   background: 'magenta'
 };
@@ -134,15 +134,16 @@ export const AUTOMATION_LAYER = {
 export const RULER_CONTAINER = {
   position: 'relative',
   height: '100%',
-  width: '200%',
+  width: '100%',
   borderRadius: '30%',
   background: 'cyan'
 };
 
 export const NOTE_ON = {
+  zIndex: 100,
   position: 'absolute',
-  top: '10%',
-  left: '20%',
+  top: '50%',
+  left: '50%',
   borderRadius: '50%',
   width: '20px',
   height: '20px',
