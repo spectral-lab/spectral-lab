@@ -10,7 +10,9 @@ class NoteFactory {
     this.id = 0;
   }
   assignId (note) {
-    return Object.assign({}, note, { id: this.id });
+    const ret = Object.assign({}, note, { id: this.id });
+    this.id++;
+    return ret;
   }
   /**
    * @param {object} materials
