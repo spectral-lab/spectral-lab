@@ -24,7 +24,7 @@ export const assignStylesTo = (elt, styles) => {
 export const initDivElement = (className, id) => {
   const elt = document.createElement('div');
   elt.classList.add(paramCase(className));
-  elt.id = id || paramCase(className);
+  if (id) elt.id = id;
   assignStylesTo(elt, style[constantCase(className)]);
   return elt;
 };
