@@ -76,7 +76,7 @@ export default {
     grid-column-end: end;
     grid-row-start: 4;
     grid-row-end: end;
-    background: red;
+    background: rgb(50, 50, 50);
     overflow: auto;
 }
 .automation-lane-selector {
@@ -84,7 +84,7 @@ export default {
     grid-column-end: 2;
     grid-row-start: 4;
     grid-row-end: end;
-    background: purple;
+    background: rgb(55, 55, 55);
 }
 .ruler {
     overflow: auto;
@@ -147,7 +147,6 @@ export default {
     height: 100%;
     width: 100%;
     border-radius: 30%;
-    background: magenta;
 }
 
 .automation-layer {
