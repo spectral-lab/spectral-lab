@@ -83,6 +83,7 @@
     "ndarray-unpack": "^1.0.0",
     "pixi.js": "^5.0.4",
     "pngjs": "^3.4.0",
+    "svg.js": "^2.7.1",
     "teoria": "^2.5.0",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
