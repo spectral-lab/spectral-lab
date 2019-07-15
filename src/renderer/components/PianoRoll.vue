@@ -65,7 +65,7 @@ export default {
 
 <style scoped>
 .wrapper {
-    background: black;
+    background: rgb(33,33,33);
     height: 100%;
     display: grid;
     grid-template-columns: 100px 1fr;
@@ -76,8 +76,9 @@ export default {
     grid-column-end: end;
     grid-row-start: 4;
     grid-row-end: end;
-    background: rgb(50, 50, 50);
+    background: rgb(50,50,50);
     overflow: auto;
+    border-top: solid 2px rgb(100, 112, 114);
 }
 .automation-lane-selector {
     grid-column-start: 1;
@@ -111,7 +112,7 @@ export default {
 
 .border {
     cursor: row-resize;
-    z-index: 10;
+    z-index: 100;
     grid-column-start: 1;
     grid-column-end: end;
     grid-row-start: 3;

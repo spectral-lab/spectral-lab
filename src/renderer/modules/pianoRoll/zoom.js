@@ -1,5 +1,6 @@
 import hotkeys from 'hotkeys-js';
 import { debounce } from 'lodash';
+import elementResizeDetector from 'element-resize-detector';
 
 export const manageZoom = wrapperElement => {
   hotkeys('h', () => horizontalZoomIn(wrapperElement));
@@ -10,7 +11,9 @@ export const manageZoom = wrapperElement => {
 };
 
 const listenResize = (wrapperElement) => {
-  window.addEventListener('resize', debounce(() => handleResize(wrapperElement), 120));
+  const noteDisplay = wrapperElement.querySelector('.note-display');
+  const detector = elementResizeDetector({ strategy: 'scroll' });
+  detector.listenTo(noteDisplay, debounce(() => handleResize(wrapperElement), 120));
 };
 
 const handleResize = (wrapperElement) => {
