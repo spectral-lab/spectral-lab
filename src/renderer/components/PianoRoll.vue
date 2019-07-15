@@ -6,9 +6,7 @@
         <div ref="noteDisplay" class="note-display scrollbar-hidden">
             <div ref="noteContainer" class="note-container">
                 <div ref="noteGridLayer" class="grid-layer">
-                    <div ref="noteGridRowLayer" class="grid-row-layer">
-                        <piano-roll-grid-row v-for="noteNumber in reversedNoteNumbers" :noteNumber="noteNumber"/>
-                    </div>
+                    <piano-roll-grid-row-layer/>
                     <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars"/>
                 </div>
                 <div ref="noteLayer" class="note-layer"></div>
@@ -30,19 +28,13 @@
 
 <script>
 import { composeAddNote, manageDragAndScrollAndZoom } from '../modules/pianoRoll';
-import { range } from 'lodash';
-import PianoRollGridRow from './PianoRollGridRow';
+import PianoRollGridRowLayer from './PianoRollGridRowLayer';
 import PianoRollGridColumnLayer from './PianoRollGridColumnLayer';
 
 export default {
   props: {
     totalBeats: Number,
     totalBars: Number
-  },
-  data () {
-    return {
-      noteNumbers: range(128)
-    };
   },
   mounted () {
     manageDragAndScrollAndZoom(this.$refs.wrapper, this.sections);
@@ -58,13 +50,10 @@ export default {
         automationLaneSelector: this.$refs.automationLaneSelector,
         automationLaneContent: this.$refs.automationLaneContent
       };
-    },
-    reversedNoteNumbers () {
-      return this.noteNumbers.reverse();
     }
   },
   components: {
-    PianoRollGridRow,
+    PianoRollGridRowLayer,
     PianoRollGridColumnLayer
   }
 };
@@ -142,21 +131,6 @@ export default {
     width: 100%;
     height: 100%;
     position: absolute;
-}
-
-.grid-row-layer {
-    position: absolute;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-}
-
-.grid-column-layer {
-    position: absolute;
-    display: flex;
-    width: 100%;
-    height: 100%;
 }
 
 .key-container {

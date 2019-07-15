@@ -19,8 +19,7 @@ export default {
   },
   data () {
     return {
-      width: 0,
-      height: 0
+      width: 0
     };
   },
   computed: {
@@ -35,7 +34,6 @@ export default {
     const detector = elementResizeDetector({ strategy: 'scroll' });
     detector.listenTo(this.$refs.gridColumnLayer, (element) => {
       this.width = element.offsetWidth;
-      this.height = element.offsetHeight;
     });
   },
   components: {
