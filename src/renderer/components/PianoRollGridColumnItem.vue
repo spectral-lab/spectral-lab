@@ -16,7 +16,6 @@ export default {
     z-index: 31;
     border-right: solid 1px;
     border-right-color: black;
-    flex: 1 1;
     height: 100%;
 }
 </style>

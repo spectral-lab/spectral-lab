@@ -1,7 +1,9 @@
 <template>
     <div ref="wrapper" class="wrapper">
         <div ref="ruler" class="ruler scrollbar-hidden">
-            <div ref="rulerContainer" class="ruler-container"></div>
+            <div ref="rulerContainer" class="ruler-container">
+                <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars" :show-number="true"/>
+            </div>
         </div>
         <div ref="noteDisplay" class="note-display scrollbar-hidden">
             <div ref="noteContainer" class="note-container">
@@ -93,7 +95,7 @@ export default {
     grid-column-end: end;
     grid-row-start: 1;
     grid-row-end: 2;
-    background: grey;
+    background: rgb(100, 112, 114);
 }
 .note-display {
     overflow: auto;
@@ -161,7 +163,6 @@ export default {
     height: 100%;
     width: 100%;
     border-radius: 30%;
-    background: cyan;
 }
 
 .scrollbar-hidden::-webkit-scrollbar  {
