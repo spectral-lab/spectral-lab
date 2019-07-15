@@ -13,7 +13,9 @@
             </div>
         </div>
         <div ref="midiKeyboard" class="midi-keyboard scrollbar-hidden">
-            <div ref="keyContainer" class="key-container"></div>
+            <div ref="keyContainer" class="key-container">
+                <piano-roll-midi-keyboard/>
+            </div>
         </div>
         <div ref="border" class="border"></div>
         <div ref="automationLaneSelector" class="automation-lane-selector"></div>
@@ -30,6 +32,7 @@
 import { composeAddNote, manageDragAndScrollAndZoom } from '../modules/pianoRoll';
 import PianoRollGridRowLayer from './PianoRollGridRowLayer';
 import PianoRollGridColumnLayer from './PianoRollGridColumnLayer';
+import PianoRollMidiKeyboard from './PianoRollMidiKeyboard';
 
 export default {
   props: {
@@ -54,7 +57,8 @@ export default {
   },
   components: {
     PianoRollGridRowLayer,
-    PianoRollGridColumnLayer
+    PianoRollGridColumnLayer,
+    PianoRollMidiKeyboard
   }
 };
 </script>
@@ -103,7 +107,6 @@ export default {
     grid-column-end: 2;
     grid-row-start: 2;
     grid-row-end: 4;
-    background: yellow;
 }
 
 .border {
@@ -137,8 +140,6 @@ export default {
     position: relative;
     height: 200%;
     width: 100%;
-    border-radius: 10%;
-    background: lightgrey;
 }
 
 .automation-container {
