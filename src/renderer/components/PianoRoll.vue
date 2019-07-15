@@ -5,8 +5,11 @@
         </div>
         <div ref="noteDisplay" class="note-display scrollbar-hidden">
             <div ref="noteContainer" class="note-container">
+                <div ref="noteGridLayer" class="grid-layer">
+                    <piano-roll-grid-row-layer/>
+                    <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars"/>
+                </div>
                 <div ref="noteLayer" class="note-layer"></div>
-                <div ref="noteGridLayer" class="grid-layer"></div>
             </div>
         </div>
         <div ref="midiKeyboard" class="midi-keyboard scrollbar-hidden">
@@ -16,8 +19,8 @@
         <div ref="automationLaneSelector" class="automation-lane-selector"></div>
         <div ref="automationLaneContent" class="automation-lane-content scrollbar-hidden">
             <div ref="automationContainer" class="automation-container">
+                <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars"/>
                 <div ref="automationLayer" class="automation-layer"></div>
-                <div ref="automationGridLayer" class="grid-layer"></div>
             </div>
         </div>
     </div>
@@ -25,8 +28,14 @@
 
 <script>
 import { composeAddNote, manageDragAndScrollAndZoom } from '../modules/pianoRoll';
+import PianoRollGridRowLayer from './PianoRollGridRowLayer';
+import PianoRollGridColumnLayer from './PianoRollGridColumnLayer';
 
 export default {
+  props: {
+    totalBeats: Number,
+    totalBars: Number
+  },
   mounted () {
     manageDragAndScrollAndZoom(this.$refs.wrapper, this.sections);
     this.addNote = composeAddNote(this.$refs.noteLayer);
@@ -42,6 +51,10 @@ export default {
         automationLaneContent: this.$refs.automationLaneContent
       };
     }
+  },
+  components: {
+    PianoRollGridRowLayer,
+    PianoRollGridColumnLayer
   }
 };
 </script>
@@ -83,7 +96,6 @@ export default {
     grid-column-end: end;
     grid-row-start: 2;
     grid-row-end: 4;
-    background: pink;
 }
 .midi-keyboard {
     overflow: auto;
@@ -104,10 +116,8 @@ export default {
 }
 
 .note-container {
-    height: 100%;
+    height: 200%;
     width: 100%;
-    border-radius: 10%;
-    background: lightgrey;
     position: relative;
 }
 
@@ -125,7 +135,7 @@ export default {
 
 .key-container {
     position: relative;
-    height: 100%;
+    height: 200%;
     width: 100%;
     border-radius: 10%;
     background: lightgrey;
@@ -151,17 +161,6 @@ export default {
     width: 100%;
     border-radius: 30%;
     background: cyan;
-}
-
-.note-on {
-    z-index: 100;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    background: blue;
 }
 
 .scrollbar-hidden::-webkit-scrollbar  {

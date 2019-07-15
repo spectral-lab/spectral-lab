@@ -35,8 +35,6 @@ export const stringifyProperty = array => array.map(item => item.val + item.unit
 export const NOTE_ON = {
   zIndex: 100,
   position: 'absolute',
-  top: '50%',
-  left: '50%',
   borderRadius: '50%',
   width: '20px',
   height: '20px',

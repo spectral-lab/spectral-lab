@@ -75,9 +75,6 @@ export default {
 </script>
 
 <style scoped>
-#buttonContainer {
-  height: 64px;
-}
 img {
   height: 100%;
 }
