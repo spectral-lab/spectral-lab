@@ -50,7 +50,7 @@ const horizontalZoomIn = (wrapperElement) => {
     wrapperElement.querySelector('.automation-container')
   ];
   enlargedElts.forEach(elt => {
-    elt.style.width = `${Math.max(elt.offsetWidth * 1.3, minWidth)}px`;
+    elt.style.width = `${Math.max(elt.offsetWidth * 1.4, minWidth)}px`;
   });
 };
 const horizontalZoomOut = (wrapperElement) => {
@@ -61,7 +61,7 @@ const horizontalZoomOut = (wrapperElement) => {
     wrapperElement.querySelector('.automation-container')
   ];
   reducedElts.forEach(elt => {
-    elt.style.width = `${Math.max(elt.offsetWidth / 1.3, minWidth)}px`;
+    elt.style.width = `${Math.max(elt.offsetWidth / 1.4, minWidth)}px`;
   });
 };
 const verticalZoomIn = (wrapperElement) => {
@@ -71,7 +71,7 @@ const verticalZoomIn = (wrapperElement) => {
     wrapperElement.querySelector('.key-container')
   ];
   enlargedElts.forEach(elt => {
-    elt.style.height = `${Math.max(elt.offsetHeight * 1.3, minHeight)}px`;
+    elt.style.height = `${Math.max(elt.offsetHeight * 1.4, minHeight)}px`;
   });
 };
 const verticalZoomOut = (wrapperElement) => {
@@ -81,6 +81,6 @@ const verticalZoomOut = (wrapperElement) => {
     wrapperElement.querySelector('.key-container')
   ];
   reducedElts.forEach(elt => {
-    elt.style.height = `${Math.max(elt.offsetHeight / 1.3, minHeight)}px`;
+    elt.style.height = `${Math.max(elt.offsetHeight / 1.4, minHeight)}px`;
   });
 };

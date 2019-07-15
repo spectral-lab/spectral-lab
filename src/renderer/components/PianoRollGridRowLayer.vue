@@ -26,7 +26,7 @@ export default {
       return this.noteNumbers.reverse();
     },
     visibleLine () {
-      if (this.height > 25e3) return 'CENT';
+      if (this.height > 20e3) return 'CENT';
       if (this.height > 5e3) return 'NOTE';
       if (this.height > 1750) return 'OCTAVE';
       return 'NONE';
