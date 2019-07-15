@@ -13,7 +13,7 @@ export const manageZoom = wrapperElement => {
 const listenResize = (wrapperElement) => {
   const noteDisplay = wrapperElement.querySelector('.note-display');
   const detector = elementResizeDetector({ strategy: 'scroll' });
-  detector.listenTo(noteDisplay, debounce(() => handleResize(wrapperElement), 120));
+  detector.listenTo(noteDisplay, debounce(() => handleResize(wrapperElement), 10));
 };
 
 const handleResize = (wrapperElement) => {
