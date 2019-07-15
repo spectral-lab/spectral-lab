@@ -72,6 +72,7 @@
     "change-case": "^3.1.0",
     "decibels": "^2.0.0",
     "dsp.js-browser": "^1.0.1",
+    "element-resize-detector": "^1.1.15",
     "express": "^4.16.4",
     "hotkeys-js": "^3.6.11",
     "lodash": "^4.17.11",

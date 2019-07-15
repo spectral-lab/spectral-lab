@@ -9,9 +9,7 @@
                     <div ref="noteGridRowLayer" class="grid-row-layer">
                         <piano-roll-grid-row v-for="noteNumber in reversedNoteNumbers" :noteNumber="noteNumber"/>
                     </div>
-                    <div ref="noteGridColumnLayer" class="grid-column-layer">
-                        <piano-roll-grid-column v-for="_ in totalBeats"/>
-                    </div>
+                    <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars"/>
                 </div>
                 <div ref="noteLayer" class="note-layer"></div>
             </div>
@@ -23,9 +21,7 @@
         <div ref="automationLaneSelector" class="automation-lane-selector"></div>
         <div ref="automationLaneContent" class="automation-lane-content scrollbar-hidden">
             <div ref="automationContainer" class="automation-container">
-                <div ref="automationGridLayer" class="grid-column-layer">
-                    <piano-roll-grid-column v-for="_ in totalBeats"/>
-                </div>
+                <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars"/>
                 <div ref="automationLayer" class="automation-layer"></div>
             </div>
         </div>
@@ -36,9 +32,13 @@
 import { composeAddNote, manageDragAndScrollAndZoom } from '../modules/pianoRoll';
 import { range } from 'lodash';
 import PianoRollGridRow from './PianoRollGridRow';
-import PianoRollGridColumn from './PianoRollGridColumn';
+import PianoRollGridColumnLayer from './PianoRollGridColumnLayer';
 
 export default {
+  props: {
+    totalBeats: Number,
+    totalBars: Number
+  },
   data () {
     return {
       noteNumbers: range(128)
@@ -61,14 +61,11 @@ export default {
     },
     reversedNoteNumbers () {
       return this.noteNumbers.reverse();
-    },
-    totalBeats () {
-      return 32;
     }
   },
   components: {
     PianoRollGridRow,
-    PianoRollGridColumn
+    PianoRollGridColumnLayer
   }
 };
 </script>
@@ -130,7 +127,7 @@ export default {
 }
 
 .note-container {
-    height: 100%;
+    height: 200%;
     width: 100%;
     position: relative;
 }
@@ -164,7 +161,7 @@ export default {
 
 .key-container {
     position: relative;
-    height: 100%;
+    height: 200%;
     width: 100%;
     border-radius: 10%;
     background: lightgrey;

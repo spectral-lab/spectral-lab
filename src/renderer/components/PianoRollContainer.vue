@@ -1,6 +1,6 @@
 <template>
     <div ref="pianoRollContainer" class="piano-roll-container">
-        <piano-roll ref="pianoRoll"/>
+        <piano-roll ref="pianoRoll" :total-beats="totalBeats" :total-bars="totalBars"/>
     </div>
 </template>
 
@@ -11,6 +11,12 @@ import mockState from '../../../test/data/mockState';
 import { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF, DELETE_NOTE } from '../store/mutation-types';
 
 export default {
+  data () {
+    return {
+      totalBeats: 32,
+      totalBars: 8
+    };
+  },
   mounted () {
     this.subscribeNotes();
     this.loadMockNotes();
