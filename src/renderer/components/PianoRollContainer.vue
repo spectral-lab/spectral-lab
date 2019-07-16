@@ -1,6 +1,6 @@
 <template>
     <div ref="pianoRollContainer" class="piano-roll-container">
-        <piano-roll ref="pianoRoll" :total-beats="totalBeats" :total-bars="totalBars"/>
+        <piano-roll ref="pianoRoll" :total-beats="totalBeats" :total-bars="totalBars" :notes="notes"/>
     </div>
 </template>
 
@@ -8,7 +8,6 @@
 import PianoRoll from './PianoRoll';
 import { ADD_NOTE } from '../store/action-types';
 import mockState from '../../../test/data/mockState';
-import { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF, DELETE_NOTE } from '../store/mutation-types';
 
 export default {
   data () {
@@ -17,29 +16,15 @@ export default {
       totalBars: 8
     };
   },
+  computed: {
+    notes () {
+      return this.$store.state.notes.data;
+    }
+  },
   mounted () {
-    this.subscribeNotes();
     this.loadMockNotes();
   },
-  beforeDestroy () {
-    this.unsubscribe();
-  },
   methods: {
-    subscribeNotes () {
-      this.unsubscribe = this.$store.subscribe((mutation) => {
-        switch (mutation.type) {
-          case APPEND_NOTE:
-            this.$refs.pianoRoll.addNote(mutation.payload);
-            break;
-          case INSERT_MODULATION:
-            break;
-          case SET_NOTE_OFF:
-            break;
-          case DELETE_NOTE:
-            break;
-        }
-      });
-    },
     loadMockNotes () {
       mockState.notes.data.forEach(note => {
         this.$store.dispatch(ADD_NOTE, note);

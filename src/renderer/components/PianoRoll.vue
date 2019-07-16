@@ -11,7 +11,9 @@
                     <piano-roll-grid-row-layer/>
                     <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars"/>
                 </div>
-                <div ref="noteLayer" class="note-layer"></div>
+                <div ref="noteLayer" class="note-layer">
+                    <piano-roll-note v-for="note in notes" :note="note"/>
+                </div>
             </div>
         </div>
         <div ref="midiKeyboard" class="midi-keyboard scrollbar-hidden">
@@ -35,9 +37,11 @@ import { composeAddNote, manageDragAndScrollAndZoom } from '../modules/pianoRoll
 import PianoRollGridRowLayer from './PianoRollGridRowLayer';
 import PianoRollGridColumnLayer from './PianoRollGridColumnLayer';
 import PianoRollMidiKeyboard from './PianoRollMidiKeyboard';
+import PianoRollNote from './PianoRollNote';
 
 export default {
   props: {
+    notes: Array,
     totalBeats: Number,
     totalBars: Number
   },
@@ -60,7 +64,8 @@ export default {
   components: {
     PianoRollGridRowLayer,
     PianoRollGridColumnLayer,
-    PianoRollMidiKeyboard
+    PianoRollMidiKeyboard,
+    PianoRollNote
   }
 };
 </script>
@@ -72,7 +77,14 @@ export default {
     display: grid;
     grid-template-columns: 100px 1fr;
     grid-template-rows: 40px 1fr 4px 4px 120px;
+    animation: fadein 1s;
 }
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 .automation-lane-content {
     grid-column-start: 2;
     grid-column-end: end;
