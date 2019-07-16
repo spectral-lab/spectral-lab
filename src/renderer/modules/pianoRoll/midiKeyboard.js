@@ -35,5 +35,4 @@ const drawBlackKeys = (draw) => {
 const drawBlackKey = (noteNumber, draw) => {
   const centerY = (127 - noteNumber) * 10 + 5;
   draw.rect(40, 4).radius(10, 2).attr({ fill: 'rgb(80,80,80)' }).y(centerY - 2);
-  console.log(teoria.note.fromMIDI(noteNumber).scientific(), noteNumber);
 };
