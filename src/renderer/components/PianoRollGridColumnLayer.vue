@@ -3,7 +3,7 @@
         <div class="beat-layer">
             <div v-for="beat in totalBeats" class="grid-item-container">
                 <piano-roll-grid-column-item :is-visible="showBeats" color="DimGray"/>
-GG            </div>
+            </div>
         </div>
         <div class="bar-layer">
             <div v-for="bar in totalBars" class="grid-item-container">
