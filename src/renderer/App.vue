@@ -7,10 +7,10 @@
         <v-container fluid fill-height>
           <v-layout column>
             <v-flex>
-              <audio-info/>
+              <audio-info-container/>
             </v-flex>
             <v-flex>
-              <toolbar/>
+              <toolbar-container/>
             </v-flex>
             <v-flex>
               <info-bar/>
@@ -29,21 +29,21 @@
 <script>
 import store from './store';
 import PianoRollContainer from './components/PianoRollContainer';
-import AudioInfo from './components/AudioInfo';
 import Transport from './components/Transport';
 import TitleBar from './components/TitleBar';
 import KeyboardManager from './components/KeyboardManager';
-import Toolbar from './components/Toolbar';
+import ToolbarContainer from './components/ToolbarContainer';
 import InfoBar from './components/InfoBar';
+import AudioInfoContainer from './components/AudioInfoContainer';
 
 export default {
   name: 'app',
   store,
   components: {
+    AudioInfoContainer,
     PianoRollContainer,
-    Toolbar,
+    ToolbarContainer,
     InfoBar,
-    AudioInfo,
     Transport,
     TitleBar,
     KeyboardManager
