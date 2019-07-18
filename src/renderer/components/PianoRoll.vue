@@ -12,7 +12,7 @@
                     <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars"/>
                 </div>
                 <div ref="noteLayer" class="note-layer">
-                    <piano-roll-note v-for="note in notes" :note="note"/>
+                    <piano-roll-note v-for="note in notes" :note="note" :total-ticks="totalTicks"/>
                 </div>
             </div>
         </div>
@@ -42,14 +42,17 @@ import PianoRollNote from './PianoRollNote';
 export default {
   props: {
     notes: Array,
-    totalBeats: Number,
-    totalBars: Number
-  },
-  mounted () {
-    manageDragAndScrollAndZoom(this.$refs.wrapper, this.sections);
-    this.addNote = composeAddNote(this.$refs.noteLayer);
+    totalBars: Number,
+    beatsInBar: Number,
+    ticksPerBeat: Number
   },
   computed: {
+    totalBeats () {
+      return this.totalBars * this.beatsInBar;
+    },
+    totalTicks () {
+      return this.totalBars * this.beatsInBar * this.ticksPerBeat;
+    },
     sections () {
       return {
         ruler: this.$refs.ruler,
@@ -60,6 +63,10 @@ export default {
         automationLaneContent: this.$refs.automationLaneContent
       };
     }
+  },
+  mounted () {
+    manageDragAndScrollAndZoom(this.$refs.wrapper, this.sections);
+    this.addNote = composeAddNote(this.$refs.noteLayer);
   },
   components: {
     PianoRollGridRowLayer,
@@ -174,7 +181,6 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
-    border-radius: 30%;
 }
 
 .scrollbar-hidden::-webkit-scrollbar  {

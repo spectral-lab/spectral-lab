@@ -1,24 +1,34 @@
 <template>
     <div ref="pianoRollContainer" class="piano-roll-container">
-        <piano-roll ref="pianoRoll" :total-beats="totalBeats" :total-bars="totalBars" :notes="notes"/>
+        <piano-roll
+                ref="pianoRoll"
+                :total-bars="totalBars"
+                :beats-in-bar="song.beatsInBar"
+                :ticks-per-beat="song.ticksPerBeat"
+                :notes="notes"
+        />
     </div>
 </template>
 
 <script>
 import PianoRoll from './PianoRoll';
-import { ADD_NOTE } from '../store/action-types';
-import mockState from '../../../test/data/mockState';
+import mockEntities from '../../../test/data/mockEntities';
+import { SET_ENTITIES } from '../store/mutation-types';
+import { Clip, Song } from '../store/models';
 
 export default {
-  data () {
-    return {
-      totalBeats: 32,
-      totalBars: 8
-    };
-  },
   computed: {
+    song () {
+      return Song.query().last();
+    },
+    clip () {
+      return Clip.query().where('selected', true).withAllRecursive().last();
+    },
     notes () {
-      return this.$store.state.notes.data;
+      return this.clip.notes;
+    },
+    totalBars () {
+      return Math.ceil(this.clip.duration / this.song.ticksPerBeat / this.song.beatsInBar);
     }
   },
   mounted () {
@@ -26,9 +36,7 @@ export default {
   },
   methods: {
     loadMockNotes () {
-      mockState.notes.data.forEach(note => {
-        this.$store.dispatch(ADD_NOTE, note);
-      });
+      this.$store.commit(SET_ENTITIES, mockEntities);
     }
   },
   components: {

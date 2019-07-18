@@ -142,6 +142,7 @@ export class Track extends Model {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(TRACK),
       bpmTransition: this.attr([]),
+      beatsInBarTransition: this.attr([]),
       selected: this.boolean(false),
       songId: this.attr(null),
       clips: this.hasMany(Clip, 'trackId')

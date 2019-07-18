@@ -97900,7 +97900,7 @@
         "duration": 7680,
         "notes": [],
         "audioBuffer": null,
-        "selected": false,
+        "selected": true,
         "trackId": "84j381a"
       }
     }
