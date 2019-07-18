@@ -31,9 +31,6 @@ export default {
       return Math.ceil(this.clip.duration / this.song.ticksPerBeat / this.song.beatsInBar);
     }
   },
-  mounted () {
-    this.loadMockNotes();
-  },
   methods: {
     loadMockNotes () {
       this.$store.commit(SET_ENTITIES, mockEntities);

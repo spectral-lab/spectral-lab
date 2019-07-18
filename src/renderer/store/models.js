@@ -7,6 +7,8 @@ import {
 import { makeMandatory } from './utils';
 import { bpm, beatsInBar, ticksPerBeat } from '../constants/defaults';
 import { SELECT } from '../constants/mouse-modes';
+import { random } from 'lodash';
+import { SCALE_COLORS } from '../constants/colors';
 
 export class NoteOn extends Model {
   static entity = 'noteOns';
@@ -66,7 +68,8 @@ export class Note extends Model {
       noteOff: this.hasOne(NoteOff, 'noteId'),
       modulations: this.hasMany(Modulation, 'noteId'),
       offsetTime: this.number(0), // in tick
-      selected: this.boolean(false)
+      selected: this.boolean(false),
+      interpolation: this.string('LINEAR')
     };
   }
   get pitchTransition () {
@@ -130,7 +133,8 @@ export class Clip extends Model {
       notes: this.hasMany(Note, 'clipId'),
       audioBuffer: this.hasOne(AudioBuffer, 'clipId'),
       selected: this.boolean(false),
-      trackId: this.attr(null)
+      trackId: this.attr(null),
+      color: this.attr(() => SCALE_COLORS.aBernardKlein[random(11)])
     };
   };
 }

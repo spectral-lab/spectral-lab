@@ -2,7 +2,11 @@
     <div class="point-wrapper">
         <div v-for="point in positions"
              class="pitch"
-             :style="{left: `${point.x * 100}%`, top: `${point.y * 100}%` }"
+             :style="{
+                left: `${point.x * 100}%`,
+                top: `${point.y * 100}%`,
+                borderColor: color
+             }"
         >
         </div>
     </div>
@@ -14,7 +18,8 @@
     props: {
       transition: Array,
       type: String,
-      totalTicks: Number
+      totalTicks: Number,
+      color: String
     },
     computed: {
       positions () {
@@ -44,7 +49,7 @@
     }
     .pitch {
         border-radius: 50%;
-        border: 1px solid orange;
+        border: 1px solid;
         position: absolute;
         width: 7px;
         height: 7px;
