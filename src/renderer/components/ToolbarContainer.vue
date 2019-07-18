@@ -2,27 +2,66 @@
     <div>
         <toolbar
                 @mouse-mode="handleMouseMode"
+                @extract-notes="extractNotes"
         />
     </div>
 </template>
 
 <script>
 import Toolbar from './Toolbar';
-import { App } from '../store/models';
+import { App, Spectrogram, Song, Note } from '../store/models';
+import { APP_ID } from '../constants/ids';
+import {
+  makePNGBuffer, postImage,
+  parsePointAsNoteOn, parsePointAsModulation, parsePointAsNoteOff
+} from '../modules/helpers/postImageUtils';
+import uid from 'uid';
+import { getParent } from '../store/utils';
+
 export default {
   computed: {
-    appId () {
-      return App.query().last().id;
+    bpm () {
+      return Song.query().last().bpm;
+    },
+    ticksPerBeat () {
+      return Song.query().last().ticksPerBeat;
     }
   },
   methods: {
     handleMouseMode (m) {
       App.update({
-        where: this.appId,
+        where: APP_ID,
         data: {
           mouseMode: m
         }
       });
+    },
+    async extractNotes () {
+      const spectrogram = Spectrogram.query().last();
+      if (!spectrogram) return;
+      if (spectrogram.times.length === 0) return;
+      const buff = makePNGBuffer(spectrogram.magnitude2d);
+      const extractedLines = await postImage(buff, { sensitivity: 5, degree: 6 });
+      extractedLines.forEach((line) => {
+        const noteOn = parsePointAsNoteOn(line[0], spectrogram, this.secToTick);
+        const modulations = line.slice(1, -1).map(point => {
+          return parsePointAsModulation(point, spectrogram, this.secToTick, noteOn.time, noteOn.noteNumber);
+        });
+        const noteOff = parsePointAsNoteOff(line[line.length - 1], spectrogram, this.secToTick, noteOn.time);
+        Note.insert({
+          data: {
+            id: uid(),
+            clipId: getParent(spectrogram).clipId,
+            offsetTime: noteOn.time,
+            noteOn,
+            noteOff,
+            modulations
+          }
+        });
+      });
+    },
+    secToTick (sec) {
+      return sec / 60 * this.bpm * this.ticksPerBeat;
     }
   },
   components: {

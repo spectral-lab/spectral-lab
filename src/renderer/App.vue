@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keyboard-manager/>
+    <project-manager/>
     <v-app id="inspire" dark>
       <title-bar/>
       <v-content>
@@ -31,7 +31,7 @@ import store from './store';
 import PianoRollContainer from './components/PianoRollContainer';
 import Transport from './components/Transport';
 import TitleBar from './components/TitleBar';
-import KeyboardManager from './components/KeyboardManager';
+import ProjectManager from './components/ProjectManager';
 import ToolbarContainer from './components/ToolbarContainer';
 import InfoBar from './components/InfoBar';
 import AudioInfoContainer from './components/AudioInfoContainer';
@@ -46,7 +46,7 @@ export default {
     InfoBar,
     Transport,
     TitleBar,
-    KeyboardManager
+    ProjectManager
   }
 };
 </script>

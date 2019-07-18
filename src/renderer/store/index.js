@@ -3,20 +3,19 @@ import Vuex from 'vuex';
 import createLogger from 'vuex/dist/logger';
 import VuexORM from '@vuex-orm/core';
 import { initDatabase, instanciateModels } from './utils';
+import mutations from './mutations';
 
 Vue.use(Vuex);
 const database = initDatabase();
 const InitialState = {
-  audioCtx: new AudioContext({
-    latencyHint: 'interactive',
-    sampleRate: 22050
-  })
+  audioCtx: null
 };
-const logger = createLogger();
+const logger = process.env.NODE_ENV === 'development' ? createLogger() : null;
 const store = new Vuex.Store({
   strict: true,
   state: InitialState,
-  plugins: [logger, VuexORM.install(database)]
+  mutations,
+  plugins: [logger, VuexORM.install(database)].filter(v => v)
 });
 
 instanciateModels();

@@ -1,4 +1,4 @@
-import * as noteActionTypes from '../../constants/note-action-types';
+import * as noteActionTypes from '../../constants/model-types';
 import { validateModulation, validateNoteOff } from './validateNoteAction';
 import { pick } from 'lodash';
 import * as modulationTypes from '../../constants/modulation-types';

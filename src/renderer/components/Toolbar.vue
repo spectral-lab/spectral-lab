@@ -15,7 +15,7 @@
           </v-flex>
           <v-flex>
             <icon-btn-with-tip
-              @click="extractNotes"
+              @click="emitExtractNotes"
               icon="fa-flask"
               tip="Extract notes from spectrogram"
             />
@@ -36,22 +36,10 @@
 <script>
 import IconBtnWithTip from './IconBtnWithTip';
 import * as MOUSE_MODES from '../constants/mouse-modes';
-import {
-  makePNGBuffer, postImage,
-  parsePointAsNoteOn, parsePointAsModulation, parsePointAsNoteOff
-} from '../modules/helpers/postImageUtils';
 
 export default {
   components: {
     IconBtnWithTip
-  },
-  computed: {
-    bpm () {
-      return this.$store.state.bpm;
-    },
-    tpb () {
-      return this.$store.state.tpb;
-    }
   },
   methods: {
     emitMouseMode (modeIdx) {
@@ -64,32 +52,11 @@ export default {
           break;
       }
     },
-    async extractNotes () {
-      const { spectrogram } = this.$store.state;
-      if (spectrogram.times.length === 0) return;
-      const buff = makePNGBuffer(spectrogram.magnitude2d);
-      const extractedLines = await postImage(buff, { sensitivity: 5, degree: 6 });
-      extractedLines.forEach(async (line) => {
-        const noteId = await this.$store.dispatch(
-          'CREATE_NOTE',
-          parsePointAsNoteOn(line[0], spectrogram, this.secToTick)
-        );
-        const modulationPoints = line.slice(1, -1);
-        modulationPoints.forEach(point => {
-          const modulation = parsePointAsModulation(point, spectrogram, this.secToTick);
-          this.$store.dispatch('MODULATE_NOTE', { modulation, id: noteId });
-        });
-        this.$store.dispatch('RELEASE_NOTE', {
-          noteOff: parsePointAsNoteOff(line[line.length - 1], spectrogram, this.secToTick),
-          id: noteId
-        });
-      });
+    emitExtractNotes () {
+      this.$emit('extract-notes');
     },
     deleteAllNotes () {
       this.$store.dispatch('DELETE_ALL_NOTES');
-    },
-    secToTick (sec) {
-      return sec / 60 * this.bpm * this.tpb;
     }
   }
 };

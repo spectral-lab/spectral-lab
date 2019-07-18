@@ -13,7 +13,7 @@
 
 <script>
 import AudioInfo from './AudioInfo';
-import { AudioBuffer, Spectrogram, MidiClip } from '../store/models';
+import { AudioBuffer, Spectrogram, Clip } from '../store/models';
 import { playAudioBuffer } from '../modules/helpers';
 import processAudioFile from '../modules/helpers/processAudioFile';
 import uid from 'uid';
@@ -31,10 +31,6 @@ export default {
     audioBuffer () {
       return AudioBuffer.query().last();
     },
-    buffer () {
-      if (!this.audioBuffer) return null;
-      return this.audioBuffer.buffer;
-    },
     filepath () {
       if (!this.audioBuffer) return '';
       return this.audioBuffer.originalFilePath;
@@ -46,17 +42,18 @@ export default {
       return Boolean(this.sourceNode);
     },
     clipId () {
-      return MidiClip.query().last().id;
+      return Clip.query().last().id;
     }
   },
   methods: {
     handleClickPlay () {
+      if (!this.audioBuffer) return;
       if (this.sourceNode != null) {
         this.sourceNode.stop();
         this.sourceNode = null;
         return;
       }
-      const ab = this.buffer;
+      const ab = this.audioBuffer.data;
       const ctx = this.$store.state.audioCtx;
       this.sourceNode = playAudioBuffer(ab, ctx);
       this.sourceNode.onended = () => {
@@ -72,7 +69,8 @@ export default {
       AudioBuffer.insert({
         data: {
           id: uid(),
-          buffer,
+          clipId: this.clipId,
+          data: buffer,
           originalFilePath: filepath
         }
       });
@@ -81,15 +79,18 @@ export default {
       this.buildSpectrogram();
     },
     async buildSpectrogram () {
-      if (!this.buffer) return;
+      if (!this.audioBuffer) return;
+      const buffer = this.audioBuffer.data;
+      const audioBufferId = this.audioBuffer.id;
       const DESIRED_SAMPLE_RATE = 22050;
-      const resampleEvent = await resample(this.buffer, DESIRED_SAMPLE_RATE);
-      const resampledAudioBuffer = resampleEvent.renderedBuffer;
-      const { times, freqs, magnitude2d } = await stft(resampledAudioBuffer, DESIRED_SAMPLE_RATE);
+      const resampleEvent = await resample(buffer, DESIRED_SAMPLE_RATE);
+      const resampledBuffer = resampleEvent.renderedBuffer;
+      const { times, freqs, magnitude2d } = await stft(resampledBuffer, DESIRED_SAMPLE_RATE);
+      console.log(times, freqs, magnitude2d);
       Spectrogram.insert({
         data: {
           id: uid(),
-          clipId: this.clipId,
+          audioBufferId,
           times,
           freqs,
           magnitude2d

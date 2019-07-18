@@ -6,7 +6,7 @@
 
 <script>
 import { Note, NoteOn, NoteOff, MidiClip } from '../store/models';
-import * as uid from 'uid';
+import uid from 'uid';
 
 export default {
   computed: {
@@ -27,13 +27,13 @@ export default {
     }
   },
   async mounted () {
-    const clipId = uid();
-    await MidiClip.insert({
-      data: {
-        id: clipId
-      }
-    });
-    this.editing = clipId;
+    // const clipId = uid();
+    // await MidiClip.insert({
+    //   data: {
+    //     id: clipId
+    //   }
+    // });
+    // this.editing = clipId;
     // setInterval(async () => {
     //   const noteOffId = uid();
     //   await NoteOff.insert({

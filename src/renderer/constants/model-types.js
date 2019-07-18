@@ -1,0 +1,10 @@
+export const NOTE_ON = 'NOTE_ON';
+export const MODULATION = 'MODULATION';
+export const NOTE_OFF = 'NOTE_OFF';
+export const NOTE = 'NOTE';
+export const AUDIO_BUFFER = 'AUDIO_BUFFER';
+export const SPECTROGRAM = 'SPECTROGRAM';
+export const CLIP = 'CLIP';
+export const TRACK = 'TRACK';
+export const SONG = 'SONG';
+export const APP = 'APP';

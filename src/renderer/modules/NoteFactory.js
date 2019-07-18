@@ -1,5 +1,5 @@
 import * as defaults from '../constants/defaults';
-import { NOTE_ON } from '../constants/note-action-types';
+import { NOTE_ON } from '../constants/model-types';
 import { pick } from 'lodash';
 import '../typedef';
 
