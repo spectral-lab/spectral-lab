@@ -49,7 +49,7 @@ describe('Note model', () => {
     expect(note.pitchTransition.length).not.toBe(0);
     note.pitchTransition.reduce((prev, current) => {
       expect(current.pitch).not.toBe(null);
-      expect(prev.time).toBeLessThan(current.time);
+      expect(prev.time <= current.time).toBe(true);
       return current;
     }, {
       pitch: -1,
