@@ -1,12 +1,3 @@
-export const noteOn = {
-  type: 'NOTE_ON',
-  time: 0,
-  pitchBend: 0,
-  noteNumber: 60,
-  noteOnVelocity: 0.5,
-  timbre: 0.5,
-  pressure: 0.5
-};
 
 export const outputManagerOptions = {
   masterChannels: [1],
@@ -17,5 +8,6 @@ export const outputManagerOptions = {
 };
 
 export const bpm = 120;
-/** @type {number} tick per beat `ticks = minutes * bpm * tpb` */
-export const tpb = 480;
+/** @type {number} ticks per beat `ticks = minutes * bpm * tpb` */
+export const ticksPerBeat = 480;
+export const beatsInBar = 4;

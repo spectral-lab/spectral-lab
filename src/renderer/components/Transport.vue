@@ -35,8 +35,8 @@ export default {
     bpm () {
       return this.$store.state.bpm;
     },
-    tpb () {
-      return this.$store.state.tpb;
+    ticksPerBeat () {
+      return this.$store.state.ticksPerBeat;
     }
   },
   mounted () {
@@ -67,8 +67,8 @@ export default {
       });
     },
     tickToMs (tick) {
-      console.log(tick / this.tpb / this.bpm * 60 * 1e3);
-      return tick / this.tpb / this.bpm * 60 * 1e3;
+      console.log(tick / this.ticksPerBeat / this.bpm * 60 * 1e3);
+      return tick / this.ticksPerBeat / this.bpm * 60 * 1e3;
     }
   }
 };
