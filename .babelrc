@@ -33,7 +33,8 @@
         ["@babel/preset-env", {
           "targets": { "node": 7 }
         }]
-      ]
+      ],
+      "plugins": ["@babel/plugin-proposal-class-properties"]
     }
-  },
+  }
 }

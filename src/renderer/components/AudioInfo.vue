@@ -1,61 +1,62 @@
 <template>
   <div>
     <v-toolbar color="grey darken-3" class="mb-2">
-      <v-btn @click="handleClick" icon color="primary">
+      <v-btn @click="handleClickPlay" icon color="primary">
         <v-icon size="24px">{{icon}}</v-icon>
       </v-btn>
-      <v-toolbar-title>{{filename}}</v-toolbar-title>
-      <v-spacer />
+      <div>
+        <v-toolbar-title>{{basename}}</v-toolbar-title>
+        <div class="filepath">{{filepath}}</div>
+      </div>
+      <v-spacer/>
       <upload-button @file-update="handleFileUpdate" title="Open" noTitleUpdate>Open</upload-button>
+      <icon-btn-with-tip
+              @click="handleClickBuild"
+              icon="build"
+              tip="Build a spectrogram of the source audio."
+      >
+      </icon-btn-with-tip>
     </v-toolbar>
   </div>
 </template>
 
 <script>
 import UploadButton from 'vuetify-upload-button';
-import { ACCEPT_AUDIO } from '../store/action-types';
-import { playAudioBuffer } from '../modules/helpers';
-import path from 'path';
+import IconBtnWithTip from './IconBtnWithTip';
 
 export default {
-  data: function () {
-    return {
-      sourceNode: null
-    };
+  props: {
+    filepath: String,
+    basename: String,
+    isPlaying: Boolean
   },
   computed: {
-    filename () {
-      const p = this.$store.state.sourceAudio.filepath;
-      if (p === '') return 'no source audio';
-      return path.basename(p);
-    },
     icon () {
-      if (this.sourceNode != null) return 'stop';
+      if (this.isPlaying) return 'stop';
       return 'play_arrow';
     }
   },
   methods: {
     handleFileUpdate (file) {
-      this.$store.dispatch(ACCEPT_AUDIO, { file });
+      this.$emit('file-update', file);
     },
-    handleClick () {
-      if (this.sourceNode != null) {
-        this.sourceNode.stop();
-        this.sourceNode = null;
-        return;
-      }
-      const ab = this.$store.state.sourceAudio.buffer;
-      const ctx = this.$store.state.audioCtx;
-      this.sourceNode = playAudioBuffer(ab, ctx);
-      this.sourceNode.onended = () => {
-        if (this.sourceNode != null) {
-          this.sourceNode = null;
-        }
-      };
+    handleClickPlay () {
+      this.$emit('click-play');
+    },
+    handleClickBuild () {
+      this.$emit('click-build');
     }
   },
   components: {
-    UploadButton
+    UploadButton,
+    IconBtnWithTip
   }
 };
 </script>
+
+<style scoped>
+  .filepath {
+    font-size: 9px;
+    color: rgb(180, 180, 180);
+  }
+</style>

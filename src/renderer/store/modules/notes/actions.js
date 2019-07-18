@@ -1,4 +1,3 @@
-import { CREATE_NOTE, MODULATE_NOTE, RELEASE_NOTE, DELETE_ALL_NOTES, ADD_NOTE } from '../../action-types';
 import { APPEND_NOTE, INSERT_MODULATION, SET_NOTE_OFF, DELETE_NOTE } from '../../mutation-types';
 import NoteFactory from '../../../modules/NoteFactory';
 import '../../../typedef';
@@ -27,7 +26,7 @@ export default {
    *   // Default values are used for omitted properties.
    * });
    */
-  [CREATE_NOTE] ({ commit }, materials) {
+  CREATE_NOTE ({ commit }, materials) {
     const note = noteFactory.createNote(materials);
     commit(APPEND_NOTE, note);
     return note.id;
@@ -46,7 +45,7 @@ export default {
   *   "modulations": [{...}, {...}]
   * });
   */
-  [ADD_NOTE] ({ commit }, materials) {
+  ADD_NOTE ({ commit }, materials) {
     const note = noteFactory.assignId(materials);
     commit(APPEND_NOTE, note);
     return note.id;
@@ -76,7 +75,7 @@ export default {
    *   }
    * });
    */
-  [MODULATE_NOTE] ({ state, commit }, { id, modulation }) {
+  MODULATE_NOTE ({ state, commit }, { id, modulation }) {
     const targetNote = state.data.find(note => note.id === id);
     const formatted = formatModulation({ modulation, targetNote });
     commit(INSERT_MODULATION, { id, modulation: formatted });
@@ -106,12 +105,12 @@ export default {
    *   }
    * });
    */
-  [RELEASE_NOTE] ({ state, commit }, { id, noteOff }) {
+  RELEASE_NOTE ({ state, commit }, { id, noteOff }) {
     const targetNote = state.data.find(note => note.id === id);
     const formatted = formatNoteOff({ noteOff, targetNote });
     commit(SET_NOTE_OFF, { id, noteOff: formatted });
   },
-  [DELETE_ALL_NOTES] ({ state, commit }) {
+  DELETE_ALL_NOTES ({ state, commit }) {
     state.data.forEach(note => {
       commit(DELETE_NOTE, note.id);
     });

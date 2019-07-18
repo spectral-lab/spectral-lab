@@ -1,50 +1,26 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import mutations from './mutations';
-import actions from './actions';
-import notes from './modules/notes';
 import createLogger from 'vuex/dist/logger';
-import { INSERT_MODULATION, SET_NOTE_OFF } from './mutation-types';
-import { bpm, tpb } from '../constants/defaults';
+import VuexORM from '@vuex-orm/core';
+import { initDatabase, instanciateModels } from './utils';
+import mutations from './mutations';
 
 Vue.use(Vuex);
+const database = initDatabase();
 const InitialState = {
-  audioCtx: new AudioContext({
-    latencyHint: 'interactive',
-    sampleRate: 22050
-  }),
-  sourceAudio: {
-    filepath: '',
-    buffer: new AudioBuffer({
-      length: 1,
-      numberOfChannels: 1,
-      sampleRate: 22050
-    })
-  },
-  spectrogram: {
-    times: [],
-    freqs: [],
-    magnitude2d: [[]]
-  },
-  bpm,
-  tpb
+  audioCtx: null
 };
-const logger = createLogger({
-  filter (mutation) {
-    const blackListedTypes = [INSERT_MODULATION, SET_NOTE_OFF];
-    return blackListedTypes.includes(mutation.type) === false;
-  }
-});
+const logger = process.env.NODE_ENV === 'development' ? createLogger() : null;
 const store = new Vuex.Store({
   strict: true,
   state: InitialState,
   mutations,
-  actions,
-  modules: { notes },
-  plugins: [logger]
+  plugins: [logger, VuexORM.install(database)].filter(v => v)
 });
+
+instanciateModels();
 
 export default store;
 export {
-  InitialState, mutations, actions
+  InitialState
 };

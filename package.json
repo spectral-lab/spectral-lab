@@ -70,12 +70,13 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.9.0",
     "change-case": "^3.1.0",
+    "@vuex-orm/core": "^0.32.0",
     "decibels": "^2.0.0",
     "dsp.js-browser": "^1.0.1",
     "element-resize-detector": "^1.1.15",
     "express": "^4.16.4",
     "hotkeys-js": "^3.6.11",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "material-design-icons-iconfont": "^5.0.1",
     "ndarray-normalize": "^1.0.0",
     "ndarray-ops": "^1.2.2",
@@ -85,6 +86,7 @@
     "pngjs": "^3.4.0",
     "svg.js": "^2.7.1",
     "teoria": "^2.5.0",
+    "uid": "^0.0.2",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vuetify": "^1.5.14",
@@ -93,6 +95,7 @@
     "vuex-electron": "^1.0.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.0",
     "@babel/preset-env": "^7.4.5",
     "ajv": "^6.5.0",
     "babel-core": "^6.26.3",
