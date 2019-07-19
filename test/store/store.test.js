@@ -1,13 +1,13 @@
 import store from '../../src/renderer/store';
 import mockEntities from '../data/mockEntities';
-import { Clip, NoteOff, NoteOn, Modulation, Note } from '../../src/renderer/store/models';
+import { Clip, NoteOff, NoteOn, Modulation, Note, Track } from '../../src/renderer/store/models';
 import { getAbsoluteTime, getPath } from '../../src/renderer/store/utils';
 import uid from 'uid';
 import { SET_ENTITIES } from '../../src/renderer/store/mutation-types';
 
 describe('utils', () => {
   test('gets path', () => {
-    const path = getPath(Clip.query().last());
+    const path = Clip.query().last().path;
     expect(path.length).toBe(3);
     expect(path[0].type).toBe('SONG');
     expect(path[1].type).toBe('TRACK');
@@ -36,8 +36,8 @@ describe('utils', () => {
         }
       }
     });
-    const time = getAbsoluteTime(NoteOff.find(noteOffId));
-    expect(time).toBe(7000);
+    expect(Track.query().last().absoluteTime).toBe(0);
+    expect(NoteOff.find(noteOffId).absoluteTime).toBe(7000);
     done();
   });
 });
@@ -49,7 +49,7 @@ describe('Note model', () => {
     expect(note.pitchTransition.length).not.toBe(0);
     note.pitchTransition.reduce((prev, current) => {
       expect(current.pitch).not.toBe(null);
-      expect(prev.time).toBeLessThan(current.time);
+      expect(prev.time <= current.time).toBe(true);
       return current;
     }, {
       pitch: -1,
