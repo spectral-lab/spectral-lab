@@ -7,6 +7,8 @@ import {
 import { makeMandatory } from './utils';
 import { bpm, beatsInBar, ticksPerBeat } from '../constants/defaults';
 import { SELECT } from '../constants/mouse-modes';
+import { pick, random } from 'lodash';
+import { SCALE_COLORS } from '../constants/colors';
 
 export class NoteOn extends Model {
   static entity = 'noteOns';
@@ -76,15 +78,18 @@ export class Note extends Model {
     return [
       {
         time: this.offsetTime,
-        pitch: this.noteOn.noteNumber + this.noteOn.pitchBend
+        pitch: this.noteOn.noteNumber + this.noteOn.pitchBend,
+        ...pick(this.noteOn, ['id', 'type'])
       },
       ...pitchBendMods.map(modulation => ({
         time: this.offsetTime + modulation.offsetTime,
-        pitch: this.noteOn.noteNumber + modulation.pitchBend
+        pitch: this.noteOn.noteNumber + modulation.pitchBend,
+        ...pick(modulation, ['id', 'type'])
       })),
       this.noteOff && {
         time: this.offsetTime + this.noteOff.offsetTime,
-        pitch: this.noteOn.noteNumber + lastPitchBend
+        pitch: this.noteOn.noteNumber + lastPitchBend,
+        ...pick(this.noteOff, ['id', 'type'])
       }
     ].filter(v => v);
   }
@@ -130,7 +135,8 @@ export class Clip extends Model {
       notes: this.hasMany(Note, 'clipId'),
       audioBuffer: this.hasOne(AudioBuffer, 'clipId'),
       selected: this.boolean(false),
-      trackId: this.attr(null)
+      trackId: this.attr(null),
+      color: this.attr(() => SCALE_COLORS.hHelmholtz[random(11)])
     };
   };
 }
