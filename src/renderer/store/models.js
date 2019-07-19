@@ -102,17 +102,17 @@ export class Note extends BaseModel {
     return [
       {
         time: this.offsetTime,
-        pitch: this.noteOn.noteNumber + this.noteOn.pitchBend,
+        pitch: this.noteNumber + this.noteOn.pitchBend,
         ...pick(this.noteOn, ['id', 'type'])
       },
       ...pitchBendMods.map(modulation => ({
         time: this.offsetTime + modulation.offsetTime,
-        pitch: this.noteOn.noteNumber + modulation.pitchBend,
+        pitch: this.noteNumber + modulation.pitchBend,
         ...pick(modulation, ['id', 'type'])
       })),
       this.noteOff && {
         time: this.offsetTime + this.noteOff.offsetTime,
-        pitch: this.noteOn.noteNumber + lastPitchBend,
+        pitch: this.noteNumber + lastPitchBend,
         ...pick(this.noteOff, ['id', 'type'])
       }
     ].filter(v => v);
