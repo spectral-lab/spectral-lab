@@ -86,7 +86,6 @@ export default {
       const resampleEvent = await resample(buffer, DESIRED_SAMPLE_RATE);
       const resampledBuffer = resampleEvent.renderedBuffer;
       const { times, freqs, magnitude2d } = await stft(resampledBuffer, DESIRED_SAMPLE_RATE);
-      console.log(times, freqs, magnitude2d);
       Spectrogram.insert({
         data: {
           id: uid(),
