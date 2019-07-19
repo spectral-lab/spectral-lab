@@ -2,7 +2,7 @@
     <div class="transition-wrapper">
         <piano-roll-transition
                 :transition="note.pitchTransition"
-                type="PITCH"
+                transition-type="PITCH"
                 :total-ticks="totalTicks"
                 :color="color"
         />
