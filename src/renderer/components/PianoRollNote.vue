@@ -12,7 +12,6 @@
 <script>
 import { Note } from '../store/models';
 import PianoRollTransition from './PianoRollTransition';
-import { getParent } from '../store/utils';
 
 export default {
   components: { PianoRollTransition },
@@ -22,7 +21,7 @@ export default {
   },
   computed: {
     color () {
-      return getParent(this.note).color;
+      return this.note.parent.color;
     }
   }
 };

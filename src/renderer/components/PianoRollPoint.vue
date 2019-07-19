@@ -6,7 +6,6 @@
             top: `${point.y * 100}%`,
             borderColor: color,
             background: color,
-            class: noteOn
         }"
         draggable="true"
         @dragstart="emitDragStart"
