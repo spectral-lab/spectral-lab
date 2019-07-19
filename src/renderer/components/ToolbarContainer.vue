@@ -44,9 +44,9 @@ export default {
       extractedLines.forEach((line) => {
         const { note, noteOn } = parsePointAsNoteOn(line[0], spectrogram, this.secToTick);
         const modulations = line.slice(1, -1).map(point => {
-          return parsePointAsModulation(point, spectrogram, this.secToTick, noteOn.time, noteOn.noteNumber);
+          return parsePointAsModulation(point, spectrogram, this.secToTick, note.offsetTime, note.noteNumber);
         });
-        const noteOff = parsePointAsNoteOff(line[line.length - 1], spectrogram, this.secToTick, noteOn.time);
+        const noteOff = parsePointAsNoteOff(line[line.length - 1], spectrogram, this.secToTick, note.offsetTime);
         Note.insert({
           data: {
             id: uid(),
