@@ -2,18 +2,18 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import createLogger from 'vuex/dist/logger';
 import VuexORM from '@vuex-orm/core';
-import { initDatabase, instanciateModels } from './utils';
+import { createAudioCtx, initDatabase, instanciateModels } from './utils';
 import mutations from './mutations';
 
 Vue.use(Vuex);
 const database = initDatabase();
-const InitialState = {
-  audioCtx: null
+const initialState = {
+  audioCtx: process.env.NODE_ENV === 'test' ? null : createAudioCtx()
 };
 const logger = process.env.NODE_ENV === 'development' ? createLogger() : null;
 const store = new Vuex.Store({
   strict: true,
-  state: InitialState,
+  state: initialState,
   mutations,
   plugins: [logger, VuexORM.install(database)].filter(v => v)
 });
@@ -22,5 +22,5 @@ instanciateModels();
 
 export default store;
 export {
-  InitialState
+  initialState
 };

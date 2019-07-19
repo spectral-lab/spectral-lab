@@ -7,17 +7,31 @@ import {
 import { makeMandatory } from './utils';
 import { bpm, beatsInBar, ticksPerBeat } from '../constants/defaults';
 import { SELECT } from '../constants/mouse-modes';
-import { pick, random } from 'lodash';
+import { pick, random, sum } from 'lodash';
 import { SCALE_COLORS } from '../constants/colors';
 
-export class NoteOn extends Model {
+class BaseModel extends Model {
+  get path () {
+    if (!this.parent) return [this];
+    return [...this.parent.path, this];
+  }
+  get absoluteTime () {
+    const offsetTimes = this.path.map(modelInstance => {
+      const offset = modelInstance.offsetTime;
+      return offset == null ? 0 : offset;
+    });
+    return sum(offsetTimes);
+  }
+}
+
+export class NoteOn extends BaseModel {
   static entity = 'noteOns';
+
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
       noteId: this.attr(null),
       type: this.string(NOTE_ON),
-      noteNumber: this.number(60),
       noteOnVelocity: this.number(0.5), // from 0.0 to 1.0.
       pitchBend: this.number(0), // in midi note number. Negative float is acceptable.
       timbre: this.number(0.5), // from 0.0 to 1.0.
@@ -25,9 +39,12 @@ export class NoteOn extends Model {
       selected: this.boolean(false)
     };
   }
+  get parent () {
+    return Note.find(this.noteId);
+  }
 }
 
-export class Modulation extends Model {
+export class Modulation extends BaseModel {
   static entity = 'modulations';
   static fields () {
     return {
@@ -41,9 +58,12 @@ export class Modulation extends Model {
       selected: this.boolean(false)
     };
   }
+  get parent () {
+    return Note.find(this.noteId);
+  }
 }
 
-export class NoteOff extends Model {
+export class NoteOff extends BaseModel {
   static entity = 'noteOffs';
   static fields () {
     return {
@@ -55,19 +75,23 @@ export class NoteOff extends Model {
       selected: this.boolean(false)
     };
   }
+  get parent () {
+    return Note.find(this.noteId);
+  }
 }
 
-export class Note extends Model {
+export class Note extends BaseModel {
   static entity = 'notes';
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(NOTE),
       clipId: this.attr(null, makeMandatory('clipId')),
+      noteNumber: this.number(60),
+      offsetTime: this.number(0), // in tick
       noteOn: this.hasOne(NoteOn, 'noteId'),
       noteOff: this.hasOne(NoteOff, 'noteId'),
       modulations: this.hasMany(Modulation, 'noteId'),
-      offsetTime: this.number(0), // in tick
       selected: this.boolean(false)
     };
   }
@@ -93,9 +117,12 @@ export class Note extends Model {
       }
     ].filter(v => v);
   }
+  get parent () {
+    return Clip.find(this.clipId);
+  }
 }
 
-export class AudioBuffer extends Model {
+export class AudioBuffer extends BaseModel {
   static entity = 'audioBuffers';
   static fields () {
     return {
@@ -108,9 +135,12 @@ export class AudioBuffer extends Model {
       spectrogram: this.hasOne(Spectrogram, 'audioBufferId')
     };
   }
+  get parent () {
+    return Clip.find(this.clipId);
+  }
 }
 
-export class Spectrogram extends Model {
+export class Spectrogram extends BaseModel {
   static entity = 'spectrograms';
   static fields () {
     return {
@@ -122,9 +152,12 @@ export class Spectrogram extends Model {
       magnitude2d: this.attr([[]])
     };
   }
+  get parent () {
+    return AudioBuffer.find(this.audioBufferId);
+  }
 }
 
-export class Clip extends Model {
+export class Clip extends BaseModel {
   static entity = 'clips';
   static fields () {
     return {
@@ -139,9 +172,12 @@ export class Clip extends Model {
       color: this.attr(() => SCALE_COLORS.hHelmholtz[random(11)])
     };
   };
+  get parent () {
+    return Track.find(this.trackId);
+  }
 }
 
-export class Track extends Model {
+export class Track extends BaseModel {
   static entity = 'tracks';
   static fields () {
     return {
@@ -153,9 +189,12 @@ export class Track extends Model {
       clips: this.hasMany(Clip, 'trackId')
     };
   }
+  get parent () {
+    return Song.find(this.songId);
+  }
 }
 
-export class Song extends Model {
+export class Song extends BaseModel {
   static entity = 'songs';
   static fields () {
     return {
@@ -167,9 +206,12 @@ export class Song extends Model {
       tracks: this.hasMany(Track, 'songId')
     };
   }
+  get parent () {
+    return null;
+  }
 }
 
-export class App extends Model {
+export class App extends BaseModel {
   static entity = 'app';
   static fields () {
     return {
@@ -177,5 +219,8 @@ export class App extends Model {
       type: this.string(APP),
       mouseMode: this.attr(SELECT)
     };
+  }
+  get parent () {
+    return null;
   }
 }

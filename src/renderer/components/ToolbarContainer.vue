@@ -16,7 +16,6 @@ import {
   parsePointAsNoteOn, parsePointAsModulation, parsePointAsNoteOff
 } from '../modules/helpers/postImageUtils';
 import uid from 'uid';
-import { getParent } from '../store/utils';
 
 export default {
   computed: {
@@ -43,7 +42,7 @@ export default {
       const buff = makePNGBuffer(spectrogram.magnitude2d);
       const extractedLines = await postImage(buff, { sensitivity: 5, degree: 6 });
       extractedLines.forEach((line) => {
-        const noteOn = parsePointAsNoteOn(line[0], spectrogram, this.secToTick);
+        const { note, noteOn } = parsePointAsNoteOn(line[0], spectrogram, this.secToTick);
         const modulations = line.slice(1, -1).map(point => {
           return parsePointAsModulation(point, spectrogram, this.secToTick, noteOn.time, noteOn.noteNumber);
         });
@@ -51,8 +50,9 @@ export default {
         Note.insert({
           data: {
             id: uid(),
-            clipId: getParent(spectrogram).clipId,
-            offsetTime: noteOn.time,
+            clipId: spectrogram.parent.clipId,
+            offsetTime: note.offsetTime,
+            noteNumber: note.noteNumber,
             noteOn,
             noteOff,
             modulations

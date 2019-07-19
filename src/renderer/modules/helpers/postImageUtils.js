@@ -58,12 +58,16 @@ export const parsePointAsNoteOn = (noteOnPoint, spectrogram, secToTick) => {
   const pitch = ftom(freq);
   const { noteNumber, pitchBend } = pitchToNoteNumberAndPitchBend(pitch);
   return {
-    id: uid(),
-    time,
-    noteNumber,
-    pitchBend,
-    noteOnVelocity: decibelCurve(noteOnPoint[2]),
-    pressure: decibelCurve(noteOnPoint[2])
+    note: {
+      offsetTime: time,
+      noteNumber
+    },
+    noteOn: {
+      id: uid(),
+      pitchBend,
+      noteOnVelocity: decibelCurve(noteOnPoint[2]),
+      pressure: decibelCurve(noteOnPoint[2])
+    }
   };
 };
 /**
