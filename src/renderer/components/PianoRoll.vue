@@ -11,7 +11,19 @@
                     <piano-roll-grid-row-layer/>
                     <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars"/>
                 </div>
-                <div ref="noteLayer" class="note-layer"></div>
+                <div ref="noteLayer" class="note-layer">
+                    <svg width="100%" height="100%">
+                        <piano-roll-note
+                                v-for="note in notes"
+                                :note="note"
+                                :total-ticks="totalTicks"
+                                :selected-note-ids="selectedNoteIds"
+                                :editing-note-id="editingNoteId"
+                                @click="emitClickNote"
+                                @dblclick="emitDblClickNote"
+                        />
+                    </svg>
+                </div>
             </div>
         </div>
         <div ref="midiKeyboard" class="midi-keyboard scrollbar-hidden">
@@ -35,17 +47,24 @@ import { composeAddNote, manageDragAndScrollAndZoom } from '../modules/pianoRoll
 import PianoRollGridRowLayer from './PianoRollGridRowLayer';
 import PianoRollGridColumnLayer from './PianoRollGridColumnLayer';
 import PianoRollMidiKeyboard from './PianoRollMidiKeyboard';
+import PianoRollNote from './PianoRollNote';
 
 export default {
   props: {
-    totalBeats: Number,
-    totalBars: Number
-  },
-  mounted () {
-    manageDragAndScrollAndZoom(this.$refs.wrapper, this.sections);
-    this.addNote = composeAddNote(this.$refs.noteLayer);
+    notes: Array,
+    totalBars: Number,
+    beatsInBar: Number,
+    ticksPerBeat: Number,
+    selectedNoteIds: Array,
+    editingNoteId: String
   },
   computed: {
+    totalBeats () {
+      return this.totalBars * this.beatsInBar;
+    },
+    totalTicks () {
+      return this.totalBars * this.beatsInBar * this.ticksPerBeat;
+    },
     sections () {
       return {
         ruler: this.$refs.ruler,
@@ -57,10 +76,23 @@ export default {
       };
     }
   },
+  mounted () {
+    manageDragAndScrollAndZoom(this.$refs.wrapper, this.sections);
+    this.addNote = composeAddNote(this.$refs.noteLayer);
+  },
+  methods: {
+    emitClickNote (ev, id) {
+      this.$emit('click-note', ev, id);
+    },
+    emitDblClickNote (ev, id) {
+      this.$emit('dblclick-note', ev, id);
+    }
+  },
   components: {
     PianoRollGridRowLayer,
     PianoRollGridColumnLayer,
-    PianoRollMidiKeyboard
+    PianoRollMidiKeyboard,
+    PianoRollNote
   }
 };
 </script>
@@ -72,7 +104,14 @@ export default {
     display: grid;
     grid-template-columns: 100px 1fr;
     grid-template-rows: 40px 1fr 4px 4px 120px;
+    animation: fadein 1s;
 }
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 .automation-lane-content {
     grid-column-start: 2;
     grid-column-end: end;
@@ -162,7 +201,6 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
-    border-radius: 30%;
 }
 
 .scrollbar-hidden::-webkit-scrollbar  {

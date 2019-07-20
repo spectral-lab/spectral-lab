@@ -1,10 +1,10 @@
-import { SET_SOURCE_AUDIO, SET_SPECTROGRAM } from './mutation-types';
+import { SET_AUDIO_CTX, SET_ENTITIES } from './mutation-types';
 
 export default {
-  [SET_SOURCE_AUDIO] (state, { buffer, filepath }) {
-    state.sourceAudio = Object.assign({}, { buffer, filepath });
+  [SET_AUDIO_CTX] (state, ctx) {
+    state.audioCtx = ctx;
   },
-  [SET_SPECTROGRAM] (state, { spectrogram }) {
-    state.spectrogram = Object.assign({}, spectrogram);
+  [SET_ENTITIES] (state, entities) {
+    state.entities = entities;
   }
 };

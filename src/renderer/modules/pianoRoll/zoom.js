@@ -1,12 +1,18 @@
 import hotkeys from 'hotkeys-js';
 import { debounce } from 'lodash';
 import elementResizeDetector from 'element-resize-detector';
+import {
+  HORIZONTAL_ZOOM_IN,
+  HORIZONTAL_ZOOM_OUT,
+  VERTICAL_ZOOM_IN,
+  VERTICAL_ZOOM_OUT
+} from '../../constants/key-bindings';
 
 export const manageZoom = wrapperElement => {
-  hotkeys('h', () => horizontalZoomIn(wrapperElement));
-  hotkeys('g', () => horizontalZoomOut(wrapperElement));
-  hotkeys('shift+h', () => verticalZoomIn(wrapperElement));
-  hotkeys('shift+g', () => verticalZoomOut(wrapperElement));
+  hotkeys(HORIZONTAL_ZOOM_IN, () => horizontalZoomIn(wrapperElement));
+  hotkeys(HORIZONTAL_ZOOM_OUT, () => horizontalZoomOut(wrapperElement));
+  hotkeys(VERTICAL_ZOOM_IN, () => verticalZoomIn(wrapperElement));
+  hotkeys(VERTICAL_ZOOM_OUT, () => verticalZoomOut(wrapperElement));
   listenResize(wrapperElement);
 };
 
