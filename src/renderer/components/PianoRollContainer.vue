@@ -18,9 +18,17 @@
 import PianoRoll from './PianoRoll';
 import mockEntities from '../../../test/data/mockEntities';
 import { SET_ENTITIES } from '../store/mutation-types';
-import { Clip, Song, Note } from '../store/models';
+import { Clip, Song, Note, NoteOn, NoteOff, Modulation } from '../store/models';
 import hotkeys from 'hotkeys-js';
-import { ESCAPE } from '../constants/key-bindings';
+import {
+  ESCAPE,
+  NOTE_SHIFT_DOWN,
+  NOTE_SHIFT_LEFT,
+  NOTE_SHIFT_RIGHT,
+  NOTE_SHIFT_UP,
+  DELETE,
+  SELECT_ALL
+} from '../constants/key-bindings';
 
 export default {
   data () {
@@ -43,6 +51,76 @@ export default {
     },
     selectedNoteIds () {
       return Note.query().where('selected', true).get().map(note => note.id);
+    },
+    hasNoteSelected () {
+      return this.selectedNoteIds.length !== 0;
+    }
+  },
+  watch: {
+    hasNoteSelected (hasNoteSelected) {
+      if (hasNoteSelected) {
+        hotkeys(NOTE_SHIFT_LEFT, (ev) => {
+          ev.preventDefault();
+          Note.query().where('selected', true).get().forEach(note => {
+            Note.update({
+              where: note.id,
+              data: {
+                offsetTime: note.offsetTime - 100
+              }
+            });
+          });
+        });
+        hotkeys(NOTE_SHIFT_RIGHT, (ev) => {
+          ev.preventDefault();
+          Note.query().where('selected', true).get().forEach(note => {
+            Note.update({
+              where: note.id,
+              data: {
+                offsetTime: note.offsetTime + 100
+              }
+            });
+          });
+        });
+        hotkeys(NOTE_SHIFT_UP, (ev) => {
+          ev.preventDefault();
+          Note.query().where('selected', true).get().forEach(note => {
+            Note.update({
+              where: note.id,
+              data: {
+                noteNumber: note.noteNumber + 1
+              }
+            });
+          });
+        });
+        hotkeys(NOTE_SHIFT_DOWN, (ev) => {
+          ev.preventDefault();
+          Note.query().where('selected', true).get().forEach(note => {
+            Note.update({
+              where: note.id,
+              data: {
+                noteNumber: note.noteNumber - 1
+              }
+            });
+          });
+        });
+        hotkeys(DELETE, (ev) => {
+          ev.preventDefault();
+          Note.query().where('selected', true).withAll().get().forEach(note => {
+            const { noteOn, noteOff, modulations, id } = note;
+            Note.delete(id);
+            NoteOn.delete(noteOn.id);
+            NoteOff.delete(noteOff.id);
+            modulations.forEach(mod => Modulation.delete(mod.id));
+          });
+        });
+      }
+      if (!hasNoteSelected) {
+        hotkeys.unbind(NOTE_SHIFT_LEFT);
+        hotkeys.unbind(NOTE_SHIFT_RIGHT);
+        hotkeys.unbind(NOTE_SHIFT_UP);
+        hotkeys.unbind(NOTE_SHIFT_DOWN);
+        hotkeys.unbind(DELETE);
+      }
     }
   },
   methods: {
@@ -78,11 +156,18 @@ export default {
           selected: false
         }
       });
+    },
+    selectAll () {
+      Note.update({
+        where: _ => true,
+        data: { selected: true }
+      });
     }
   },
   mounted () {
     // this.loadMockNotes();
     hotkeys(ESCAPE, this.clearSelections);
+    hotkeys(SELECT_ALL, (ev) => { ev.preventDefault(); this.selectAll(); });
   },
   components: {
     PianoRoll
