@@ -1,5 +1,3 @@
-export const NOTE_COLOR = 'rgb(0, 255 , 55)';
-
 export const SCALE_COLORS = {
   louisBertrandCastel: {
     0: '#1C0D82', // blue
