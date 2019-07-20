@@ -72,6 +72,9 @@ export class NoteOff extends BaseModel {
       type: this.string(NOTE_OFF),
       offsetTime: this.number(1), // in tick
       noteOffVelocity: this.number(0),
+      pitchBend: this.number(null).nullable(), // in midi note number. Negative float is acceptable.
+      pressure: this.number(null).nullable(), // from 0.0 to 1.0.
+      timbre: this.number(null).nullable(), // from 0.0 to 1.0.
       selected: this.boolean(false)
     };
   }
@@ -95,23 +98,30 @@ export class Note extends BaseModel {
       selected: this.boolean(false)
     };
   }
+  get noteActions () {
+    return [
+      this.noteOn,
+      ...this.modulations,
+      this.noteOff
+    ];
+  }
   get pitchTransition () {
     const pitchBendMods = this.modulations.filter(mod => mod.pitchBend !== null);
     const isEmpty = pitchBendMods.length === 0;
     const lastPitchBend = isEmpty ? this.noteOn.pitchBend : pitchBendMods[pitchBendMods.length - 1].pitchBend;
     return [
       {
-        time: this.offsetTime,
+        offsetTime: this.offsetTime,
         pitch: this.noteNumber + this.noteOn.pitchBend,
         ...pick(this.noteOn, ['id', 'type'])
       },
       ...pitchBendMods.map(modulation => ({
-        time: this.offsetTime + modulation.offsetTime,
+        offsetTime: this.offsetTime + modulation.offsetTime,
         pitch: this.noteNumber + modulation.pitchBend,
         ...pick(modulation, ['id', 'type'])
       })),
       this.noteOff && {
-        time: this.offsetTime + this.noteOff.offsetTime,
+        offsetTime: this.offsetTime + this.noteOff.offsetTime,
         pitch: this.noteNumber + lastPitchBend,
         ...pick(this.noteOff, ['id', 'type'])
       }
