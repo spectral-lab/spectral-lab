@@ -1,20 +1,25 @@
 <template>
-    <circle
-            :cx="`${point.x * 100}%`"
-            :cy="`${point.y * 100}%`"
-            r="5"
-            :fill="color"
+    <line
+            v-if="nextPoint"
+            :x1="`${point.x * 100}%`"
+            :y1="`${point.y * 100}%`"
+            :x2="`${nextPoint.x * 100}%`"
+            :y2="`${nextPoint.y * 100}%`"
+            :stroke="color"
+            :stroke-width="strokeWidth"
             :opacity="opacity"
             @click="handleEvent"
             @dblclick="handleEvent"
-    ></circle>
+    ></line>
 </template>
 
 <script>
   export default {
     props: {
       point: Object,
+      nextPoint: Object,
       color: String,
+      strokeWidth: String,
       opacity: String
     },
     methods: {

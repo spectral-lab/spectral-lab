@@ -13,8 +13,15 @@
                 </div>
                 <div ref="noteLayer" class="note-layer">
                     <svg width="100%" height="100%">
-                        <svg-defs/>
-                        <piano-roll-note v-for="note in notes" :note="note" :total-ticks="totalTicks"/>
+                        <piano-roll-note
+                                v-for="note in notes"
+                                :note="note"
+                                :total-ticks="totalTicks"
+                                :selected-note-ids="selectedNoteIds"
+                                :editing-note-id="editingNoteId"
+                                @click="emitClickNote"
+                                @dblclick="emitDblClickNote"
+                        />
                     </svg>
                 </div>
             </div>
@@ -41,14 +48,15 @@ import PianoRollGridRowLayer from './PianoRollGridRowLayer';
 import PianoRollGridColumnLayer from './PianoRollGridColumnLayer';
 import PianoRollMidiKeyboard from './PianoRollMidiKeyboard';
 import PianoRollNote from './PianoRollNote';
-import SvgDefs from './SvgDefs';
 
 export default {
   props: {
     notes: Array,
     totalBars: Number,
     beatsInBar: Number,
-    ticksPerBeat: Number
+    ticksPerBeat: Number,
+    selectedNoteIds: Array,
+    editingNoteId: String
   },
   computed: {
     totalBeats () {
@@ -72,12 +80,19 @@ export default {
     manageDragAndScrollAndZoom(this.$refs.wrapper, this.sections);
     this.addNote = composeAddNote(this.$refs.noteLayer);
   },
+  methods: {
+    emitClickNote (ev, id) {
+      this.$emit('click-note', ev, id);
+    },
+    emitDblClickNote (ev, id) {
+      this.$emit('dblclick-note', ev, id);
+    }
+  },
   components: {
     PianoRollGridRowLayer,
     PianoRollGridColumnLayer,
     PianoRollMidiKeyboard,
-    PianoRollNote,
-    SvgDefs
+    PianoRollNote
   }
 };
 </script>
