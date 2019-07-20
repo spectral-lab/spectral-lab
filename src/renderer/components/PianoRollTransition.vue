@@ -20,7 +20,7 @@
       positions () {
         if (this.transitionType === 'PITCH') {
           return this.transition.map(point => ({
-            x: tickToPosX(point.time, this.totalTicks),
+            x: tickToPosX(point.offsetTime, this.totalTicks),
             y: pitchToPosY(point.pitch),
             id: point.id,
             type: point.type
@@ -28,7 +28,7 @@
         }
         if (this.transitionType === 'AMP') {
           return this.transition.map(point => ({
-            x: tickToPosX(point.time, this.totalTicks),
+            x: tickToPosX(point.offsetTime, this.totalTicks),
             y: point.amp,
             id: point.id,
             type: point.type

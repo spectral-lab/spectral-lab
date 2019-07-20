@@ -46,7 +46,7 @@ export default {
         const modulations = line.slice(1, -1).map(point => {
           return parsePointAsModulation(point, spectrogram, this.secToTick, note.offsetTime, note.noteNumber);
         });
-        const noteOff = parsePointAsNoteOff(line[line.length - 1], spectrogram, this.secToTick, note.offsetTime);
+        const noteOff = parsePointAsNoteOff(line[line.length - 1], spectrogram, this.secToTick, note.offsetTime, note.noteNumber);
         Note.insert({
           data: {
             id: uid(),
