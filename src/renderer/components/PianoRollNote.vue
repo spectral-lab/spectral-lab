@@ -1,12 +1,12 @@
 <template>
-    <div class="transition-wrapper">
+    <g>
         <piano-roll-transition
                 :transition="note.pitchTransition"
                 transition-type="PITCH"
                 :total-ticks="totalTicks"
                 :color="color"
         />
-    </div>
+    </g>
 </template>
 
 <script>
@@ -28,10 +28,4 @@ export default {
 </script>
 
 <style scoped>
-    .transition-wrapper {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
 </style>

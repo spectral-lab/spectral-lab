@@ -12,7 +12,10 @@
                     <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars"/>
                 </div>
                 <div ref="noteLayer" class="note-layer">
-                    <piano-roll-note v-for="note in notes" :note="note" :total-ticks="totalTicks"/>
+                    <svg width="100%" height="100%">
+                        <svg-defs/>
+                        <piano-roll-note v-for="note in notes" :note="note" :total-ticks="totalTicks"/>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -38,6 +41,7 @@ import PianoRollGridRowLayer from './PianoRollGridRowLayer';
 import PianoRollGridColumnLayer from './PianoRollGridColumnLayer';
 import PianoRollMidiKeyboard from './PianoRollMidiKeyboard';
 import PianoRollNote from './PianoRollNote';
+import SvgDefs from './SvgDefs';
 
 export default {
   props: {
@@ -72,7 +76,8 @@ export default {
     PianoRollGridRowLayer,
     PianoRollGridColumnLayer,
     PianoRollMidiKeyboard,
-    PianoRollNote
+    PianoRollNote,
+    SvgDefs
   }
 };
 </script>

@@ -36,6 +36,9 @@ export default {
       this.$store.commit(SET_ENTITIES, mockEntities);
     }
   },
+  mounted () {
+    this.loadMockNotes();
+  },
   components: {
     PianoRoll
   }

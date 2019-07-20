@@ -1,9 +1,9 @@
 <template>
-    <div class="point-wrapper">
-        <div v-for="point in positions" class="pitch-points">
+    <g>
+        <g v-for="point in positions">
             <piano-roll-point :point="point" :color="color"/>
-        </div>
-    </div>
+        </g>
+    </g>
 </template>
 
 <script>
@@ -36,6 +36,11 @@
         }
       }
     },
+    methods: {
+      handleMouseDown () {
+        console.log('mousedown');
+      }
+    },
     components: {
       PianoRollPoint
     }
@@ -43,10 +48,4 @@
 </script>
 
 <style scoped>
-    .point-wrapper {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
 </style>
