@@ -108,8 +108,6 @@ export class Note extends BaseModel {
   }
   get pitchTransition () {
     const pitchBendMods = this.modulations.filter(mod => mod.pitchBend !== null);
-    const isEmpty = pitchBendMods.length === 0;
-    const lastPitchBend = isEmpty ? this.noteOn.pitchBend : pitchBendMods[pitchBendMods.length - 1].pitchBend;
     return [
       {
         offsetTime: this.offsetTime,
@@ -123,7 +121,7 @@ export class Note extends BaseModel {
       })),
       this.noteOff && {
         offsetTime: this.offsetTime + this.noteOff.offsetTime,
-        pitch: this.noteNumber + lastPitchBend,
+        pitch: this.noteNumber + this.noteOff.pitchBend,
         ...pick(this.noteOff, ['id', 'type'])
       }
     ].filter(v => v);
