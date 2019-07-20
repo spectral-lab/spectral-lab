@@ -1,7 +1,6 @@
 import store from '../../src/renderer/store';
 import mockEntities from '../data/mockEntities';
 import { Clip, NoteOff, NoteOn, Modulation, Note, Track } from '../../src/renderer/store/models';
-import { getAbsoluteTime, getPath } from '../../src/renderer/store/utils';
 import uid from 'uid';
 import { SET_ENTITIES } from '../../src/renderer/store/mutation-types';
 
@@ -9,9 +8,9 @@ describe('utils', () => {
   test('gets path', () => {
     const path = Clip.query().last().path;
     expect(path.length).toBe(3);
-    expect(path[0].type).toBe('SONG');
-    expect(path[1].type).toBe('TRACK');
-    expect(path[2].type).toBe('CLIP');
+    expect(path[0].type).toBe('Song');
+    expect(path[1].type).toBe('Track');
+    expect(path[2].type).toBe('Clip');
   });
   test('gets absolute time', async (done) => {
     const noteOffId = uid();
@@ -49,11 +48,11 @@ describe('Note model', () => {
     expect(note.pitchTransition.length).not.toBe(0);
     note.pitchTransition.reduce((prev, current) => {
       expect(current.pitch).not.toBe(null);
-      expect(prev.time <= current.time).toBe(true);
+      expect(prev.offsetTime <= current.offsetTime).toBe(true);
       return current;
     }, {
       pitch: -1,
-      time: -1
+      offsetTime: -1
     });
   });
 });
