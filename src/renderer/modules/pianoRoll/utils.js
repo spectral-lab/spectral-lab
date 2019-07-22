@@ -1,6 +1,15 @@
 import * as style from './style';
 import { clamp } from 'lodash';
 import { paramCase, constantCase } from 'change-case';
+import { Note, NoteOn, NoteOff, Modulation } from '../../store/models';
+import {
+  NOTE_SHIFT_DOWN,
+  NOTE_SHIFT_LEFT,
+  NOTE_SHIFT_RIGHT,
+  NOTE_SHIFT_UP,
+  DELETE
+} from '../../constants/key-bindings';
+import hotkeys from 'hotkeys-js';
 const { GRID_TEMPLATE_ROWS, stringifyProperty } = style;
 
 /**
@@ -93,3 +102,68 @@ export const getNormalizedPos = elt => ({
   x: elt.offsetLeft / elt.offsetParent.offsetWidth,
   y: elt.offsetTop / elt.offsetParent.offsetHeight
 });
+
+export const bindKeys = () => {
+  hotkeys(NOTE_SHIFT_LEFT, (ev) => {
+    ev.preventDefault();
+    Note.query().where('selected', true).get().forEach(note => {
+      Note.update({
+        where: note.id,
+        data: {
+          offsetTime: note.offsetTime - 100
+        }
+      });
+    });
+  });
+  hotkeys(NOTE_SHIFT_RIGHT, (ev) => {
+    ev.preventDefault();
+    Note.query().where('selected', true).get().forEach(note => {
+      Note.update({
+        where: note.id,
+        data: {
+          offsetTime: note.offsetTime + 100
+        }
+      });
+    });
+  });
+  hotkeys(NOTE_SHIFT_UP, (ev) => {
+    ev.preventDefault();
+    Note.query().where('selected', true).get().forEach(note => {
+      Note.update({
+        where: note.id,
+        data: {
+          noteNumber: note.noteNumber + 1
+        }
+      });
+    });
+  });
+  hotkeys(NOTE_SHIFT_DOWN, (ev) => {
+    ev.preventDefault();
+    Note.query().where('selected', true).get().forEach(note => {
+      Note.update({
+        where: note.id,
+        data: {
+          noteNumber: note.noteNumber - 1
+        }
+      });
+    });
+  });
+  hotkeys(DELETE, (ev) => {
+    ev.preventDefault();
+    Note.query().where('selected', true).withAll().get().forEach(note => {
+      const { noteOn, noteOff, modulations, id } = note;
+      Note.delete(id);
+      NoteOn.delete(noteOn.id);
+      NoteOff.delete(noteOff.id);
+      modulations.forEach(mod => Modulation.delete(mod.id));
+    });
+  });
+};
+
+export const unbindKeys = () => {
+  hotkeys.unbind(NOTE_SHIFT_LEFT);
+  hotkeys.unbind(NOTE_SHIFT_RIGHT);
+  hotkeys.unbind(NOTE_SHIFT_UP);
+  hotkeys.unbind(NOTE_SHIFT_DOWN);
+  hotkeys.unbind(DELETE);
+};

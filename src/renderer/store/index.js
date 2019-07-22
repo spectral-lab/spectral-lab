@@ -11,6 +11,7 @@ const initialState = {
   audioCtx: process.env.NODE_ENV === 'test' ? null : createAudioCtx()
 };
 const logger = process.env.NODE_ENV === 'development' ? createLogger() : null;
+// const logger = null;
 const store = new Vuex.Store({
   strict: true,
   state: initialState,
