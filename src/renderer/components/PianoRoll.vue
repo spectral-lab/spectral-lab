@@ -15,12 +15,13 @@
                     <svg width="100%" height="100%">
                         <piano-roll-note
                                 v-for="note in notes"
+                                :key="note.id"
                                 :note="note"
                                 :total-ticks="totalTicks"
                                 :selected-note-ids="selectedNoteIds"
                                 :editing-note-id="editingNoteId"
-                                @click="emitClickNote"
-                                @dblclick="emitDblClickNote"
+                                @click="handleClickNote"
+                                @dblclick="handleDblClickNote"
                         />
                     </svg>
                 </div>
@@ -81,11 +82,11 @@ export default {
     this.addNote = composeAddNote(this.$refs.noteLayer);
   },
   methods: {
-    emitClickNote (ev, id) {
-      this.$emit('click-note', ev, id);
+    handleClickNote (ev, id) {
+      this.$emit('click', ev, { target: 'NOTE', id });
     },
-    emitDblClickNote (ev, id) {
-      this.$emit('dblclick-note', ev, id);
+    handleDblClickNote (ev, id) {
+      this.$emit('dblclick', ev, { target: 'NOTE', id });
     }
   },
   components: {

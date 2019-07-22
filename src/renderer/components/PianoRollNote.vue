@@ -5,11 +5,13 @@
                 <piano-roll-point
                         :point="point"
                         :color="circleColor"
+                        :key="'a' + point.id"
                         opacity="0.8"
                 />
                 <piano-roll-line
                         :point="point"
                         :next-point="positions[idx+1]"
+                        :key="'d' + point.id"
                         color="Honeydew"
                         stroke-width="2"
                 />
@@ -20,6 +22,7 @@
                 <piano-roll-point
                         :point="point"
                         :color="lineColor"
+                        :key="'c' + point.id"
                         opacity="1"
                         @click="handleClick"
                         @dblclick="handleDblClick"
@@ -28,6 +31,7 @@
                         :point="point"
                         :next-point="positions[idx+1]"
                         :color="lineColor"
+                        :key="'d' + point.id"
                         opacity="1"
                         stroke-width="10"
                         @click="handleClick"
