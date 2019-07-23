@@ -42,11 +42,11 @@ export default {
       const buff = makePNGBuffer(spectrogram.magnitude2d);
       const extractedLines = await postImage(buff, { sensitivity: 5, degree: 6 });
       extractedLines.forEach((line) => {
-        const { note, noteOn } = parsePointAsNoteOn(line[0], spectrogram, this.secToTick);
+        const { note, noteOn } = parsePointAsNoteOn(line[0], spectrogram);
         const modulations = line.slice(1, -1).map(point => {
-          return parsePointAsModulation(point, spectrogram, this.secToTick, note.offsetTime, note.noteNumber);
+          return parsePointAsModulation(point, spectrogram, note.offsetTime, note.noteNumber);
         });
-        const noteOff = parsePointAsNoteOff(line[line.length - 1], spectrogram, this.secToTick, note.offsetTime, note.noteNumber);
+        const noteOff = parsePointAsNoteOff(line[line.length - 1], spectrogram, note.offsetTime, note.noteNumber);
         Note.insert({
           data: {
             id: uid(),
@@ -59,9 +59,6 @@ export default {
           }
         });
       });
-    },
-    secToTick (sec) {
-      return sec / 60 * this.bpm * this.ticksPerBeat;
     }
   },
   components: {

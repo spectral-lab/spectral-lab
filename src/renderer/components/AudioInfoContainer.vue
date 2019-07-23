@@ -20,6 +20,7 @@ import uid from 'uid';
 import { basename } from 'path';
 import resample from '../modules/audio/resample';
 import stft from '../modules/audio/stft';
+import { secToTick } from '../modules/helpers/timeUtils';
 
 export default {
   data () {
@@ -41,8 +42,14 @@ export default {
     isPlaying () {
       return Boolean(this.sourceNode);
     },
+    clip () {
+      return Clip.query().last();
+    },
     clipId () {
-      return Clip.query().last().id;
+      return this.clip.id;
+    },
+    song () {
+      return this.clip.parent.parent;
     }
   },
   methods: {
@@ -90,7 +97,7 @@ export default {
         data: {
           id: uid(),
           audioBufferId,
-          times,
+          times: times.map(time => secToTick(time, this.song.bpm, this.song.ticksPerBeat)),
           freqs,
           magnitude2d
         }

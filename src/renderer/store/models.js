@@ -2,7 +2,7 @@ import { Model } from '@vuex-orm/core';
 import {
   NOTE_ON, NOTE_OFF, MODULATION,
   NOTE, SPECTROGRAM, AUDIO_BUFFER, CLIP,
-  TRACK, SONG, APP
+  TRACK, SONG, APP, PIANO_ROLL
 } from '../constants/model-types';
 import { makeMandatory } from './utils';
 import { bpm, beatsInBar, ticksPerBeat } from '../constants/defaults';
@@ -40,7 +40,7 @@ export class NoteOn extends BaseModel {
     };
   }
   get parent () {
-    return Note.find(this.noteId);
+    return Clip.query().whereId(this.clipId).first();
   }
 }
 
@@ -59,7 +59,7 @@ export class Modulation extends BaseModel {
     };
   }
   get parent () {
-    return Note.find(this.noteId);
+    return Clip.query().whereId(this.clipId).first();
   }
 }
 
@@ -79,7 +79,7 @@ export class NoteOff extends BaseModel {
     };
   }
   get parent () {
-    return Note.find(this.noteId);
+    return Note.query().whereId(this.noteId).first();
   }
 }
 
@@ -127,7 +127,7 @@ export class Note extends BaseModel {
     ].filter(v => v);
   }
   get parent () {
-    return Clip.find(this.clipId);
+    return Clip.query().whereId(this.clipId).first();
   }
 }
 
@@ -145,7 +145,7 @@ export class AudioBuffer extends BaseModel {
     };
   }
   get parent () {
-    return Clip.find(this.clipId);
+    return Clip.query().whereId(this.clipId).first();
   }
 }
 
@@ -162,7 +162,7 @@ export class Spectrogram extends BaseModel {
     };
   }
   get parent () {
-    return AudioBuffer.find(this.audioBufferId);
+    return AudioBuffer.query().whereId(this.audioBufferId).first();
   }
 }
 
@@ -182,7 +182,7 @@ export class Clip extends BaseModel {
     };
   };
   get parent () {
-    return Track.find(this.trackId);
+    return Track.query().whereId(this.trackId).first();
   }
 }
 
@@ -200,7 +200,7 @@ export class Track extends BaseModel {
     };
   }
   get parent () {
-    return Song.find(this.songId);
+    return Song.query().whereId(this.songId).first();
   }
 }
 
@@ -218,6 +218,23 @@ export class Song extends BaseModel {
   }
   get parent () {
     return null;
+  }
+}
+
+export class PianoRoll extends BaseModel {
+  static entity = 'pianoRoll';
+  static fields () {
+    return {
+      id: this.attr(null, makeMandatory('id')),
+      type: this.string(PIANO_ROLL),
+      appId: this.attr(null, makeMandatory('appId')),
+      selected: this.attr(false),
+      gridOpacity: this.attr(1),
+      spectrogramOpacity: this.attr(1)
+    };
+  }
+  get parent () {
+    return App.query().whereId(this.appId).first();
   }
 }
 

@@ -18,6 +18,9 @@
             <v-flex>
               <piano-roll-container/>
             </v-flex>
+            <v-flex>
+              <footer-toolbar/>
+            </v-flex>
           </v-layout>
         </v-container>
       </v-content>
@@ -35,6 +38,7 @@ import ProjectManager from './components/ProjectManager';
 import ToolbarContainer from './components/ToolbarContainer';
 import InfoBar from './components/InfoBar';
 import AudioInfoContainer from './components/AudioInfoContainer';
+import FooterToolbar from './components/FooterToolbar';
 
 export default {
   name: 'app',
@@ -43,6 +47,7 @@ export default {
     AudioInfoContainer,
     PianoRollContainer,
     ToolbarContainer,
+    FooterToolbar,
     InfoBar,
     Transport,
     TitleBar,

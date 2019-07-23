@@ -8,6 +8,9 @@
                 :notes="notes"
                 :selectedNoteIds="selectedNoteIds"
                 :editingNoteId="editingNoteId"
+                :spectrogram="spectrogram"
+                :spectrogram-opacity="spectrogramOpacity"
+                :grid-opacity="gridOpacity"
                 @click="handleClick"
                 @dblclick="handleDblClick"
         />
@@ -18,7 +21,7 @@
 import PianoRoll from './PianoRoll';
 import mockEntities from '../../../test/data/mockEntities';
 import { SET_ENTITIES } from '../store/mutation-types';
-import { Clip, Song, Note } from '../store/models';
+import { Clip, Song, Note, PianoRoll as PianoRollModel } from '../store/models';
 import hotkeys from 'hotkeys-js';
 import { ESCAPE, SELECT_ALL } from '../constants/key-bindings';
 import { bindKeys, unbindKeys } from '../modules/pianoRoll/utils';
@@ -36,6 +39,12 @@ export default {
     clip () {
       return Clip.query().where('selected', true).withAllRecursive().last();
     },
+    audioBuffer () {
+      return this.clip.audioBuffer;
+    },
+    spectrogram () {
+      return this.audioBuffer ? this.audioBuffer.spectrogram : null;
+    },
     notes () {
       return this.clip.notes;
     },
@@ -47,6 +56,12 @@ export default {
     },
     noteIsSelected () {
       return this.selectedNoteIds.length !== 0;
+    },
+    gridOpacity () {
+      return PianoRollModel.query().first().gridOpacity;
+    },
+    spectrogramOpacity () {
+      return PianoRollModel.query().first().spectrogramOpacity;
     }
   },
   watch: {
@@ -98,7 +113,7 @@ export default {
     }
   },
   mounted () {
-    this.loadMockNotes();
+    // this.loadMockNotes();
     hotkeys(ESCAPE, this.clearSelections);
     hotkeys(SELECT_ALL, (ev) => { ev.preventDefault(); this.selectAll(); });
   },
