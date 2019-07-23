@@ -30,11 +30,10 @@ class MemberChannel {
     if (options.pitchBendRange != null) this.pitchBendRange = options.pitchBendRange;
     switch (noteAction.type) {
       case NOTE_ON:
-        const noteOn = Object.assign({}, defaults.noteOn, noteAction);
         if (this.isOccupied) {
-          return [...this.buildNoteOffMessages({}), ...this.buildNoteOnRelatedMessages(noteOn)];
+          return [...this.buildNoteOffMessages({}), ...this.buildNoteOnRelatedMessages(noteAction)];
         }
-        return this.buildNoteOnRelatedMessages(noteOn);
+        return this.buildNoteOnRelatedMessages(noteAction);
       case MODULATION:
         if (this.isOccupied) {
           return this.buildModulationMessages(noteAction);
@@ -58,7 +57,7 @@ class MemberChannel {
 
   buildNoteOffMessages (noteOff) {
     const noteOffVelocity = noteOff.noteOffVelocity || 0;
-    const ret = noteOffMessage(this.activeNoteOn.noteNumber, noteOffVelocity, this.midiChannel);
+    const ret = noteOffMessage(this.activeNoteOn.parent.noteNumber, noteOffVelocity, this.midiChannel);
     this.timeOfLastNoteOff = this.now();
     this.activeNoteOn = null;
     return [ret];
@@ -71,7 +70,7 @@ class MemberChannel {
       cc74Message(noteOn.timbre, this.midiChannel),
       channelPressureMessage(noteOn.pressure, this.midiChannel),
       pitchBendMessage(noteOn.pitchBend, this.pitchBendRange, this.midiChannel),
-      noteOnMessage(noteOn.noteNumber, noteOn.noteOnVelocity, this.midiChannel)
+      noteOnMessage(noteOn.parent.noteNumber, noteOn.noteOnVelocity, this.midiChannel)
     ];
   }
 

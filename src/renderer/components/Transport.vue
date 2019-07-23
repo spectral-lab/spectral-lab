@@ -8,7 +8,7 @@
       test
     </v-btn>
     <v-btn flat icon>
-      <v-icon size="28px">stop</v-icon>
+      <v-icon size="28px" @click="allNotesOff">stop</v-icon>
     </v-btn>
     <v-btn flat icon>
       <v-icon size="24px">fiber_manual_record</v-icon>
@@ -20,6 +20,9 @@
 <script>
 import OutputManager from '../modules/outputManager';
 import * as defaults from '../constants/defaults';
+import { Note, Song } from '../store/models';
+import { range } from 'lodash';
+import { noteOffMessage } from '../modules/midi/formatMidiMessage';
 
 export default {
   data: function () {
@@ -32,11 +35,14 @@ export default {
     playButtonColor () {
       return this.isPlaying ? 'success' : 'white';
     },
+    song () {
+      return Song.query().first();
+    },
     bpm () {
-      return this.$store.state.bpm;
+      return this.song.bpm;
     },
     ticksPerBeat () {
-      return this.$store.state.ticksPerBeat;
+      return this.song.ticksPerBeat;
     }
   },
   mounted () {
@@ -44,7 +50,7 @@ export default {
       const ids = [];
       access.outputs.forEach(output => ids.push(output.id));
       this.midiOutput = access.outputs.get(ids[0]);
-      console.log(this.midiOutput);
+      this.outputManager = new OutputManager({ midiOutput: this.midiOutput });
     });
   },
   methods: {
@@ -55,19 +61,24 @@ export default {
       // release velocity = 64, timestamp = now + 1000ms.
     },
     playNotes () {
-      const options = Object.assign({}, defaults.outputManagerOptions, { midiOutput: this.midiOutput });
-      const outputManager = new OutputManager(options);
-      const notes = this.$store.getters.notes;
+      const notes = Note.query().withAllRecursive().get();
       notes.forEach((note) => {
-        const noteControl = outputManager.noteOn(note.noteOn, window.performance.now() + this.tickToMs(note.noteOn.time));
-        note.modulations.forEach(modulation => {
-          noteControl.modulate(modulation, window.performance.now() + this.tickToMs(note.noteOn.time + modulation.offsetTime));
+        const { noteOn, modulations, noteOff } = note;
+        const noteControl = this.outputManager.noteOn(noteOn, window.performance.now() + this.tickToMs(noteOn.absoluteTime));
+        modulations.forEach(modulation => {
+          noteControl.modulate(modulation, window.performance.now() + this.tickToMs(modulation.absoluteTime));
         });
-        noteControl.noteOff(note.noteOff, window.performance.now() + this.tickToMs(note.noteOn.time + note.noteOff.offsetTime));
+        noteControl.noteOff(noteOff, window.performance.now() + this.tickToMs(noteOff.absoluteTime));
+      });
+    },
+    allNotesOff () {
+      range(1, 17).forEach(channel => {
+        range(128).forEach(noteNumber => {
+          this.midiOutput.send(noteOffMessage(noteNumber, 0, channel));
+        });
       });
     },
     tickToMs (tick) {
-      console.log(tick / this.ticksPerBeat / this.bpm * 60 * 1e3);
       return tick / this.ticksPerBeat / this.bpm * 60 * 1e3;
     }
   }

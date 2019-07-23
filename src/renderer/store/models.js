@@ -40,7 +40,7 @@ export class NoteOn extends BaseModel {
     };
   }
   get parent () {
-    return Clip.query().whereId(this.clipId).first();
+    return Note.query().whereId(this.noteId).first();
   }
 }
 
@@ -59,7 +59,7 @@ export class Modulation extends BaseModel {
     };
   }
   get parent () {
-    return Clip.query().whereId(this.clipId).first();
+    return Note.query().whereId(this.noteId).first();
   }
 }
 
@@ -176,6 +176,7 @@ export class Clip extends BaseModel {
       duration: this.number(4 * beatsInBar * ticksPerBeat), // 4 bars
       notes: this.hasMany(Note, 'clipId'),
       audioBuffer: this.hasOne(AudioBuffer, 'clipId'),
+      beatsInBar: this.attr([{ barIdx: 0, val: beatsInBar }]),
       selected: this.boolean(false),
       trackId: this.attr(null),
       color: this.attr(() => SCALE_COLORS.hHelmholtz[random(11)])
@@ -192,8 +193,7 @@ export class Track extends BaseModel {
     return {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(TRACK),
-      bpmTransition: this.attr([]),
-      beatsInBarTransition: this.attr([]),
+      speed: this.attr([{ offsetTime: 0, val: 1 }]),
       selected: this.boolean(false),
       songId: this.attr(null),
       clips: this.hasMany(Clip, 'trackId')
@@ -211,7 +211,6 @@ export class Song extends BaseModel {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(SONG),
       bpm: this.number(bpm),
-      beatsInBar: this.number(beatsInBar),
       ticksPerBeat: this.number(ticksPerBeat),
       tracks: this.hasMany(Track, 'songId')
     };

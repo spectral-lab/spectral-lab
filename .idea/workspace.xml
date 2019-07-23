@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="753fb297-6703-4a87-a463-b3cc2452c5a5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/PianoRollContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/PianoRollContainer.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/ToolbarContainer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/ToolbarContainer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/Transport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/Transport.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/constants/messages.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/modules/outputManager/MemberChannel.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/modules/outputManager/MemberChannel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/modules/outputManager/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/modules/outputManager/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/store/models.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/store/models.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/data/mockEntities.json" beforeDir="false" afterPath="$PROJECT_DIR$/test/data/mockEntities.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -19,10 +24,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/renderer/components/PianoRollContainer.vue">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/Transport.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="64" column="6" lean-forward="true" selection-start-line="64" selection-start-column="6" selection-end-line="64" selection-end-column="6" />
+            <state relative-caret-position="456">
+              <caret line="57" column="37" lean-forward="true" selection-start-line="57" selection-start-column="37" selection-end-line="57" selection-end-column="37" />
+              <folding>
+                <element signature="e#479#532#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -39,12 +47,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>offsetWidth</find>
-      <find>resetted</find>
-      <find>CONTAINER</find>
-      <find>manageSc</find>
-      <find>tpb</find>
-      <find>editing</find>
       <find>playAudio</find>
       <find>App</find>
       <find>APP</find>
@@ -69,6 +71,12 @@
       <find>id</find>
       <find>ruler</find>
       <find>secToTick</find>
+      <find>beatsIn</find>
+      <find>beatsInBa</find>
+      <find>beatsInba</find>
+      <find>noteNumber</find>
+      <find>build</find>
+      <find>debugger</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src/renderer</dir>
@@ -81,8 +89,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/renderer/modules/pianoRoll/default-styles.js" />
-        <option value="$PROJECT_DIR$/src/renderer/modules/NoteFactory.js" />
         <option value="$PROJECT_DIR$/src/renderer/modules/pianoRoll/constants/default-styles.js" />
         <option value="$PROJECT_DIR$/src/renderer/modules/pianoRoll/initSection.js" />
         <option value="$PROJECT_DIR$/src/renderer/modules/pianoRoll/zoom.js" />
@@ -95,7 +101,6 @@
         <option value="$PROJECT_DIR$/.babelrc" />
         <option value="$PROJECT_DIR$/src/renderer/store/queries.js" />
         <option value="$PROJECT_DIR$/src/renderer/constants/defaults.js" />
-        <option value="$PROJECT_DIR$/src/renderer/components/Transport.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/AudioInfo.vue" />
         <option value="$PROJECT_DIR$/src/renderer/store/actions.js" />
         <option value="$PROJECT_DIR$/src/renderer/store/modules/notes/actions.js" />
@@ -132,6 +137,9 @@
         <option value="$PROJECT_DIR$/src/renderer/components/ToolbarContainer.vue" />
         <option value="$PROJECT_DIR$/src/renderer/store/models.js" />
         <option value="$PROJECT_DIR$/src/renderer/components/PianoRollContainer.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/modules/outputManager/MemberChannel.js" />
+        <option value="$PROJECT_DIR$/src/renderer/components/Transport.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/modules/outputManager/index.js" />
       </list>
     </option>
   </component>
@@ -198,6 +206,22 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="renderer" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="midi" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spectral-lab" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spectral-lab" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="renderer" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="outputManager" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spectral-lab" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spectral-lab" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="renderer" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
               <item name="pianoRoll" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -211,25 +235,6 @@
               <item name="spectral-lab" type="b2602c69:ProjectViewProjectNode" />
               <item name="spectral-lab" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spectral-lab" type="b2602c69:ProjectViewProjectNode" />
-              <item name="spectral-lab" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spectral-lab" type="b2602c69:ProjectViewProjectNode" />
-              <item name="spectral-lab" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="audio" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spectral-lab" type="b2602c69:ProjectViewProjectNode" />
-              <item name="spectral-lab" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="store" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -326,12 +331,12 @@
       <workItem from="1563804863315" duration="3533000" />
       <workItem from="1563851133417" duration="18004000" />
       <workItem from="1563874699609" duration="211000" />
-      <workItem from="1563875039392" duration="1499000" />
+      <workItem from="1563875039392" duration="10467000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="150464000" />
+    <option name="totallyTimeSpent" value="159432000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="878" extended-state="0" />
@@ -363,76 +368,7 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test/utils/formatMidiMessage.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/utils/dataByteUtils.test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#15#248#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dist/electron/index.html" />
-    <entry file="file://$PROJECT_DIR$/test/store/helpers.js" />
-    <entry file="file://$PROJECT_DIR$/.babelrc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="1" lean-forward="true" selection-start-column="1" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/@vuex-orm/core/lib/model/Model.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="91" column="16" selection-start-line="91" selection-start-column="16" selection-end-line="91" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/modules/NoteFactory.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="26" column="29" lean-forward="true" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/modules/helpers/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/store/modules/notes/actions.js" />
-    <entry file="file://$PROJECT_DIR$/src/renderer/constants/defaults.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/store/mutation-types.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -489,13 +425,6 @@
     <entry file="file://$PROJECT_DIR$/src/renderer/components/PianoRollGridRowLayer.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/PianoRollLine.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/modules/pianoRoll/utils.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="97">
@@ -534,13 +463,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/PianoRollGridColumnItem.vue">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/modules/outputManager/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="39" column="2" selection-start-line="39" selection-start-column="2" selection-end-line="39" selection-end-column="2" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/AudioInfoContainer.vue">
       <provider selected="true" editor-type-id="text-editor">
@@ -611,13 +533,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/constants/model-types.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="32" lean-forward="true" selection-start-column="32" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/modules/helpers/timeUtils.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -633,11 +548,6 @@
             <element signature="e#15#86#0" expanded="true" />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/Transport.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-481" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/FooterToolbar.vue">
@@ -664,13 +574,6 @@
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="34" selection-start-line="9" selection-start-column="34" selection-end-line="9" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -705,20 +608,122 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/store/models.js">
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/PianoRollLine.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="239" column="1" lean-forward="true" selection-start-line="239" selection-start-column="1" selection-end-line="239" selection-end-column="1" />
+        <state relative-caret-position="465">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="40" column="55" lean-forward="true" selection-start-line="40" selection-start-column="55" selection-end-line="40" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/modules/helpers/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/PianoRollContainer.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="64" column="6" lean-forward="true" selection-start-line="64" selection-start-column="6" selection-end-line="64" selection-end-column="6" />
+        <state relative-caret-position="270">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/store/models.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="218" column="16" lean-forward="true" selection-start-line="218" selection-start-column="16" selection-end-line="218" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/modules/outputManager/NoteControl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="5" lean-forward="true" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/constants/model-types.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/constants/midi-message-types.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/modules/outputManager/MemberChannel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/typedef.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="581">
+          <caret line="39" column="22" selection-start-line="39" selection-start-column="22" selection-end-line="39" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/constants/messages.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/modules/midi/formatMidiMessage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/modules/midi/dataByteUtils.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/modules/midi/statusByteUtils.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/constants/defaults.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/modules/outputManager/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="54" lean-forward="true" selection-start-line="10" selection-start-column="54" selection-end-line="10" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/Transport.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="57" column="37" lean-forward="true" selection-start-line="57" selection-start-column="37" selection-end-line="57" selection-end-column="37" />
+          <folding>
+            <element signature="e#479#532#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

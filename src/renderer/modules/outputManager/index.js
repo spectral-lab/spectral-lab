@@ -1,24 +1,27 @@
 import MemberChannel from './MemberChannel';
 import NoteControl from './NoteControl';
+import { outputManagerOptions } from '../../constants/defaults';
 class OutputManager {
   /**
    * @param  {object} options
-   * @param  {object} options.midiOutput
-   * @param  {number} options.pitchBendRange
-   * @param  {function} options.nowCb
-   * @param  {Array.<number>} options.memberChannels
-   * @param  {Array.<number>} options.masterChannels
+   * @param  {object} [options.midiOutput]
+   * @param  {number} [options.pitchBendRange]
+   * @param  {function} [options.nowCb]
+   * @param  {Array.<number>} [options.memberChannels]
+   * @param  {Array.<number>} [options.masterChannels]
    */
   constructor (options) {
-    this.pitchBendRange = options.pitchBendRange;
-    this.now = options.nowCb;
-    this.midiOutput = options.midiOutput;
+    const defaultedOptions = Object.assign({}, outputManagerOptions, options);
+    this.pitchBendRange = defaultedOptions.pitchBendRange;
+    this.now = defaultedOptions.nowCb;
+    this.midiOutput = defaultedOptions.midiOutput;
     // TODO: Implement MasterChannel
-    this.memberChannels = options.memberChannels
+    this.memberChannels = defaultedOptions.memberChannels
       .map(midiChannel => new MemberChannel({ midiChannel, nowCb: this.now }));
   }
   /**
    * @param  {NoteOn} noteOn
+   * @param  {number} [timestamp]
    */
   noteOn (noteOn, timestamp = 0) {
     const channelToSend = this.allocateChannel();

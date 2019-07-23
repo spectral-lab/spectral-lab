@@ -3,7 +3,7 @@
         <piano-roll
                 ref="pianoRoll"
                 :total-bars="totalBars"
-                :beats-in-bar="song.beatsInBar"
+                :beats-in-bar="beatsInBar"
                 :ticks-per-beat="song.ticksPerBeat"
                 :notes="notes"
                 :selectedNoteIds="selectedNoteIds"
@@ -48,8 +48,11 @@ export default {
     notes () {
       return this.clip.notes;
     },
+    beatsInBar () {
+      return this.clip.beatsInBar[0].val;
+    },
     totalBars () {
-      return Math.ceil(this.clip.duration / this.song.ticksPerBeat / this.song.beatsInBar);
+      return Math.ceil(this.clip.duration / this.song.ticksPerBeat / this.beatsInBar);
     },
     selectedNoteIds () {
       return Note.query().where('selected', true).get().map(note => note.id);
