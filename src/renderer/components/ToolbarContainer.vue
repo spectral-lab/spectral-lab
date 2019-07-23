@@ -9,7 +9,7 @@
 
 <script>
 import Toolbar from './Toolbar';
-import { App, Spectrogram, Song, Note } from '../store/models';
+import { Spectrogram, Song, Note, PianoRoll } from '../store/models';
 import { APP_ID } from '../constants/ids';
 import {
   makePNGBuffer, postImage,
@@ -19,17 +19,23 @@ import uid from 'uid';
 
 export default {
   computed: {
+    song () {
+      return Song.query().last();
+    },
     bpm () {
-      return Song.query().last().bpm;
+      return this.song.bpm;
     },
     ticksPerBeat () {
-      return Song.query().last().ticksPerBeat;
+      return this.song.ticksPerBeat;
+    },
+    pianoRoll () {
+      return PianoRoll.query().first();
     }
   },
   methods: {
     handleMouseMode (m) {
-      App.update({
-        where: APP_ID,
+      PianoRoll.update({
+        where: this.pianoRoll.id,
         data: {
           mouseMode: m
         }

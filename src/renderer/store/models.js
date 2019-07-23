@@ -230,7 +230,8 @@ export class PianoRoll extends BaseModel {
       appId: this.attr(null, makeMandatory('appId')),
       selected: this.attr(false),
       gridOpacity: this.attr(1),
-      spectrogramOpacity: this.attr(1)
+      spectrogramOpacity: this.attr(1),
+      mouseMode: this.attr(SELECT)
     };
   }
   get parent () {
@@ -243,8 +244,7 @@ export class App extends BaseModel {
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
-      type: this.string(APP),
-      mouseMode: this.attr(SELECT)
+      type: this.string(APP)
     };
   }
   get parent () {

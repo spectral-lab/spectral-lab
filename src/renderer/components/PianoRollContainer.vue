@@ -57,11 +57,17 @@ export default {
     noteIsSelected () {
       return this.selectedNoteIds.length !== 0;
     },
+    pianoRollModelInstance () {
+      return PianoRollModel.query().first();
+    },
     gridOpacity () {
-      return PianoRollModel.query().first().gridOpacity;
+      return this.pianoRollModelInstance.gridOpacity;
     },
     spectrogramOpacity () {
-      return PianoRollModel.query().first().spectrogramOpacity;
+      return this.pianoRollModelInstance.spectrogramOpacity;
+    },
+    mouseMode () {
+      return this.pianoRollModelInstance.mouseMode;
     }
   },
   watch: {
