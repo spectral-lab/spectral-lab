@@ -3,10 +3,10 @@ import MemberChannel from '../../src/renderer/modules/outputManager/MemberChanne
 
 const noteOn = {
   pitchBend: 0,
-  noteNumber: 60,
   noteOnVelocity: 0.5,
   timbre: 0.5,
-  pressure: 0.5
+  pressure: 0.5,
+  parent: { noteNumber: 60 }
 };
 
 const nowCb = () => {
@@ -34,16 +34,16 @@ test('instanciates', () => {
 test('buildNoteOffMessages', () => {
   const memberChannel = new MemberChannel({ midiChannel: 3, nowCb });
   memberChannel.activeNoteOn = {
-    noteNumber: 72
+    parent: { noteNumber: 72 }
   };
   expect(memberChannel.buildNoteOffMessages({})).toEqual([[130, 72, 0]]);
   expect(memberChannel.activeNoteOn).toEqual(null);
   memberChannel.activeNoteOn = {
-    noteNumber: 42
+    parent: { noteNumber: 42 }
   };
   expect(memberChannel.buildNoteOffMessages({ noteOffVelocity: 1 })).toEqual([[130, 42, 127]]);
   memberChannel.activeNoteOn = {
-    noteNumber: 60
+    parent: { noteNumber: 60 }
   };
   expect(memberChannel.buildNoteOffMessages({ irrelevantProperty: 0.5 })).toEqual([[130, 60, 0]]);
 });

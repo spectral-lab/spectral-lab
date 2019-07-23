@@ -19,7 +19,6 @@
 
 <script>
 import OutputManager from '../modules/outputManager';
-import * as defaults from '../constants/defaults';
 import { Note, Song } from '../store/models';
 import { range } from 'lodash';
 import { noteOffMessage } from '../modules/midi/formatMidiMessage';
