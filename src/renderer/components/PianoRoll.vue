@@ -176,7 +176,6 @@ export default {
     grid-row-start: 2;
     grid-row-end: 4;
 }
-
 .border {
     cursor: row-resize;
     z-index: 100;
@@ -185,13 +184,11 @@ export default {
     grid-row-start: 3;
     grid-row-end: 5;
 }
-
 .note-container {
     height: 200%;
     width: 100%;
     position: relative;
 }
-
 .note-layer {
     width: 100%;
     height: 100%;
