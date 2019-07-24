@@ -95,7 +95,8 @@ export class Note extends BaseModel {
       noteOn: this.hasOne(NoteOn, 'noteId'),
       noteOff: this.hasOne(NoteOff, 'noteId'),
       modulations: this.hasMany(Modulation, 'noteId'),
-      selected: this.boolean(false)
+      selected: this.boolean(false),
+      interpolation: this.string('LINEAR')
     };
   }
   get noteActions () {
@@ -107,8 +108,6 @@ export class Note extends BaseModel {
   }
   get pitchTransition () {
     const pitchBendMods = this.modulations.filter(mod => mod.pitchBend !== null);
-    const isEmpty = pitchBendMods.length === 0;
-    const lastPitchBend = isEmpty ? this.noteOn.pitchBend : pitchBendMods[pitchBendMods.length - 1].pitchBend;
     return [
       {
         offsetTime: this.offsetTime,
@@ -122,7 +121,7 @@ export class Note extends BaseModel {
       })),
       this.noteOff && {
         offsetTime: this.offsetTime + this.noteOff.offsetTime,
-        pitch: this.noteNumber + lastPitchBend,
+        pitch: this.noteNumber + this.noteOff.pitchBend,
         ...pick(this.noteOff, ['id', 'type'])
       }
     ].filter(v => v);
@@ -194,6 +193,7 @@ export class Track extends BaseModel {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(TRACK),
       bpmTransition: this.attr([]),
+      beatsInBarTransition: this.attr([]),
       selected: this.boolean(false),
       songId: this.attr(null),
       clips: this.hasMany(Clip, 'trackId')

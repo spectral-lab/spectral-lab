@@ -36,6 +36,7 @@ export const instanciateModels = () => {
   models.Clip.insert({
     data: {
       id: uid(),
+      selected: true,
       trackId
     }
   });
