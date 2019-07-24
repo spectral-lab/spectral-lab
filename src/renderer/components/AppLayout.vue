@@ -26,13 +26,22 @@ import ClipView from './ClipView';
 import ArrangementView from './ArrangementView';
 import { clamp, debounce } from 'lodash';
 import TitleBar from './TitleBar';
-import { initialArrangementViewHeight, titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
+import { titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
+import hotkeys from 'hotkeys-js';
+import { ROTATE_VIEW_MODE } from '../constants/key-bindings';
+
+const VIEW_MODE = {
+  ARRANGEMENT: 'ARRANGEMENT',
+  SPLIT: 'SPLIT',
+  CLIP: 'CLIP'
+};
+const { ARRANGEMENT, SPLIT, CLIP } = VIEW_MODE;
 
 export default {
   data () {
     return {
+      arrangementViewHeight: 500,
       windowHeight: 800,
-      arrangementViewHeight: parseInt(initialArrangementViewHeight, 10),
       titleBarHeight: parseInt(titleBarHeight, 10),
       transportHeight: parseInt(transportHeight, 10),
       borderHeight: parseInt(borderHeight, 10)
@@ -44,6 +53,18 @@ export default {
     },
     clipViewHeight () {
       return this.appMainContentHeight - this.arrangementViewHeight - this.borderHeight - 6;
+    },
+    maxArrangementViewHeight () {
+      return this.appMainContentHeight - this.borderHeight - 6;
+    },
+    viewMode () {
+      if (this.arrangementViewHeight > this.maxArrangementViewHeight - 10) {
+        return ARRANGEMENT;
+      }
+      if (this.arrangementViewHeight < 10) {
+        return CLIP;
+      }
+      return SPLIT;
     }
   },
   created () {
@@ -54,17 +75,29 @@ export default {
       this.windowHeight = window.innerHeight;
     }, 30));
     this.makeDraggable();
-    this.switchToArrangementView();
+    hotkeys(ROTATE_VIEW_MODE, this.rotateViewMode);
+    this.switchToClipView();
   },
   methods: {
+    rotateViewMode () {
+      if (this.viewMode === ARRANGEMENT) {
+        this.switchToClipView();
+        return;
+      }
+      if (this.viewMode === CLIP) {
+        this.switchToSplitView();
+        return;
+      }
+      this.switchToArrangementView();
+    },
     switchToArrangementView () {
-      this.arrangementViewHeight = this.appMainContentHeight - this.borderHeight - 6;
+      this.arrangementViewHeight = this.maxArrangementViewHeight;
     },
     switchToClipView () {
       this.arrangementViewHeight = 0;
     },
-    splitHorizontally () {
-      this.arrangementViewHeight = (this.appMainContentHeight - this.borderHeight - 6) * 0.5;
+    switchToSplitView () {
+      this.arrangementViewHeight = this.maxArrangementViewHeight * 0.5;
     },
     makeDraggable () {
       let dragging = false;
@@ -98,18 +131,13 @@ export default {
 
 <style scoped>
   .app-main-content {
-    /*display: flex;*/
-    /*height: 95vh;*/
-    /*flex-direction: column;*/
     overflow: hidden;
   }
   .arrangement-view-container {
-    /*flex: 1 1 auto;*/
     overflow: auto;
   }
   .clip-view-container {
     overflow: auto;
-    /*flex: 1 1 auto;*/
   }
   .border {
     cursor: row-resize;
