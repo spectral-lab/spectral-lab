@@ -223,7 +223,6 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
-    border-radius: 30%;
 }
 
 .automation-layer {

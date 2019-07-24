@@ -1,13 +1,12 @@
 <template>
-    <div>
+    <div class="arrangement-view">
         <v-content>
             <v-container fluid fill-height>
                 <v-layout column>
                     <v-flex>
-                        <toolbar-container/>
-                    </v-flex>
-                    <v-flex>
-                        <info-bar/>
+                        <div class="arrangement-ruler">
+                            ruler
+                        </div>
                     </v-flex>
                     <v-flex>
                         <track-row/>
@@ -38,5 +37,15 @@
 </script>
 
 <style scoped>
+    .arrangement-view {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    .arrangement-ruler {
+        background: darkcyan;
+        width: 100%;
+        height: 50px;
+    }
 
 </style>

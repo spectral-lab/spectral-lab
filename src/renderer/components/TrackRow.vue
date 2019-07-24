@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="track-row">
         Track
     </div>
 </template>
@@ -11,5 +11,8 @@
 </script>
 
 <style scoped>
-
+    .track-row {
+        background: grey;
+        height: 150px;
+    }
 </style>

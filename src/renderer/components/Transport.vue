@@ -1,5 +1,5 @@
 <template>
-  <v-footer app fixed>
+  <v-footer app fixed :height="transportHeight">
     <v-spacer />
     <v-btn flat icon>
       <v-icon size="28px" :color="playButtonColor" @click="playNotes">play_arrow</v-icon>
@@ -22,12 +22,14 @@ import OutputManager from '../modules/outputManager';
 import { Note, Song } from '../store/models';
 import { range } from 'lodash';
 import { noteOffMessage } from '../modules/midi/formatMidiMessage';
+import { transportHeight } from '../constants/layout';
 
 export default {
   data: function () {
     return {
       isPlaying: false,
-      midiOutput: null
+      midiOutput: null,
+      transportHeight
     };
   },
   computed: {

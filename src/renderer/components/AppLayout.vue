@@ -1,11 +1,18 @@
 <template>
-  <div>
-    <div class="main" ref="main">
-      <div class="arrangement-view-container">
+  <div class="app-layout">
+    <title-bar/>
+    <div class="app-main-content"
+         ref="appMainContent"
+         :style="{ height: `${appMainContentHeight}px` }"
+         >
+      <div class="arrangement-view-container"
+           ref="arrangementViewContainer"
+           :style="{ height: `${arrangementViewHeight}px` }">
         <arrangement-view/>
       </div>
-      <div ref="border" class="border"></div>
-      <div class="clip-view-container" :style="{ maxHeight: `${clipViewHeight}px` }">
+      <div ref="border" class="border" :style="{ height: `${borderHeight}px` }"></div>
+      <div class="clip-view-container"
+           :style="{ height: `${clipViewHeight}px` }">
         <clip-view/>
       </div>
     </div>
@@ -14,40 +21,54 @@
 </template>
 
 <script>
-import PianoRollContainer from './PianoRollContainer';
 import Transport from './Transport';
-import ToolbarContainer from './ToolbarContainer';
-import InfoBar from './InfoBar';
-import AudioInfoContainer from './AudioInfoContainer';
-import FooterToolbar from './FooterToolbar';
 import ClipView from './ClipView';
 import ArrangementView from './ArrangementView';
-import { clamp } from 'lodash';
-import { getOffsetTop } from '../modules/pianoRoll/utils';
+import { clamp, debounce } from 'lodash';
+import TitleBar from './TitleBar';
+import { initialArrangementViewHeight, titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
 
 export default {
   data () {
     return {
-      clipViewHeight: 300
+      windowHeight: 800,
+      arrangementViewHeight: parseInt(initialArrangementViewHeight, 10),
+      titleBarHeight: parseInt(titleBarHeight, 10),
+      transportHeight: parseInt(transportHeight, 10),
+      borderHeight: parseInt(borderHeight, 10)
     };
   },
-  components: {
-    ClipView,
-    AudioInfoContainer,
-    PianoRollContainer,
-    ToolbarContainer,
-    FooterToolbar,
-    InfoBar,
-    Transport,
-    ArrangementView
+  computed: {
+    appMainContentHeight () {
+      return this.windowHeight - this.titleBarHeight - this.transportHeight;
+    },
+    clipViewHeight () {
+      return this.appMainContentHeight - this.arrangementViewHeight - this.borderHeight - 6;
+    }
+  },
+  created () {
+    this.windowHeight = window.innerHeight;
   },
   mounted () {
-    this.makeDraggable(this.$refs.border, this.$refs.main);
+    window.addEventListener('resize', debounce(() => {
+      this.windowHeight = window.innerHeight;
+    }, 30));
+    this.makeDraggable();
+    this.switchToArrangementView();
   },
   methods: {
-    makeDraggable (borderElt, wrapper) {
+    switchToArrangementView () {
+      this.arrangementViewHeight = this.appMainContentHeight - this.borderHeight - 6;
+    },
+    switchToClipView () {
+      this.arrangementViewHeight = 0;
+    },
+    splitHorizontally () {
+      this.arrangementViewHeight = (this.appMainContentHeight - this.borderHeight - 6) * 0.5;
+    },
+    makeDraggable () {
       let dragging = false;
-      borderElt.addEventListener('mousedown', () => {
+      this.$refs.border.addEventListener('mousedown', () => {
         document.body.style.cursor = 'row-resize';
         dragging = true;
       });
@@ -56,37 +77,43 @@ export default {
         document.body.style.cursor = 'default';
         dragging = false;
       });
-      wrapper.addEventListener('mousemove', (ev) => {
+      this.$refs.appMainContent.addEventListener('mousemove', (ev) => {
         if (!dragging) return;
-        this.clipViewHeight = clamp(
-          getOffsetTop(wrapper) + wrapper.clientHeight - ev.pageY,
+        this.arrangementViewHeight = clamp(
+          ev.pageY - this.$refs.appMainContent.offsetTop,
           0,
-          Math.max(wrapper.clientHeight - 48, 1)
+          Math.max(this.$refs.appMainContent.clientHeight, 1)
         );
       });
     }
+  },
+  components: {
+    ClipView,
+    Transport,
+    ArrangementView,
+    TitleBar
   }
 };
 </script>
 
 <style scoped>
-  .main {
-    display: flex;
-    height: 95vh;
-    flex-direction: column;
+  .app-main-content {
+    /*display: flex;*/
+    /*height: 95vh;*/
+    /*flex-direction: column;*/
+    overflow: hidden;
   }
   .arrangement-view-container {
-    flex: 1 1 auto;
+    /*flex: 1 1 auto;*/
+    overflow: auto;
   }
   .clip-view-container {
-    /*max-height: 2000px;*/
     overflow: auto;
-    flex: 1 1 auto;
+    /*flex: 1 1 auto;*/
   }
   .border {
     cursor: row-resize;
-    height: 5px;
-    background: black;
+    background: #212121;
     z-index: 100;
   }
 </style>
