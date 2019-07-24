@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="753fb297-6703-4a87-a463-b3cc2452c5a5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/renderer/constants/layout.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/AppLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/AppLayout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/ArrangementView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/ArrangementView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/ClipView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/ClipView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/PianoRoll.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/PianoRoll.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/TitleBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/TitleBar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/TrackRow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/TrackRow.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/Transport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/Transport.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/constants/key-bindings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/constants/key-bindings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/constants/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/constants/layout.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -24,7 +18,34 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/renderer/components/AppLayout.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="256">
+              <caret line="31" selection-start-line="31" selection-end-line="31" />
+              <folding>
+                <element signature="e#653#689#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/renderer/constants/layout.js">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/renderer/constants/key-bindings.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -36,7 +57,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>playAudio</find>
       <find>App</find>
       <find>APP</find>
       <find>appId</find>
@@ -66,6 +86,7 @@
       <find>noteNumber</find>
       <find>build</find>
       <find>debugger</find>
+      <find>viewMode</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src/renderer</dir>
@@ -96,7 +117,6 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/test/data/mockEntities.json" />
         <option value="$PROJECT_DIR$/src/renderer/components/PianoRollTransition.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/constants/key-bindings.js" />
         <option value="$PROJECT_DIR$/src/renderer/store/index.js" />
         <option value="$PROJECT_DIR$/src/renderer/modules/pianoRoll/utils.js" />
         <option value="$PROJECT_DIR$/src/renderer/modules/render/renderSpectrogram.js" />
@@ -126,15 +146,15 @@
         <option value="$PROJECT_DIR$/src/renderer/components/ClipView.vue" />
         <option value="$PROJECT_DIR$/src/renderer/App.vue" />
         <option value="$PROJECT_DIR$/src/renderer/components/Transport.vue" />
-        <option value="$PROJECT_DIR$/src/renderer/constants/layout.js" />
         <option value="$PROJECT_DIR$/src/renderer/components/TitleBar.vue" />
+        <option value="$PROJECT_DIR$/src/renderer/constants/key-bindings.js" />
+        <option value="$PROJECT_DIR$/src/renderer/constants/layout.js" />
         <option value="$PROJECT_DIR$/src/renderer/components/AppLayout.vue" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1440" />
-    <option name="y" value="-158" />
+    <option name="y" value="22" />
     <option name="width" value="1440" />
     <option name="height" value="878" />
   </component>
@@ -143,35 +163,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="spectral-lab" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/repos/spectral-lab" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="spectral-lab" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/repos/spectral-lab" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="spectral-lab" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/repos/spectral-lab" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="renderer" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="spectral-lab" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/repos/spectral-lab" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="renderer" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="components" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -221,6 +212,35 @@
               <item name="spectral-lab" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="classes" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="spectral-lab" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/repos/spectral-lab" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="spectral-lab" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/repos/spectral-lab" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="spectral-lab" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/repos/spectral-lab" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="renderer" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="spectral-lab" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/repos/spectral-lab" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="renderer" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="components" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -293,16 +313,18 @@
       <workItem from="1563874699609" duration="211000" />
       <workItem from="1563875039392" duration="15978000" />
       <workItem from="1563932071879" duration="11362000" />
+      <workItem from="1563972337889" duration="4063000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176305000" />
+    <option name="totallyTimeSpent" value="180368000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1440" height="878" extended-state="0" />
+    <frame x="0" y="22" width="1440" height="878" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49896482" visible="true" weight="0.27554616" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49896482" visible="true" weight="0.3685694" />
       <window_info id="Structure" order="1" sideWeight="0.5010352" side_tool="true" weight="0.17535545" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -328,9 +350,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/PianoRollGridRowLayer.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/modules/pianoRoll/scroll.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -670,16 +689,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/components/AppLayout.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="65" column="26" lean-forward="true" selection-start-line="65" selection-start-column="26" selection-end-line="65" selection-end-column="26" />
-          <folding>
-            <element signature="e#481#517#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/TitleBar.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -692,18 +701,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/Transport.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="12" lean-forward="true" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        <state relative-caret-position="239">
+          <caret line="26" column="16" lean-forward="true" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
           <folding>
-            <element signature="e#493#546#0" expanded="true" />
+            <element signature="e#505#558#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/renderer/constants/layout.js">
+    <entry file="file://$PROJECT_DIR$/src/renderer/constants/key-bindings.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="37" lean-forward="true" selection-start-line="1" selection-start-column="37" selection-end-line="1" selection-end-column="37" />
+        <state relative-caret-position="180">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/constants/layout.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/renderer/components/AppLayout.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="e#653#689#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
