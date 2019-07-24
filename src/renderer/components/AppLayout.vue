@@ -131,18 +131,13 @@ export default {
 
 <style scoped>
   .app-main-content {
-    /*display: flex;*/
-    /*height: 95vh;*/
-    /*flex-direction: column;*/
     overflow: hidden;
   }
   .arrangement-view-container {
-    /*flex: 1 1 auto;*/
     overflow: auto;
   }
   .clip-view-container {
     overflow: auto;
-    /*flex: 1 1 auto;*/
   }
   .border {
     cursor: row-resize;

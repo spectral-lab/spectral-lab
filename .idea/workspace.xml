@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="753fb297-6703-4a87-a463-b3cc2452c5a5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/AppLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/AppLayout.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/constants/key-bindings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/constants/key-bindings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/constants/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/constants/layout.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/renderer/components/AppLayout.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="31" selection-start-line="31" selection-end-line="31" />
+            <state relative-caret-position="291">
+              <caret line="126" column="12" lean-forward="true" selection-start-line="126" selection-start-column="12" selection-end-line="126" selection-end-column="12" />
               <folding>
                 <element signature="e#653#689#0" expanded="true" />
               </folding>
@@ -318,7 +315,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="180368000" />
+    <option name="totallyTimeSpent" value="180381000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="878" extended-state="6" />
@@ -721,8 +718,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/renderer/components/AppLayout.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
+        <state relative-caret-position="291">
+          <caret line="126" column="12" lean-forward="true" selection-start-line="126" selection-start-column="12" selection-end-line="126" selection-end-column="12" />
           <folding>
             <element signature="e#653#689#0" expanded="true" />
           </folding>
