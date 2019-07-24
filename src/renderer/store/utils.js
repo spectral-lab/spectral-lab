@@ -40,6 +40,13 @@ export const instanciateModels = () => {
       trackId
     }
   });
+  models.PianoRoll.insert({
+    data: {
+      id: uid(),
+      selected: true,
+      appId: APP_ID
+    }
+  });
 };
 
 export const createAudioCtx = () => new AudioContext({

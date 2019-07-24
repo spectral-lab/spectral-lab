@@ -50,8 +50,10 @@ export const calcYPos = (freq, arrayOfFreqs, heightOfCanvas) => {
     return heightOfCanvas;
   }
   const noteNum = ftom(freq);
-  const highestNote = ftom(arrayOfFreqs[arrayOfFreqs.length - 1]);
-  const lowestNote = ftom(Math.max(LOW_FREQ_TO_HIDE, arrayOfFreqs[0]));
+  // const highestNote = ftom(arrayOfFreqs[arrayOfFreqs.length - 1]);
+  // const lowestNote = ftom(Math.max(LOW_FREQ_TO_HIDE, arrayOfFreqs[0]));
+  const highestNote = 127;
+  const lowestNote = 0;
   return heightOfCanvas * (highestNote - noteNum) / (highestNote - lowestNote);
 };
 

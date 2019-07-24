@@ -3,11 +3,14 @@
         <piano-roll
                 ref="pianoRoll"
                 :total-bars="totalBars"
-                :beats-in-bar="song.beatsInBar"
+                :beats-in-bar="beatsInBar"
                 :ticks-per-beat="song.ticksPerBeat"
                 :notes="notes"
                 :selectedNoteIds="selectedNoteIds"
                 :editingNoteId="editingNoteId"
+                :spectrogram="spectrogram"
+                :spectrogram-opacity="spectrogramOpacity"
+                :grid-opacity="gridOpacity"
                 @click="handleClick"
                 @dblclick="handleDblClick"
         />
@@ -18,7 +21,7 @@
 import PianoRoll from './PianoRoll';
 import mockEntities from '../../../test/data/mockEntities';
 import { SET_ENTITIES } from '../store/mutation-types';
-import { Clip, Song, Note } from '../store/models';
+import { Clip, Song, Note, PianoRoll as PianoRollModel } from '../store/models';
 import hotkeys from 'hotkeys-js';
 import { ESCAPE, SELECT_ALL } from '../constants/key-bindings';
 import { bindKeys, unbindKeys } from '../modules/pianoRoll/utils';
@@ -36,17 +39,38 @@ export default {
     clip () {
       return Clip.query().where('selected', true).withAllRecursive().last();
     },
+    audioBuffer () {
+      return this.clip.audioBuffer;
+    },
+    spectrogram () {
+      return this.audioBuffer ? this.audioBuffer.spectrogram : null;
+    },
     notes () {
       return this.clip.notes;
     },
+    beatsInBar () {
+      return this.clip.beatsInBar[0].val;
+    },
     totalBars () {
-      return Math.ceil(this.clip.duration / this.song.ticksPerBeat / this.song.beatsInBar);
+      return Math.ceil(this.clip.duration / this.song.ticksPerBeat / this.beatsInBar);
     },
     selectedNoteIds () {
       return Note.query().where('selected', true).get().map(note => note.id);
     },
     noteIsSelected () {
       return this.selectedNoteIds.length !== 0;
+    },
+    pianoRollModelInstance () {
+      return PianoRollModel.query().first();
+    },
+    gridOpacity () {
+      return this.pianoRollModelInstance.gridOpacity;
+    },
+    spectrogramOpacity () {
+      return this.pianoRollModelInstance.spectrogramOpacity;
+    },
+    mouseMode () {
+      return this.pianoRollModelInstance.mouseMode;
     }
   },
   watch: {
@@ -98,7 +122,7 @@ export default {
     }
   },
   mounted () {
-    this.loadMockNotes();
+    // this.loadMockNotes();
     hotkeys(ESCAPE, this.clearSelections);
     hotkeys(SELECT_ALL, (ev) => { ev.preventDefault(); this.selectAll(); });
   },

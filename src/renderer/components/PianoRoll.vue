@@ -7,9 +7,18 @@
         </div>
         <div ref="noteDisplay" class="note-display scrollbar-hidden">
             <div ref="noteContainer" class="note-container">
-                <div ref="noteGridLayer" class="grid-layer">
+                <div ref="noteGridLayer" class="grid-layer" :style="{ opacity: gridOpacity }">
                     <piano-roll-grid-row-layer/>
                     <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars"/>
+                </div>
+                <div ref="spectrogramLayer"
+                     :style="{
+                         width: `${spectrogramDuration / totalTicks * 100}%`,
+                         opacity: spectrogramOpacity
+                     }"
+                     class="spectrogram-layer"
+                >
+                    <canvas ref="spectrogram" class="spectrogram" width="1920" height="1080"></canvas>
                 </div>
                 <div ref="noteLayer" class="note-layer">
                     <svg width="100%" height="100%">
@@ -49,6 +58,7 @@ import PianoRollGridRowLayer from './PianoRollGridRowLayer';
 import PianoRollGridColumnLayer from './PianoRollGridColumnLayer';
 import PianoRollMidiKeyboard from './PianoRollMidiKeyboard';
 import PianoRollNote from './PianoRollNote';
+import renderSpectrogram from '../modules/render/renderSpectrogram';
 
 export default {
   props: {
@@ -57,7 +67,18 @@ export default {
     beatsInBar: Number,
     ticksPerBeat: Number,
     selectedNoteIds: Array,
-    editingNoteId: String
+    editingNoteId: String,
+    spectrogram: Object,
+    gridOpacity: Number,
+    spectrogramOpacity: Number
+  },
+  watch: {
+    spectrogram: {
+      handler (spectrogram) {
+        renderSpectrogram(spectrogram, this.$refs.spectrogram);
+      },
+      deep: true
+    }
   },
   computed: {
     totalBeats () {
@@ -75,6 +96,10 @@ export default {
         automationLaneSelector: this.$refs.automationLaneSelector,
         automationLaneContent: this.$refs.automationLaneContent
       };
+    },
+    spectrogramDuration () {
+      if (!this.spectrogram) return 0;
+      return this.spectrogram.times[this.spectrogram.times.length - 1];
     }
   },
   mounted () {
@@ -151,7 +176,6 @@ export default {
     grid-row-start: 2;
     grid-row-end: 4;
 }
-
 .border {
     cursor: row-resize;
     z-index: 100;
@@ -160,20 +184,30 @@ export default {
     grid-row-start: 3;
     grid-row-end: 5;
 }
-
 .note-container {
     height: 200%;
     width: 100%;
     position: relative;
 }
-
 .note-layer {
     width: 100%;
     height: 100%;
     position: absolute;
 }
 
+.spectrogram-layer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
 .grid-layer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.spectrogram {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -189,7 +223,6 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
-    border-radius: 30%;
 }
 
 .automation-layer {

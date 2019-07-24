@@ -2,7 +2,7 @@ import { Model } from '@vuex-orm/core';
 import {
   NOTE_ON, NOTE_OFF, MODULATION,
   NOTE, SPECTROGRAM, AUDIO_BUFFER, CLIP,
-  TRACK, SONG, APP
+  TRACK, SONG, APP, PIANO_ROLL
 } from '../constants/model-types';
 import { makeMandatory } from './utils';
 import { bpm, beatsInBar, ticksPerBeat } from '../constants/defaults';
@@ -40,7 +40,7 @@ export class NoteOn extends BaseModel {
     };
   }
   get parent () {
-    return Note.find(this.noteId);
+    return Note.query().whereId(this.noteId).first();
   }
 }
 
@@ -59,7 +59,7 @@ export class Modulation extends BaseModel {
     };
   }
   get parent () {
-    return Note.find(this.noteId);
+    return Note.query().whereId(this.noteId).first();
   }
 }
 
@@ -79,7 +79,7 @@ export class NoteOff extends BaseModel {
     };
   }
   get parent () {
-    return Note.find(this.noteId);
+    return Note.query().whereId(this.noteId).first();
   }
 }
 
@@ -127,7 +127,7 @@ export class Note extends BaseModel {
     ].filter(v => v);
   }
   get parent () {
-    return Clip.find(this.clipId);
+    return Clip.query().whereId(this.clipId).first();
   }
 }
 
@@ -145,7 +145,7 @@ export class AudioBuffer extends BaseModel {
     };
   }
   get parent () {
-    return Clip.find(this.clipId);
+    return Clip.query().whereId(this.clipId).first();
   }
 }
 
@@ -162,7 +162,7 @@ export class Spectrogram extends BaseModel {
     };
   }
   get parent () {
-    return AudioBuffer.find(this.audioBufferId);
+    return AudioBuffer.query().whereId(this.audioBufferId).first();
   }
 }
 
@@ -176,13 +176,14 @@ export class Clip extends BaseModel {
       duration: this.number(4 * beatsInBar * ticksPerBeat), // 4 bars
       notes: this.hasMany(Note, 'clipId'),
       audioBuffer: this.hasOne(AudioBuffer, 'clipId'),
+      beatsInBar: this.attr([{ barIdx: 0, val: beatsInBar }]),
       selected: this.boolean(false),
       trackId: this.attr(null),
       color: this.attr(() => SCALE_COLORS.hHelmholtz[random(11)])
     };
   };
   get parent () {
-    return Track.find(this.trackId);
+    return Track.query().whereId(this.trackId).first();
   }
 }
 
@@ -192,15 +193,14 @@ export class Track extends BaseModel {
     return {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(TRACK),
-      bpmTransition: this.attr([]),
-      beatsInBarTransition: this.attr([]),
+      speed: this.attr([{ offsetTime: 0, val: 1 }]),
       selected: this.boolean(false),
       songId: this.attr(null),
       clips: this.hasMany(Clip, 'trackId')
     };
   }
   get parent () {
-    return Song.find(this.songId);
+    return Song.query().whereId(this.songId).first();
   }
 }
 
@@ -211,7 +211,6 @@ export class Song extends BaseModel {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(SONG),
       bpm: this.number(bpm),
-      beatsInBar: this.number(beatsInBar),
       ticksPerBeat: this.number(ticksPerBeat),
       tracks: this.hasMany(Track, 'songId')
     };
@@ -221,13 +220,30 @@ export class Song extends BaseModel {
   }
 }
 
+export class PianoRoll extends BaseModel {
+  static entity = 'pianoRoll';
+  static fields () {
+    return {
+      id: this.attr(null, makeMandatory('id')),
+      type: this.string(PIANO_ROLL),
+      appId: this.attr(null, makeMandatory('appId')),
+      selected: this.attr(false),
+      gridOpacity: this.attr(1),
+      spectrogramOpacity: this.attr(1),
+      mouseMode: this.attr(SELECT)
+    };
+  }
+  get parent () {
+    return App.query().whereId(this.appId).first();
+  }
+}
+
 export class App extends BaseModel {
   static entity = 'app';
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
-      type: this.string(APP),
-      mouseMode: this.attr(SELECT)
+      type: this.string(APP)
     };
   }
   get parent () {
