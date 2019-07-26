@@ -10,4 +10,5 @@ export const NOTE_SHIFT_UP = 'up';
 export const NOTE_SHIFT_DOWN = 'down';
 export const DELETE = 'clear,backspace,del,delete';
 export const SELECT_ALL = 'cmd+a';
-export const ROTATE_VIEW_MODE = 'tab';
+export const SWITCH_WINDOW = 'tab';
+export const SPLIT_WINDOW = 'cmd+d';

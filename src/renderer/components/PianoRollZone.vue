@@ -1,5 +1,5 @@
 <template>
-  <v-content class="clip-view">
+  <v-content class="piano-roll-zone">
     <v-container fluid fill-height>
       <v-layout column>
         <v-flex>
@@ -45,8 +45,5 @@
 </script>
 
 <style scoped>
-  /*.clip-view {*/
-  /*  height: 100%;*/
-  /*}*/
 </style>
 

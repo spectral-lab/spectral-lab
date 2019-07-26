@@ -1,5 +1,5 @@
 <template>
-    <div class="arrangement-view">
+    <div class="arrangement-zone">
         <v-content>
             <v-container fluid fill-height>
                 <v-layout column>
@@ -37,7 +37,7 @@
 </script>
 
 <style scoped>
-    .arrangement-view {
+    .arrangement-zone {
         position: relative;
         width: 100%;
         height: 100%;

@@ -5,16 +5,26 @@
          ref="appMainContent"
          :style="{ height: `${appMainContentHeight}px` }"
          >
-      <div class="arrangement-view-container"
-           ref="arrangementViewContainer"
-           :style="{ height: `${arrangementViewHeight}px` }">
-        <arrangement-view/>
+      <div class="arrangement-zone-container"
+           ref="arrangementZoneContainer"
+           :style="{
+            height: `${arrangementZoneHeight}px`,
+            borderColor: arrangementZoneBorderColor
+           }"
+           @click="selectArrangementZone"
+      >
+        <arrangement-zone/>
       </div>
       <div ref="border" class="border" :style="{ height: `${borderHeight}px` }"></div>
-      <div class="clip-view-container"
-           :style="{ height: `${clipViewHeight}px` }">
-        <clip-view/>
-      </div>
+      <div class="piano-roll-zone-container"
+           :style="{
+            height: `${pianoRollZoneHeight}px`,
+            borderColor: pianoRollZoneBorderColor
+            }"
+           @click="selectPianoRollZone"
+      >
+        <piano-roll-zone/>
+        </div>
     </div>
     <transport/>
   </div>
@@ -22,25 +32,25 @@
 
 <script>
 import Transport from './Transport';
-import ClipView from './ClipView';
-import ArrangementView from './ArrangementView';
+import PianoRollZone from './PianoRollZone';
+import ArrangementZone from './ArrangementZone';
 import { clamp, debounce } from 'lodash';
 import TitleBar from './TitleBar';
 import { titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
 import hotkeys from 'hotkeys-js';
-import { ROTATE_VIEW_MODE } from '../constants/key-bindings';
+import { SPLIT_WINDOW, SWITCH_WINDOW } from '../constants/key-bindings';
 
-const VIEW_MODE = {
+const ZONE = {
   ARRANGEMENT: 'ARRANGEMENT',
-  SPLIT: 'SPLIT',
-  CLIP: 'CLIP'
+  PIANO_ROLL: 'PIANO_ROLL'
 };
-const { ARRANGEMENT, SPLIT, CLIP } = VIEW_MODE;
+const { ARRANGEMENT, PIANO_ROLL } = ZONE;
 
 export default {
   data () {
     return {
-      arrangementViewHeight: 500,
+      arrangementZoneHeight: 500,
+      selectedZone: ARRANGEMENT,
       windowHeight: 800,
       titleBarHeight: parseInt(titleBarHeight, 10),
       transportHeight: parseInt(transportHeight, 10),
@@ -51,20 +61,23 @@ export default {
     appMainContentHeight () {
       return this.windowHeight - this.titleBarHeight - this.transportHeight;
     },
-    clipViewHeight () {
-      return this.appMainContentHeight - this.arrangementViewHeight - this.borderHeight - 6;
+    pianoRollZoneHeight () {
+      return this.appMainContentHeight - this.arrangementZoneHeight - this.borderHeight - 12;
     },
-    maxArrangementViewHeight () {
-      return this.appMainContentHeight - this.borderHeight - 6;
+    maxArrangementZoneHeight () {
+      return this.appMainContentHeight - this.borderHeight - 12;
     },
-    viewMode () {
-      if (this.arrangementViewHeight > this.maxArrangementViewHeight - 10) {
-        return ARRANGEMENT;
+    arrangementZoneBorderColor () {
+      switch (this.selectedZone) {
+        case ARRANGEMENT: return 'lightgrey';
+        case PIANO_ROLL: return 'transparent';
       }
-      if (this.arrangementViewHeight < 10) {
-        return CLIP;
+    },
+    pianoRollZoneBorderColor () {
+      switch (this.selectedZone) {
+        case ARRANGEMENT: return 'transparent';
+        case PIANO_ROLL: return 'lightgrey';
       }
-      return SPLIT;
     }
   },
   created () {
@@ -75,29 +88,35 @@ export default {
       this.windowHeight = window.innerHeight;
     }, 30));
     this.makeDraggable();
-    hotkeys(ROTATE_VIEW_MODE, this.rotateViewMode);
-    this.switchToClipView();
+    hotkeys(SWITCH_WINDOW, this.switchWindow);
+    hotkeys(SPLIT_WINDOW, this.splitWindow);
+    this.expandPianoRollZone();
+    this.selectPianoRollZone();
   },
   methods: {
-    rotateViewMode () {
-      if (this.viewMode === ARRANGEMENT) {
-        this.switchToClipView();
+    switchWindow () {
+      if (this.selectedZone === ARRANGEMENT) {
+        this.expandPianoRollZone();
+        this.selectPianoRollZone();
         return;
       }
-      if (this.viewMode === CLIP) {
-        this.switchToSplitView();
-        return;
-      }
-      this.switchToArrangementView();
+      this.expandArrangementZone();
+      this.selectArrangementZone();
     },
-    switchToArrangementView () {
-      this.arrangementViewHeight = this.maxArrangementViewHeight;
+    expandArrangementZone () {
+      this.arrangementZoneHeight = this.maxArrangementZoneHeight;
     },
-    switchToClipView () {
-      this.arrangementViewHeight = 0;
+    expandPianoRollZone () {
+      this.arrangementZoneHeight = 0;
     },
-    switchToSplitView () {
-      this.arrangementViewHeight = this.maxArrangementViewHeight * 0.5;
+    splitWindow () {
+      this.arrangementZoneHeight = this.maxArrangementZoneHeight * 0.5;
+    },
+    selectPianoRollZone () {
+      this.selectedZone = PIANO_ROLL;
+    },
+    selectArrangementZone () {
+      this.selectedZone = ARRANGEMENT;
     },
     makeDraggable () {
       let dragging = false;
@@ -112,7 +131,7 @@ export default {
       });
       this.$refs.appMainContent.addEventListener('mousemove', (ev) => {
         if (!dragging) return;
-        this.arrangementViewHeight = clamp(
+        this.arrangementZoneHeight = clamp(
           ev.pageY - this.$refs.appMainContent.offsetTop,
           0,
           Math.max(this.$refs.appMainContent.clientHeight, 1)
@@ -121,9 +140,9 @@ export default {
     }
   },
   components: {
-    ClipView,
+    PianoRollZone,
     Transport,
-    ArrangementView,
+    ArrangementZone,
     TitleBar
   }
 };
@@ -133,15 +152,19 @@ export default {
   .app-main-content {
     overflow: hidden;
   }
-  .arrangement-view-container {
+  .arrangement-zone-container {
     overflow: auto;
+    border: solid 3px;
+    border-radius: 10px;
   }
-  .clip-view-container {
+  .piano-roll-zone-container {
     overflow: auto;
+    border: solid 3px;
+    border-radius: 10px;
   }
   .border {
     cursor: row-resize;
-    background: #212121;
+    background: transparent;
     z-index: 100;
   }
 </style>
