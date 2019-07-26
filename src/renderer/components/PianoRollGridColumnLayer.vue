@@ -37,8 +37,7 @@ export default {
     }
   },
   mounted () {
-    const detector = elementResizeDetector({ strategy: 'scroll' });
-    detector.listenTo(this.$refs.gridColumnLayer, (element) => {
+    elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.gridColumnLayer, (element) => {
       this.width = element.offsetWidth;
     });
   },
