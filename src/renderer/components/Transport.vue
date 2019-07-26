@@ -1,6 +1,5 @@
 <template>
-  <v-footer app fixed :height="transportHeight">
-    <v-spacer />
+  <div class="transport">
     <v-btn flat icon>
       <v-icon size="28px" :color="playButtonColor" @click="playNotes">play_arrow</v-icon>
     </v-btn>
@@ -13,8 +12,7 @@
     <v-btn flat icon>
       <v-icon size="24px">fiber_manual_record</v-icon>
     </v-btn>
-    <v-spacer />
-  </v-footer>
+  </div>
 </template>
 
 <script>
@@ -87,7 +85,12 @@ export default {
 </script>
 
 <style scoped>
-img {
-  height: 100%;
-}
+  .transport {
+    height: 100%;
+    background: #212121;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 </style>

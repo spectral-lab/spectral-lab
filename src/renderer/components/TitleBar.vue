@@ -1,28 +1,20 @@
 <template>
-  <div class="titlebar" style="-webkit-app-region: drag">
-    <v-toolbar :height="titleBarHeight" color="grey darken-4">
-      <v-spacer />
-        Project Title
-      <v-spacer />
-    </v-toolbar>
+  <div class="titlebar">
+    Project Title
   </div>
 </template>
 
 <script>
-  import { titleBarHeight } from '../constants/layout';
-  export default {
-    data () {
-      return {
-        titleBarHeight
-      };
-    }
-  };
+  export default {};
 </script>
 
 <style scoped>
 .titlebar {
   -webkit-app-region: "drag";
   -webkit-user-select: none;
+  background: #212121;
+  height: 100%;
+  text-align: center;
 }
 </style>
 

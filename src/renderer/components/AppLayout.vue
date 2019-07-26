@@ -1,32 +1,40 @@
 <template>
   <div class="app-layout">
-    <title-bar/>
+    <div class="title-bar-container">
+      <title-bar/>
+    </div>
     <div class="app-main-content"
          ref="appMainContent"
-         :style="{ height: `${appMainContentHeight}px` }"
          >
-      <div class="arrangement-zone-container"
-           ref="arrangementZoneContainer"
-           :style="{
-            height: `${arrangementZoneHeight}px`,
+      <elastic-stack :upper-content-height="arrangementZoneHeight"
+                     @change-height="arrangementZoneHeight = $event">
+        <template #upper>
+          <div class="arrangement-zone-container"
+               ref="arrangementZoneContainer"
+               :style="{
             borderColor: arrangementZoneBorderColor
            }"
-           @click="selectArrangementZone"
-      >
-        <arrangement-zone/>
-      </div>
-      <div ref="border" class="border" :style="{ height: `${borderHeight}px` }"></div>
-      <div class="piano-roll-zone-container"
-           :style="{
-            height: `${pianoRollZoneHeight}px`,
+               @click="selectArrangementZone"
+          >
+            <arrangement-zone/>
+          </div>
+        </template>
+        <template #lower>
+          <div
+                  class="piano-roll-zone-container"
+                  :style="{
             borderColor: pianoRollZoneBorderColor
-            }"
-           @click="selectPianoRollZone"
-      >
-        <piano-roll-zone/>
-        </div>
+          }"
+                  @click="selectPianoRollZone"
+          >
+            <piano-roll-zone/>
+          </div>
+        </template>
+      </elastic-stack>
     </div>
-    <transport/>
+    <div class="transport-container">
+      <transport/>
+    </div>
   </div>
 </template>
 
@@ -34,19 +42,22 @@
 import Transport from './Transport';
 import PianoRollZone from './PianoRollZone';
 import ArrangementZone from './ArrangementZone';
-import { clamp, debounce } from 'lodash';
+import ElasticStack from './ElasticStack';
 import TitleBar from './TitleBar';
+import { clamp } from 'lodash';
 import { titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
 import hotkeys from 'hotkeys-js';
 import { SPLIT_WINDOW, SWITCH_WINDOW } from '../constants/key-bindings';
 import { App } from '../store/models';
 import { ARRANGEMENT, PIANO_ROLL } from '../constants/zone';
+import elementResizeDetector from 'element-resize-detector';
 
 export default {
   data () {
     return {
-      arrangementZoneHeight: 500,
+      arrangementZoneHeight: 0,
       windowHeight: 800,
+      appMainContentHeight: null,
       titleBarHeight: parseInt(titleBarHeight, 10),
       transportHeight: parseInt(transportHeight, 10),
       borderHeight: parseInt(borderHeight, 10)
@@ -58,15 +69,6 @@ export default {
     },
     selectedZone () {
       return this.app.selectedZone;
-    },
-    appMainContentHeight () {
-      return this.windowHeight - this.titleBarHeight - this.transportHeight;
-    },
-    pianoRollZoneHeight () {
-      return this.appMainContentHeight - this.arrangementZoneHeight - this.borderHeight - 12;
-    },
-    maxArrangementZoneHeight () {
-      return this.appMainContentHeight - this.borderHeight - 12;
     },
     arrangementZoneBorderColor () {
       switch (this.selectedZone) {
@@ -81,14 +83,11 @@ export default {
       }
     }
   },
-  created () {
-    this.windowHeight = window.innerHeight;
-  },
   mounted () {
-    window.addEventListener('resize', debounce(() => {
-      this.windowHeight = window.innerHeight;
-    }, 30));
-    this.makeDraggable();
+    elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.appMainContent, (element) => {
+      this.appMainContentHeight = element.offsetHeight;
+    });
+    this.appMainContentHeight = this.$refs.appMainContent.offsetHeight;
     hotkeys(SWITCH_WINDOW, this.switchWindow);
     hotkeys(SPLIT_WINDOW, this.splitWindow);
     this.expandArrangementZone();
@@ -105,13 +104,13 @@ export default {
       this.selectArrangementZone();
     },
     expandArrangementZone () {
-      this.arrangementZoneHeight = this.maxArrangementZoneHeight;
+      this.arrangementZoneHeight = this.appMainContentHeight;
     },
     expandPianoRollZone () {
       this.arrangementZoneHeight = 0;
     },
     splitWindow () {
-      this.arrangementZoneHeight = this.maxArrangementZoneHeight * 0.5;
+      this.arrangementZoneHeight = this.appMainContentHeight * 0.5;
     },
     selectPianoRollZone () {
       App.update({
@@ -154,29 +153,42 @@ export default {
     PianoRollZone,
     Transport,
     ArrangementZone,
-    TitleBar
+    TitleBar,
+    ElasticStack
   }
 };
 </script>
 
 <style scoped>
-  .app-main-content {
+  .app-layout {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 24px 1fr 30px;
     overflow: hidden;
   }
+  .title-bar-container {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+  .app-main-content {
+    grid-area: 2 / 1 / 3 / 2;
+    overflow: hidden;
+  }
+  .transport-container {
+    grid-area: 3 / 1 / 4 / 2;
+  }
   .arrangement-zone-container {
-    overflow: auto;
+    height: 100%;
+    overflow: hidden;
     border: solid 3px;
     border-radius: 10px;
   }
   .piano-roll-zone-container {
+    height: 100%;
     overflow: auto;
     border: solid 3px;
     border-radius: 10px;
-  }
-  .border {
-    cursor: row-resize;
-    background: transparent;
-    z-index: 100;
   }
 </style>
 

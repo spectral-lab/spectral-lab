@@ -14,7 +14,6 @@
             <slot name="lower"></slot>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -22,17 +21,12 @@
   import { getOffsetTop } from '../modules/pianoRoll/utils';
 
   export default {
-    data () {
-      return {
-        upperContentHeight: this.initialUpperContentHeight
-      };
-    },
     props: {
       handleWidth: {
         type: Number,
         default: 12 // px
       },
-      initialUpperContentHeight: {
+      upperContentHeight: {
         type: Number,
         default: 100 // px
       }
@@ -45,7 +39,7 @@
         if (this.upperContentHeight < 0) {
           return `0px ${this.handleWidth * 0.5 + this.upperContentHeight}px ${this.handleWidth * 0.5}px 1fr`;
         }
-        return `${this.upperContentHeight - this.handleWidth * 0.5}px ${this.handleWidth * 0.5}px ${this.handleWidth * 0.5}px 1fr`;
+        return `${Math.max(this.upperContentHeight - this.handleWidth * 0.5, 0)}px ${this.handleWidth * 0.5}px ${this.handleWidth * 0.5}px 1fr`;
       }
     },
     methods: {
@@ -62,11 +56,11 @@
         });
         document.addEventListener('mousemove', (ev) => {
           if (!dragging) return;
-          this.upperContentHeight = clamp(
+          this.$emit('change-height', clamp(
             ev.pageY - getOffsetTop(this.$refs.elasticContainer),
             -this.handleWidth * 0.5,
             Math.max(this.$refs.elasticContainer.clientHeight, 1)
-          );
+          ));
         });
       }
     }
@@ -82,13 +76,11 @@
         overflow: hidden;
     }
     .upper-content {
-        background: darkblue;
         grid-area: 1 / 1 / 3 / 2;
         overflow: auto;
     }
     .lower-content {
         grid-area: 3 / 1 / 5 / 2;
-        background: darkgreen;
         overflow: auto;
     }
     .border {
