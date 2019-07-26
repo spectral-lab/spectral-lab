@@ -25,13 +25,9 @@
 
 <script>
   import TrackRow from './TrackRow';
-  import InfoBar from './InfoBar';
-  import ToolbarContainer from './ToolbarContainer';
   export default {
     components: {
-      TrackRow,
-      InfoBar,
-      ToolbarContainer
+      TrackRow
     }
   };
 </script>
