@@ -1,6 +1,5 @@
 import '../../typedef';
 import { NOTE_ON, MODULATION, NOTE_OFF } from '../../constants/model-types';
-import * as defaults from '../../constants/defaults';
 import {
   noteOffMessage, noteOnMessage, pitchBendMessage, channelPressureMessage, cc74Message
 } from '../midi/formatMidiMessage';

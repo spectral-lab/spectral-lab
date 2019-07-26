@@ -10,7 +10,6 @@
 <script>
 import Toolbar from './Toolbar';
 import { Spectrogram, Song, Note, PianoRoll } from '../store/models';
-import { APP_ID } from '../constants/ids';
 import {
   makePNGBuffer, postImage,
   parsePointAsNoteOn, parsePointAsModulation, parsePointAsNoteOff
