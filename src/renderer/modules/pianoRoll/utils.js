@@ -37,6 +37,10 @@ export const initDivElement = (className, id) => {
   assignStylesTo(elt, style[constantCase(className)]);
   return elt;
 };
+/**
+ * @param {HTMLElement} element
+ * @returns {number}
+ */
 export const getOffsetTop = element => {
   let offsetTop = 0;
   while (element) {
