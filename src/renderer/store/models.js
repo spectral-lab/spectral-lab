@@ -7,7 +7,7 @@ import {
 import { makeMandatory } from './utils';
 import { bpm, beatsInBar, ticksPerBeat } from '../constants/defaults';
 import { SELECT } from '../constants/mouse-modes';
-import { pick, random, sum } from 'lodash';
+import { random, sum } from 'lodash';
 import { SCALE_COLORS } from '../constants/colors';
 
 class BaseModel extends Model {
@@ -108,23 +108,13 @@ export class Note extends BaseModel {
   }
   get pitchTransition () {
     const pitchBendMods = this.modulations.filter(mod => mod.pitchBend !== null);
-    return [
-      {
-        offsetTime: this.offsetTime,
-        pitch: this.noteNumber + this.noteOn.pitchBend,
-        ...pick(this.noteOn, ['id', 'type'])
-      },
-      ...pitchBendMods.map(modulation => ({
-        offsetTime: this.offsetTime + modulation.offsetTime,
-        pitch: this.noteNumber + modulation.pitchBend,
-        ...pick(modulation, ['id', 'type'])
-      })),
-      this.noteOff && {
-        offsetTime: this.offsetTime + this.noteOff.offsetTime,
-        pitch: this.noteNumber + this.noteOff.pitchBend,
-        ...pick(this.noteOff, ['id', 'type'])
-      }
-    ].filter(v => v);
+    const noteActions = [{ offsetTime: 0, ...this.noteOn }, ...pitchBendMods, this.noteOff && this.noteOff].filter(v => v);
+    return noteActions.map(noteAction => ({
+      offsetTime: this.offsetTime + noteAction.offsetTime,
+      pitch: this.noteNumber + noteAction.pitchBend,
+      id: noteAction.id,
+      type: noteAction.type
+    }));
   }
   get parent () {
     return Clip.query().whereId(this.clipId).first();
