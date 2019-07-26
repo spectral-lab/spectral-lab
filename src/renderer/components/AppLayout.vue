@@ -6,26 +6,30 @@
     <div class="app-main-content"
          ref="appMainContent"
          >
-      <elastic-stack :upper-content-height="arrangementZoneHeight"
-                     @change-height="arrangementZoneHeight = $event">
+      <elastic-stack
+        :borderWidth="24"
+        :upper-content-height="arrangementZoneHeight"
+        @change-height="arrangementZoneHeight = $event"
+      >
         <template #upper>
-          <div class="arrangement-zone-container"
-               ref="arrangementZoneContainer"
-               :style="{
-            borderColor: arrangementZoneBorderColor
-           }"
-               @click="selectArrangementZone"
+          <div
+            class="arrangement-zone-container"
+            ref="arrangementZoneContainer"
+            :style="{
+              borderColor: arrangementZoneBorderColor
+            }"
+            @click="selectArrangementZone"
           >
             <arrangement-zone/>
           </div>
         </template>
         <template #lower>
           <div
-                  class="piano-roll-zone-container"
-                  :style="{
-            borderColor: pianoRollZoneBorderColor
-          }"
-                  @click="selectPianoRollZone"
+            class="piano-roll-zone-container"
+            :style="{
+              borderColor: pianoRollZoneBorderColor
+            }"
+            @click="selectPianoRollZone"
           >
             <piano-roll-zone/>
           </div>
@@ -57,7 +61,7 @@ export default {
     return {
       arrangementZoneHeight: 0,
       windowHeight: 800,
-      appMainContentHeight: null,
+      appMainContentHeight: 0,
       titleBarHeight: parseInt(titleBarHeight, 10),
       transportHeight: parseInt(transportHeight, 10),
       borderHeight: parseInt(borderHeight, 10)
@@ -96,12 +100,12 @@ export default {
   methods: {
     switchWindow () {
       if (this.selectedZone === ARRANGEMENT) {
-        this.expandPianoRollZone();
         this.selectPianoRollZone();
+        this.expandPianoRollZone();
         return;
       }
-      this.expandArrangementZone();
       this.selectArrangementZone();
+      this.expandArrangementZone();
     },
     expandArrangementZone () {
       this.arrangementZoneHeight = this.appMainContentHeight;
@@ -173,6 +177,7 @@ export default {
   }
   .app-main-content {
     grid-area: 2 / 1 / 3 / 2;
+    box-sizing: border-box;
     overflow: hidden;
   }
   .transport-container {
@@ -183,12 +188,14 @@ export default {
     overflow: hidden;
     border: solid 3px;
     border-radius: 10px;
+    box-sizing: border-box;
   }
   .piano-roll-zone-container {
     height: 100%;
     overflow: auto;
     border: solid 3px;
     border-radius: 10px;
+    box-sizing: border-box;
   }
 </style>
 

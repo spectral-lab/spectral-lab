@@ -22,7 +22,7 @@
 
   export default {
     props: {
-      handleWidth: {
+      borderWidth: {
         type: Number,
         default: 12 // px
       },
@@ -36,10 +36,10 @@
     },
     computed: {
       gridTemplateRows () {
-        if (this.upperContentHeight < 0) {
-          return `0px ${this.handleWidth * 0.5 + this.upperContentHeight}px ${this.handleWidth * 0.5}px 1fr`;
+        if (this.upperContentHeight < this.borderWidth * 0.5) {
+          return `0px ${this.upperContentHeight}px ${this.borderWidth * 0.5}px 1fr`;
         }
-        return `${Math.max(this.upperContentHeight - this.handleWidth * 0.5, 0)}px ${this.handleWidth * 0.5}px ${this.handleWidth * 0.5}px 1fr`;
+        return `${this.upperContentHeight}px ${this.borderWidth * 0.5}px ${this.borderWidth * 0.5}px 1fr`;
       }
     },
     methods: {
@@ -58,7 +58,7 @@
           if (!dragging) return;
           this.$emit('change-height', clamp(
             ev.pageY - getOffsetTop(this.$refs.elasticContainer),
-            -this.handleWidth * 0.5,
+            0,
             Math.max(this.$refs.elasticContainer.clientHeight, 1)
           ));
         });
