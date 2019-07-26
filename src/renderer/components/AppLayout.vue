@@ -39,18 +39,13 @@ import TitleBar from './TitleBar';
 import { titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
 import hotkeys from 'hotkeys-js';
 import { SPLIT_WINDOW, SWITCH_WINDOW } from '../constants/key-bindings';
-
-const ZONE = {
-  ARRANGEMENT: 'ARRANGEMENT',
-  PIANO_ROLL: 'PIANO_ROLL'
-};
-const { ARRANGEMENT, PIANO_ROLL } = ZONE;
+import { App } from '../store/models';
+import { ARRANGEMENT, PIANO_ROLL } from '../constants/zone';
 
 export default {
   data () {
     return {
       arrangementZoneHeight: 500,
-      selectedZone: ARRANGEMENT,
       windowHeight: 800,
       titleBarHeight: parseInt(titleBarHeight, 10),
       transportHeight: parseInt(transportHeight, 10),
@@ -58,6 +53,12 @@ export default {
     };
   },
   computed: {
+    app () {
+      return App.query().first();
+    },
+    selectedZone () {
+      return this.app.selectedZone;
+    },
     appMainContentHeight () {
       return this.windowHeight - this.titleBarHeight - this.transportHeight;
     },
@@ -113,10 +114,20 @@ export default {
       this.arrangementZoneHeight = this.maxArrangementZoneHeight * 0.5;
     },
     selectPianoRollZone () {
-      this.selectedZone = PIANO_ROLL;
+      App.update({
+        where: this.app.id,
+        data: {
+          selectedZone: PIANO_ROLL
+        }
+      });
     },
     selectArrangementZone () {
-      this.selectedZone = ARRANGEMENT;
+      App.update({
+        where: this.app.id,
+        data: {
+          selectedZone: ARRANGEMENT
+        }
+      });
     },
     makeDraggable () {
       let dragging = false;

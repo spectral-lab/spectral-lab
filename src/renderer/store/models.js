@@ -9,6 +9,7 @@ import { bpm, beatsInBar, ticksPerBeat } from '../constants/defaults';
 import { SELECT } from '../constants/mouse-modes';
 import { random, sum } from 'lodash';
 import { SCALE_COLORS } from '../constants/colors';
+import * as ZONE from '../constants/zone';
 
 class BaseModel extends Model {
   get path () {
@@ -217,7 +218,6 @@ export class PianoRoll extends BaseModel {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(PIANO_ROLL),
       appId: this.attr(null, makeMandatory('appId')),
-      selected: this.attr(false),
       gridOpacity: this.attr(1),
       spectrogramOpacity: this.attr(1),
       mouseMode: this.attr(SELECT)
@@ -233,7 +233,8 @@ export class App extends BaseModel {
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
-      type: this.string(APP)
+      type: this.string(APP),
+      selectedZone: this.string(ZONE.PIANO_ROLL)
     };
   }
   get parent () {
