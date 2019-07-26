@@ -91,8 +91,8 @@ export default {
     this.makeDraggable();
     hotkeys(SWITCH_WINDOW, this.switchWindow);
     hotkeys(SPLIT_WINDOW, this.splitWindow);
-    this.expandPianoRollZone();
-    this.selectPianoRollZone();
+    this.expandArrangementZone();
+    this.selectArrangementZone();
   },
   methods: {
     switchWindow () {
