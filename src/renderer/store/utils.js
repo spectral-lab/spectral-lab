@@ -2,10 +2,16 @@ import VuexORM from '@vuex-orm/core';
 import * as models from './models';
 import { APP_ID } from '../constants/ids';
 import uid from 'uid';
+import hotkeys from 'hotkeys-js';
 
 export const makeMandatory = field => val => {
   if (val == null) throw new Error(`Mandatory Field: ${field} cannot be ${val}`);
   return val;
+};
+
+export const setHotkeysScope = zoneName => {
+  hotkeys.setScope(zoneName);
+  return zoneName;
 };
 
 export const initDatabase = () => {

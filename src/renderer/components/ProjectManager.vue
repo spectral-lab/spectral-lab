@@ -7,7 +7,7 @@ const { dialog } = require('electron').remote;
 
 export default {
   mounted () {
-    hotkeys(SAVE_PROJECT, this.save);
+    hotkeys(SAVE_PROJECT.keys, SAVE_PROJECT.scope, this.save);
   },
   methods: {
     save () {

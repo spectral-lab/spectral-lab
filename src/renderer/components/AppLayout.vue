@@ -48,12 +48,12 @@ import PianoRollZone from './PianoRollZone';
 import ArrangementZone from './ArrangementZone';
 import ElasticStack from './ElasticStack';
 import TitleBar from './TitleBar';
-import { clamp, debounce } from 'lodash';
+import { debounce } from 'lodash';
 import { titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
 import hotkeys from 'hotkeys-js';
 import { SPLIT_WINDOW, SWITCH_WINDOW } from '../constants/key-bindings';
 import { App } from '../store/models';
-import { ARRANGEMENT, PIANO_ROLL } from '../constants/zone';
+import { ARRANGEMENT, PIANO_ROLL } from '../constants/model-types';
 import elementResizeDetector from 'element-resize-detector';
 
 export default {
@@ -94,8 +94,8 @@ export default {
       this.arrangementZoneHeight = this.appMainContentHeight * proportionOfArrangementZone;
     }, 30));
     this.appMainContentHeight = this.$refs.appMainContent.offsetHeight;
-    hotkeys(SWITCH_WINDOW, this.switchWindow);
-    hotkeys(SPLIT_WINDOW, this.splitWindow);
+    hotkeys(SWITCH_WINDOW.keys, SWITCH_WINDOW.scope, this.switchWindow);
+    hotkeys(SPLIT_WINDOW.keys, SPLIT_WINDOW.scope, this.splitWindow);
     this.expandArrangementZone();
     this.selectArrangementZone();
   },

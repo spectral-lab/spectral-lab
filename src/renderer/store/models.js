@@ -2,14 +2,13 @@ import { Model } from '@vuex-orm/core';
 import {
   NOTE_ON, NOTE_OFF, MODULATION,
   NOTE, SPECTROGRAM, AUDIO_BUFFER, CLIP,
-  TRACK, SONG, APP, PIANO_ROLL
+  TRACK, SONG, APP, PIANO_ROLL, ARRANGEMENT
 } from '../constants/model-types';
-import { makeMandatory } from './utils';
+import { makeMandatory, setHotkeysScope } from './utils';
 import { bpm, beatsInBar, ticksPerBeat } from '../constants/defaults';
 import { SELECT } from '../constants/mouse-modes';
 import { random, sum } from 'lodash';
 import { SCALE_COLORS } from '../constants/colors';
-import * as ZONE from '../constants/zone';
 
 class BaseModel extends Model {
   get path () {
@@ -220,7 +219,22 @@ export class PianoRoll extends BaseModel {
       appId: this.attr(null, makeMandatory('appId')),
       gridOpacity: this.attr(1),
       spectrogramOpacity: this.attr(1),
-      mouseMode: this.attr(SELECT)
+      mouseMode: this.string(SELECT)
+    };
+  }
+  get parent () {
+    return App.query().whereId(this.appId).first();
+  }
+}
+
+export class Arrangement extends BaseModel {
+  static entity = 'pianoRoll';
+  static fields () {
+    return {
+      id: this.attr(null, makeMandatory('id')),
+      type: this.string(ARRANGEMENT),
+      appId: this.attr(null, makeMandatory('appId')),
+      mouseMode: this.string(SELECT)
     };
   }
   get parent () {
@@ -234,7 +248,7 @@ export class App extends BaseModel {
     return {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(APP),
-      selectedZone: this.string(ZONE.PIANO_ROLL)
+      selectedZone: this.string(PIANO_ROLL, setHotkeysScope)
     };
   }
   get parent () {

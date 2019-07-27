@@ -9,10 +9,10 @@ import {
 } from '../../constants/key-bindings';
 
 export const manageZoom = wrapperElement => {
-  hotkeys(HORIZONTAL_ZOOM_IN, () => horizontalZoomIn(wrapperElement));
-  hotkeys(HORIZONTAL_ZOOM_OUT, () => horizontalZoomOut(wrapperElement));
-  hotkeys(VERTICAL_ZOOM_IN, () => verticalZoomIn(wrapperElement));
-  hotkeys(VERTICAL_ZOOM_OUT, () => verticalZoomOut(wrapperElement));
+  hotkeys(HORIZONTAL_ZOOM_IN.keys, HORIZONTAL_ZOOM_IN.scope, () => horizontalZoomIn(wrapperElement));
+  hotkeys(HORIZONTAL_ZOOM_OUT.keys, HORIZONTAL_ZOOM_OUT.scope, () => horizontalZoomOut(wrapperElement));
+  hotkeys(VERTICAL_ZOOM_IN.keys, VERTICAL_ZOOM_IN.scope, () => verticalZoomIn(wrapperElement));
+  hotkeys(VERTICAL_ZOOM_OUT.keys, VERTICAL_ZOOM_OUT.scope, () => verticalZoomOut(wrapperElement));
   listenResize(wrapperElement);
 };
 

@@ -23,7 +23,7 @@ import mockEntities from '../../../test/data/mockEntities';
 import { SET_ENTITIES } from '../store/mutation-types';
 import { Clip, Song, Note, PianoRoll as PianoRollModel } from '../store/models';
 import hotkeys from 'hotkeys-js';
-import { ESCAPE, SELECT_ALL } from '../constants/key-bindings';
+import { DESELECT_NOTES, SELECT_ALL_NOTES } from '../constants/key-bindings';
 import { bindKeys, unbindKeys } from '../modules/pianoRoll/utils';
 
 export default {
@@ -123,8 +123,8 @@ export default {
   },
   mounted () {
     // this.loadMockNotes();
-    hotkeys(ESCAPE, this.clearSelections);
-    hotkeys(SELECT_ALL, (ev) => { ev.preventDefault(); this.selectAll(); });
+    hotkeys(DESELECT_NOTES.keys, DESELECT_NOTES.scope, this.clearSelections);
+    hotkeys(SELECT_ALL_NOTES.keys, SELECT_ALL_NOTES.scope, (ev) => { ev.preventDefault(); this.selectAll(); });
   },
   components: {
     PianoRoll
