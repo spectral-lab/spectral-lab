@@ -3,10 +3,7 @@ import { clamp } from 'lodash';
 import { paramCase, constantCase } from 'change-case';
 import { Note, NoteOn, NoteOff, Modulation } from '../../store/models';
 import {
-  NOTE_SHIFT_DOWN,
-  NOTE_SHIFT_LEFT,
-  NOTE_SHIFT_RIGHT,
-  NOTE_SHIFT_UP,
+  NOTE_SHIFT,
   DELETE_NOTES
 } from '../../constants/key-bindings';
 import hotkeys from 'hotkeys-js';
@@ -108,7 +105,7 @@ export const getNormalizedPos = elt => ({
 });
 
 export const bindKeys = () => {
-  hotkeys(NOTE_SHIFT_LEFT.keys, NOTE_SHIFT_LEFT.scope, (ev) => {
+  hotkeys(NOTE_SHIFT.left.keys, NOTE_SHIFT.left.scope, (ev) => {
     ev.preventDefault();
     Note.query().where('selected', true).get().forEach(note => {
       Note.update({
@@ -119,7 +116,7 @@ export const bindKeys = () => {
       });
     });
   });
-  hotkeys(NOTE_SHIFT_RIGHT.keys, NOTE_SHIFT_RIGHT.scope, (ev) => {
+  hotkeys(NOTE_SHIFT.right.keys, NOTE_SHIFT.right.scope, (ev) => {
     ev.preventDefault();
     Note.query().where('selected', true).get().forEach(note => {
       Note.update({
@@ -130,7 +127,7 @@ export const bindKeys = () => {
       });
     });
   });
-  hotkeys(NOTE_SHIFT_UP.keys, NOTE_SHIFT_UP.scope, (ev) => {
+  hotkeys(NOTE_SHIFT.up.keys, NOTE_SHIFT.up.scope, (ev) => {
     ev.preventDefault();
     Note.query().where('selected', true).get().forEach(note => {
       Note.update({
@@ -141,7 +138,7 @@ export const bindKeys = () => {
       });
     });
   });
-  hotkeys(NOTE_SHIFT_DOWN.keys, NOTE_SHIFT_DOWN.scope, (ev) => {
+  hotkeys(NOTE_SHIFT.down.keys, NOTE_SHIFT.down.scope, (ev) => {
     ev.preventDefault();
     Note.query().where('selected', true).get().forEach(note => {
       Note.update({
@@ -165,9 +162,9 @@ export const bindKeys = () => {
 };
 
 export const unbindKeys = () => {
-  hotkeys.unbind(NOTE_SHIFT_LEFT.keys);
-  hotkeys.unbind(NOTE_SHIFT_RIGHT.keys);
-  hotkeys.unbind(NOTE_SHIFT_UP.keys);
-  hotkeys.unbind(NOTE_SHIFT_DOWN.keys);
+  hotkeys.unbind(NOTE_SHIFT.left.keys);
+  hotkeys.unbind(NOTE_SHIFT.right.keys);
+  hotkeys.unbind(NOTE_SHIFT.up.keys);
+  hotkeys.unbind(NOTE_SHIFT.down.keys);
   hotkeys.unbind(DELETE_NOTES.keys);
 };
