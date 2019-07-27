@@ -9,7 +9,7 @@
       <elastic-stack
         :borderWidth="24"
         :upper-content-height="arrangementZoneHeight"
-        @change-height="arrangementZoneHeight = $event"
+        @change-height="arrangementZoneHeight = $event.upperHeight"
       >
         <template #upper>
           <div
@@ -48,7 +48,7 @@ import PianoRollZone from './PianoRollZone';
 import ArrangementZone from './ArrangementZone';
 import ElasticStack from './ElasticStack';
 import TitleBar from './TitleBar';
-import { clamp } from 'lodash';
+import { clamp, debounce } from 'lodash';
 import { titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
 import hotkeys from 'hotkeys-js';
 import { SPLIT_WINDOW, SWITCH_WINDOW } from '../constants/key-bindings';
@@ -88,9 +88,11 @@ export default {
     }
   },
   mounted () {
-    elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.appMainContent, (element) => {
+    elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.appMainContent, debounce((element) => {
+      const proportionOfArrangementZone = this.arrangementZoneHeight / this.appMainContentHeight;
       this.appMainContentHeight = element.offsetHeight;
-    });
+      this.arrangementZoneHeight = this.appMainContentHeight * proportionOfArrangementZone;
+    }, 30));
     this.appMainContentHeight = this.$refs.appMainContent.offsetHeight;
     hotkeys(SWITCH_WINDOW, this.switchWindow);
     hotkeys(SPLIT_WINDOW, this.splitWindow);
@@ -98,14 +100,15 @@ export default {
     this.selectArrangementZone();
   },
   methods: {
-    switchWindow () {
+    switchWindow (ev) {
+      ev.preventDefault();
       if (this.selectedZone === ARRANGEMENT) {
-        this.selectPianoRollZone();
         this.expandPianoRollZone();
+        this.selectPianoRollZone();
         return;
       }
-      this.selectArrangementZone();
       this.expandArrangementZone();
+      this.selectArrangementZone();
     },
     expandArrangementZone () {
       this.arrangementZoneHeight = this.appMainContentHeight;
@@ -130,26 +133,6 @@ export default {
         data: {
           selectedZone: ARRANGEMENT
         }
-      });
-    },
-    makeDraggable () {
-      let dragging = false;
-      this.$refs.border.addEventListener('mousedown', () => {
-        document.body.style.cursor = 'row-resize';
-        dragging = true;
-      });
-      document.addEventListener('mouseup', () => {
-        if (!dragging) return;
-        document.body.style.cursor = 'default';
-        dragging = false;
-      });
-      this.$refs.appMainContent.addEventListener('mousemove', (ev) => {
-        if (!dragging) return;
-        this.arrangementZoneHeight = clamp(
-          ev.pageY - this.$refs.appMainContent.offsetTop,
-          0,
-          Math.max(this.$refs.appMainContent.clientHeight, 1)
-        );
       });
     }
   },

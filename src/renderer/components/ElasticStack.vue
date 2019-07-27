@@ -18,9 +18,16 @@
 
 <script>
   import { clamp } from 'lodash';
-  import { getOffsetTop } from '../modules/pianoRoll/utils';
+  import { getOffsetTopFromRoot } from '../modules/pianoRoll/utils';
+  import elementResizeDetector from 'element-resize-detector';
 
   export default {
+    data () {
+      return {
+        containerClientHeight: 0,
+        containerOffsetTop: 0
+      };
+    },
     props: {
       borderWidth: {
         type: Number,
@@ -32,14 +39,23 @@
       }
     },
     mounted () {
+      elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.elasticContainer, (element) => {
+        this.containerClientHeight = element.clientHeight;
+        this.containerOffsetTop = getOffsetTopFromRoot(element);
+      });
       this.makeDraggable();
     },
     computed: {
       gridTemplateRows () {
         if (this.upperContentHeight < this.borderWidth * 0.5) {
+          // If there is no space for the upmost row, the border needs to shrink.
           return `0px ${this.upperContentHeight}px ${this.borderWidth * 0.5}px 1fr`;
         }
-        return `${this.upperContentHeight}px ${this.borderWidth * 0.5}px ${this.borderWidth * 0.5}px 1fr`;
+        if (this.upperContentHeight > this.containerClientHeight - this.borderWidth * 0.5) {
+          // If there is no space for the lowest row, the border needs to shrink.
+          return `${this.upperContentHeight - this.borderWidth * 0.5}px ${this.borderWidth * 0.5}px 1fr 0px`;
+        }
+        return `${this.upperContentHeight - this.borderWidth * 0.5}px ${this.borderWidth * 0.5}px ${this.borderWidth * 0.5}px 1fr`;
       }
     },
     methods: {
@@ -56,11 +72,13 @@
         });
         document.addEventListener('mousemove', (ev) => {
           if (!dragging) return;
-          this.$emit('change-height', clamp(
-            ev.pageY - getOffsetTop(this.$refs.elasticContainer),
-            0,
-            Math.max(this.$refs.elasticContainer.clientHeight, 1)
-          ));
+          this.$emit('change-height', {
+            upperHeight: clamp(
+              ev.pageY - this.containerOffsetTop,
+              0,
+              Math.max(this.$refs.elasticContainer.clientHeight, 1)
+            )
+          });
         });
       }
     }
@@ -89,5 +107,4 @@
         cursor: row-resize;
         background: transparent;
     }
-
 </style>

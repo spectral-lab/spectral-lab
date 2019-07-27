@@ -41,7 +41,7 @@ export const initDivElement = (className, id) => {
  * @param {HTMLElement} element
  * @returns {number}
  */
-export const getOffsetTop = element => {
+export const getOffsetTopFromRoot = element => {
   let offsetTop = 0;
   while (element) {
     offsetTop += element.offsetTop;
@@ -67,7 +67,7 @@ export const makeDraggable = (borderElt, gridContainer) => {
   gridContainer.addEventListener('mousemove', (ev) => {
     if (!dragging) return;
     const height = clamp(
-      getOffsetTop(gridContainer) + gridContainer.clientHeight - ev.pageY,
+      getOffsetTopFromRoot(gridContainer) + gridContainer.clientHeight - ev.pageY,
       0,
       Math.max(gridContainer.clientHeight - 48, 1)
     );
