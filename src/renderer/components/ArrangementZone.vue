@@ -1,32 +1,32 @@
 <template>
-    <div class="arrangement-zone">
-        <div class="arrangement-zone-content">
-            <div class="arrangement-ruler">
-                ruler
-            </div>
-            <div class="track-container">
-                <track-row/>
-                <track-row/>
-                <track-row/>
-                <track-row/>
-                <track-row/>
-                <track-row/>
-                <track-row/>
-                <track-row/>
-                <track-row/>
-            </div>
-        </div>
+  <div class="arrangement-zone">
+    <div class="arrangement-zone-content">
+      <div class="arrangement-ruler">
+        ruler
+      </div>
+      <div class="track-container">
+        <track-row />
+        <track-row />
+        <track-row />
+        <track-row />
+        <track-row />
+        <track-row />
+        <track-row />
+        <track-row />
+        <track-row />
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-  import TrackRow from './TrackRow';
+import TrackRow from './TrackRow';
 
-  export default {
-    components: {
-      TrackRow
-    }
-  };
+export default {
+  components: {
+    TrackRow
+  }
+};
 </script>
 
 <style scoped>

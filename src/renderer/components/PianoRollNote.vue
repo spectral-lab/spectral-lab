@@ -1,45 +1,53 @@
 <template>
-    <g>
-        <g v-if="edited">
-            <g class="note-action-group" v-for="(point, idx) in positions">
-                <piano-roll-point
-                        :point="point"
-                        :color="circleColor"
-                        :key="'a' + point.id"
-                        opacity="0.8"
-                />
-                <piano-roll-line
-                        :point="point"
-                        :next-point="positions[idx+1]"
-                        :key="'d' + point.id"
-                        color="Honeydew"
-                        stroke-width="2"
-                />
-            </g>
-        </g>
-        <g v-if="!edited">
-            <g class="note-line" v-for="(point, idx) in positions">
-                <piano-roll-point
-                        :point="point"
-                        :color="lineColor"
-                        :key="'c' + point.id"
-                        opacity="1"
-                        @click="handleClick"
-                        @dblclick="handleDblClick"
-                />
-                <piano-roll-line
-                        :point="point"
-                        :next-point="positions[idx+1]"
-                        :color="lineColor"
-                        :key="'d' + point.id"
-                        opacity="1"
-                        stroke-width="10"
-                        @click="handleClick"
-                        @dblclick="handleDblClick"
-                />
-            </g>
-        </g>
+  <g>
+    <g v-if="edited">
+      <g
+        v-for="(point, idx) in positions"
+        :key="'a' + point.id"
+        class="note-action-group"
+      >
+        <piano-roll-point
+          :key="'b' + point.id"
+          :point="point"
+          :color="circleColor"
+          opacity="0.8"
+        />
+        <piano-roll-line
+          :key="'c' + point.id"
+          :point="point"
+          :next-point="positions[idx+1]"
+          color="Honeydew"
+          stroke-width="2"
+        />
+      </g>
     </g>
+    <g v-if="!edited">
+      <g
+        v-for="(point, idx) in positions"
+        :key="'d' + point.id"
+        class="note-line"
+      >
+        <piano-roll-point
+          :key="'e' + point.id"
+          :point="point"
+          :color="lineColor"
+          opacity="1"
+          @click="handleClick"
+          @dblclick="handleDblClick"
+        />
+        <piano-roll-line
+          :key="'f' + point.id"
+          :point="point"
+          :next-point="positions[idx+1]"
+          :color="lineColor"
+          opacity="1"
+          stroke-width="10"
+          @click="handleClick"
+          @dblclick="handleDblClick"
+        />
+      </g>
+    </g>
+  </g>
 </template>
 
 <script>
@@ -49,6 +57,10 @@ import PianoRollPoint from './PianoRollPoint';
 import PianoRollLine from './PianoRollLine';
 
 export default {
+  components: {
+    PianoRollPoint,
+    PianoRollLine
+  },
   props: {
     note: Note,
     totalTicks: Number,
@@ -88,10 +100,6 @@ export default {
     handleDblClick (ev) {
       this.$emit('dblclick', ev, this.note.id);
     }
-  },
-  components: {
-    PianoRollPoint,
-    PianoRollLine
   }
 };
 </script>

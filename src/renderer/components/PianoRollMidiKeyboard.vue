@@ -1,5 +1,8 @@
 <template>
-    <div ref="svgWrapper" class="svg-wrapper"></div>
+  <div
+    ref="svgWrapper"
+    class="svg-wrapper"
+  />
 </template>
 
 <script>
@@ -14,7 +17,7 @@ export default {
   },
   computed: {
     reversedNoteNumbers () {
-      return this.noteNumbers.reverse();
+      return [...this.noteNumbers].reverse();
     }
   },
   mounted () {

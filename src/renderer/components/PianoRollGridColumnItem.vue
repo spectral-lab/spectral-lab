@@ -1,5 +1,10 @@
 <template>
-    <div ref="gridColumn" class="grid-column" v-show="isVisible" :style="{borderRightColor: color}"></div>
+  <div
+    v-show="isVisible"
+    ref="gridColumn"
+    class="grid-column"
+    :style="{borderRightColor: color}"
+  />
 </template>
 
 <script>

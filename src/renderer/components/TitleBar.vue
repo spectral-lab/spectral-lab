@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  export default {};
+export default {};
 </script>
 
 <style scoped>
@@ -17,4 +17,3 @@
   text-align: center;
 }
 </style>
-

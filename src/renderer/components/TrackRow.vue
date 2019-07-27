@@ -1,12 +1,12 @@
 <template>
-    <div class="track-row">
-        <div class="track-header-panel">
-            track header panel
-        </div>
-        <div class="track-content">
-            <div class="clip"></div>
-        </div>
+  <div class="track-row">
+    <div class="track-header-panel">
+      track header panel
     </div>
+    <div class="track-content">
+      <div class="clip" />
+    </div>
+  </div>
 </template>
 
 <script>

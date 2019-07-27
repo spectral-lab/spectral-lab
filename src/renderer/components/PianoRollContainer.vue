@@ -1,20 +1,23 @@
 <template>
-    <div ref="pianoRollContainer" class="piano-roll-container">
-        <piano-roll
-                ref="pianoRoll"
-                :total-bars="totalBars"
-                :beats-in-bar="beatsInBar"
-                :ticks-per-beat="song.ticksPerBeat"
-                :notes="notes"
-                :selectedNoteIds="selectedNoteIds"
-                :editingNoteId="editingNoteId"
-                :spectrogram="spectrogram"
-                :spectrogram-opacity="spectrogramOpacity"
-                :grid-opacity="gridOpacity"
-                @click="handleClick"
-                @dblclick="handleDblClick"
-        />
-    </div>
+  <div
+    ref="pianoRollContainer"
+    class="piano-roll-container"
+  >
+    <piano-roll
+      ref="pianoRoll"
+      :total-bars="totalBars"
+      :beats-in-bar="beatsInBar"
+      :ticks-per-beat="song.ticksPerBeat"
+      :notes="notes"
+      :selected-note-ids="selectedNoteIds"
+      :editing-note-id="editingNoteId"
+      :spectrogram="spectrogram"
+      :spectrogram-opacity="spectrogramOpacity"
+      :grid-opacity="gridOpacity"
+      @click="handleClick"
+      @dblclick="handleDblClick"
+    />
+  </div>
 </template>
 
 <script>
@@ -27,6 +30,9 @@ import { DESELECT_NOTES, SELECT_ALL_NOTES } from '../constants/key-bindings';
 import { bindKeys, unbindKeys } from '../modules/pianoRoll/utils';
 
 export default {
+  components: {
+    PianoRoll
+  },
   data () {
     return {
       editingNoteId: null
@@ -78,6 +84,11 @@ export default {
       noteIsSelected ? bindKeys() : unbindKeys();
     }
   },
+  mounted () {
+    // this.loadMockNotes();
+    hotkeys(DESELECT_NOTES.keys, DESELECT_NOTES.scope, this.clearSelections);
+    hotkeys(SELECT_ALL_NOTES.keys, SELECT_ALL_NOTES.scope, (ev) => { ev.preventDefault(); this.selectAll(); });
+  },
   methods: {
     loadMockNotes () {
       this.$store.commit(SET_ENTITIES, mockEntities);
@@ -120,14 +131,6 @@ export default {
         data: { selected: true }
       });
     }
-  },
-  mounted () {
-    // this.loadMockNotes();
-    hotkeys(DESELECT_NOTES.keys, DESELECT_NOTES.scope, this.clearSelections);
-    hotkeys(SELECT_ALL_NOTES.keys, SELECT_ALL_NOTES.scope, (ev) => { ev.preventDefault(); this.selectAll(); });
-  },
-  components: {
-    PianoRoll
   }
 };
 </script>
@@ -137,4 +140,3 @@ export default {
     height: 60vh;
 }
 </style>
-

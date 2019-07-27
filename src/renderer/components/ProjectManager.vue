@@ -1,4 +1,6 @@
-<template/>
+<template>
+  <div />
+</template>
 <script>
 import hotkeys from 'hotkeys-js';
 import fs from 'fs-extra';

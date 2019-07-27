@@ -1,16 +1,42 @@
 <template>
   <div class="transport">
-    <v-btn flat icon>
-      <v-icon size="28px" :color="playButtonColor" @click="playNotes">play_arrow</v-icon>
+    <v-btn
+      flat
+      icon
+    >
+      <v-icon
+        size="28px"
+        :color="playButtonColor"
+        @click="playNotes"
+      >
+        play_arrow
+      </v-icon>
     </v-btn>
-    <v-btn flat icon @click="testTone">
+    <v-btn
+      flat
+      icon
+      @click="testTone"
+    >
       test
     </v-btn>
-    <v-btn flat icon>
-      <v-icon size="28px" @click="allNotesOff">stop</v-icon>
+    <v-btn
+      flat
+      icon
+    >
+      <v-icon
+        size="28px"
+        @click="allNotesOff"
+      >
+        stop
+      </v-icon>
     </v-btn>
-    <v-btn flat icon>
-      <v-icon size="24px">fiber_manual_record</v-icon>
+    <v-btn
+      flat
+      icon
+    >
+      <v-icon size="24px">
+        fiber_manual_record
+      </v-icon>
     </v-btn>
   </div>
 </template>

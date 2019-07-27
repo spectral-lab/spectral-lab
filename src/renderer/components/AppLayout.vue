@@ -1,26 +1,27 @@
 <template>
   <div class="app-layout">
     <div class="title-bar-container">
-      <title-bar/>
+      <title-bar />
     </div>
-    <div class="app-main-content"
-         ref="appMainContent"
-         >
+    <div
+      ref="appMainContent"
+      class="app-main-content"
+    >
       <elastic-stack
-        :borderWidth="24"
+        :border-width="24"
         :upper-content-height="arrangementZoneHeight"
         @change-height="arrangementZoneHeight = $event.upperHeight"
       >
         <template #upper>
           <div
-            class="arrangement-zone-container"
             ref="arrangementZoneContainer"
+            class="arrangement-zone-container"
             :style="{
               borderColor: arrangementZoneBorderColor
             }"
             @click="selectArrangementZone"
           >
-            <arrangement-zone/>
+            <arrangement-zone />
           </div>
         </template>
         <template #lower>
@@ -31,13 +32,13 @@
             }"
             @click="selectPianoRollZone"
           >
-            <piano-roll-zone/>
+            <piano-roll-zone />
           </div>
         </template>
       </elastic-stack>
     </div>
     <div class="transport-container">
-      <transport/>
+      <transport />
     </div>
   </div>
 </template>
@@ -57,6 +58,13 @@ import { ARRANGEMENT, PIANO_ROLL } from '../constants/model-types';
 import elementResizeDetector from 'element-resize-detector';
 
 export default {
+  components: {
+    PianoRollZone,
+    Transport,
+    ArrangementZone,
+    TitleBar,
+    ElasticStack
+  },
   data () {
     return {
       arrangementZoneHeight: 0,
@@ -78,12 +86,14 @@ export default {
       switch (this.selectedZone) {
         case ARRANGEMENT: return 'lightgrey';
         case PIANO_ROLL: return 'transparent';
+        default: return 'transparent';
       }
     },
     pianoRollZoneBorderColor () {
       switch (this.selectedZone) {
         case ARRANGEMENT: return 'transparent';
         case PIANO_ROLL: return 'lightgrey';
+        default: return 'transparent';
       }
     }
   },
@@ -137,13 +147,6 @@ export default {
         }
       });
     }
-  },
-  components: {
-    PianoRollZone,
-    Transport,
-    ArrangementZone,
-    TitleBar,
-    ElasticStack
   }
 };
 </script>
@@ -183,4 +186,3 @@ export default {
     box-sizing: border-box;
   }
 </style>
-

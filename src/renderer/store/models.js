@@ -25,7 +25,9 @@ class BaseModel extends Model {
 }
 
 export class NoteOn extends BaseModel {
-  static entity = 'noteOns';
+  static get entity () {
+    return 'noteOns';
+  }
 
   static fields () {
     return {
@@ -45,7 +47,9 @@ export class NoteOn extends BaseModel {
 }
 
 export class Modulation extends BaseModel {
-  static entity = 'modulations';
+  static get entity () {
+    return 'modulations';
+  }
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -64,7 +68,9 @@ export class Modulation extends BaseModel {
 }
 
 export class NoteOff extends BaseModel {
-  static entity = 'noteOffs';
+  static get entity () {
+    return 'noteOffs';
+  }
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -84,7 +90,9 @@ export class NoteOff extends BaseModel {
 }
 
 export class Note extends BaseModel {
-  static entity = 'notes';
+  static get entity () {
+    return 'notes';
+  }
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -122,7 +130,9 @@ export class Note extends BaseModel {
 }
 
 export class AudioBuffer extends BaseModel {
-  static entity = 'audioBuffers';
+  static get entity () {
+    return 'audioBuffers';
+  }
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -140,7 +150,9 @@ export class AudioBuffer extends BaseModel {
 }
 
 export class Spectrogram extends BaseModel {
-  static entity = 'spectrograms';
+  static get entity () {
+    return 'spectrograms';
+  }
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -157,7 +169,9 @@ export class Spectrogram extends BaseModel {
 }
 
 export class Clip extends BaseModel {
-  static entity = 'clips';
+  static get entity () {
+    return 'clips';
+  }
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -178,7 +192,9 @@ export class Clip extends BaseModel {
 }
 
 export class Track extends BaseModel {
-  static entity = 'tracks';
+  static get entity () {
+    return 'tracks';
+  }
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -195,7 +211,9 @@ export class Track extends BaseModel {
 }
 
 export class Song extends BaseModel {
-  static entity = 'songs';
+  static get entity () {
+    return 'songs';
+  }
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -211,7 +229,9 @@ export class Song extends BaseModel {
 }
 
 export class PianoRoll extends BaseModel {
-  static entity = 'pianoRoll';
+  static get entity () {
+    return 'pianoRoll';
+  }
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -228,7 +248,9 @@ export class PianoRoll extends BaseModel {
 }
 
 export class Arrangement extends BaseModel {
-  static entity = 'arrangement';
+  static get entity () {
+    return 'arrangement';
+  }
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -243,7 +265,9 @@ export class Arrangement extends BaseModel {
 }
 
 export class App extends BaseModel {
-  static entity = 'app';
+  static get entity () {
+    return 'app';
+  }
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),

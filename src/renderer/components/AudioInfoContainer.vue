@@ -1,14 +1,14 @@
 <template>
-    <div>
-        <audio-info
-                :filepath="filepath"
-                :basename="basename"
-                :isPlaying="isPlaying"
-                @click-play="handleClickPlay"
-                @file-update="handleFileUpdate"
-                @click-build="handleClickBuild"
-        />
-    </div>
+  <div>
+    <audio-info
+      :filepath="filepath"
+      :basename="basename"
+      :is-playing="isPlaying"
+      @click-play="handleClickPlay"
+      @file-update="handleFileUpdate"
+      @click-build="handleClickBuild"
+    />
+  </div>
 </template>
 
 <script>
@@ -23,6 +23,9 @@ import stft from '../modules/audio/stft';
 import { secToTick } from '../modules/helpers/timeUtils';
 
 export default {
+  components: {
+    AudioInfo
+  },
   data () {
     return {
       sourceNode: null
@@ -103,9 +106,6 @@ export default {
         }
       });
     }
-  },
-  components: {
-    AudioInfo
   }
 };
 </script>

@@ -1,11 +1,18 @@
 <template>
   <v-tooltip bottom>
     <template #activator="{ on }">
-      <v-btn small fab v-on="on" @click="emitClickEvent" color="primary" class="elevation-0">
-        <v-icon>{{icon}}</v-icon>
+      <v-btn
+        small
+        fab
+        color="primary"
+        class="elevation-0"
+        v-on="on"
+        @click="emitClickEvent"
+      >
+        <v-icon>{{ icon }}</v-icon>
       </v-btn>
     </template>
-    <span>{{tip}}</span>
+    <span>{{ tip }}</span>
   </v-tooltip>
 </template>
 

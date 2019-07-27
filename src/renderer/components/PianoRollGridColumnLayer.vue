@@ -1,23 +1,48 @@
 <template>
-    <div ref="gridColumnLayer" class="grid-column-layer">
-        <div class="beat-layer">
-            <div v-for="beat in totalBeats" class="grid-item-container">
-                <piano-roll-grid-column-item :is-visible="showBeats" color="DimGray"/>
-            </div>
-        </div>
-        <div class="bar-layer">
-            <div v-for="bar in totalBars" class="grid-item-container">
-                <piano-roll-grid-column-item :is-visible="showBars" color="DarkGray"/>
-                <div v-if="showNumber" class="number-box">{{bar}}</div>
-            </div>
-        </div>
+  <div
+    ref="gridColumnLayer"
+    class="grid-column-layer"
+  >
+    <div class="beat-layer">
+      <div
+        v-for="beat in totalBeats"
+        :key="beat"
+        class="grid-item-container"
+      >
+        <piano-roll-grid-column-item
+          :is-visible="showBeats"
+          color="DimGray"
+        />
+      </div>
     </div>
+    <div class="bar-layer">
+      <div
+        v-for="bar in totalBars"
+        :key="bar"
+        class="grid-item-container"
+      >
+        <piano-roll-grid-column-item
+          :is-visible="showBars"
+          color="DarkGray"
+        />
+        <div
+          v-if="showNumber"
+          class="number-box"
+        >
+          {{ bar }}
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import pianoRollGridColumnItem from './PianoRollGridColumnItem';
 import elementResizeDetector from 'element-resize-detector';
 export default {
+  components: {
+    pianoRollGridColumnItem
+  },
   props: {
     totalBeats: Number,
     totalBars: Number,
@@ -40,9 +65,6 @@ export default {
     elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.gridColumnLayer, (element) => {
       this.width = element.offsetWidth;
     });
-  },
-  components: {
-    pianoRollGridColumnItem
   }
 };
 </script>

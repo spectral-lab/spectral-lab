@@ -1,12 +1,19 @@
 <template>
-    <div ref="gridRowLayer" class="grid-row-layer">
-        <div v-for="noteNumber in reversedNoteNumbers" class="grid-item-wrapper">
-            <piano-roll-grid-row-item
-                    :noteNumber="noteNumber"
-                    :visible-line="visibleLine"
-            />
-        </div>
+  <div
+    ref="gridRowLayer"
+    class="grid-row-layer"
+  >
+    <div
+      v-for="noteNumber in reversedNoteNumbers"
+      :key="noteNumber"
+      class="grid-item-wrapper"
+    >
+      <piano-roll-grid-row-item
+        :note-number="noteNumber"
+        :visible-line="visibleLine"
+      />
     </div>
+  </div>
 </template>
 
 <script>
@@ -15,6 +22,9 @@ import elementResizeDetector from 'element-resize-detector';
 import { range } from 'lodash';
 
 export default {
+  components: {
+    pianoRollGridRowItem
+  },
   data () {
     return {
       height: 0,
@@ -23,7 +33,7 @@ export default {
   },
   computed: {
     reversedNoteNumbers () {
-      return this.noteNumbers.reverse();
+      return [...this.noteNumbers].reverse();
     },
     visibleLine () {
       if (this.height > 20e3) return 'CENT';
@@ -36,9 +46,6 @@ export default {
     elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.gridRowLayer, (element) => {
       this.height = element.offsetHeight;
     });
-  },
-  components: {
-    pianoRollGridRowItem
   }
 };
 </script>

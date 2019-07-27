@@ -1,55 +1,117 @@
 <template>
-    <div ref="wrapper" class="wrapper">
-        <div ref="ruler" class="ruler scrollbar-hidden">
-            <div ref="rulerContainer" class="ruler-container">
-                <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars" :show-number="true"/>
-            </div>
-        </div>
-        <div ref="noteDisplay" class="note-display scrollbar-hidden">
-            <div ref="noteContainer" class="note-container">
-                <div ref="noteGridLayer" class="grid-layer" :style="{ opacity: gridOpacity }">
-                    <piano-roll-grid-row-layer/>
-                    <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars"/>
-                </div>
-                <div ref="spectrogramLayer"
-                     :style="{
-                         width: `${spectrogramDuration / totalTicks * 100}%`,
-                         opacity: spectrogramOpacity
-                     }"
-                     class="spectrogram-layer"
-                >
-                    <canvas ref="spectrogram" class="spectrogram" width="1920" height="1080"></canvas>
-                </div>
-                <div ref="noteLayer" class="note-layer">
-                    <svg width="100%" height="100%">
-                        <piano-roll-note
-                                v-for="note in notes"
-                                :key="note.id"
-                                :note="note"
-                                :total-ticks="totalTicks"
-                                :selected-note-ids="selectedNoteIds"
-                                :editing-note-id="editingNoteId"
-                                @click="handleClickNote"
-                                @dblclick="handleDblClickNote"
-                        />
-                    </svg>
-                </div>
-            </div>
-        </div>
-        <div ref="midiKeyboard" class="midi-keyboard scrollbar-hidden">
-            <div ref="keyContainer" class="key-container">
-                <piano-roll-midi-keyboard/>
-            </div>
-        </div>
-        <div ref="border" class="border"></div>
-        <div ref="automationLaneSelector" class="automation-lane-selector"></div>
-        <div ref="automationLaneContent" class="automation-lane-content scrollbar-hidden">
-            <div ref="automationContainer" class="automation-container">
-                <piano-roll-grid-column-layer :total-beats="totalBeats" :total-bars="totalBars"/>
-                <div ref="automationLayer" class="automation-layer"></div>
-            </div>
-        </div>
+  <div
+    ref="wrapper"
+    class="wrapper"
+  >
+    <div
+      ref="ruler"
+      class="ruler scrollbar-hidden"
+    >
+      <div
+        ref="rulerContainer"
+        class="ruler-container"
+      >
+        <piano-roll-grid-column-layer
+          :total-beats="totalBeats"
+          :total-bars="totalBars"
+          :show-number="true"
+        />
+      </div>
     </div>
+    <div
+      ref="noteDisplay"
+      class="note-display scrollbar-hidden"
+    >
+      <div
+        ref="noteContainer"
+        class="note-container"
+      >
+        <div
+          ref="noteGridLayer"
+          class="grid-layer"
+          :style="{ opacity: gridOpacity }"
+        >
+          <piano-roll-grid-row-layer />
+          <piano-roll-grid-column-layer
+            :total-beats="totalBeats"
+            :total-bars="totalBars"
+          />
+        </div>
+        <div
+          ref="spectrogramLayer"
+          :style="{
+            width: `${spectrogramDuration / totalTicks * 100}%`,
+            opacity: spectrogramOpacity
+          }"
+          class="spectrogram-layer"
+        >
+          <canvas
+            ref="spectrogram"
+            class="spectrogram"
+            width="1920"
+            height="1080"
+          />
+        </div>
+        <div
+          ref="noteLayer"
+          class="note-layer"
+        >
+          <svg
+            width="100%"
+            height="100%"
+          >
+            <piano-roll-note
+              v-for="note in notes"
+              :key="note.id"
+              :note="note"
+              :total-ticks="totalTicks"
+              :selected-note-ids="selectedNoteIds"
+              :editing-note-id="editingNoteId"
+              @click="handleClickNote"
+              @dblclick="handleDblClickNote"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div
+      ref="midiKeyboard"
+      class="midi-keyboard scrollbar-hidden"
+    >
+      <div
+        ref="keyContainer"
+        class="key-container"
+      >
+        <piano-roll-midi-keyboard />
+      </div>
+    </div>
+    <div
+      ref="border"
+      class="border"
+    />
+    <div
+      ref="automationLaneSelector"
+      class="automation-lane-selector"
+    />
+    <div
+      ref="automationLaneContent"
+      class="automation-lane-content scrollbar-hidden"
+    >
+      <div
+        ref="automationContainer"
+        class="automation-container"
+      >
+        <piano-roll-grid-column-layer
+          :total-beats="totalBeats"
+          :total-bars="totalBars"
+        />
+        <div
+          ref="automationLayer"
+          class="automation-layer"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -61,6 +123,12 @@ import PianoRollNote from './PianoRollNote';
 import renderSpectrogram from '../modules/render/renderSpectrogram';
 
 export default {
+  components: {
+    PianoRollGridRowLayer,
+    PianoRollGridColumnLayer,
+    PianoRollMidiKeyboard,
+    PianoRollNote
+  },
   props: {
     notes: Array,
     totalBars: Number,
@@ -71,14 +139,6 @@ export default {
     spectrogram: Object,
     gridOpacity: Number,
     spectrogramOpacity: Number
-  },
-  watch: {
-    spectrogram: {
-      handler (spectrogram) {
-        renderSpectrogram(spectrogram, this.$refs.spectrogram);
-      },
-      deep: true
-    }
   },
   computed: {
     totalBeats () {
@@ -102,6 +162,14 @@ export default {
       return this.spectrogram.times[this.spectrogram.times.length - 1];
     }
   },
+  watch: {
+    spectrogram: {
+      handler (spectrogram) {
+        renderSpectrogram(spectrogram, this.$refs.spectrogram);
+      },
+      deep: true
+    }
+  },
   mounted () {
     manageDragAndScrollAndZoom(this.$refs.wrapper, this.sections);
     this.addNote = composeAddNote(this.$refs.noteLayer);
@@ -113,12 +181,6 @@ export default {
     handleDblClickNote (ev, id) {
       this.$emit('dblclick', ev, { target: 'NOTE', id });
     }
-  },
-  components: {
-    PianoRollGridRowLayer,
-    PianoRollGridColumnLayer,
-    PianoRollMidiKeyboard,
-    PianoRollNote
   }
 };
 </script>

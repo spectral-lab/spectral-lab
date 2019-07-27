@@ -3,7 +3,6 @@
     Info Bar
   </div>
 </template>
-  
 
 <script>
 export default {};
