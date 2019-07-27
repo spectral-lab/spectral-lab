@@ -1,6 +1,6 @@
 <template>
   <v-tooltip bottom>
-    <template v-slot:activator="{ on }">
+    <template #activator="{ on }">
       <v-btn small fab v-on="on" @click="emitClickEvent" color="primary" class="elevation-0">
         <v-icon>{{icon}}</v-icon>
       </v-btn>

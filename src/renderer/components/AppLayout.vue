@@ -120,6 +120,7 @@ export default {
       this.arrangementZoneHeight = this.appMainContentHeight * 0.5;
     },
     selectPianoRollZone () {
+      if (this.selectedZone === PIANO_ROLL) return;
       App.update({
         where: this.app.id,
         data: {
@@ -128,6 +129,7 @@ export default {
       });
     },
     selectArrangementZone () {
+      if (this.selectedZone === ARRANGEMENT) return;
       App.update({
         where: this.app.id,
         data: {

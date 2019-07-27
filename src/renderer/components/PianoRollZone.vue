@@ -6,7 +6,7 @@
           <audio-info-container/>
         </v-flex>
         <v-flex>
-          <toolbar-container/>
+          <toolbar/>
         </v-flex>
         <v-flex>
           <info-bar/>
@@ -26,7 +26,7 @@
   import PianoRollContainer from './PianoRollContainer';
   import Transport from './Transport';
   import ProjectManager from './ProjectManager';
-  import ToolbarContainer from './ToolbarContainer';
+  import Toolbar from './Toolbar';
   import InfoBar from './InfoBar';
   import AudioInfoContainer from './AudioInfoContainer';
   import FooterToolbar from './FooterToolbar';
@@ -35,7 +35,7 @@
     components: {
       AudioInfoContainer,
       PianoRollContainer,
-      ToolbarContainer,
+      Toolbar,
       FooterToolbar,
       InfoBar,
       Transport,
