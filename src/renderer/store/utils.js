@@ -49,7 +49,12 @@ export const instanciateModels = () => {
   models.PianoRoll.insert({
     data: {
       id: uid(),
-      selected: true,
+      appId: APP_ID
+    }
+  });
+  models.Arrangement.insert({
+    data: {
+      id: uid(),
       appId: APP_ID
     }
   });

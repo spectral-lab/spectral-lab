@@ -228,7 +228,7 @@ export class PianoRoll extends BaseModel {
 }
 
 export class Arrangement extends BaseModel {
-  static entity = 'pianoRoll';
+  static entity = 'arrangement';
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
