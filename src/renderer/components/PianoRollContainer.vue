@@ -4,7 +4,6 @@
     class="piano-roll-container"
   >
     <piano-roll
-      ref="pianoRoll"
       :total-bars="totalBars"
       :beats-in-bar="beatsInBar"
       :ticks-per-beat="song.ticksPerBeat"
@@ -63,7 +62,7 @@ export default {
     selectedNoteIds () {
       return Note.query().where('selected', true).get().map(note => note.id);
     },
-    noteIsSelected () {
+    someNotesAreSelected () {
       return this.selectedNoteIds.length !== 0;
     },
     pianoRollModelInstance () {
@@ -80,8 +79,8 @@ export default {
     }
   },
   watch: {
-    noteIsSelected (noteIsSelected) {
-      noteIsSelected ? bindKeys() : unbindKeys();
+    someNotesAreSelected (someNotesAreSelected) {
+      someNotesAreSelected ? bindKeys() : unbindKeys();
     }
   },
   mounted () {

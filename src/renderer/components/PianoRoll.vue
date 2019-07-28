@@ -1,7 +1,7 @@
 <template>
   <div
-    ref="wrapper"
-    class="wrapper"
+    ref="pianoRoll"
+    class="piano-roll"
   >
     <div
       ref="ruler"
@@ -23,8 +23,7 @@
       class="note-display scrollbar-hidden"
     >
       <div
-        ref="noteContainer"
-        class="note-container"
+        class="note-display-content"
       >
         <div
           ref="noteGridLayer"
@@ -171,7 +170,7 @@ export default {
     }
   },
   mounted () {
-    manageDragAndScrollAndZoom(this.$refs.wrapper, this.sections);
+    manageDragAndScrollAndZoom(this.$refs.pianoRoll, this.sections);
     this.addNote = composeAddNote(this.$refs.noteLayer);
   },
   methods: {
@@ -186,7 +185,7 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
+.piano-roll {
     background: rgb(33,33,33);
     height: 100%;
     display: grid;
@@ -246,7 +245,7 @@ export default {
     grid-row-start: 3;
     grid-row-end: 5;
 }
-.note-container {
+.note-display-content {
     height: 200%;
     width: 100%;
     position: relative;

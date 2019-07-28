@@ -18,7 +18,7 @@ const listenResize = (wrapperElement) => {
 
 const handleResize = (wrapperElement) => {
   const noteDisplay = wrapperElement.querySelector('.note-display');
-  const container = wrapperElement.querySelector('.note-container');
+  const container = wrapperElement.querySelector('.note-display-content');
   const [minWidth, minHeight] = [noteDisplay.offsetWidth, noteDisplay.offsetHeight];
   if (container.offsetWidth < minWidth) resetHorizontalZoom(wrapperElement);
   if (container.offsetHeight < minHeight) resetVerticalZoom(wrapperElement);
@@ -26,7 +26,7 @@ const handleResize = (wrapperElement) => {
 
 const resetHorizontalZoom = (wrapperElement) => {
   const resetElts = [
-    wrapperElement.querySelector('.note-container'),
+    wrapperElement.querySelector('.note-display-content'),
     wrapperElement.querySelector('.ruler-container'),
     wrapperElement.querySelector('.automation-container')
   ];
@@ -37,7 +37,7 @@ const resetHorizontalZoom = (wrapperElement) => {
 
 const resetVerticalZoom = (wrapperElement) => {
   const resetElts = [
-    wrapperElement.querySelector('.note-container'),
+    wrapperElement.querySelector('.note-display-content'),
     wrapperElement.querySelector('.key-container')
   ];
   resetElts.forEach(elt => {
@@ -48,7 +48,7 @@ const resetVerticalZoom = (wrapperElement) => {
 const horizontalZoomIn = (wrapperElement) => {
   const minWidth = wrapperElement.querySelector('.note-display').offsetWidth;
   const enlargedElts = [
-    wrapperElement.querySelector('.note-container'),
+    wrapperElement.querySelector('.note-display-content'),
     wrapperElement.querySelector('.ruler-container'),
     wrapperElement.querySelector('.automation-container')
   ];
@@ -59,7 +59,7 @@ const horizontalZoomIn = (wrapperElement) => {
 const horizontalZoomOut = (wrapperElement) => {
   const minWidth = wrapperElement.querySelector('.note-display').offsetWidth;
   const reducedElts = [
-    wrapperElement.querySelector('.note-container'),
+    wrapperElement.querySelector('.note-display-content'),
     wrapperElement.querySelector('.ruler-container'),
     wrapperElement.querySelector('.automation-container')
   ];
@@ -70,7 +70,7 @@ const horizontalZoomOut = (wrapperElement) => {
 const verticalZoomIn = (wrapperElement) => {
   const minHeight = wrapperElement.querySelector('.note-display').offsetHeight;
   const enlargedElts = [
-    wrapperElement.querySelector('.note-container'),
+    wrapperElement.querySelector('.note-display-content'),
     wrapperElement.querySelector('.key-container')
   ];
   enlargedElts.forEach(elt => {
@@ -80,7 +80,7 @@ const verticalZoomIn = (wrapperElement) => {
 const verticalZoomOut = (wrapperElement) => {
   const minHeight = wrapperElement.querySelector('.note-display').offsetHeight;
   const reducedElts = [
-    wrapperElement.querySelector('.note-container'),
+    wrapperElement.querySelector('.note-display-content'),
     wrapperElement.querySelector('.key-container')
   ];
   reducedElts.forEach(elt => {

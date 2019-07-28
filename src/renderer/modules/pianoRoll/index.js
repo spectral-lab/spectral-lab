@@ -3,7 +3,7 @@ import { manageScroll } from './scroll';
 import { manageZoom } from './zoom';
 
 /**
- * @param {HTMLElement} wrapperElement
+ * @param {Element} wrapperElement
  * @param {object} sections
  */
 export const manageDragAndScrollAndZoom = (wrapperElement, sections) => {
