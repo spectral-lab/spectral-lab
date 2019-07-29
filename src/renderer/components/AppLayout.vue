@@ -106,8 +106,10 @@ export default {
     this.appMainContentHeight = this.$refs.appMainContent.offsetHeight;
     hotkeys(SWITCH_WINDOW.keys, SWITCH_WINDOW.scope, this.switchWindow);
     hotkeys(SPLIT_WINDOW.keys, SPLIT_WINDOW.scope, this.splitWindow);
-    this.expandArrangementZone();
-    this.selectArrangementZone();
+    // this.expandArrangementZone();
+    // this.selectArrangementZone();
+    this.expandPianoRollZone();
+    this.selectPianoRollZone();
   },
   methods: {
     switchWindow (ev) {

@@ -5,7 +5,7 @@
       <option name="arguments" value="--ext .js,.vue --fix $FilePath$" />
       <option name="checkSyntaxErrors" value="true" />
       <option name="description" />
-      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="exitCodeBehavior" value="NEVER" />
       <option name="fileExtension" value="vue" />
       <option name="immediateSync" value="false" />
       <option name="name" value="ESLint Vue" />
@@ -25,7 +25,7 @@
       <option name="arguments" value="--ext .js,.vue --fix $FilePath$" />
       <option name="checkSyntaxErrors" value="true" />
       <option name="description" />
-      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="exitCodeBehavior" value="NEVER" />
       <option name="fileExtension" value="js" />
       <option name="immediateSync" value="false" />
       <option name="name" value="ESLint Js" />

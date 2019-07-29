@@ -44,7 +44,7 @@ export default {
     pianoRollGridColumnItem
   },
   props: {
-    totalBeats: Number,
+    beatsPerBar: Number,
     totalBars: Number,
     showNumber: Boolean
   },
@@ -54,6 +54,9 @@ export default {
     };
   },
   computed: {
+    totalBeats () {
+      return this.totalBars * this.beatsPerBar;
+    },
     showBeats () {
       return this.width > 500;
     },

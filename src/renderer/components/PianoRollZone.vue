@@ -15,7 +15,7 @@
           <info-bar />
         </v-flex>
         <v-flex>
-          <piano-roll-container />
+          <piano-roll />
         </v-flex>
         <v-flex>
           <footer-toolbar />
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import PianoRollContainer from './PianoRollContainer';
+import PianoRoll from './PianoRoll';
 import Toolbar from './Toolbar';
 import InfoBar from './InfoBar';
 import AudioInfoContainer from './AudioInfoContainer';
@@ -35,7 +35,7 @@ import FooterToolbar from './FooterToolbar';
 export default {
   components: {
     AudioInfoContainer,
-    PianoRollContainer,
+    PianoRoll,
     Toolbar,
     FooterToolbar,
     InfoBar

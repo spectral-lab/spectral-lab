@@ -11,8 +11,6 @@
       :selected-note-ids="selectedNoteIds"
       :editing-note-id="editingNoteId"
       :spectrogram="spectrogram"
-      :spectrogram-opacity="spectrogramOpacity"
-      :grid-opacity="gridOpacity"
       @click="handleClick"
       @dblclick="handleDblClick"
     />
@@ -54,7 +52,7 @@ export default {
       return this.clip.notes;
     },
     beatsInBar () {
-      return this.clip.beatsInBar[0].val;
+      return this.clip.beatsPerBar[0].val;
     },
     totalBars () {
       return Math.ceil(this.clip.duration / this.song.ticksPerBeat / this.beatsInBar);
@@ -67,12 +65,6 @@ export default {
     },
     pianoRollModelInstance () {
       return PianoRollModel.query().first();
-    },
-    gridOpacity () {
-      return this.pianoRollModelInstance.gridOpacity;
-    },
-    spectrogramOpacity () {
-      return this.pianoRollModelInstance.spectrogramOpacity;
     },
     mouseMode () {
       return this.pianoRollModelInstance.mouseMode;

@@ -40,6 +40,7 @@ module.exports = {
     'comma-spacing': process.env.NODE_ENV === 'production' ? 2 : 1,
     'space-before-function-paren': process.env.NODE_ENV === 'production' ? 2 : 1,
     'comma-dangle': process.env.NODE_ENV === 'production' ? 2 : 1,
-    'vue/require-default-prop': process.env.NODE_ENV === 'production' ? 1 : 0
+    'vue/require-default-prop': process.env.NODE_ENV === 'production' ? 1 : 0,
+    'vue/no-unused-components': process.env.NODE_ENV === 'production' ? 2 : 1
   }
 };

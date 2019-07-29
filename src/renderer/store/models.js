@@ -5,9 +5,9 @@ import {
   TRACK, SONG, APP, PIANO_ROLL, ARRANGEMENT
 } from '../constants/model-types';
 import { makeMandatory, setHotkeysScope } from './utils';
-import { bpm, beatsInBar, ticksPerBeat } from '../constants/defaults';
+import { bpm, beatsPerBar, ticksPerBeat } from '../constants/defaults';
 import { SELECT } from '../constants/mouse-modes';
-import { random, sum } from 'lodash';
+import { random, sum, flatten } from 'lodash';
 import { SCALE_COLORS } from '../constants/colors';
 
 class BaseModel extends Model {
@@ -177,10 +177,10 @@ export class Clip extends BaseModel {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(CLIP),
       offsetTime: this.number(0), // in tick
-      duration: this.number(4 * beatsInBar * ticksPerBeat), // 4 bars
+      duration: this.number(4 * beatsPerBar * ticksPerBeat), // in tick. default is 4 bars
       notes: this.hasMany(Note, 'clipId'),
       audioBuffer: this.hasOne(AudioBuffer, 'clipId'),
-      beatsInBar: this.attr([{ barIdx: 0, val: beatsInBar }]),
+      beatsPerBar: this.attr([{ barIdx: 0, val: beatsPerBar }]),
       selected: this.boolean(false),
       trackId: this.attr(null),
       color: this.attr(() => SCALE_COLORS.hHelmholtz[random(11)])
@@ -188,6 +188,18 @@ export class Clip extends BaseModel {
   };
   get parent () {
     return Track.query().whereId(this.trackId).first();
+  }
+  get startTime () {
+    return this.absoluteTime;
+  }
+  get endTime () {
+    return this.absoluteTime + this.duration;
+  }
+  get selectedNoteIds () {
+    return this.notes.filter(note => note.selected).map(note => note.id);
+  }
+  get someNotesAreSelected () {
+    return this.selectedNoteIds.length !== 0;
   }
 }
 
@@ -244,6 +256,41 @@ export class PianoRoll extends BaseModel {
   }
   get parent () {
     return App.query().whereId(this.appId).first();
+  }
+  get clips () {
+    return Clip.query().where('selected', true).withAllRecursive().get();
+  }
+  get notes () {
+    return flatten(this.clips.map(clip => clip.notes));
+  }
+  get someNotesAreSelected () {
+    return this.clips.some(clip => clip.someNotesAreSelected);
+  }
+  get audioBuffers () {
+    return this.clips.map(clip => clip.audioBuffer).filter(v => v);
+  }
+  get spectrograms () {
+    return this.audioBuffers.map(audioBuffer => audioBuffer.spectrogram).filter(v => v);
+  }
+  get beatsPerBar () {
+    return this.clips[0].beatsPerBar[0].val;
+  }
+  get ticksPerBeat () {
+    return Song.query().last().ticksPerBeat;
+  }
+  get displayRange () {
+    const start = Math.min(this.clips.map(clip => clip.startTime));
+    const end = Math.max(this.clips.map(clip => clip.endTime));
+    return { start, end };
+  }
+  get totalTicks () {
+    return this.displayRange.end - this.displayRange.start;
+  }
+  get totalBeats () {
+    return this.totalTicks / this.ticksPerBeat;
+  }
+  get totalBars () {
+    return this.totalBeats / this.beatsPerBar;
   }
 }
 
