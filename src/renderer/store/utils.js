@@ -1,6 +1,6 @@
 import VuexORM from '@vuex-orm/core';
 import * as models from './models';
-import { APP_ID } from '../constants/ids';
+import { APP_ID, SONG_ID } from '../constants/ids';
 import uid from 'uid';
 import hotkeys from 'hotkeys-js';
 import * as modelTypes from '../constants/model-types';
@@ -22,7 +22,6 @@ export const initDatabase = () => {
 };
 
 export const instanciateModels = () => {
-  const songId = uid();
   const trackId = uid();
   models.App.insert({
     data: {
@@ -31,13 +30,13 @@ export const instanciateModels = () => {
   });
   models.Song.insert({
     data: {
-      id: songId
+      id: SONG_ID
     }
   });
   models.Track.insert({
     data: {
       id: trackId,
-      songId
+      songId: SONG_ID
     }
   });
   models.Clip.insert({

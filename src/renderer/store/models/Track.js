@@ -13,7 +13,7 @@ export default class Track extends BaseModel {
       type: this.string(TRACK),
       speed: this.attr([{ offsetTime: 0, val: 1 }]),
       selected: this.boolean(false),
-      songId: this.attr(null),
+      songId: this.attr(null, makeMandatory('songId')),
       clips: this.hasMany(Clip, 'trackId')
     };
   }
