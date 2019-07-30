@@ -1,7 +1,6 @@
 <template>
   <div
-    ref="noteGridLayer"
-    class="grid-layer"
+    class="grid-container"
     :style="{ opacity: gridOpacity }"
   >
     <grid-row-container />
@@ -40,7 +39,7 @@ export default {
 </script>
 
 <style scoped>
-  .grid-layer {
+  .grid-container {
     width: 100%;
     height: 100%;
     position: absolute;
