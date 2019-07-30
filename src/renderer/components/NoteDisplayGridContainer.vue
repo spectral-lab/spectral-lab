@@ -4,8 +4,8 @@
     class="grid-layer"
     :style="{ opacity: gridOpacity }"
   >
-    <piano-roll-grid-row-layer />
-    <piano-roll-grid-column-layer
+    <grid-row-container />
+    <grid-column-container
       :beats-per-bar="beatsPerBar"
       :total-bars="totalBars"
     />
@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import PianoRollGridRowLayer from './PianoRollGridRowLayer';
-import PianoRollGridColumnLayer from './PianoRollGridColumnLayer';
+import GridRowContainer from './GridRowContainer';
+import GridColumnContainer from './GridColumnContainer';
 import { PianoRoll } from '../store/models';
 
 export default {
   components: {
-    PianoRollGridRowLayer,
-    PianoRollGridColumnLayer
+    GridRowContainer,
+    GridColumnContainer
   },
   computed: {
     beatsPerBar () {

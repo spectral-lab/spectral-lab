@@ -1,7 +1,7 @@
 <template>
   <div
-    ref="gridColumnLayer"
-    class="grid-column-layer"
+    ref="gridColumnContainer"
+    class="grid-column-container"
   >
     <div class="beat-layer">
       <div
@@ -9,7 +9,7 @@
         :key="beat"
         class="grid-item-container"
       >
-        <piano-roll-grid-column-item
+        <grid-column
           :is-visible="showBeats"
           color="DimGray"
         />
@@ -21,7 +21,7 @@
         :key="bar"
         class="grid-item-container"
       >
-        <piano-roll-grid-column-item
+        <grid-column
           :is-visible="showBars"
           color="DarkGray"
         />
@@ -37,16 +37,19 @@
 </template>
 
 <script>
-import pianoRollGridColumnItem from './PianoRollGridColumnItem';
+import GridColumn from './GridColumn';
 import elementResizeDetector from 'element-resize-detector';
 export default {
   components: {
-    pianoRollGridColumnItem
+    GridColumn
   },
   props: {
     beatsPerBar: Number,
     totalBars: Number,
-    showNumber: Boolean
+    showNumber: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     return {
@@ -65,7 +68,7 @@ export default {
     }
   },
   mounted () {
-    elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.gridColumnLayer, (element) => {
+    elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.gridColumnContainer, (element) => {
       this.width = element.offsetWidth;
     });
   }
@@ -73,7 +76,7 @@ export default {
 </script>
 
 <style scoped>
-    .grid-column-layer {
+    .grid-column-container {
         position: absolute;
         width: 100%;
         height: 100%;

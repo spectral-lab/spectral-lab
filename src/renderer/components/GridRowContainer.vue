@@ -1,14 +1,14 @@
 <template>
   <div
-    ref="gridRowLayer"
-    class="grid-row-layer"
+    ref="gridRowContainer"
+    class="grid-row-container"
   >
     <div
       v-for="noteNumber in reversedNoteNumbers"
       :key="noteNumber"
       class="grid-item-wrapper"
     >
-      <piano-roll-grid-row-item
+      <grid-row
         :note-number="noteNumber"
         :visible-line="visibleLine"
       />
@@ -17,13 +17,13 @@
 </template>
 
 <script>
-import pianoRollGridRowItem from './PianoRollGridRowItem';
+import GridRow from './GridRow';
 import elementResizeDetector from 'element-resize-detector';
 import { range } from 'lodash';
 
 export default {
   components: {
-    pianoRollGridRowItem
+    GridRow
   },
   data () {
     return {
@@ -43,7 +43,7 @@ export default {
     }
   },
   mounted () {
-    elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.gridRowLayer, (element) => {
+    elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.gridRowContainer, (element) => {
       this.height = element.offsetHeight;
     });
   }
@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style scoped>
-    .grid-row-layer {
+    .grid-row-container {
         position: absolute;
         display: flex;
         width: 100%;
