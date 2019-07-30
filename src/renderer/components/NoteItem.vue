@@ -65,7 +65,11 @@ import { tickToPosX, pitchToPosY } from '../modules/pianoRoll/utils';
 
 export default {
   props: {
-    note: Note,
+    pitchTransition: Array,
+    color: {
+      type: String,
+      default: 'grey'
+    },
     totalTicks: Number,
     isSelected: {
       type: Boolean,
@@ -78,23 +82,20 @@ export default {
   },
   computed: {
     positions () {
-      return this.transition.map(point => ({
+      return this.pitchTransition.map(point => ({
         x: tickToPosX(point.offsetTime, this.totalTicks),
         y: pitchToPosY(point.pitch),
         id: point.id,
         type: point.type
       }));
     },
-    transition () {
-      return this.note.pitchTransition;
-    },
     lineColor () {
       if (this.isSelected) return 'Honeydew';
-      return this.note.parent.color;
+      return this.color;
     },
     circleColor () {
       if (this.isEdited) return 'Honeydew';
-      return this.note.parent.color;
+      return this.color;
     }
   },
   methods: {

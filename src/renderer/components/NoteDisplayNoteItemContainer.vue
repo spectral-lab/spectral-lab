@@ -10,10 +10,11 @@
       <note-item
         v-for="note in notes"
         :key="note.id"
-        :note="note"
+        :pitch-transition="note.pitchTransition"
         :total-ticks="totalTicks"
         :is-selected="isSelected(note)"
         :is-edited="isEdited(note)"
+        :color="note.parent.color"
         @click="handleClick"
         @dblclick="handleDblClick"
       />
