@@ -16,7 +16,7 @@ const { dialog } = require('electron').remote;
 
 export default () => {
   bindKeys();
-  loadMockEntities();
+  if (process.env.NODE_ENV === 'development') loadMockEntities();
 };
 
 const loadMockEntities = () => {
