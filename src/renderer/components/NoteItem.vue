@@ -33,7 +33,7 @@
         class="note-line"
       >
         <line
-          v-if="positions[idx-1]"
+          v-if="prevPoint(idx)"
           :key="'f' + point.id"
           :x1="`${point.x * 100}%`"
           :y1="`${point.y * 100}%`"
