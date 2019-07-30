@@ -1,8 +1,2 @@
-import renderWaveform from './renderWaveform';
-import renderSpectrogram from './renderSpectrogram';
-import renderPianoRoll from './renderPianoRoll';
-export {
-  renderWaveform,
-  renderSpectrogram,
-  renderPianoRoll
-};
+export { default as renderWaveform } from './renderWaveform';
+export { default as renderSpectrogram } from './renderSpectrogram';

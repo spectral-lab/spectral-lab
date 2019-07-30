@@ -1,21 +1,37 @@
 <template>
   <div>
-    <v-toolbar color="grey darken-3" class="mb-2">
-      <v-btn @click="handleClickPlay" icon color="primary">
-        <v-icon size="24px">{{icon}}</v-icon>
+    <v-toolbar
+      color="grey darken-3"
+      class="mb-2"
+    >
+      <v-btn
+        icon
+        color="primary"
+        @click="handleClickPlay"
+      >
+        <v-icon size="24px">
+          {{ icon }}
+        </v-icon>
       </v-btn>
       <div>
-        <v-toolbar-title>{{basename}}</v-toolbar-title>
-        <div class="filepath">{{filepath}}</div>
+        <v-toolbar-title>{{ basename }}</v-toolbar-title>
+        <div class="filepath">
+          {{ filepath }}
+        </div>
       </div>
-      <v-spacer/>
-      <upload-button @file-update="handleFileUpdate" title="Open" noTitleUpdate>Open</upload-button>
-      <icon-btn-with-tip
-              @click="handleClickBuild"
-              icon="build"
-              tip="Build a spectrogram of the source audio."
+      <v-spacer />
+      <upload-button
+        title="Open"
+        no-title-update
+        @file-update="handleFileUpdate"
       >
-      </icon-btn-with-tip>
+        Open
+      </upload-button>
+      <icon-btn-with-tip
+        icon="build"
+        tip="Build a spectrogram of the source audio."
+        @click="handleClickBuild"
+      />
     </v-toolbar>
   </div>
 </template>
@@ -25,6 +41,10 @@ import UploadButton from 'vuetify-upload-button';
 import IconBtnWithTip from './IconBtnWithTip';
 
 export default {
+  components: {
+    UploadButton,
+    IconBtnWithTip
+  },
   props: {
     filepath: String,
     basename: String,
@@ -46,10 +66,6 @@ export default {
     handleClickBuild () {
       this.$emit('click-build');
     }
-  },
-  components: {
-    UploadButton,
-    IconBtnWithTip
   }
 };
 </script>

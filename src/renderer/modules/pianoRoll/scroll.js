@@ -1,7 +1,19 @@
-export const manageScroll = (sectionElts) => {
-  syncHorizontalScroll(sectionElts.noteDisplay, sectionElts.ruler);
-  syncHorizontalScroll(sectionElts.noteDisplay, sectionElts.automationLaneContent);
-  syncVerticalScroll(sectionElts.noteDisplay, sectionElts.midiKeyboard);
+/**
+ * @param {object} param
+ * @param {Element[]} param.verticalScrollTargets
+ * @param {Element[]} param.horizontalScrollTargets
+ */
+export const syncScroll = ({ verticalScrollTargets, horizontalScrollTargets }) => {
+  verticalScrollTargets.forEach((targetElement, idx, targets) => {
+    const prevElement = targets[idx - 1];
+    if (!prevElement) return;
+    syncVerticalScroll(prevElement, targetElement);
+  });
+  horizontalScrollTargets.forEach((targetElement, idx, targets) => {
+    const prevElement = targets[idx - 1];
+    if (!prevElement) return;
+    syncHorizontalScroll(prevElement, targetElement);
+  });
 };
 
 export const syncVerticalScroll = (a, b) => {
@@ -17,6 +29,7 @@ export const syncVerticalScroll = (a, b) => {
     prev = target.scrollTop;
   });
 };
+
 export const syncHorizontalScroll = (a, b) => {
   let prev = 0;
   a.addEventListener('scroll', ({ target }) => {

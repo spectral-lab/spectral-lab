@@ -1,13 +1,63 @@
-export const SAVE_PROJECT = 'cmd+s';
-export const ESCAPE = 'esc';
-export const HORIZONTAL_ZOOM_IN = 'h';
-export const HORIZONTAL_ZOOM_OUT = 'g';
-export const VERTICAL_ZOOM_IN = 'shift+h';
-export const VERTICAL_ZOOM_OUT = 'shift+g';
-export const NOTE_SHIFT_LEFT = 'left';
-export const NOTE_SHIFT_RIGHT = 'right';
-export const NOTE_SHIFT_UP = 'up';
-export const NOTE_SHIFT_DOWN = 'down';
-export const DELETE = 'clear,backspace,del,delete';
-export const SELECT_ALL = 'cmd+a';
-export const ROTATE_VIEW_MODE = 'tab';
+import { PIANO_ROLL } from './model-types';
+const ALL = 'all';
+
+export const SAVE_PROJECT = {
+  scope: ALL,
+  keys: 'cmd+s'
+};
+export const DESELECT_NOTES = {
+  scope: PIANO_ROLL,
+  keys: 'esc'
+};
+export const SELECT_ALL_NOTES = {
+  scope: PIANO_ROLL,
+  keys: 'cmd+a'
+};
+export const ZOOM = {
+  horizontalZoomIn: {
+    scope: PIANO_ROLL,
+    keys: 'h'
+  },
+  horizontalZoomOut: {
+    scope: PIANO_ROLL,
+    keys: 'g'
+  },
+  verticalZoomIn: {
+    scope: PIANO_ROLL,
+    keys: 'shift+h'
+  },
+  verticalZoomOut: {
+    scope: PIANO_ROLL,
+    keys: 'shift+g'
+  }
+};
+export const NOTE_SHIFT = {
+  left: {
+    scope: PIANO_ROLL,
+    keys: 'left'
+  },
+  right: {
+    scope: PIANO_ROLL,
+    keys: 'right'
+  },
+  up: {
+    scope: PIANO_ROLL,
+    keys: 'up'
+  },
+  down: {
+    scope: PIANO_ROLL,
+    keys: 'down'
+  }
+};
+export const DELETE_NOTES = {
+  scope: PIANO_ROLL,
+  keys: 'clear,backspace,del,delete'
+};
+export const SWITCH_WINDOW = {
+  scope: ALL,
+  keys: 'tab'
+};
+export const SPLIT_WINDOW = {
+  scope: ALL,
+  keys: 'cmd+d'
+};

@@ -10,4 +10,4 @@ export const outputManagerOptions = {
 export const bpm = 120;
 /** @type {number} ticks per beat `ticks = minutes * bpm * tpb` */
 export const ticksPerBeat = 480;
-export const beatsInBar = 4;
+export const beatsPerBar = 4;

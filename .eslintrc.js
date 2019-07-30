@@ -1,20 +1,29 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: 'vue-eslint-parser',
+
   parserOptions: {
-    sourceType: 'module'
+    sourceType: 'module',
+    parser: 'babel-eslint'
   },
+
   env: {
     browser: true,
     node: true,
     jest: true
   },
-  extends: 'standard',
+
+  extends: [
+    'plugin:vue/recommended',
+    'standard'
+  ],
+
   globals: {
     __static: true
   },
+
   plugins: [
-    'html'
+    'vue'
   ],
   'rules': {
     // allow paren-less arrow functions
@@ -30,6 +39,8 @@ module.exports = {
     'object-curly-spacing': process.env.NODE_ENV === 'production' ? ["error", "always"] : ["warn", "always"],
     'comma-spacing': process.env.NODE_ENV === 'production' ? 2 : 1,
     'space-before-function-paren': process.env.NODE_ENV === 'production' ? 2 : 1,
-    'comma-dangle': process.env.NODE_ENV === 'production' ? 2 : 1
+    'comma-dangle': process.env.NODE_ENV === 'production' ? 2 : 1,
+    'vue/require-default-prop': 0,
+    'vue/no-unused-components': process.env.NODE_ENV === 'production' ? 2 : 1
   }
-}
+};

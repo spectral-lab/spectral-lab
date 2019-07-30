@@ -12,8 +12,7 @@ export const drawMidiKeyboard = wrapper => {
 };
 
 const listenWrapperResize = (wrapper, draw) => {
-  const detector = elementResizeDetector({ strategy: 'scroll' });
-  detector.listenTo(wrapper, () => {
+  elementResizeDetector({ strategy: 'scroll' }).listenTo(wrapper, () => {
     draw.height('100%');
   });
 };

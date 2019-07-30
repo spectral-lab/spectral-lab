@@ -1,21 +1,27 @@
 import VuexORM from '@vuex-orm/core';
 import * as models from './models';
-import { APP_ID } from '../constants/ids';
+import { APP_ID, SONG_ID } from '../constants/ids';
 import uid from 'uid';
+import hotkeys from 'hotkeys-js';
+import * as modelTypes from '../constants/model-types';
 
 export const makeMandatory = field => val => {
   if (val == null) throw new Error(`Mandatory Field: ${field} cannot be ${val}`);
   return val;
 };
 
+export const setHotkeysScope = zoneName => {
+  hotkeys.setScope(zoneName);
+  return zoneName;
+};
+
 export const initDatabase = () => {
   const database = new VuexORM.Database();
-  Object.values(models).forEach(model => database.register(model));
+  Object.values(modelTypes).forEach(modelName => database.register(models[modelName]));
   return database;
 };
 
 export const instanciateModels = () => {
-  const songId = uid();
   const trackId = uid();
   models.App.insert({
     data: {
@@ -24,13 +30,13 @@ export const instanciateModels = () => {
   });
   models.Song.insert({
     data: {
-      id: songId
+      id: SONG_ID
     }
   });
   models.Track.insert({
     data: {
       id: trackId,
-      songId
+      songId: SONG_ID
     }
   });
   models.Clip.insert({
@@ -43,13 +49,13 @@ export const instanciateModels = () => {
   models.PianoRoll.insert({
     data: {
       id: uid(),
-      selected: true,
+      appId: APP_ID
+    }
+  });
+  models.Arrangement.insert({
+    data: {
+      id: uid(),
       appId: APP_ID
     }
   });
 };
-
-export const createAudioCtx = () => new AudioContext({
-  latencyHint: 'interactive',
-  sampleRate: 22050
-});

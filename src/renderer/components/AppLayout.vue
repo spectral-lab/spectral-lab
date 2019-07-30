@@ -1,46 +1,71 @@
 <template>
   <div class="app-layout">
-    <title-bar/>
-    <div class="app-main-content"
-         ref="appMainContent"
-         :style="{ height: `${appMainContentHeight}px` }"
-         >
-      <div class="arrangement-view-container"
-           ref="arrangementViewContainer"
-           :style="{ height: `${arrangementViewHeight}px` }">
-        <arrangement-view/>
-      </div>
-      <div ref="border" class="border" :style="{ height: `${borderHeight}px` }"></div>
-      <div class="clip-view-container"
-           :style="{ height: `${clipViewHeight}px` }">
-        <clip-view/>
-      </div>
+    <div class="title-bar-container">
+      <title-bar />
     </div>
-    <transport/>
+    <div
+      ref="appMainContent"
+      class="app-main-content"
+    >
+      <elastic-div-stack
+        :border-width="24"
+        :upper-content-height="arrangementZoneHeight"
+        @change-height="arrangementZoneHeight = $event.upperContentHeight"
+      >
+        <template #upper>
+          <div
+            ref="arrangementZoneContainer"
+            class="arrangement-zone-container"
+            :style="{
+              borderColor: arrangementZoneBorderColor
+            }"
+            @click="selectArrangementZone"
+          >
+            <arrangement-zone />
+          </div>
+        </template>
+        <template #lower>
+          <div
+            class="piano-roll-zone-container"
+            :style="{
+              borderColor: pianoRollZoneBorderColor
+            }"
+            @click="selectPianoRollZone"
+          >
+            <piano-roll-zone />
+          </div>
+        </template>
+      </elastic-div-stack>
+    </div>
+    <div class="transport-container">
+      <transport />
+    </div>
   </div>
 </template>
 
 <script>
 import Transport from './Transport';
-import ClipView from './ClipView';
-import ArrangementView from './ArrangementView';
-import { clamp, debounce } from 'lodash';
+import PianoRollZone from './PianoRollZone';
+import ArrangementZone from './ArrangementZone';
+import ElasticDivStack from './ElasticDivStack';
 import TitleBar from './TitleBar';
 import { titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
 import hotkeys from 'hotkeys-js';
-import { ROTATE_VIEW_MODE } from '../constants/key-bindings';
-
-const VIEW_MODE = {
-  ARRANGEMENT: 'ARRANGEMENT',
-  SPLIT: 'SPLIT',
-  CLIP: 'CLIP'
-};
-const { ARRANGEMENT, SPLIT, CLIP } = VIEW_MODE;
+import { SPLIT_WINDOW, SWITCH_WINDOW } from '../constants/key-bindings';
+import { App } from '../store/models';
+import { ARRANGEMENT, PIANO_ROLL } from '../constants/model-types';
 
 export default {
+  components: {
+    PianoRollZone,
+    Transport,
+    ArrangementZone,
+    TitleBar,
+    ElasticDivStack
+  },
   data () {
     return {
-      arrangementViewHeight: 500,
+      arrangementZoneHeight: 0,
       windowHeight: 800,
       titleBarHeight: parseInt(titleBarHeight, 10),
       transportHeight: parseInt(transportHeight, 10),
@@ -48,101 +73,109 @@ export default {
     };
   },
   computed: {
-    appMainContentHeight () {
-      return this.windowHeight - this.titleBarHeight - this.transportHeight;
+    app () {
+      return App.query().first();
     },
-    clipViewHeight () {
-      return this.appMainContentHeight - this.arrangementViewHeight - this.borderHeight - 6;
+    selectedZone () {
+      return this.app.selectedZone;
     },
-    maxArrangementViewHeight () {
-      return this.appMainContentHeight - this.borderHeight - 6;
-    },
-    viewMode () {
-      if (this.arrangementViewHeight > this.maxArrangementViewHeight - 10) {
-        return ARRANGEMENT;
+    arrangementZoneBorderColor () {
+      switch (this.selectedZone) {
+        case ARRANGEMENT: return 'lightgrey';
+        case PIANO_ROLL: return 'transparent';
+        default: return 'transparent';
       }
-      if (this.arrangementViewHeight < 10) {
-        return CLIP;
+    },
+    pianoRollZoneBorderColor () {
+      switch (this.selectedZone) {
+        case ARRANGEMENT: return 'transparent';
+        case PIANO_ROLL: return 'lightgrey';
+        default: return 'transparent';
       }
-      return SPLIT;
     }
-  },
-  created () {
-    this.windowHeight = window.innerHeight;
   },
   mounted () {
-    window.addEventListener('resize', debounce(() => {
-      this.windowHeight = window.innerHeight;
-    }, 30));
-    this.makeDraggable();
-    hotkeys(ROTATE_VIEW_MODE, this.rotateViewMode);
-    this.switchToClipView();
+    hotkeys(SWITCH_WINDOW.keys, SWITCH_WINDOW.scope, this.switchWindow);
+    hotkeys(SPLIT_WINDOW.keys, SPLIT_WINDOW.scope, this.splitWindow);
+    // this.expandArrangementZone();
+    // this.selectArrangementZone();
+    this.expandPianoRollZone();
+    this.selectPianoRollZone();
   },
   methods: {
-    rotateViewMode () {
-      if (this.viewMode === ARRANGEMENT) {
-        this.switchToClipView();
+    switchWindow (ev) {
+      ev.preventDefault();
+      if (this.selectedZone === ARRANGEMENT) {
+        this.expandPianoRollZone();
+        this.selectPianoRollZone();
         return;
       }
-      if (this.viewMode === CLIP) {
-        this.switchToSplitView();
-        return;
-      }
-      this.switchToArrangementView();
+      this.expandArrangementZone();
+      this.selectArrangementZone();
     },
-    switchToArrangementView () {
-      this.arrangementViewHeight = this.maxArrangementViewHeight;
+    expandArrangementZone () {
+      this.arrangementZoneHeight = this.$refs.appMainContent.offsetHeight;
     },
-    switchToClipView () {
-      this.arrangementViewHeight = 0;
+    expandPianoRollZone () {
+      this.arrangementZoneHeight = 0;
     },
-    switchToSplitView () {
-      this.arrangementViewHeight = this.maxArrangementViewHeight * 0.5;
+    splitWindow () {
+      this.arrangementZoneHeight = this.$refs.appMainContent.offsetHeight * 0.5;
     },
-    makeDraggable () {
-      let dragging = false;
-      this.$refs.border.addEventListener('mousedown', () => {
-        document.body.style.cursor = 'row-resize';
-        dragging = true;
+    selectPianoRollZone () {
+      if (this.selectedZone === PIANO_ROLL) return;
+      App.update({
+        where: this.app.id,
+        data: {
+          selectedZone: PIANO_ROLL
+        }
       });
-      document.addEventListener('mouseup', () => {
-        if (!dragging) return;
-        document.body.style.cursor = 'default';
-        dragging = false;
-      });
-      this.$refs.appMainContent.addEventListener('mousemove', (ev) => {
-        if (!dragging) return;
-        this.arrangementViewHeight = clamp(
-          ev.pageY - this.$refs.appMainContent.offsetTop,
-          0,
-          Math.max(this.$refs.appMainContent.clientHeight, 1)
-        );
+    },
+    selectArrangementZone () {
+      if (this.selectedZone === ARRANGEMENT) return;
+      App.update({
+        where: this.app.id,
+        data: {
+          selectedZone: ARRANGEMENT
+        }
       });
     }
-  },
-  components: {
-    ClipView,
-    Transport,
-    ArrangementView,
-    TitleBar
   }
 };
 </script>
 
 <style scoped>
-  .app-main-content {
+  .app-layout {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 24px 1fr 30px;
     overflow: hidden;
   }
-  .arrangement-view-container {
-    overflow: auto;
+  .title-bar-container {
+    grid-area: 1 / 1 / 2 / 2;
   }
-  .clip-view-container {
-    overflow: auto;
+  .app-main-content {
+    grid-area: 2 / 1 / 3 / 2;
+    box-sizing: border-box;
+    overflow: hidden;
   }
-  .border {
-    cursor: row-resize;
-    background: #212121;
-    z-index: 100;
+  .transport-container {
+    grid-area: 3 / 1 / 4 / 2;
+  }
+  .arrangement-zone-container {
+    height: 100%;
+    overflow: hidden;
+    border: solid 3px;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+  .piano-roll-zone-container {
+    height: 100%;
+    overflow: auto;
+    border: solid 3px;
+    border-radius: 10px;
+    box-sizing: border-box;
   }
 </style>
-

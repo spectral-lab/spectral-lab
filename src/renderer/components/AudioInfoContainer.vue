@@ -1,14 +1,14 @@
 <template>
-    <div>
-        <audio-info
-                :filepath="filepath"
-                :basename="basename"
-                :isPlaying="isPlaying"
-                @click-play="handleClickPlay"
-                @file-update="handleFileUpdate"
-                @click-build="handleClickBuild"
-        />
-    </div>
+  <div>
+    <audio-info
+      :filepath="filepath"
+      :basename="basename"
+      :is-playing="isPlaying"
+      @click-play="handleClickPlay"
+      @file-update="handleFileUpdate"
+      @click-build="handleClickBuild"
+    />
+  </div>
 </template>
 
 <script>
@@ -21,8 +21,12 @@ import { basename } from 'path';
 import resample from '../modules/audio/resample';
 import stft from '../modules/audio/stft';
 import { secToTick } from '../modules/helpers/timeUtils';
+import audioCtx from '../modules/audio/audioCtx';
 
 export default {
+  components: {
+    AudioInfo
+  },
   data () {
     return {
       sourceNode: null
@@ -61,7 +65,7 @@ export default {
         return;
       }
       const ab = this.audioBuffer.data;
-      const ctx = this.$store.state.audioCtx;
+      const ctx = audioCtx;
       this.sourceNode = playAudioBuffer(ab, ctx);
       this.sourceNode.onended = () => {
         if (this.sourceNode != null) {
@@ -71,7 +75,7 @@ export default {
     },
     async handleFileUpdate (file) {
       if (!file) return;
-      const ctx = this.$store.state.audioCtx;
+      const ctx = audioCtx;
       const { buffer, filepath } = await processAudioFile(file, ctx);
       AudioBuffer.insert({
         data: {
@@ -103,9 +107,6 @@ export default {
         }
       });
     }
-  },
-  components: {
-    AudioInfo
   }
 };
 </script>

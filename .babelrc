@@ -3,35 +3,32 @@
   "env": {
     "main": {
       "presets": [
-        ["env", {
+        ["@babel/env", {
           "targets": { "node": 7 }
         }],
-        "stage-0"
       ],
-      "plugins": ["transform-runtime"]
+      "plugins": ["@babel/transform-runtime", "@babel/plugin-proposal-function-bind"]
     },
     "renderer": {
       "presets": [
-        ["env", {
+        ["@babel/env", {
           "modules": false
         }],
-        "stage-0"
       ],
-      "plugins": ["transform-runtime"]
+      "plugins": ["@babel/transform-runtime", "@babel/plugin-proposal-function-bind"]
     },
     "web": {
       "presets": [
-        ["env", {
+        ["@babel/env", {
           "modules": false
         }],
-        "stage-0"
       ],
-      "plugins": ["transform-runtime"]
+      "plugins": ["@babel/transform-runtime", "@babel/plugin-proposal-function-bind"]
     },
     "test": {
       "presets": [
         ["@babel/preset-env", {
-          "targets": { "node": 7 }
+          "targets": { "node": "current" }
         }]
       ],
       "plugins": ["@babel/plugin-proposal-class-properties"]

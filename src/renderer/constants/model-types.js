@@ -8,4 +8,5 @@ export const CLIP = 'Clip';
 export const TRACK = 'Track';
 export const SONG = 'Song';
 export const APP = 'App';
-export const PIANO_ROLL = 'PIANO_ROLL';
+export const PIANO_ROLL = 'PianoRoll';
+export const ARRANGEMENT = 'Arrangement';

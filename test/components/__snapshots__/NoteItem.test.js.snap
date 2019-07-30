@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component renders correctly 1`] = `
+<g>
+  <g>
+    <g
+      class="note-line"
+    >
+      <line
+        opacity="1"
+        stroke="grey"
+        stroke-width="10"
+        x1="12.148680272108843%"
+        x2="12.26013605442177%"
+        y1="22.206267533234914%"
+        y2="22.20626753323437%"
+      />
+       
+      <circle
+        cx="12.148680272108843%"
+        cy="22.206267533234914%"
+        fill="grey"
+        opacity="1"
+        r="5"
+      />
+    </g>
+    <g
+      class="note-line"
+    >
+      <line
+        opacity="1"
+        stroke="grey"
+        stroke-width="10"
+        x1="12.26013605442177%"
+        x2="12.371591836734694%"
+        y1="22.20626753323437%"
+        y2="22.206267533234115%"
+      />
+       
+      <circle
+        cx="12.26013605442177%"
+        cy="22.20626753323437%"
+        fill="grey"
+        opacity="1"
+        r="5"
+      />
+    </g>
+    <g
+      class="note-line"
+    >
+      <line
+        opacity="1"
+        stroke="grey"
+        stroke-width="10"
+        x1="12.371591836734694%"
+        x2="12.48304761904762%"
+        y1="22.206267533234115%"
+        y2="22.20626753323267%"
+      />
+       
+      <circle
+        cx="12.371591836734694%"
+        cy="22.206267533234115%"
+        fill="grey"
+        opacity="1"
+        r="5"
+      />
+    </g>
+    <g
+      class="note-line"
+    >
+      <!---->
+       
+      <circle
+        cx="12.48304761904762%"
+        cy="22.20626753323267%"
+        fill="grey"
+        opacity="1"
+        r="5"
+      />
+    </g>
+  </g>
+</g>
+`;
