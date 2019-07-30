@@ -3,6 +3,7 @@ import * as models from './models';
 import { APP_ID } from '../constants/ids';
 import uid from 'uid';
 import hotkeys from 'hotkeys-js';
+import * as modelTypes from '../constants/model-types';
 
 export const makeMandatory = field => val => {
   if (val == null) throw new Error(`Mandatory Field: ${field} cannot be ${val}`);
@@ -16,7 +17,7 @@ export const setHotkeysScope = zoneName => {
 
 export const initDatabase = () => {
   const database = new VuexORM.Database();
-  Object.values(models).forEach(model => database.register(model));
+  Object.values(modelTypes).forEach(modelName => database.register(models[modelName]));
   return database;
 };
 
