@@ -6,7 +6,15 @@ exports[`Component renders correctly 1`] = `
     <g
       class="note-line"
     >
-      <!---->
+      <line
+        opacity="1"
+        stroke="grey"
+        stroke-width="10"
+        x1="12.148680272108843%"
+        x2="12.26013605442177%"
+        y1="22.206267533234914%"
+        y2="22.20626753323437%"
+      />
        
       <circle
         cx="12.148680272108843%"
@@ -24,9 +32,9 @@ exports[`Component renders correctly 1`] = `
         stroke="grey"
         stroke-width="10"
         x1="12.26013605442177%"
-        x2="12.148680272108843%"
+        x2="12.371591836734694%"
         y1="22.20626753323437%"
-        y2="22.206267533234914%"
+        y2="22.206267533234115%"
       />
        
       <circle
@@ -45,9 +53,9 @@ exports[`Component renders correctly 1`] = `
         stroke="grey"
         stroke-width="10"
         x1="12.371591836734694%"
-        x2="12.26013605442177%"
+        x2="12.48304761904762%"
         y1="22.206267533234115%"
-        y2="22.20626753323437%"
+        y2="22.20626753323267%"
       />
        
       <circle
@@ -61,15 +69,7 @@ exports[`Component renders correctly 1`] = `
     <g
       class="note-line"
     >
-      <line
-        opacity="1"
-        stroke="grey"
-        stroke-width="10"
-        x1="12.48304761904762%"
-        x2="12.371591836734694%"
-        y1="22.20626753323267%"
-        y2="22.206267533234115%"
-      />
+      <!---->
        
       <circle
         cx="12.48304761904762%"
