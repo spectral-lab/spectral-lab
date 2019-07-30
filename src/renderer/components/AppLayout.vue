@@ -7,10 +7,10 @@
       ref="appMainContent"
       class="app-main-content"
     >
-      <elastic-stack
+      <elastic-div-stack
         :border-width="24"
         :upper-content-height="arrangementZoneHeight"
-        @change-height="arrangementZoneHeight = $event.upperHeight"
+        @change-height="arrangementZoneHeight = $event.upperContentHeight"
       >
         <template #upper>
           <div
@@ -35,7 +35,7 @@
             <piano-roll-zone />
           </div>
         </template>
-      </elastic-stack>
+      </elastic-div-stack>
     </div>
     <div class="transport-container">
       <transport />
@@ -47,15 +47,13 @@
 import Transport from './Transport';
 import PianoRollZone from './PianoRollZone';
 import ArrangementZone from './ArrangementZone';
-import ElasticStack from './ElasticStack';
+import ElasticDivStack from './ElasticDivStack';
 import TitleBar from './TitleBar';
-import { debounce } from 'lodash';
 import { titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
 import hotkeys from 'hotkeys-js';
 import { SPLIT_WINDOW, SWITCH_WINDOW } from '../constants/key-bindings';
 import { App } from '../store/models';
 import { ARRANGEMENT, PIANO_ROLL } from '../constants/model-types';
-import elementResizeDetector from 'element-resize-detector';
 
 export default {
   components: {
@@ -63,13 +61,12 @@ export default {
     Transport,
     ArrangementZone,
     TitleBar,
-    ElasticStack
+    ElasticDivStack
   },
   data () {
     return {
       arrangementZoneHeight: 0,
       windowHeight: 800,
-      appMainContentHeight: 0,
       titleBarHeight: parseInt(titleBarHeight, 10),
       transportHeight: parseInt(transportHeight, 10),
       borderHeight: parseInt(borderHeight, 10)
@@ -98,12 +95,6 @@ export default {
     }
   },
   mounted () {
-    elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.appMainContent, debounce((element) => {
-      const proportionOfArrangementZone = this.arrangementZoneHeight / this.appMainContentHeight;
-      this.appMainContentHeight = element.offsetHeight;
-      this.arrangementZoneHeight = this.appMainContentHeight * proportionOfArrangementZone;
-    }, 30));
-    this.appMainContentHeight = this.$refs.appMainContent.offsetHeight;
     hotkeys(SWITCH_WINDOW.keys, SWITCH_WINDOW.scope, this.switchWindow);
     hotkeys(SPLIT_WINDOW.keys, SPLIT_WINDOW.scope, this.splitWindow);
     // this.expandArrangementZone();
@@ -123,13 +114,13 @@ export default {
       this.selectArrangementZone();
     },
     expandArrangementZone () {
-      this.arrangementZoneHeight = this.appMainContentHeight;
+      this.arrangementZoneHeight = this.$refs.appMainContent.offsetHeight;
     },
     expandPianoRollZone () {
       this.arrangementZoneHeight = 0;
     },
     splitWindow () {
-      this.arrangementZoneHeight = this.appMainContentHeight * 0.5;
+      this.arrangementZoneHeight = this.$refs.appMainContent.offsetHeight * 0.5;
     },
     selectPianoRollZone () {
       if (this.selectedZone === PIANO_ROLL) return;

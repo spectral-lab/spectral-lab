@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="note-display"
     class="note-display"
   >
     <note-display-grid-container />

@@ -1,7 +1,7 @@
 <template>
   <div
-    ref="midiKeyboard"
-    class="midi-keyboard scrollbar-hidden"
+    ref="midiKeyboardContainer"
+    class="midi-keyboard-container scrollbar-hidden"
   >
     <midi-keyboard />
   </div>
@@ -18,8 +18,7 @@ export default {
 </script>
 
 <style scoped>
-  .midi-keyboard {
-    position: relative;
+  .midi-keyboard-container {
     width: 100%;
     height: 100%;
   }

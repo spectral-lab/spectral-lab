@@ -1,7 +1,7 @@
 <template>
   <div
-    ref="elasticContainer"
-    class="elastic-container"
+    ref="container"
+    class="elastic-div-stack"
     :style="{
       gridTemplateRows
     }"
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { clamp } from 'lodash';
+import { clamp, debounce } from 'lodash';
 import { getOffsetTopFromRoot } from '../modules/pianoRoll/utils';
 import elementResizeDetector from 'element-resize-detector';
 
@@ -37,8 +37,7 @@ export default {
   },
   data () {
     return {
-      containerClientHeight: 0,
-      containerOffsetTop: 0
+      containerOffsetHeight: 1
     };
   },
   computed: {
@@ -47,18 +46,24 @@ export default {
         // If there is no space for the upmost row, the border needs to shrink.
         return `0px ${this.upperContentHeight}px ${this.borderWidth * 0.5}px 1fr`;
       }
-      if (this.upperContentHeight > this.containerClientHeight - this.borderWidth * 0.5) {
+      if (this.upperContentHeight > this.containerOffsetHeight - this.borderWidth * 0.5) {
         // If there is no space for the lowest row, the border needs to shrink.
         return `${this.upperContentHeight - this.borderWidth * 0.5}px ${this.borderWidth * 0.5}px 1fr 0px`;
       }
       return `${this.upperContentHeight - this.borderWidth * 0.5}px ${this.borderWidth * 0.5}px ${this.borderWidth * 0.5}px 1fr`;
+    },
+    proportionOfUpperContent () {
+      return this.upperContentHeight / this.containerOffsetHeight;
     }
   },
   mounted () {
-    elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.elasticContainer, (element) => {
-      this.containerClientHeight = element.clientHeight;
-      this.containerOffsetTop = getOffsetTopFromRoot(element);
-    });
+    this.containerOffsetHeight = this.$refs.container.offsetHeight;
+    elementResizeDetector({ strategy: 'scroll' }).listenTo(this.$refs.container, debounce((element) => {
+      this.$emit('change-height', {
+        upperContentHeight: element.offsetHeight * this.proportionOfUpperContent
+      });
+      this.containerOffsetHeight = element.offsetHeight;
+    }, 30));
     this.makeDraggable();
   },
   methods: {
@@ -76,10 +81,10 @@ export default {
       document.addEventListener('mousemove', (ev) => {
         if (!dragging) return;
         this.$emit('change-height', {
-          upperHeight: clamp(
-            ev.pageY - this.containerOffsetTop,
+          upperContentHeight: clamp(
+            ev.pageY - getOffsetTopFromRoot(this.$refs.container),
             0,
-            Math.max(this.$refs.elasticContainer.clientHeight, 1)
+            Math.max(this.containerOffsetHeight, 1)
           )
         });
       });
@@ -89,7 +94,7 @@ export default {
 </script>
 
 <style scoped>
-    .elastic-container {
+    .elastic-div-stack {
         width: 100%;
         height: 100%;
         display: grid;
