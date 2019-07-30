@@ -7,13 +7,13 @@
         class="note-action-group"
       >
         <line
-          v-if="prevPoint(idx)"
+          v-if="nextPoint(idx)"
           :key="'c' + point.id"
           :x1="`${point.x * 100}%`"
           :y1="`${point.y * 100}%`"
-          :x2="`${prevPoint(idx).x * 100}%`"
-          :y2="`${prevPoint(idx).y * 100}%`"
-          stroke="Honeydew"
+          :x2="`${nextPoint(idx).x * 100}%`"
+          :y2="`${nextPoint(idx).y * 100}%`"
+          :stroke="lineColor"
           :stroke-width="2"
           :opacity="1"
         />
@@ -33,12 +33,12 @@
         class="note-line"
       >
         <line
-          v-if="prevPoint(idx)"
+          v-if="nextPoint(idx)"
           :key="'f' + point.id"
           :x1="`${point.x * 100}%`"
           :y1="`${point.y * 100}%`"
-          :x2="`${prevPoint(idx).x * 100}%`"
-          :y2="`${prevPoint(idx).y * 100}%`"
+          :x2="`${nextPoint(idx).x * 100}%`"
+          :y2="`${nextPoint(idx).y * 100}%`"
           :stroke="lineColor"
           :stroke-width="10"
           :opacity="1"
@@ -60,11 +60,11 @@
 </template>
 
 <script>
-import { Note } from '../store/models';
 import { tickToPosX, pitchToPosY } from '../modules/pianoRoll/utils';
 
 export default {
   props: {
+    noteId: String,
     pitchTransition: Array,
     color: {
       type: String,
@@ -90,23 +90,25 @@ export default {
       }));
     },
     lineColor () {
+      if (this.isEdited) return 'Honeydew';
       if (this.isSelected) return 'Honeydew';
       return this.color;
     },
     circleColor () {
-      if (this.isEdited) return 'Honeydew';
+      if (this.isEdited) return this.color;
+      if (this.isSelected) return 'Honeydew';
       return this.color;
     }
   },
   methods: {
-    prevPoint (idx) {
-      return this.positions[idx - 1];
+    nextPoint (idx) {
+      return this.positions[idx + 1];
     },
     handleClick (ev) {
-      this.$emit('click', ev, this.note.id);
+      this.$emit('click', ev, this.noteId);
     },
     handleDblClick (ev) {
-      this.$emit('dblclick', ev, this.note.id);
+      this.$emit('dblclick', ev, this.noteId);
     }
   }
 };

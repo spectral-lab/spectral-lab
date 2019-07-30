@@ -10,6 +10,7 @@
       <note-item
         v-for="note in notes"
         :key="note.id"
+        :note-id="note.id"
         :pitch-transition="note.pitchTransition"
         :total-ticks="totalTicks"
         :is-selected="isSelected(note)"
@@ -25,6 +26,9 @@
 <script>
 import NoteItem from './NoteItem';
 import { Note, PianoRoll } from '../store/models';
+import hotkeys from 'hotkeys-js';
+import { DESELECT_NOTES } from '../constants/key-bindings';
+
 export default {
   components: {
     NoteItem
@@ -54,6 +58,9 @@ export default {
       return this.pianoRoll.selectedNoteIds;
     }
   },
+  mounted () {
+    hotkeys(DESELECT_NOTES.keys, DESELECT_NOTES.scope, this.deselectNotes);
+  },
   methods: {
     isEdited (note) {
       return this.editingNoteId === note.id;
@@ -79,9 +86,18 @@ export default {
         }
       });
     },
-    handleDblClick (ev, { target, id }) {
-      if (target === 'NOTE') this.editingNoteId = id;
+    handleDblClick (ev, id) {
+      this.editingNoteId = id;
     }
+  },
+  deselectNotes () {
+    this.editingNoteId = null;
+    Note.update({
+      where: note => note.selected,
+      data: {
+        selected: false
+      }
+    });
   }
 };
 </script>

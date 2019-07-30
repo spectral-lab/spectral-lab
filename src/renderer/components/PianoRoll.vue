@@ -91,7 +91,8 @@ export default {
     };
   },
   mounted () {
-    this.zoomManager = new ZoomManager({
+    /* eslint-disable no-new */
+    new ZoomManager({
       resizeBasis: this.$refs.noteDisplayViewport,
       horizontalZoomTargets: [
         this.$refs.noteDisplayContent,

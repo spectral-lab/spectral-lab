@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <project-manager />
     <v-app dark>
       <app-layout />
     </v-app>
@@ -8,15 +7,11 @@
 </template>
 
 <script>
-import store from './store';
-import ProjectManager from './components/ProjectManager';
 import AppLayout from './components/AppLayout';
 
 export default {
   name: 'App',
-  store,
   components: {
-    ProjectManager,
     AppLayout
   }
 };
