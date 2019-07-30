@@ -56,7 +56,7 @@
 <script>
 import { composeAddNote, manageDragAndScrollAndZoom } from '../modules/pianoRoll';
 // import PianoRollGridColumnLayer from './PianoRollGridColumnLayer';
-import PianoRollMidiKeyboard from './MidiKeyboard';
+// import PianoRollMidiKeyboard from './MidiKeyboard';
 import NoteDisplay from './NoteDisplay';
 import MidiKeyboardContainer from './MidiKeyboardContainer';
 
@@ -64,7 +64,7 @@ export default {
   components: {
     NoteDisplay,
     // PianoRollGridColumnLayer,
-    PianoRollMidiKeyboard,
+    // PianoRollMidiKeyboard,
     MidiKeyboardContainer
   },
   computed: {

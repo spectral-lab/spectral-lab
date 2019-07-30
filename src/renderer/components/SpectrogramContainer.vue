@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { PianoRoll, Spectrogram as SpectrogramModel } from '../store/models';
+import { PianoRoll } from '../store/models';
 import Spectrogram from './Spectrogram';
 
 export default {
