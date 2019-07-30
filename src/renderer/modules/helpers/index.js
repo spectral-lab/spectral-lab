@@ -1,18 +1,9 @@
-import normalize2d from './normalize2d';
-import ftom from './ftom';
-import playAudioBuffer from './playAudioBuffer';
-import fillBlankTime from './fillBlankTime';
-import normalizeMagnitude from './normalizeMagnitude';
-import decibelCurve from './decibelCurve';
+export { default as ftom } from './ftom';
+export { default as playAudioBuffer } from './playAudioBuffer';
+export { default as fillBlankTime } from './fillBlankTime';
+export { default as normalizeMagnitude } from './normalizeMagnitude';
+export { default as decibelCurve } from './decibelCurve';
 
-export {
-  normalize2d,
-  ftom,
-  playAudioBuffer,
-  fillBlankTime,
-  normalizeMagnitude,
-  decibelCurve
-};
 /**
  * @param pitch
  * @returns {{noteNumber: number, pitchBend: number}}
