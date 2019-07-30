@@ -1,0 +1,52 @@
+{
+  "id": "h38ug99",
+  "type": "Note",
+  "clipId": "72xc2qe",
+  "noteNumber": 100,
+  "offsetTime": 1214.8680272108843,
+  "noteOn": {
+    "id": "4k631ul",
+    "noteId": "h38ug99",
+    "type": "NoteOn",
+    "noteOnVelocity": 0.3177526776389604,
+    "pitchBend": -0.4240224425406893,
+    "timbre": 0.5,
+    "pressure": 0.3177526776389604,
+    "selected": false
+  },
+  "noteOff": {
+    "id": "mbmylph",
+    "noteId": "h38ug99",
+    "type": "NoteOff",
+    "offsetTime": 33.436734693877725,
+    "noteOffVelocity": 0.316965703266315,
+    "pitchBend": -0.42402244253781873,
+    "pressure": 0.316965703266315,
+    "timbre": null,
+    "selected": false
+  },
+  "modulations": [
+    {
+      "id": "xxwpkus",
+      "noteId": "h38ug99",
+      "type": "Modulation",
+      "offsetTime": 11.145578231292575,
+      "pitchBend": -0.424022442539993,
+      "pressure": 0.32893494891051567,
+      "timbre": null,
+      "selected": false
+    },
+    {
+      "id": "30nvobk",
+      "noteId": "h38ug99",
+      "type": "Modulation",
+      "offsetTime": 22.29115646258515,
+      "pitchBend": -0.42402244253966614,
+      "pressure": 0.32822340393197325,
+      "timbre": null,
+      "selected": false
+    }
+  ],
+  "selected": false,
+  "interpolation": "LINEAR"
+}
