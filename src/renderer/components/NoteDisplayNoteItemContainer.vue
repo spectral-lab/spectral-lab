@@ -1,7 +1,11 @@
 <template>
   <div
-    ref="noteLayer"
+    ref="noteContainer"
     class="note-container"
+    @mousedown="handleMouseDown"
+    @mousemove="handleMouseMove"
+    @mouseup="handleMouseUp"
+    @mouseleave="handleMouseUp"
   >
     <svg
       width="100%"
@@ -25,9 +29,13 @@
 
 <script>
 import NoteItem from './NoteItem';
-import { Note, PianoRoll } from '../store/models';
+import { Note, PianoRoll, NoteOff, Modulation } from '../store/models';
 import hotkeys from 'hotkeys-js';
 import { DESELECT_NOTES } from '../constants/key-bindings';
+import { PEN } from '../constants/mouse-modes';
+import uid from 'uid';
+import { posXToTick, posYToPitch } from '../modules/pianoRoll/utils';
+import { pitchToNoteNumberAndPitchBend } from '../modules/helpers';
 
 export default {
   components: {
@@ -35,7 +43,8 @@ export default {
   },
   data () {
     return {
-      editingNoteId: null
+      editingNoteId: null,
+      drawingNote: null
     };
   },
   computed: {
@@ -56,6 +65,9 @@ export default {
     },
     selectedNoteIds () {
       return this.pianoRoll.selectedNoteIds;
+    },
+    drawing () {
+      return Boolean(this.drawingNote);
     }
   },
   mounted () {
@@ -69,6 +81,7 @@ export default {
       return this.selectedNoteIds.includes(note.id);
     },
     handleClick (ev, id) {
+      console.log('click');
       if (!ev.metaKey && !ev.shiftKey) {
         this.editingNoteId = null;
         Note.update({
@@ -88,16 +101,67 @@ export default {
     },
     handleDblClick (ev, id) {
       this.editingNoteId = id;
+    },
+    deselectNotes () {
+      this.editingNoteId = null;
+      Note.update({
+        where: note => note.selected,
+        data: {
+          selected: false
+        }
+      });
+    },
+    handleMouseDown (ev) {
+      if (this.pianoRoll.mouseMode !== PEN) return;
+      const offsetTime = posXToTick(ev.offsetX / this.$refs.noteContainer.offsetWidth, this.totalTicks);
+      const { noteNumber, pitchBend } = pitchToNoteNumberAndPitchBend(
+        posYToPitch(ev.offsetY / this.$refs.noteContainer.offsetHeight)
+      );
+      this.drawingNote = {
+        id: uid(),
+        offsetTime,
+        noteNumber
+      };
+      Note.insert({
+        data: {
+          id: this.drawingNote.id,
+          clipId: this.pianoRoll.clips[0].id,
+          offsetTime,
+          noteNumber,
+          noteOn: {
+            id: uid(),
+            pitchBend
+          }
+        }
+      });
+    },
+    handleMouseMove (ev) {
+      if (!this.drawing) return;
+      const offsetTime = posXToTick(ev.offsetX / this.$refs.noteContainer.offsetWidth, this.totalTicks);
+      const pitch = posYToPitch(ev.offsetY / this.$refs.noteContainer.offsetHeight);
+      Modulation.insert({
+        data: {
+          id: uid(),
+          noteId: this.drawingNote.id,
+          offsetTime: offsetTime - this.drawingNote.offsetTime,
+          pitchBend: pitch - this.drawingNote.noteNumber
+        }
+      });
+    },
+    handleMouseUp (ev) {
+      if (!this.drawing) return;
+      const offsetTime = posXToTick(ev.offsetX / this.$refs.noteContainer.offsetWidth, this.totalTicks);
+      const pitch = posYToPitch(ev.offsetY / this.$refs.noteContainer.offsetHeight);
+      NoteOff.insert({
+        data: {
+          id: uid(),
+          noteId: this.drawingNote.id,
+          offsetTime: offsetTime - this.drawingNote.offsetTime,
+          pitchBend: pitch - this.drawingNote.noteNumber
+        }
+      });
+      this.drawingNote = null;
     }
-  },
-  deselectNotes () {
-    this.editingNoteId = null;
-    Note.update({
-      where: note => note.selected,
-      data: {
-        selected: false
-      }
-    });
   }
 };
 </script>
