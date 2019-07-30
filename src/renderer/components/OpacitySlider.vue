@@ -4,7 +4,7 @@
     append-icon="waves"
     thumb-color="rgb(0, 139, 139)"
     :value="value"
-    @input="handleInput"
+    @input="debouncedHandleInput"
     @click:prepend="handleClickGrid"
     @click:append="handleClickWaves"
   />
@@ -12,6 +12,7 @@
 
 <script>
 import { PianoRoll } from '../store/models';
+import { debounce } from 'lodash';
 
 export default {
   computed: {
@@ -23,6 +24,9 @@ export default {
       if (spectrogramOpacity < 1) return spectrogramOpacity * 50;
       return (1 - gridOpacity) * 50 + 50;
     }
+  },
+  created () {
+    this.debouncedHandleInput = debounce(this.handleInput, 60);
   },
   methods: {
     handleInput (val) {
