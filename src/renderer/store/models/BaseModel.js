@@ -6,6 +6,7 @@ export default class BaseModel extends Model {
     if (!this.parent) return [this];
     return [...this.parent.path, this];
   }
+
   get absoluteTime () {
     const offsetTimes = this.path.map(modelInstance => {
       const offset = modelInstance.offsetTime;

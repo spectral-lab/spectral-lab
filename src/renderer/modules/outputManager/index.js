@@ -19,6 +19,7 @@ class OutputManager {
     this.memberChannels = defaultedOptions.memberChannels
       .map(midiChannel => new MemberChannel({ midiChannel, nowCb: this.now }));
   }
+
   /**
    * @param  {NoteOn} noteOn
    * @param  {number} [timestamp]
@@ -29,6 +30,7 @@ class OutputManager {
     midiMessages.forEach(message => this.midiOutput.send(message, timestamp));
     return this.createNoteControl(channelToSend);
   }
+
   allocateChannel () {
     const unoccupiedChannels = this.memberChannels.filter(memberChannel => !memberChannel.isOccupied);
     if (unoccupiedChannels.length === 0) {
@@ -40,9 +42,11 @@ class OutputManager {
       .reduce((acc, memberChannel) => memberChannel.timeOfLastNoteOff < acc.timeOfLastNoteOff ? memberChannel : acc, unoccupiedChannels[0]);
     return channelWithOldestLastNoteOff;
   }
+
   findMemberChannel (midiChannel) {
     return this.memberChannels.find(channel => channel.midiChannel === midiChannel);
   }
+
   createNoteControl (memberChannel) {
     const modulateCb = (modulation, timestamp = 0) => {
       const midiMessages = memberChannel.deriveMidiMessages(modulation, { pitchBendRange: this.pitchBendRange });

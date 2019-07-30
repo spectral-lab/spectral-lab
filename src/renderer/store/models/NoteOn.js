@@ -19,6 +19,7 @@ export default class NoteOn extends BaseModel {
       selected: this.boolean(false)
     };
   }
+
   get parent () {
     return Note.query().whereId(this.noteId).first();
   }

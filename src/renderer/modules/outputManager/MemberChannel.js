@@ -20,6 +20,7 @@ class MemberChannel {
     this.midiChannel = midiChannel;
     this.pitchBendRange = 48;
   };
+
   /**
    * @param  {NoteOn | Modulation | NoteOff} noteAction
    * @param  {object} [options]

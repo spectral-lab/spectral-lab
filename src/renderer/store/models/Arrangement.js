@@ -7,6 +7,7 @@ export default class Arrangement extends BaseModel {
   static get entity () {
     return 'arrangement';
   }
+
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -15,6 +16,7 @@ export default class Arrangement extends BaseModel {
       mouseMode: this.string(SELECT)
     };
   }
+
   get parent () {
     return App.query().whereId(this.appId).first();
   }

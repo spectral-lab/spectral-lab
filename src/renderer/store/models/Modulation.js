@@ -6,6 +6,7 @@ export default class Modulation extends BaseModel {
   static get entity () {
     return 'modulations';
   }
+
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -18,6 +19,7 @@ export default class Modulation extends BaseModel {
       selected: this.boolean(false)
     };
   }
+
   get parent () {
     return Note.query().whereId(this.noteId).first();
   }

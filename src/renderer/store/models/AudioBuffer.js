@@ -6,6 +6,7 @@ export default class AudioBuffer extends BaseModel {
   static get entity () {
     return 'audioBuffers';
   }
+
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -17,6 +18,7 @@ export default class AudioBuffer extends BaseModel {
       spectrogram: this.hasOne(Spectrogram, 'audioBufferId')
     };
   }
+
   get parent () {
     return Clip.query().whereId(this.clipId).first();
   }

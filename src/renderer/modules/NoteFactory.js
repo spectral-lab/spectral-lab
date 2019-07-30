@@ -9,11 +9,13 @@ class NoteFactory {
   constructor () {
     this.id = 0;
   }
+
   assignId (note) {
     const ret = Object.assign({}, note, { id: this.id });
     this.id++;
     return ret;
   }
+
   /**
    * @param {object} materials
    * @returns {Note}
@@ -24,6 +26,7 @@ class NoteFactory {
     if (materials.time != null && materials.noteNumber != null) return this.noteFromNoteNumber(materials);
     throw new Error('To create note, either (time and pitch) or (time and noteNumber) is necessary');
   }
+
   noteFromPitch (materials) {
     const noteNumber = Math.round(materials.pitch);
     const pitchBend = materials.pitch - noteNumber;
@@ -43,6 +46,7 @@ class NoteFactory {
     this.id++;
     return note;
   }
+
   noteFromNoteNumber (materials) {
     const noteOn = Object.assign(
       {},

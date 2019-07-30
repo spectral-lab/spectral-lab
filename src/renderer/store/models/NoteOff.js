@@ -6,6 +6,7 @@ export default class NoteOff extends BaseModel {
   static get entity () {
     return 'noteOffs';
   }
+
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -19,6 +20,7 @@ export default class NoteOff extends BaseModel {
       selected: this.boolean(false)
     };
   }
+
   get parent () {
     return Note.query().whereId(this.noteId).first();
   }

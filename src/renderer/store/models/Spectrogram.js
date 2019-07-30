@@ -6,6 +6,7 @@ export default class Spectrogram extends BaseModel {
   static get entity () {
     return 'spectrograms';
   }
+
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -16,6 +17,7 @@ export default class Spectrogram extends BaseModel {
       magnitude2d: this.attr([[]])
     };
   }
+
   get parent () {
     return AudioBuffer.query().whereId(this.audioBufferId).first();
   }

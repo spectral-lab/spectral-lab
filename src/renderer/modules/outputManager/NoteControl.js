@@ -6,6 +6,7 @@ class NoteControl {
     this.modulateCb = modulateCb;
     this.noteOffCb = noteOffCb;
   }
+
   /**
    * @param  {Modulation} modulation
    * @param  {number} timestamp default 0
@@ -14,6 +15,7 @@ class NoteControl {
     if (this.released) return;
     this.modulateCb(modulation, timestamp);
   }
+
   /**
    * @param  {NoteOff} noteOff
    * @param  {number} timestamp default 0

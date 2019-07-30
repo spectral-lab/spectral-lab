@@ -7,6 +7,7 @@ export default class Song extends BaseModel {
   static get entity () {
     return 'songs';
   }
+
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -16,6 +17,7 @@ export default class Song extends BaseModel {
       tracks: this.hasMany(Track, 'songId')
     };
   }
+
   get parent () {
     return null;
   }

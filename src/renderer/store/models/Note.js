@@ -6,6 +6,7 @@ export default class Note extends BaseModel {
   static get entity () {
     return 'notes';
   }
+
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -20,6 +21,7 @@ export default class Note extends BaseModel {
       interpolation: this.string('LINEAR')
     };
   }
+
   get noteActions () {
     return [
       this.noteOn,
@@ -27,6 +29,7 @@ export default class Note extends BaseModel {
       this.noteOff
     ];
   }
+
   get pitchTransition () {
     const pitchBendMods = this.modulations.filter(mod => mod.pitchBend !== null);
     const noteActions = [{ offsetTime: 0, ...this.noteOn }, ...pitchBendMods, this.noteOff && this.noteOff].filter(v => v);
@@ -37,6 +40,7 @@ export default class Note extends BaseModel {
       type: noteAction.type
     }));
   }
+
   get parent () {
     return Clip.query().whereId(this.clipId).first();
   }

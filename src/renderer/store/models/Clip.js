@@ -9,6 +9,7 @@ export default class Clip extends BaseModel {
   static get entity () {
     return 'clips';
   }
+
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -23,18 +24,23 @@ export default class Clip extends BaseModel {
       color: this.attr(() => SCALE_COLORS.hHelmholtz[random(11)])
     };
   };
+
   get parent () {
     return Track.query().whereId(this.trackId).first();
   }
+
   get startTime () {
     return this.absoluteTime;
   }
+
   get endTime () {
     return this.absoluteTime + this.duration;
   }
+
   get selectedNoteIds () {
     return this.notes.filter(note => note.selected).map(note => note.id);
   }
+
   get someNotesAreSelected () {
     return this.selectedNoteIds.length !== 0;
   }

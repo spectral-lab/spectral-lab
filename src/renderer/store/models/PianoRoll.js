@@ -8,6 +8,7 @@ export default class PianoRoll extends BaseModel {
   static get entity () {
     return 'pianoRoll';
   }
+
   static fields () {
     return {
       id: this.attr(null, makeMandatory('id')),
@@ -18,44 +19,57 @@ export default class PianoRoll extends BaseModel {
       mouseMode: this.string(SELECT)
     };
   }
+
   get parent () {
     return App.query().whereId(this.appId).first();
   }
+
   get clips () {
     return Clip.query().where('selected', true).withAllRecursive().get();
   }
+
   get notes () {
     return flatten(this.clips.map(clip => clip.notes));
   }
+
   get selectedNoteIds () {
     return flatten(this.clips.map(clip => clip.selectedNoteIds));
   }
+
   get someNotesAreSelected () {
     return this.clips.some(clip => clip.someNotesAreSelected);
   }
+
   get audioBuffers () {
     return this.clips.map(clip => clip.audioBuffer).filter(v => v);
   }
+
   get spectrograms () {
     return this.audioBuffers.map(audioBuffer => audioBuffer.spectrogram).filter(v => v);
   }
+
   get beatsPerBar () {
     return this.clips[0].beatsPerBar[0].val;
   }
+
   get ticksPerBeat () {
     return Song.query().last().ticksPerBeat;
   }
+
   get displayRange () {
     const start = Math.min(this.clips.map(clip => clip.startTime));
     const end = Math.max(this.clips.map(clip => clip.endTime));
     return { start, end };
   }
+
   get totalTicks () {
     return this.displayRange.end - this.displayRange.start;
   }
+
   get totalBeats () {
     return this.totalTicks / this.ticksPerBeat;
   }
+
   get totalBars () {
     return this.totalBeats / this.beatsPerBar;
   }
