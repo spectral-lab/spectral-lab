@@ -263,6 +263,9 @@ export class PianoRoll extends BaseModel {
   get notes () {
     return flatten(this.clips.map(clip => clip.notes));
   }
+  get selectedNoteIds () {
+    return flatten(this.clips.map(clip => clip.selectedNoteIds));
+  }
   get someNotesAreSelected () {
     return this.clips.some(clip => clip.someNotesAreSelected);
   }

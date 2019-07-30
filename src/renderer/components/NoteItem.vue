@@ -1,47 +1,56 @@
 <template>
   <g>
-    <g v-if="edited">
+    <g v-if="isEdited">
       <g
         v-for="(point, idx) in positions"
         :key="'a' + point.id"
         class="note-action-group"
       >
-        <piano-roll-point
-          :key="'b' + point.id"
-          :point="point"
-          :color="circleColor"
-          opacity="0.8"
-        />
-        <piano-roll-line
+        <line
+          v-if="prevPoint(idx)"
           :key="'c' + point.id"
-          :point="point"
-          :next-point="positions[idx+1]"
-          color="Honeydew"
-          stroke-width="2"
+          :x1="`${point.x * 100}%`"
+          :y1="`${point.y * 100}%`"
+          :x2="`${prevPoint(idx).x * 100}%`"
+          :y2="`${prevPoint(idx).y * 100}%`"
+          stroke="Honeydew"
+          :stroke-width="2"
+          :opacity="1"
+        />
+        <circle
+          :cx="`${point.x * 100}%`"
+          :cy="`${point.y * 100}%`"
+          r="5"
+          :fill="circleColor"
+          :opacity="0.8"
         />
       </g>
     </g>
-    <g v-if="!edited">
+    <g v-else>
       <g
         v-for="(point, idx) in positions"
         :key="'d' + point.id"
         class="note-line"
       >
-        <piano-roll-point
-          :key="'e' + point.id"
-          :point="point"
-          :color="lineColor"
-          opacity="1"
+        <line
+          v-if="positions[idx-1]"
+          :key="'f' + point.id"
+          :x1="`${point.x * 100}%`"
+          :y1="`${point.y * 100}%`"
+          :x2="`${prevPoint(idx).x * 100}%`"
+          :y2="`${prevPoint(idx).y * 100}%`"
+          :stroke="lineColor"
+          :stroke-width="10"
+          :opacity="1"
           @click="handleClick"
           @dblclick="handleDblClick"
         />
-        <piano-roll-line
-          :key="'f' + point.id"
-          :point="point"
-          :next-point="positions[idx+1]"
-          :color="lineColor"
-          opacity="1"
-          stroke-width="10"
+        <circle
+          :cx="`${point.x * 100}%`"
+          :cy="`${point.y * 100}%`"
+          r="5"
+          :fill="circleColor"
+          :opacity="1"
           @click="handleClick"
           @dblclick="handleDblClick"
         />
@@ -53,27 +62,21 @@
 <script>
 import { Note } from '../store/models';
 import { tickToPosX, pitchToPosY } from '../modules/pianoRoll/utils';
-import PianoRollPoint from './PianoRollPoint';
-import PianoRollLine from './PianoRollLine';
 
 export default {
-  components: {
-    PianoRollPoint,
-    PianoRollLine
-  },
   props: {
     note: Note,
     totalTicks: Number,
-    selectedNoteIds: Array,
-    editingNoteId: String
+    isSelected: {
+      type: Boolean,
+      default: false
+    },
+    isEdited: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
-    selected () {
-      return this.selectedNoteIds.includes(this.note.id);
-    },
-    edited () {
-      return this.editingNoteId === this.note.id;
-    },
     positions () {
       return this.transition.map(point => ({
         x: tickToPosX(point.offsetTime, this.totalTicks),
@@ -86,14 +89,18 @@ export default {
       return this.note.pitchTransition;
     },
     lineColor () {
-      if (this.selected) return 'Honeydew';
+      if (this.isSelected) return 'Honeydew';
       return this.note.parent.color;
     },
     circleColor () {
+      if (this.isEdited) return 'Honeydew';
       return this.note.parent.color;
     }
   },
   methods: {
+    prevPoint (idx) {
+      return this.positions[idx - 1];
+    },
     handleClick (ev) {
       this.$emit('click', ev, this.note.id);
     },

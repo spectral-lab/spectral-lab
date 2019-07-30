@@ -7,26 +7,26 @@
       width="100%"
       height="100%"
     >
-      <piano-roll-note
+      <note-item
         v-for="note in notes"
         :key="note.id"
         :note="note"
         :total-ticks="totalTicks"
-        :selected-note-ids="selectedNoteIds"
-        :editing-note-id="editingNoteId"
-        @click="handleClickNote"
-        @dblclick="handleDblClickNote"
+        :is-selected="isSelected(note)"
+        :is-edited="isEdited(note)"
+        @click="handleClick"
+        @dblclick="handleDblClick"
       />
     </svg>
   </div>
 </template>
 
 <script>
-import PianoRollNote from './PianoRollNote';
+import NoteItem from './NoteItem';
 import { Note, PianoRoll } from '../store/models';
 export default {
   components: {
-    PianoRollNote
+    NoteItem
   },
   data () {
     return {
@@ -54,6 +54,12 @@ export default {
     }
   },
   methods: {
+    isEdited (note) {
+      return this.editingNoteId === note.id;
+    },
+    isSelected (note) {
+      return this.selectedNoteIds.includes(note.id);
+    },
     handleClick (ev, id) {
       if (!ev.metaKey && !ev.shiftKey) {
         this.editingNoteId = null;

@@ -4,19 +4,19 @@
   >
     <note-display-grid-container />
     <spectrogram-container />
-    <note-display-note-container />
+    <note-display-note-item-container />
   </div>
 </template>
 
 <script>
 import NoteDisplayGridContainer from './NoteDisplayGridContainer';
-import NoteDisplayNoteContainer from './NoteDisplayNoteContainer';
+import NoteDisplayNoteItemContainer from './NoteDisplayNoteItemContainer';
 import SpectrogramContainer from './SpectrogramContainer';
 
 export default {
   components: {
     NoteDisplayGridContainer,
-    NoteDisplayNoteContainer,
+    NoteDisplayNoteItemContainer,
     SpectrogramContainer
   }
 };

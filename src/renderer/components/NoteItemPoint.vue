@@ -5,8 +5,6 @@
     r="5"
     :fill="color"
     :opacity="opacity"
-    @click="handleEvent"
-    @dblclick="handleEvent"
   />
 </template>
 
