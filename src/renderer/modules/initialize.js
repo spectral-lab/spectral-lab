@@ -12,7 +12,8 @@ import {
   noteShiftUp,
   selectAllNotes
 } from './noteManipulations';
-const { dialog } = require('electron').remote;
+import { remote } from 'electron';
+const { dialog } = remote;
 
 export default () => {
   bindKeys();
