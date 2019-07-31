@@ -75,16 +75,18 @@ class MemberChannel {
   }
 
   buildModulationMessages (modulation) {
-    return Object.keys(pick(modulation, [PITCH_BEND, PRESSURE, TIMBRE])).reduce((messages, key) => {
-      switch (key) {
-        case PITCH_BEND:
-          return [...messages, pitchBendMessage(modulation.pitchBend, this.pitchBendRange, this.midiChannel)];
-        case PRESSURE:
-          return [...messages, channelPressureMessage(modulation.pressure, this.midiChannel)];
-        case TIMBRE:
-          return [...messages, cc74Message(modulation.timbre, this.midiChannel)];
-      }
-    }, []);
+    return Object.keys(pick(modulation, [PITCH_BEND, PRESSURE, TIMBRE]))
+      .filter(key => modulation[key] !== null)
+      .reduce((messages, key) => {
+        switch (key) {
+          case PITCH_BEND:
+            return [...messages, pitchBendMessage(modulation.pitchBend, this.pitchBendRange, this.midiChannel)];
+          case PRESSURE:
+            return [...messages, channelPressureMessage(modulation.pressure, this.midiChannel)];
+          case TIMBRE:
+            return [...messages, cc74Message(modulation.timbre, this.midiChannel)];
+        }
+      }, []);
   }
 }
 
