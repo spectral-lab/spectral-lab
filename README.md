@@ -1,7 +1,7 @@
 # spectral-lab
 ## Overview
 
-![spectral_lab_animation](https://user-images.githubusercontent.com/31060964/59972745-97428a00-95cf-11e9-9b1d-f7c3cd74e676.gif)
+![spectral-lab-demo-20190731](https://user-images.githubusercontent.com/31060964/62178713-035d9e00-b385-11e9-89ea-66c69eea6822.gif)
 
 "Spectral Lab" is a brand new compositional tool with a spectrogram,  which enhances musicians’ creativity.  
 It looks like a piano roll or a sequencer but is distinguished by the following points.  
@@ -10,7 +10,7 @@ It looks like a piano roll or a sequencer but is distinguished by the following 
 - Ideal for creating unheard harmonies, fluid textures, and expressions of nuances.
 - Compatible with any MIDI instruments of various possibilities.
 
-#### [Please see our demonstration video](https://youtu.be/C91-oyalkZ0)
+#### [Please see our demonstration video](https://youtu.be/2p1GyuFf20U)
 
 ## Development
 This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[8fae476](https://github.com/SimulatedGREG/electron-vue/tree/8fae4763e9d225d3691b627e83b9e09b56f6c935) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
