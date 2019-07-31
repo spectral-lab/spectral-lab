@@ -3,6 +3,7 @@
     <div class="title-bar-container">
       <title-bar />
     </div>
+    <navigation-drawer />
     <div
       ref="appMainContent"
       class="app-main-content"
@@ -49,6 +50,7 @@ import PianoRollZone from './PianoRollZone';
 import ArrangementZone from './ArrangementZone';
 import ElasticDivStack from './ElasticDivStack';
 import TitleBar from './TitleBar';
+import NavigationDrawer from './NavigationDrawer';
 import { titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
 import hotkeys from 'hotkeys-js';
 import { SPLIT_WINDOW, SWITCH_WINDOW } from '../constants/key-bindings';
@@ -61,7 +63,8 @@ export default {
     Transport,
     ArrangementZone,
     TitleBar,
-    ElasticDivStack
+    ElasticDivStack,
+    NavigationDrawer
   },
   data () {
     return {
@@ -114,13 +117,13 @@ export default {
       this.selectArrangementZone();
     },
     expandArrangementZone () {
-      this.arrangementZoneHeight = this.$refs.appMainContent.offsetHeight;
+      this.arrangementZoneHeight = this.appMainContentHeight();
     },
     expandPianoRollZone () {
       this.arrangementZoneHeight = 0;
     },
     splitWindow () {
-      this.arrangementZoneHeight = this.$refs.appMainContent.offsetHeight * 0.5;
+      this.arrangementZoneHeight = this.appMainContentHeight() * 0.5;
     },
     selectPianoRollZone () {
       if (this.selectedZone === PIANO_ROLL) return;
@@ -139,6 +142,9 @@ export default {
           selectedZone: ARRANGEMENT
         }
       });
+    },
+    appMainContentHeight () {
+      return this.$refs.appMainContent.offsetHeight;
     }
   }
 };
@@ -154,6 +160,7 @@ export default {
     overflow: hidden;
   }
   .title-bar-container {
+    z-index: 1000;
     grid-area: 1 / 1 / 2 / 2;
   }
   .app-main-content {
@@ -163,6 +170,7 @@ export default {
   }
   .transport-container {
     grid-area: 3 / 1 / 4 / 2;
+    z-index: 10;
   }
   .arrangement-zone-container {
     height: 100%;
