@@ -11696,7 +11696,7 @@ vuetify-upload-button@^2.0.0:
   resolved "https://registry.yarnpkg.com/vuetify-upload-button/-/vuetify-upload-button-2.0.2.tgz#9b4e75069cd6225e5871b79d845e6b733bb9c2fa"
   integrity sha512-i4rd+XBFjhesm1GyuwgeSP5moKfBMFOmhkoPRru+DxkVSyD1fAn1W+zko5XyLRAAfIunR3WsFRYWTvZoCwVI9g==
 
-vuetify@^1.5.14:
+vuetify@1.5.16:
   version "1.5.16"
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.5.16.tgz#cc9d0199c389d64d15787ddc85ca47a28225eeee"
   integrity sha512-yBgOsfurKQkeS+l+rrTQZ2bFk0D9ezjHhkuVM5A/yVzcg62sY2nfYaq/H++uezBWC9WYFrp/5OmSocJQcWn9Qw==
