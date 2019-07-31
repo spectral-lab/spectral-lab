@@ -81,7 +81,7 @@ export default {
     },
     arrangementZoneBorderColor () {
       switch (this.selectedZone) {
-        case ARRANGEMENT: return 'lightgrey';
+        case ARRANGEMENT: return 'grey';
         case PIANO_ROLL: return 'transparent';
         default: return 'transparent';
       }
@@ -89,7 +89,7 @@ export default {
     pianoRollZoneBorderColor () {
       switch (this.selectedZone) {
         case ARRANGEMENT: return 'transparent';
-        case PIANO_ROLL: return 'lightgrey';
+        case PIANO_ROLL: return 'grey';
         default: return 'transparent';
       }
     }
@@ -167,14 +167,14 @@ export default {
   .arrangement-zone-container {
     height: 100%;
     overflow: hidden;
-    border: solid 3px;
+    border: solid 2px;
     border-radius: 10px;
     box-sizing: border-box;
   }
   .piano-roll-zone-container {
     height: 100%;
     overflow: auto;
-    border: solid 3px;
+    border: solid 2px;
     border-radius: 10px;
     box-sizing: border-box;
   }
