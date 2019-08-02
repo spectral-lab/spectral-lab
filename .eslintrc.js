@@ -25,7 +25,7 @@ module.exports = {
   plugins: [
     'vue'
   ],
-  'rules': {
+  rules: {
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await
@@ -42,5 +42,14 @@ module.exports = {
     'comma-dangle': process.env.NODE_ENV === 'production' ? 2 : 1,
     'vue/require-default-prop': 0,
     'vue/no-unused-components': process.env.NODE_ENV === 'production' ? 2 : 1
-  }
+  },
+  overrides: [
+    {
+      files: 'src/**/*.ts',
+      parserOptions: {
+        parser: "@typescript-eslint/parser"
+      },
+      plugins: ['@typescript-eslint']
+    }
+  ]
 };
