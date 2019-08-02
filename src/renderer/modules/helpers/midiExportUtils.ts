@@ -7,21 +7,24 @@ import { OutputManager } from '../outputManager';
 const { dialog } = remote;
 jzzMidiSmf(JZZ);
 
-export const exportSelectedClips = async () => {
+type MTrk = JZZ.MIDI.SMF.MTrk;
+
+export const exportSelectedClips = async (): Promise<void> => {
   const exportDir = await dialog.showOpenDialog({
     message: 'Choose a directory where you export',
     properties: ['openDirectory', 'createDirectory']
   });
   if (!exportDir) return;
   const selectedClips = Clip.query().where('selected', true).withAllRecursive().get();
-  await Promise.all(selectedClips.map(clip => exportClip(clip, exportDir)));
-  console.log('all done');
+  await Promise.all(selectedClips.map(clip => exportClip(clip, exportDir[0])));
+  console.log('All done');
 };
 
-export const exportClip = async (clip, dir) => {
+export const exportClip = async (clip: Clip, dir: string) => {
+  if (clip.notes === []) return;
   const name = clip.name || clip.id;
   const path = `${dir}/${name}.mid`;
-  console.log(`exporting clip ${name}`);
+  console.log(`Exporting clip ${name}`);
   const { ticksPerBeat } = clip.parent.parent;
   const smf = new JZZ.MIDI.SMF(1, ticksPerBeat);
   smf.push(clipToMTrk(clip));
@@ -29,7 +32,7 @@ export const exportClip = async (clip, dir) => {
   console.log(`Success: ${path} has been exported!`);
 };
 
-const clipToMTrk = clip => {
+const clipToMTrk = (clip: Clip): MTrk => {
   const MTrk = new JZZ.MIDI.SMF.MTrk();
   const offlineOutputManager = new OutputManager({
     midiOutput: {
@@ -46,6 +49,5 @@ const clipToMTrk = clip => {
     note.modulations.forEach(modulation => noteControl.modulate(modulation, note.offsetTime + modulation.offsetTime));
     noteControl.noteOff(note.noteOff, note.offsetTime + note.noteOff.offsetTime);
   });
-  debugger;
   return MTrk;
 };

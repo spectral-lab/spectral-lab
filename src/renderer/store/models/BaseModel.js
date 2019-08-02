@@ -14,4 +14,8 @@ export default class BaseModel extends Model {
     });
     return sum(offsetTimes);
   }
+
+  get parent () {
+    return null;
+  }
 }

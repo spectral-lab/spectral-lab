@@ -28,21 +28,20 @@ test('instanciates', () => {
   const memberChannel = new MemberChannel({ midiChannel: 3, nowCb: () => 1234.56 });
   expect(memberChannel).toHaveProperty('timeOfLastNoteOff', 1234.56);
   expect(memberChannel).toHaveProperty('midiChannel', 3);
-  expect(memberChannel).toHaveProperty('activeNoteOn', null);
 });
 
 test('buildNoteOffMessages', () => {
   const memberChannel = new MemberChannel({ midiChannel: 3, nowCb });
-  memberChannel.activeNoteOn = {
+  memberChannel._activeNoteOn = {
     parent: { noteNumber: 72 }
   };
   expect(memberChannel.buildNoteOffMessages({})).toEqual([[130, 72, 0]]);
-  expect(memberChannel.activeNoteOn).toEqual(null);
-  memberChannel.activeNoteOn = {
+  expect(memberChannel._activeNoteOn).toEqual(null);
+  memberChannel._activeNoteOn = {
     parent: { noteNumber: 42 }
   };
   expect(memberChannel.buildNoteOffMessages({ noteOffVelocity: 1 })).toEqual([[130, 42, 127]]);
-  memberChannel.activeNoteOn = {
+  memberChannel._activeNoteOn = {
     parent: { noteNumber: 60 }
   };
   expect(memberChannel.buildNoteOffMessages({ irrelevantProperty: 0.5 })).toEqual([[130, 60, 0]]);

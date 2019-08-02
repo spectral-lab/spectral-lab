@@ -43,3 +43,5 @@
 /**
  * @typedef {NoteOn | Modulation | NoteOff} NoteAction
  */
+
+export type MidiMessage = [number, number] | [number, number, number];
