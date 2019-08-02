@@ -6,7 +6,10 @@
       temporary
       absolute
     >
-      <div class="spacer" />
+      <div
+        class="spacer"
+        :style="{height: `${parseInt(titleBarHeight) - 4}px`}"
+      />
       <v-list dense>
         <v-list-group
           v-for="menuItem in menuTemplate"
@@ -33,51 +36,61 @@
       </v-list>
       <div class="spacer" />
     </v-navigation-drawer>
-    <export-midi-dialog ref="exportMidiDialog" />
   </div>
 </template>
 
 <script>
-import menuTemplate, * as menu from '../constants/menu';
-import { newProject, saveProject } from '../modules/helpers/projectUtils';
-import ExportMidiDialog from './ExportMidiDialog';
+import { titleBarHeight } from '../constants/layout';
+
 export default {
-  components: {
-    ExportMidiDialog
+  props: {
+    menuTemplate: {
+      type: Array,
+      default: () => []
+    }
   },
   data () {
     return {
       showDrawer: false,
-      dialog: null,
-      menuTemplate
+      titleBarHeight
     };
   },
   mounted () {
-    document.addEventListener('mousemove', (ev) => {
-      if (ev.pageX < 30) this.showDrawer = true;
-    });
+    this.listenMouseMove();
   },
   methods: {
     handleClick (type) {
-      switch (type) {
-        case menu.NEW_PROJECT:
-          newProject();
-          break;
-        case menu.SAVE_PROJECT:
-          saveProject();
-          break;
-        case menu.EXPORT_MIDI:
-          this.showDrawer = false;
-          this.$refs.exportMidiDialog.show();
-          break;
-      }
+      this.$emit('click', type);
+    },
+    hide () {
+      if (this.showDrawer) this.showDrawer = false;
+    },
+    listenMouseMove () {
+      //  If the mouse position keeps near the left edge 300 ms or longer, "showDrawer" is set true.
+      let isNearLeftEdge = false;
+      let waiting = false;
+      document.addEventListener('mousemove', (ev) => {
+        isNearLeftEdge = ev.pageX < 60;
+        if (isNearLeftEdge) {
+          if (!waiting) {
+            setTimeout(() => {
+              if (isNearLeftEdge) this.showDrawer = true;
+              waiting = false;
+            }, 300);
+            waiting = true;
+          }
+        }
+      });
+      document.addEventListener('mouseleave', () => {
+        isNearLeftEdge = false;
+      });
     }
   }
 };
 </script>
 
 <style scoped>
-    .spacer {
-        height: 30px;
-    }
+  .spacer {
+    height: 50px;
+  }
 </style>

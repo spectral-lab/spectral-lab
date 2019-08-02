@@ -1,0 +1,34 @@
+<template>
+  <midi-export-dialog
+    ref="midiExportDialog"
+    @click="handleClick"
+  />
+</template>
+
+<script>
+
+import MidiExportDialog from './MidiExportDialog';
+import { SELECTED_CLIPS, SELECTED_TRACKS, ALL_CLIPS, ALL_TRACKS } from '../constants/midi-export-options';
+import { exportSelectedClips } from '../modules/helpers/midiExportUtils';
+
+export default {
+  components: {
+    MidiExportDialog
+  },
+  methods: {
+    show () {
+      this.$refs.midiExportDialog.show();
+    },
+    handleClick (target) {
+      switch (target) {
+        case SELECTED_CLIPS: return exportSelectedClips();
+        default: exportSelectedClips();
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+
+</style>

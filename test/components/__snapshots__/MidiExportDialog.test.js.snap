@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component renders correctly 1`] = `
+<v-dialog-stub
+  contentclass=""
+  maxwidth="none"
+  origin="center center"
+  transition="dialog-transition"
+  value="true"
+  width="500"
+>
+  <v-card-stub
+    tag="div"
+  >
+    <v-card-title-stub
+      class="headline accent darken-2"
+      primarytitle="true"
+    >
+      
+      MIDI Export
+    
+    </v-card-title-stub>
+     
+    <v-card-text-stub>
+      <v-radio-group-stub
+        backgroundcolor=""
+        column="true"
+        errorcount="1"
+        errormessages=""
+        height="auto"
+        mandatory="true"
+        messages=""
+        rules=""
+        style="margin-top: 0px;"
+        successmessages=""
+        value="ALL_TRACKS"
+        valuecomparator="function deepEqual(a, b) {
+    if (a === b) return true;
+    if (a instanceof Date && b instanceof Date) {
+        // If the values are Date, they were convert to timestamp with getTime and compare it
+        if (a.getTime() !== b.getTime()) return false;
+    }
+    if (a !== Object(a) || b !== Object(b)) {
+        // If the values aren't objects, they were already checked for equality
+        return false;
+    }
+    var props = Object.keys(a);
+    if (props.length !== Object.keys(b).length) {
+        // Different number of props, don't bother to check
+        return false;
+    }
+    return props.every(function (p) {
+        return deepEqual(a[p], b[p]);
+    });
+}"
+      >
+        <v-radio-stub
+          color="accent"
+          label="All Tracks"
+          officon="$vuetify.icons.radioOff"
+          onicon="$vuetify.icons.radioOn"
+          ripple="true"
+          value="ALL_TRACKS"
+        />
+         
+        <v-radio-stub
+          color="accent"
+          label="Selected Tracks"
+          officon="$vuetify.icons.radioOff"
+          onicon="$vuetify.icons.radioOn"
+          ripple="true"
+          value="SELECTED_TRACKS"
+        />
+         
+        <v-radio-stub
+          color="accent"
+          label="All Clips"
+          officon="$vuetify.icons.radioOff"
+          onicon="$vuetify.icons.radioOn"
+          ripple="true"
+          value="ALL_CLIPS"
+        />
+         
+        <v-radio-stub
+          color="accent"
+          label="Selected Clips"
+          officon="$vuetify.icons.radioOff"
+          onicon="$vuetify.icons.radioOn"
+          ripple="true"
+          value="SELECTED_CLIPS"
+        />
+      </v-radio-group-stub>
+    </v-card-text-stub>
+     
+    <v-divider-stub />
+     
+    <v-card-actions-stub>
+      <v-spacer-stub />
+       
+      <v-btn-stub
+        activeclass="v-btn--active"
+        color="accent darken-1"
+        tag="button"
+        type="button"
+      >
+        
+        Export
+      
+      </v-btn-stub>
+    </v-card-actions-stub>
+  </v-card-stub>
+</v-dialog-stub>
+`;

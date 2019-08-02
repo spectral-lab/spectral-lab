@@ -1,5 +1,10 @@
 import '../../typedef';
 
+/**
+ * @typedef NoteControl
+ * @property {NoteControl.modulate} modulate
+ * @property {NoteControl.noteOff} noteOff
+ */
 class NoteControl {
   constructor (modulateCb, noteOffCb) {
     this.released = false;
@@ -8,6 +13,7 @@ class NoteControl {
   }
 
   /**
+   * @typedef NoteControl.modulate
    * @param  {Modulation} modulation
    * @param  {number} timestamp default 0
    */
@@ -17,6 +23,7 @@ class NoteControl {
   }
 
   /**
+   * @typedef NoteControl.noteOff
    * @param  {NoteOff} noteOff
    * @param  {number} timestamp default 0
    */

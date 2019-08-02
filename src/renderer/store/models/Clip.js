@@ -14,6 +14,7 @@ export default class Clip extends BaseModel {
     return {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(CLIP),
+      name: this.attr(null),
       offsetTime: this.number(0), // in tick
       duration: this.number(4 * beatsPerBar * ticksPerBeat), // in tick. default is 4 bars
       notes: this.hasMany(Note, 'clipId'),

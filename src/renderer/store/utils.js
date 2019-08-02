@@ -43,7 +43,8 @@ export const instanciateModels = () => {
     data: {
       id: uid(),
       selected: true,
-      trackId
+      trackId,
+      name: 'spectrogram'
     }
   });
   models.PianoRoll.insert({

@@ -3,8 +3,8 @@ import { remote } from 'electron';
 import fs from 'fs-extra';
 const { dialog } = remote;
 
-export const saveProject = () => {
-  const path = dialog.showSaveDialog();
+export const saveProject = async () => {
+  const path = await dialog.showSaveDialog();
   if (path) fs.writeJson(path, store.state.entities);
 };
 

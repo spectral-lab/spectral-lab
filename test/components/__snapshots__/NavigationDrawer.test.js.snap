@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component renders correctly 1`] = `
+<div>
+  <v-navigation-drawer-stub
+    absolute="true"
+    dark="true"
+    height="100%"
+    minivariantwidth="80"
+    mobilebreakpoint="1264"
+    temporary="true"
+    width="300"
+  >
+    <div
+      class="spacer"
+      style="height: 20px;"
+    />
+     
+    <v-list-stub
+      dense="true"
+    >
+      <v-list-group-stub
+        activeclass="primary--text"
+        appendicon="$vuetify.icons.expand"
+        noaction="true"
+      >
+         
+        <v-card-stub
+          color="grey darken-2"
+          tag="div"
+        >
+          <v-list-tile-stub
+            activeclass="primary--text"
+          >
+            <v-list-tile-title-stub>
+              
+              New Project
+            
+            </v-list-tile-title-stub>
+          </v-list-tile-stub>
+          <v-list-tile-stub
+            activeclass="primary--text"
+          >
+            <v-list-tile-title-stub>
+              
+              Open Project
+            
+            </v-list-tile-title-stub>
+          </v-list-tile-stub>
+          <v-list-tile-stub
+            activeclass="primary--text"
+          >
+            <v-list-tile-title-stub>
+              
+              Save Project
+            
+            </v-list-tile-title-stub>
+          </v-list-tile-stub>
+          <v-list-tile-stub
+            activeclass="primary--text"
+          >
+            <v-list-tile-title-stub>
+              
+              Export MIDI
+            
+            </v-list-tile-title-stub>
+          </v-list-tile-stub>
+          <v-list-tile-stub
+            activeclass="primary--text"
+          >
+            <v-list-tile-title-stub>
+              
+              Export Audio
+            
+            </v-list-tile-title-stub>
+          </v-list-tile-stub>
+        </v-card-stub>
+      </v-list-group-stub>
+      <v-list-group-stub
+        activeclass="primary--text"
+        appendicon="$vuetify.icons.expand"
+        noaction="true"
+      >
+         
+        <v-card-stub
+          color="grey darken-2"
+          tag="div"
+        >
+          <v-list-tile-stub
+            activeclass="primary--text"
+          >
+            <v-list-tile-title-stub>
+              
+              Undo
+            
+            </v-list-tile-title-stub>
+          </v-list-tile-stub>
+          <v-list-tile-stub
+            activeclass="primary--text"
+          >
+            <v-list-tile-title-stub>
+              
+              Redo
+            
+            </v-list-tile-title-stub>
+          </v-list-tile-stub>
+        </v-card-stub>
+      </v-list-group-stub>
+    </v-list-stub>
+     
+    <div
+      class="spacer"
+    />
+  </v-navigation-drawer-stub>
+</div>
+`;

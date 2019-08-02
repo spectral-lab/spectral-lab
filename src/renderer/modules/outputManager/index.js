@@ -1,10 +1,16 @@
 import MemberChannel from './MemberChannel';
 import NoteControl from './NoteControl';
 import { outputManagerOptions } from '../../constants/defaults';
-class OutputManager {
+export class OutputManager {
+  /**
+   * @callback Send
+   * @param  {array.<number>} message Array of midi message eg: [0x90, 63, 127]
+   * @param  {number} timestamp Either ms or tick. Depends on the input timestamp of outputManager
+   */
   /**
    * @param  {object} options
-   * @param  {object} [options.midiOutput]
+   * @param  {object} options.midiOutput
+   * @param  {Send} options.midiOutput.send
    * @param  {number} [options.pitchBendRange]
    * @param  {function} [options.nowCb]
    * @param  {Array.<number>} [options.memberChannels]
@@ -22,7 +28,8 @@ class OutputManager {
 
   /**
    * @param  {NoteOn} noteOn
-   * @param  {number} [timestamp]
+   * @param  {number} [timestamp] Either in tick or in ms
+   * @return  {NoteControl} noteControl
    */
   noteOn (noteOn, timestamp = 0) {
     const channelToSend = this.allocateChannel();
