@@ -1,7 +1,7 @@
 <template>
   <v-btn-toggle
-    mandatory
     @change="emitMouseMode"
+    mandatory
   >
     <v-btn class="mouse-pointer">
       <v-icon flat>

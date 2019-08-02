@@ -7,8 +7,8 @@
       absolute
     >
       <div
-        class="spacer"
         :style="{height: `${parseInt(titleBarHeight) - 4}px`}"
+        class="spacer"
       />
       <v-list dense>
         <v-list-group

@@ -20,9 +20,9 @@
         <circle
           :cx="`${point.x * 100}%`"
           :cy="`${point.y * 100}%`"
-          r="5"
           :fill="circleColor"
           :opacity="0.8"
+          r="5"
         />
       </g>
     </g>
@@ -48,11 +48,11 @@
         <circle
           :cx="`${point.x * 100}%`"
           :cy="`${point.y * 100}%`"
-          r="5"
           :fill="circleColor"
           :opacity="1"
           @click="handleClick"
           @dblclick="handleDblClick"
+          r="5"
         />
       </g>
     </g>

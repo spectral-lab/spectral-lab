@@ -16,22 +16,22 @@
         <template #upper>
           <div
             ref="arrangementZoneContainer"
-            class="arrangement-zone-container"
             :style="{
               borderColor: arrangementZoneBorderColor
             }"
             @click="selectArrangementZone"
+            class="arrangement-zone-container"
           >
             <arrangement-zone />
           </div>
         </template>
         <template #lower>
           <div
-            class="piano-roll-zone-container"
             :style="{
               borderColor: pianoRollZoneBorderColor
             }"
             @click="selectPianoRollZone"
+            class="piano-roll-zone-container"
           >
             <piano-roll-zone />
           </div>

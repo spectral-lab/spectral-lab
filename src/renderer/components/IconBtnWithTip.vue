@@ -2,12 +2,12 @@
   <v-tooltip bottom>
     <template #activator="{ on }">
       <v-btn
+        v-on="on"
+        @click="emitClickEvent"
         small
         fab
         color="primary"
         class="elevation-0"
-        v-on="on"
-        @click="emitClickEvent"
       >
         <v-icon>{{ icon }}</v-icon>
       </v-btn>

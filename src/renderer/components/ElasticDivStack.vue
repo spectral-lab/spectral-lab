@@ -1,10 +1,10 @@
 <template>
   <div
     ref="container"
-    class="elastic-div-stack"
     :style="{
       gridTemplateRows
     }"
+    class="elastic-div-stack"
   >
     <div class="upper-content">
       <slot name="upper" />

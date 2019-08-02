@@ -1,8 +1,8 @@
 <template>
   <icon-btn-with-tip
+    @click="extractNotes"
     icon="fa-flask"
     tip="Extract notes from spectrogram"
-    @click="extractNotes"
   />
 </template>
 

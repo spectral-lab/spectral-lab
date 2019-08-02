@@ -1,9 +1,9 @@
 <template>
   <div
-    class="spectrogram"
     :style="{
       width: width,
     }"
+    class="spectrogram"
   >
     <canvas
       ref="canvas"

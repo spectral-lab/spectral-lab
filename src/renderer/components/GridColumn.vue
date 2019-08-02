@@ -1,9 +1,9 @@
 <template>
   <div
-    v-show="isVisible"
     ref="gridColumn"
-    class="grid-column"
+    v-show="isVisible"
     :style="{borderRightColor: color}"
+    class="grid-column"
   />
 </template>
 

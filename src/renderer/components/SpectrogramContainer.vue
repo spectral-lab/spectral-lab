@@ -1,9 +1,9 @@
 <template>
   <div
-    class="spectrogram-container"
     :style="{
       opacity: spectrogramOpacity
     }"
+    class="spectrogram-container"
   >
     <div
       v-for="spectrogram in spectrograms"

@@ -18,20 +18,20 @@
           mandatory
         >
           <v-radio
-            label="All Tracks"
             :value="ALL_TRACKS"
+            label="All Tracks"
           />
           <v-radio
-            label="Selected Tracks"
             :value="SELECTED_TRACKS"
+            label="Selected Tracks"
           />
           <v-radio
-            label="All Clips"
             :value="ALL_CLIPS"
+            label="All Clips"
           />
           <v-radio
-            label="Selected Clips"
             :value="SELECTED_CLIPS"
+            label="Selected Clips"
           />
         </v-radio-group>
       </v-card-text>
@@ -41,8 +41,8 @@
       <v-card-actions>
         <v-spacer />
         <v-btn
-          color="accent darken-1"
           @click="handleClick"
+          color="accent darken-1"
         >
           Export
         </v-btn>

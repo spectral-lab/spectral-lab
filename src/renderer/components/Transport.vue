@@ -5,17 +5,17 @@
       icon
     >
       <v-icon
-        size="28px"
         :color="playButtonColor"
         @click="playNotes"
+        size="28px"
       >
         play_arrow
       </v-icon>
     </v-btn>
     <v-btn
+      @click="testTone"
       flat
       icon
-      @click="testTone"
     >
       test
     </v-btn>
@@ -24,8 +24,8 @@
       icon
     >
       <v-icon
-        size="28px"
         @click="allNotesOff"
+        size="28px"
       >
         stop
       </v-icon>

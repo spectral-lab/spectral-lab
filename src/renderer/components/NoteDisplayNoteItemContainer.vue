@@ -1,11 +1,11 @@
 <template>
   <div
     ref="noteContainer"
-    class="note-container"
     @mousedown="handleMouseDown"
     @mousemove="handleMouseMove"
     @mouseup="handleMouseUp"
     @mouseleave="handleMouseUp"
+    class="note-container"
   >
     <svg
       width="100%"
