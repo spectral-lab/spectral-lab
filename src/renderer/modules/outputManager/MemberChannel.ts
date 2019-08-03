@@ -7,10 +7,10 @@ import { pick } from 'lodash';
 // eslint-disable-next-line no-unused-vars
 import { NoteOn, NoteOff, Modulation } from '../../store/models';
 // eslint-disable-next-line no-unused-vars
-import { MidiMessage } from '../../typedef';
+import { MidiMessage, Now } from '../../typedef';
 
 export default class MemberChannel {
-  private _now: () => number;
+  private _now: Now;
 
   private _timeOfLastNoteOff: number;
 
@@ -25,9 +25,9 @@ export default class MemberChannel {
   /**
    * @param  {object} param
    * @param  {number} param._midiChannel Integer from 1 to 16
-   * @param  {function} param._nowCb Function to get current time. e.g.`performance._now`
+   * @param  {Now}
    */
-  constructor ({ midiChannel, nowCb }: { midiChannel: number, nowCb: () => number }) {
+  constructor ({ midiChannel, nowCb }: { midiChannel: number, nowCb: Now }) {
     this._now = nowCb;
     this._timeOfLastNoteOff = this._now();
     this._timeOfLastNoteOn = this._now();

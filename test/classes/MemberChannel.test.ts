@@ -1,7 +1,8 @@
 // @ts-nocheck
 import MemberChannel from '../../src/renderer/modules/outputManager/MemberChannel';
+import { Now } from '../../src/renderer/typedef';
 
-const noteOn = {
+const noteOn: any = {
   pitchBend: 0,
   noteOnVelocity: 0.5,
   timbre: 0.5,
@@ -9,12 +10,12 @@ const noteOn = {
   parent: { noteNumber: 60 }
 };
 
-const nowCb = () => {
+const nowCb: Now = () => {
   const [sec, ns] = process.hrtime();
   return sec * 1e3 + ns / 1e6;
 };
 
-const modulations = [
+const modulations: any = [
   { input: { pitchBend: -24 }, expected: [[224, 0, 32]] },
   { input: { pressure: 0.5 }, expected: [[208, 64]] },
   { input: { timbre: 0.5, irrelevantProperty: 1 }, expected: [[176, 74, 64]] },
@@ -32,18 +33,17 @@ test('instanciates', () => {
 
 test('buildNoteOffMessages', () => {
   const memberChannel = new MemberChannel({ midiChannel: 3, nowCb });
-  memberChannel._activeNoteOn = {
+  memberChannel.buildNoteOnRelatedMessages({
     parent: { noteNumber: 72 }
-  };
+  });
   expect(memberChannel.buildNoteOffMessages({})).toEqual([[130, 72, 0]]);
-  expect(memberChannel._activeNoteOn).toEqual(null);
-  memberChannel._activeNoteOn = {
+  memberChannel.buildNoteOnRelatedMessages({
     parent: { noteNumber: 42 }
-  };
+  });
   expect(memberChannel.buildNoteOffMessages({ noteOffVelocity: 1 })).toEqual([[130, 42, 127]]);
-  memberChannel._activeNoteOn = {
+  memberChannel.buildNoteOnRelatedMessages({
     parent: { noteNumber: 60 }
-  };
+  });
   expect(memberChannel.buildNoteOffMessages({ irrelevantProperty: 0.5 })).toEqual([[130, 60, 0]]);
 });
 

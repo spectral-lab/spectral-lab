@@ -3,19 +3,13 @@ import NoteControl from './NoteControl';
 import { outputManagerOptions } from '../../constants/defaults';
 // eslint-disable-next-line no-unused-vars
 import { NoteOn } from '../../store/models';
-
-interface MidiOutput {
-  /**
-   * @param  message Array of midi message eg: [0x90, 63, 127]
-   * @param  timestamp Either ms or tick. Depends on the input timestamp of outputManager
-   */
-  send: (message: number[], timestamp: number) => void
-}
+// eslint-disable-next-line no-unused-vars
+import { Send, Now } from '../../typedef';
 
 interface Options {
-  midiOutput?: MidiOutput;
+  send?: Send;
   pitchBendRange?: number;
-  nowCb?: () => number;
+  nowCb?: Now;
   memberChannels?: number[];
   masterChannels?: number[];
 }
@@ -23,9 +17,9 @@ interface Options {
 export class OutputManager {
   private _pitchBendRange: number;
 
-  private _now: () => number;
+  private _now: Now;
 
-  private _midiOutput: MidiOutput;
+  private _send: Send;
 
   private _memberChannels: MemberChannel[];
 
@@ -33,19 +27,19 @@ export class OutputManager {
     const defaultedOptions = Object.assign({}, outputManagerOptions, options);
     this._pitchBendRange = defaultedOptions.pitchBendRange;
     this._now = defaultedOptions.nowCb;
-    this._midiOutput = defaultedOptions.midiOutput;
+    this._send = defaultedOptions.send;
     // TODO: Implement MasterChannel
     this._memberChannels = defaultedOptions.memberChannels
       .map(midiChannel => new MemberChannel({ midiChannel, nowCb: this._now }));
   }
 
   /**
-   * @param  {number} timestamp Either in tick or in ms
+   * @param  {number} timestamp Either in tick
    */
   noteOn (noteOn: NoteOn, timestamp: number = 0): NoteControl {
     const channelToSend = this.allocateChannel();
     const midiMessages = channelToSend.deriveMidiMessages(noteOn, { pitchBendRange: this._pitchBendRange });
-    midiMessages.forEach(message => this._midiOutput.send(message, timestamp));
+    midiMessages.forEach(message => this._send(message, timestamp));
     return this.createNoteControl(channelToSend);
   }
 
@@ -61,18 +55,20 @@ export class OutputManager {
     return channelWithOldestLastNoteOff;
   }
 
-  findMemberChannel (midiChannel: number): MemberChannel | undefined {
-    return this._memberChannels.find(channel => channel.midiChannel === midiChannel);
+  findMemberChannel (midiChannel: number): MemberChannel {
+    const memberChannel = this._memberChannels.find(channel => channel.midiChannel === midiChannel);
+    if (memberChannel) return memberChannel;
+    return this._memberChannels[0];
   }
 
   createNoteControl (memberChannel: MemberChannel): NoteControl {
     const modulateCb = (modulation, timestamp = 0) => {
       const midiMessages = memberChannel.deriveMidiMessages(modulation, { pitchBendRange: this._pitchBendRange });
-      midiMessages.forEach(message => this._midiOutput.send(message, timestamp));
+      midiMessages.forEach(message => this._send(message, timestamp));
     };
     const noteOffCb = (noteOff, timestamp = 0) => {
       const midiMessages = memberChannel.deriveMidiMessages(noteOff, { pitchBendRange: this._pitchBendRange });
-      midiMessages.forEach(message => this._midiOutput.send(message, timestamp));
+      midiMessages.forEach(message => this._send(message, timestamp));
     };
     return new NoteControl(modulateCb, noteOffCb);
   }
