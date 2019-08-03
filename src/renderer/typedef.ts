@@ -1,3 +1,7 @@
+
+// eslint-disable-next-line no-unused-vars
+import * as models from './store/models';
+
 /**
  * @typedef Spectrogram
  * @property {Array<Array<Number>>} magnitude2d
@@ -43,7 +47,6 @@
 /**
  * @typedef {NoteOn | Modulation | NoteOff} NoteAction
  */
-
 export type MidiMessage = [number, number] | [number, number, number];
 
 /**
@@ -57,3 +60,5 @@ export type Send = (message: number[], timestamp: number) => void;
  * @return {number} timestamp Elapsed time from time origin. Unit is ms.
  */
 export type Now = () => number;
+
+export type NoteAction = models.NoteOn | models.Modulation | models.NoteOff;
