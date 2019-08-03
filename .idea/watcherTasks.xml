@@ -41,7 +41,7 @@
       <option name="workingDir" value="$PROJECT_DIR$" />
       <envs />
     </TaskOptions>
-    <TaskOptions isEnabled="true">
+    <TaskOptions isEnabled="false">
       <option name="arguments" value="--ext .ts --fix $FilePath$" />
       <option name="checkSyntaxErrors" value="true" />
       <option name="description" />
