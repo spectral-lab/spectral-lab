@@ -1,6 +1,17 @@
 <template>
   <g>
-    <g v-if="isEdited">
+    <defs>
+      <filter id="shadow">
+        <feDropShadow
+          dx="0.2"
+          dy="0.4"
+          std-deviation="2"
+        />
+      </filter>
+    </defs>
+    <g
+      v-if="isEdited"
+    >
       <g
         v-for="(point, idx) in positions"
         :key="'a' + point.id"
@@ -15,18 +26,20 @@
           :y2="`${nextPoint(idx).y * 100}%`"
           :stroke="lineColor"
           :stroke-width="2"
-          :opacity="1"
         />
         <circle
           :cx="`${point.x * 100}%`"
           :cy="`${point.y * 100}%`"
-          r="5"
           :fill="circleColor"
-          :opacity="0.8"
+          r="5"
+          style="filter:url(#shadow);"
         />
       </g>
     </g>
-    <g v-else>
+    <g
+      v-else
+      style="filter:url(#shadow);"
+    >
       <g
         v-for="(point, idx) in positions"
         :key="'d' + point.id"
@@ -41,18 +54,16 @@
           :y2="`${nextPoint(idx).y * 100}%`"
           :stroke="lineColor"
           :stroke-width="10"
-          :opacity="1"
           @click="handleClick"
           @dblclick="handleDblClick"
         />
         <circle
           :cx="`${point.x * 100}%`"
           :cy="`${point.y * 100}%`"
-          r="5"
           :fill="circleColor"
-          :opacity="1"
           @click="handleClick"
           @dblclick="handleDblClick"
+          r="5"
         />
       </g>
     </g>

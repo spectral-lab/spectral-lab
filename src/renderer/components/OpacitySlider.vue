@@ -1,12 +1,12 @@
 <template>
   <v-slider
-    prepend-icon="grid_on"
-    append-icon="waves"
-    thumb-color="rgb(0, 139, 139)"
     :value="value"
     @input="debouncedHandleInput"
     @click:prepend="handleClickGrid"
     @click:append="handleClickWaves"
+    prepend-icon="grid_on"
+    append-icon="waves"
+    thumb-color="rgb(0, 139, 139)"
   />
 </template>
 

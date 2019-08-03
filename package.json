@@ -13,8 +13,8 @@
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
     "dev": "node .electron-vue/dev-runner.js",
-    "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src",
-    "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src",
+    "lint": "eslint --ext .js,.vue,.ts -f ./node_modules/eslint-friendly-formatter src",
+    "lint:fix": "eslint --ext .js,.vue,.ts -f ./node_modules/eslint-friendly-formatter --fix src",
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
@@ -39,13 +39,23 @@
     "moduleFileExtensions": [
       "js",
       "json",
-      "vue"
+      "vue",
+      "ts"
     ],
     "transform": {
       ".*\\.(vue)$": "vue-jest",
-      "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.ts$": "ts-jest"
     },
-    "snapshotSerializers": ["jest-serializer-vue"]
+    "snapshotSerializers": [
+      "jest-serializer-vue"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$"
   },
   "build": {
     "productName": "spectral-lab",
@@ -89,7 +99,10 @@
     "dsp.js-browser": "^1.0.1",
     "element-resize-detector": "^1.1.15",
     "express": "^4.16.4",
+    "fs-extra": "^8.1.0",
     "hotkeys-js": "^3.6.11",
+    "jzz": "^0.8.5",
+    "jzz-midi-smf": "^1.2.7",
     "lodash": "^4.17.13",
     "material-design-icons-iconfont": "^5.0.1",
     "ndarray-normalize": "^1.0.0",
@@ -102,7 +115,8 @@
     "uid": "^0.0.2",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
-    "vuetify": "^1.5.14",
+    "vue-eslint-parser": "^6.0.4",
+    "vuetify": "1.5.16",
     "vuetify-upload-button": "^2.0.0",
     "vuex": "^3.0.1",
     "vuex-electron": "^1.0.0"
@@ -129,6 +143,8 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.5.5",
+    "@types/jest": "^24.0.16",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "@vue/test-utils": "^1.0.0-beta.29",
     "ajv": "^6.5.0",
@@ -168,6 +184,7 @@
     "multispinner": "^0.2.1",
     "node-loader": "^0.6.0",
     "style-loader": "^0.21.0",
+    "ts-jest": "^24.0.2",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
     "url-loader": "^1.0.1",

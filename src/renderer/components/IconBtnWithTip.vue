@@ -2,12 +2,12 @@
   <v-tooltip bottom>
     <template #activator="{ on }">
       <v-btn
+        v-on="on"
+        @click="emitClickEvent"
         small
         fab
         color="primary"
         class="elevation-0"
-        v-on="on"
-        @click="emitClickEvent"
       >
         <v-icon>{{ icon }}</v-icon>
       </v-btn>
@@ -17,7 +17,8 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue';
+export default Vue.extend({
   props: {
     icon: String,
     tip: String
@@ -27,5 +28,5 @@ export default {
       this.$emit('click');
     }
   }
-};
+});
 </script>

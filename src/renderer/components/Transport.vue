@@ -5,17 +5,17 @@
       icon
     >
       <v-icon
-        size="28px"
         :color="playButtonColor"
         @click="playNotes"
+        size="28px"
       >
         play_arrow
       </v-icon>
     </v-btn>
     <v-btn
+      @click="testTone"
       flat
       icon
-      @click="testTone"
     >
       test
     </v-btn>
@@ -24,8 +24,8 @@
       icon
     >
       <v-icon
-        size="28px"
         @click="allNotesOff"
+        size="28px"
       >
         stop
       </v-icon>
@@ -43,12 +43,14 @@
 
 <script>
 import OutputManager from '../modules/outputManager';
-import { Note, Song } from '../store/models';
+import { Clip, Song } from '../store/models';
 import { range } from 'lodash';
 import { noteOffMessage } from '../modules/midi/formatMidiMessage';
 import { transportHeight } from '../constants/layout';
+import Vue from 'vue';
+import { processClip } from '../modules/outputManager/utils';
 
-export default {
+export default Vue.extend({
   data: function () {
     return {
       isPlaying: false,
@@ -75,26 +77,23 @@ export default {
       const ids = [];
       access.outputs.forEach(output => ids.push(output.id));
       this.midiOutput = access.outputs.get(ids[0]);
-      this.outputManager = new OutputManager({ midiOutput: this.midiOutput });
+      this.outputManager = new OutputManager({
+        send: (message, timestamp) =>
+          this.midiOutput.send(message, window.performance.now() + this.tickToMs(timestamp))
+      });
     });
   },
   methods: {
     testTone () {
-      const noteOnMessage = [0x91, 69, 0x7f]; // note on, middle C, full velocity
-      this.midiOutput.send(noteOnMessage); // omitting the timestamp means send immediately.
-      this.midiOutput.send([0x81, 69, 0x40], window.performance.now() + 1000.0); // Inlined array creation- note off, middle C,
-      // release velocity = 64, timestamp = now + 1000ms.
+      // Note on, middle C, full velocity
+      // Then, release velocity = 64, timestamp = now + 1000ms.
+      const noteOnMessage = [0x91, 69, 0x7f];
+      this.midiOutput.send(noteOnMessage);
+      this.midiOutput.send([0x81, 69, 0x40], window.performance.now() + 1000.0);
     },
     playNotes () {
-      const notes = Note.query().withAllRecursive().get();
-      notes.forEach((note) => {
-        const { noteOn, modulations, noteOff } = note;
-        const noteControl = this.outputManager.noteOn(noteOn, window.performance.now() + this.tickToMs(noteOn.absoluteTime));
-        modulations.forEach(modulation => {
-          noteControl.modulate(modulation, window.performance.now() + this.tickToMs(modulation.absoluteTime));
-        });
-        noteControl.noteOff(noteOff, window.performance.now() + this.tickToMs(noteOff.absoluteTime));
-      });
+      const clip = Clip.query().where('selected', true).withAllRecursive().last();
+      processClip(clip, this.outputManager);
     },
     allNotesOff () {
       range(1, 17).forEach(channel => {
@@ -107,7 +106,7 @@ export default {
       return tick / this.ticksPerBeat / this.bpm * 60 * 1e3;
     }
   }
-};
+});
 </script>
 
 <style scoped>

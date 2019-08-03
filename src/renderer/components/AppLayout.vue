@@ -3,6 +3,7 @@
     <div class="title-bar-container">
       <title-bar />
     </div>
+    <app-menu />
     <div
       ref="appMainContent"
       class="app-main-content"
@@ -15,22 +16,22 @@
         <template #upper>
           <div
             ref="arrangementZoneContainer"
-            class="arrangement-zone-container"
             :style="{
               borderColor: arrangementZoneBorderColor
             }"
             @click="selectArrangementZone"
+            class="arrangement-zone-container"
           >
             <arrangement-zone />
           </div>
         </template>
         <template #lower>
           <div
-            class="piano-roll-zone-container"
             :style="{
               borderColor: pianoRollZoneBorderColor
             }"
             @click="selectPianoRollZone"
+            class="piano-roll-zone-container"
           >
             <piano-roll-zone />
           </div>
@@ -49,6 +50,7 @@ import PianoRollZone from './PianoRollZone';
 import ArrangementZone from './ArrangementZone';
 import ElasticDivStack from './ElasticDivStack';
 import TitleBar from './TitleBar';
+import AppMenu from './AppMenu';
 import { titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
 import hotkeys from 'hotkeys-js';
 import { SPLIT_WINDOW, SWITCH_WINDOW } from '../constants/key-bindings';
@@ -61,7 +63,8 @@ export default {
     Transport,
     ArrangementZone,
     TitleBar,
-    ElasticDivStack
+    ElasticDivStack,
+    AppMenu
   },
   data () {
     return {
@@ -81,7 +84,7 @@ export default {
     },
     arrangementZoneBorderColor () {
       switch (this.selectedZone) {
-        case ARRANGEMENT: return 'lightgrey';
+        case ARRANGEMENT: return 'grey';
         case PIANO_ROLL: return 'transparent';
         default: return 'transparent';
       }
@@ -89,7 +92,7 @@ export default {
     pianoRollZoneBorderColor () {
       switch (this.selectedZone) {
         case ARRANGEMENT: return 'transparent';
-        case PIANO_ROLL: return 'lightgrey';
+        case PIANO_ROLL: return 'grey';
         default: return 'transparent';
       }
     }
@@ -114,13 +117,13 @@ export default {
       this.selectArrangementZone();
     },
     expandArrangementZone () {
-      this.arrangementZoneHeight = this.$refs.appMainContent.offsetHeight;
+      this.arrangementZoneHeight = this.appMainContentHeight();
     },
     expandPianoRollZone () {
       this.arrangementZoneHeight = 0;
     },
     splitWindow () {
-      this.arrangementZoneHeight = this.$refs.appMainContent.offsetHeight * 0.5;
+      this.arrangementZoneHeight = this.appMainContentHeight() * 0.5;
     },
     selectPianoRollZone () {
       if (this.selectedZone === PIANO_ROLL) return;
@@ -139,6 +142,9 @@ export default {
           selectedZone: ARRANGEMENT
         }
       });
+    },
+    appMainContentHeight () {
+      return this.$refs.appMainContent.offsetHeight;
     }
   }
 };
@@ -154,6 +160,7 @@ export default {
     overflow: hidden;
   }
   .title-bar-container {
+    z-index: 1000;
     grid-area: 1 / 1 / 2 / 2;
   }
   .app-main-content {
@@ -163,18 +170,19 @@ export default {
   }
   .transport-container {
     grid-area: 3 / 1 / 4 / 2;
+    z-index: 10;
   }
   .arrangement-zone-container {
     height: 100%;
     overflow: hidden;
-    border: solid 3px;
+    border: solid 2px;
     border-radius: 10px;
     box-sizing: border-box;
   }
   .piano-roll-zone-container {
     height: 100%;
     overflow: auto;
-    border: solid 3px;
+    border: solid 2px;
     border-radius: 10px;
     box-sizing: border-box;
   }

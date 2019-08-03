@@ -1,6 +1,6 @@
 import { makeMandatory } from '../utils';
 import { SPECTROGRAM } from '../../constants/model-types';
-import { BaseModel } from '.';
+import { BaseModel, AudioBuffer } from '.';
 
 export default class Spectrogram extends BaseModel {
   static get entity () {

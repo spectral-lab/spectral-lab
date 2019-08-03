@@ -1,7 +1,7 @@
 <template>
   <div
-    class="grid-container"
     :style="{ opacity: gridOpacity }"
+    class="grid-container"
   >
     <grid-row-container />
     <grid-column-container

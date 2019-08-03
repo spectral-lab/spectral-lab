@@ -6,7 +6,7 @@
       :is-playing="isPlaying"
       @click-play="handleClickPlay"
       @file-update="handleFileUpdate"
-      @click-build="handleClickBuild"
+      @click-build="buildSpectrogram"
     />
   </div>
 </template>
@@ -85,9 +85,6 @@ export default {
           originalFilePath: filepath
         }
       });
-    },
-    handleClickBuild () {
-      this.buildSpectrogram();
     },
     async buildSpectrogram () {
       if (!this.audioBuffer) return;

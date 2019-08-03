@@ -5,8 +5,8 @@
   >
     <div
       v-if="visibleLine==='CENT'"
-      class="line-wrapper"
       :style="{borderBottomColor: strokeColor}"
+      class="line-wrapper"
     >
       <div
         v-for="cent in positiveCents"
@@ -28,8 +28,8 @@
     </div>
     <div
       v-if="visibleLine==='NOTE'"
-      class="line-wrapper"
       :style="{borderBottomColor: strokeColor}"
+      class="line-wrapper"
     >
       <div class="note-name">
         <span>{{ noteName }}</span>
@@ -38,8 +38,8 @@
     </div>
     <div
       v-if="visibleLine==='OCTAVE'"
-      class="line-wrapper"
       :style="{borderBottomColor: strokeColor}"
+      class="line-wrapper"
     >
       <div
         v-if="isC"

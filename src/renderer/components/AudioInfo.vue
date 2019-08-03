@@ -5,9 +5,9 @@
       class="mb-2"
     >
       <v-btn
+        @click="handleClickPlay"
         icon
         color="primary"
-        @click="handleClickPlay"
       >
         <v-icon size="24px">
           {{ icon }}
@@ -21,16 +21,16 @@
       </div>
       <v-spacer />
       <upload-button
+        @file-update="handleFileUpdate"
         title="Open"
         no-title-update
-        @file-update="handleFileUpdate"
       >
         Open
       </upload-button>
       <icon-btn-with-tip
+        @click="handleClickBuild"
         icon="build"
         tip="Build a spectrogram of the source audio."
-        @click="handleClickBuild"
       />
     </v-toolbar>
   </div>

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import OutputManager from '../../src/renderer/modules/outputManager';
 import { NOTE_ON, MODULATION, NOTE_OFF } from '../../src/renderer/constants/model-types';
+import { processClip } from '../../src/renderer/modules/outputManager/utils';
 
 const options = {
   masterChannels: [1],
@@ -10,11 +11,11 @@ const options = {
     const [sec, ns] = process.hrtime();
     return sec * 1e3 + ns / 1e6;
   },
-  midiOutput: { send: console.log }
+  send: console.log
 };
 const allMemberChannels = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 const memberChannelsExcept5 = [2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-const noteOn = {
+const noteOn: any = {
   type: NOTE_ON,
   pitchBend: 0,
   noteOnVelocity: 0.5,
@@ -22,7 +23,7 @@ const noteOn = {
   pressure: 0.5,
   parent: { noteNumber: 60 }
 };
-const modulations = [
+const modulations: any = [
   { input: { pitchBend: -24 }, expected: [[225, 0, 32]] },
   { input: { pressure: 0.5 }, expected: [[209, 64]] },
   { input: { timbre: 0.5, irrelevantProperty: 1 }, expected: [[177, 74, 64]] },
@@ -31,7 +32,7 @@ const modulations = [
     expected: [[225, 127, 127], [209, 127], [177, 74, 127]]
   }
 ];
-const noteOff = { noteOffVelocity: 0.5 };
+const noteOff: any = { noteOffVelocity: 0.5 };
 
 describe('allocateChannel', () => {
   test('allocates channel', () => {
@@ -68,7 +69,7 @@ describe('allocateChannel', () => {
 describe('executes noteActions', () => {
   test('noteOn => modulation => noteOff', () => {
     const mockFn = jest.fn();
-    const outputManager = new OutputManager(Object.assign({}, options, { midiOutput: { send: mockFn } }));
+    const outputManager = new OutputManager(Object.assign({}, options, { send: mockFn }));
     const noteControl = outputManager.noteOn(noteOn);
     expect(mockFn.mock.calls).toHaveLength(4);
     expect(mockFn.mock.calls[0][0]).toEqual([177, 74, 64]);
@@ -83,7 +84,7 @@ describe('executes noteActions', () => {
   });
   test('noteOn => noteOff => modulation => noteOn => modulation', () => {
     const mockFn = jest.fn();
-    const outputManager = new OutputManager(Object.assign({}, options, { midiOutput: { send: mockFn } }));
+    const outputManager = new OutputManager(Object.assign({}, options, { send: mockFn }));
     const firstNoteControl = outputManager.noteOn(noteOn);
     const firstModulation = modulations[0];
     expect(mockFn.mock.calls).toHaveLength(4);
@@ -102,7 +103,7 @@ describe('executes noteActions', () => {
   });
   test('executes noteOn 18 times', () => {
     const mockFn = jest.fn();
-    const outputManager = new OutputManager(Object.assign({}, options, { midiOutput: { send: mockFn } }));
+    const outputManager = new OutputManager(Object.assign({}, options, { send: mockFn }));
     for (let i = 0; i < 15; i++) {
       outputManager.noteOn(noteOn);
     }
@@ -111,5 +112,92 @@ describe('executes noteActions', () => {
       outputManager.noteOn(noteOn);
     }
     expect(mockFn.mock.calls).toHaveLength(15 * 4 + 3 * 1 + 3 * 4); // noteOnRelatedMessages + noteOffMessages + noteOnRelatedMessages
+  });
+});
+
+describe('executes processClip method', () => {
+  test('processes clip', () => {
+    const mockClip:any = {
+      offsetTime: 10,
+      sortedNoteActions: [
+        {
+          absoluteTime: 10,
+          type: NOTE_ON,
+          parent: {
+            offsetTime: 10
+          }
+        },
+        {
+          absoluteTime: 20,
+          type: MODULATION,
+          offsetTime: 10,
+          parent: {
+            offsetTime: 10
+          }
+        },
+        {
+          absoluteTime: 30,
+          type: NOTE_ON,
+          parent: {
+            offsetTime: 30
+          }
+        },
+        {
+          absoluteTime: 40,
+          offsetTime: 30,
+          type: NOTE_OFF,
+          parent: {
+            offsetTime: 10
+          }
+        }
+      ]
+    };
+    const mockModulateFunc = jest.fn();
+    const mockNoteOffFunc = jest.fn();
+    const mockNoteOnFunc = jest.fn(() => ({
+      modulate: mockModulateFunc,
+      noteOff: mockNoteOffFunc
+    }));
+    const mockOutputManager: any = { noteOn: mockNoteOnFunc };
+    processClip(mockClip, mockOutputManager);
+    expect(mockNoteOnFunc.mock.calls.length).toBe(2);
+    expect(mockModulateFunc.mock.calls.length).toBe(1);
+    expect(mockNoteOffFunc.mock.calls.length).toBe(1);
+    expect(mockNoteOnFunc.mock.calls[0]).toEqual([{
+      absoluteTime: 10,
+      type: NOTE_ON,
+      parent: {
+        offsetTime: 10
+      }
+    }, 10]);
+    expect(mockNoteOnFunc.mock.calls[1]).toEqual([{
+      absoluteTime: 30,
+      type: NOTE_ON,
+      parent: {
+        offsetTime: 30
+      }
+    }, 30]);
+    expect(mockModulateFunc.mock.calls[0]).toEqual([
+      {
+        absoluteTime: 20,
+        type: MODULATION,
+        offsetTime: 10,
+        parent: {
+          offsetTime: 10
+        }
+      },
+      20
+    ]);
+    expect(mockNoteOffFunc.mock.calls[0]).toEqual([
+      {
+        absoluteTime: 40,
+        offsetTime: 30,
+        type: NOTE_OFF,
+        parent: {
+          offsetTime: 10
+        }
+      },
+      40
+    ]);
   });
 });
