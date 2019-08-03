@@ -17,7 +17,8 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue';
+export default Vue.extend({
   props: {
     icon: String,
     tip: String
@@ -27,5 +28,5 @@ export default {
       this.$emit('click');
     }
   }
-};
+});
 </script>
