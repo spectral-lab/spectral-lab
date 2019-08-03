@@ -1,6 +1,7 @@
 import { initStore } from '../../src/renderer/store';
 import { Clip, NoteOff, AudioBuffer, Note, Track, PianoRoll } from '../../src/renderer/store/models';
 import uid from 'uid';
+import { flatten } from 'lodash';
 
 beforeEach(() => {
   initStore();
@@ -157,3 +158,58 @@ describe('PianoRoll model', () => {
     done();
   });
 });
+
+describe('Clip model', () => {
+  test('gets sorted note actions', async (done) => {
+    await Clip.insert({
+      data: {
+        id: uid(),
+        trackId: Track.query().first().id,
+        notes: [
+          {
+            id: uid(),
+            noteNumber: 60,
+            offsetTime: 100,
+            noteOn: {
+              id: uid(),
+              pitchBend: -20
+            },
+            noteOff: {
+              id: uid(),
+              offsetTime: 40
+            },
+            modulations: [
+              {
+                id: uid(),
+                offsetTime: 60,
+                pitchBend: 3
+              },
+              {
+                id: uid(),
+                offsetTime: 30,
+                pitchBend: 5
+              }
+            ]
+          }
+        ]
+      }
+    });
+    const clip = Clip.query().withAllRecursive().last();
+    expect(clip.sortedNoteActions.length).not.toBe(0);
+    const originalNoteActions = flatten(clip.notes.map(note => [note.noteOn, ...note.modulations, note.noteOff]));
+    expect(() => {
+      expectToBeSorted(originalNoteActions);
+    }).toThrow();
+    expectToBeSorted(clip.sortedNoteActions);
+    done();
+  });
+});
+
+const expectToBeSorted = arr => {
+  arr.reduce((prev, current) => {
+    expect(prev.absoluteTime <= current.absoluteTime).toBe(true);
+    return current;
+  }, {
+    absoluteTime: -1
+  });
+};

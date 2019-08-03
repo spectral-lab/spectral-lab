@@ -9,8 +9,7 @@ export default class BaseModel extends Model {
 
   get absoluteTime () {
     const offsetTimes = this.path.map(modelInstance => {
-      const offset = modelInstance.offsetTime;
-      return offset == null ? 0 : offset;
+      return modelInstance.offsetTime == null ? 0 : modelInstance.offsetTime;
     });
     return sum(offsetTimes);
   }
