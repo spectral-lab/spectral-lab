@@ -16,6 +16,9 @@
     "./src/**/*.tsx",
     "./src/**/*.vue"
   ],
+  "files": [
+    "./sfc.d.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
