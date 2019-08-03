@@ -7,7 +7,7 @@ import { pick } from 'lodash';
 // eslint-disable-next-line no-unused-vars
 import { NoteOn, NoteOff, Modulation } from '../../store/models';
 // eslint-disable-next-line no-unused-vars
-import { MidiMessage, Now } from '../../typedef';
+import { MidiMessage, Now, NoteAction } from '../../typedef';
 
 export default class MemberChannel {
   private _now: Now;
@@ -51,7 +51,7 @@ export default class MemberChannel {
   /**
    * @param  {number} [options._pitchBendRange] 0 to 96.
    */
-  deriveMidiMessages (noteAction: NoteOn | Modulation | NoteOff, options: {pitchBendRange?: number} = {}) {
+  deriveMidiMessages (noteAction: NoteAction, options: {pitchBendRange?: number} = {}) {
     if (options.pitchBendRange != null) this._pitchBendRange = options.pitchBendRange;
     switch (noteAction.type) {
       case NOTE_ON:

@@ -4,6 +4,7 @@ import { Clip } from '../../store/models';
 import JZZ from 'jzz';
 import jzzMidiSmf from 'jzz-midi-smf';
 import { OutputManager } from '../outputManager';
+import { processClip } from '../outputManager/utils';
 const { dialog } = remote;
 jzzMidiSmf(JZZ);
 
@@ -34,20 +35,14 @@ export const exportClip = async (clip: Clip, dir: string) => {
 
 const clipToMTrk = (clip: Clip): MTrk => {
   const MTrk = new JZZ.MIDI.SMF.MTrk();
-  const offlineOutputManager = new OutputManager({
-    midiOutput: {
-      send: (message, timestamp) => MTrk.add(timestamp, JZZ.MIDI(message))
-    }
-  });
   const { bpm } = clip.parent.parent;
   MTrk
     .add(0, JZZ.MIDI.smfSeqName(clip.name || clip.id))
     .add(0, JZZ.MIDI.smfBPM(bpm))
     .add(clip.duration, JZZ.MIDI.smfEndOfTrack());
-  clip.notes.forEach(note => {
-    const noteControl = offlineOutputManager.noteOn(note.noteOn, note.offsetTime);
-    note.modulations.forEach(modulation => noteControl.modulate(modulation, note.offsetTime + modulation.offsetTime));
-    noteControl.noteOff(note.noteOff, note.offsetTime + note.noteOff.offsetTime);
+  const offlineOutputManager = new OutputManager({
+    send: (message, timestamp) => MTrk.add(timestamp, JZZ.MIDI(message))
   });
+  processClip(clip, offlineOutputManager);
   return MTrk;
 };
