@@ -57,7 +57,7 @@ import { ALL_CLIPS, ALL_TRACKS, SELECTED_TRACKS, SELECTED_CLIPS } from '../const
 export default {
   data () {
     return {
-      showDialog: true,
+      showDialog: false,
       target: ALL_TRACKS,
       ALL_CLIPS,
       ALL_TRACKS,
