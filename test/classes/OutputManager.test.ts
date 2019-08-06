@@ -38,31 +38,31 @@ describe('allocateChannel', () => {
   test('allocates channel', () => {
     const outputManager = new OutputManager(options);
     memberChannelsExcept5.forEach((ch) => {
-      outputManager.findMemberChannel(ch).buildNoteOnRelatedMessages(noteOn);
+      (<any>outputManager.findMemberChannel(ch)).buildNoteOnRelatedMessages(noteOn);
     });
-    expect(outputManager.allocateChannel().midiChannel).toBe(5);
+    expect((<any>outputManager).allocateChannel().midiChannel).toBe(5);
   });
 
   test('allocates channel when multiple channels are unoccupied', () => {
     const outputManager = new OutputManager(options);
     allMemberChannels.forEach((ch) => {
-      outputManager.findMemberChannel(ch).buildNoteOnRelatedMessages(noteOn);
+      (<any>outputManager.findMemberChannel(ch)).buildNoteOnRelatedMessages(noteOn);
     });
-    outputManager.findMemberChannel(5).buildNoteOffMessages(noteOff);
-    outputManager.findMemberChannel(7).buildNoteOffMessages(noteOff);
-    outputManager.findMemberChannel(15).buildNoteOffMessages(noteOff);
-    expect(outputManager.allocateChannel().midiChannel).toBe(5);
+    (<any>outputManager.findMemberChannel(5)).buildNoteOffMessages(noteOff);
+    (<any>outputManager.findMemberChannel(7)).buildNoteOffMessages(noteOff);
+    (<any>outputManager.findMemberChannel(15)).buildNoteOffMessages(noteOff);
+    expect((<any>outputManager).allocateChannel().midiChannel).toBe(5);
   });
 
   test('allocates channel when all the channels are occupied', () => {
     const outputManager = new OutputManager(options);
     allMemberChannels.forEach((ch) => {
-      outputManager.findMemberChannel(ch).buildNoteOnRelatedMessages(noteOn);
+      (<any>outputManager.findMemberChannel(ch)).buildNoteOnRelatedMessages(noteOn);
     });
     memberChannelsExcept5.forEach((ch) => {
-      outputManager.findMemberChannel(ch).buildNoteOnRelatedMessages(noteOn);
+      (<any>outputManager.findMemberChannel(ch)).buildNoteOnRelatedMessages(noteOn);
     });
-    expect(outputManager.allocateChannel().midiChannel).toBe(5);
+    expect((<any>outputManager).allocateChannel().midiChannel).toBe(5);
   });
 });
 
