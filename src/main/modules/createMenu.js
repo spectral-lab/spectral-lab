@@ -1,5 +1,6 @@
 import { app, Menu } from 'electron';
 import proccessCommunicator from './proccessCommunicator';
+import { MIDI_EXPORT } from '../../constants/message-types';
 
 export default () => {
   const application = {
@@ -24,10 +25,9 @@ export default () => {
     label: 'Edit',
     submenu: [
       {
-        label: 'Midi Export',
+        label: 'Export MIDI',
         click: () => {
-          proccessCommunicator.send('midi-export');
-          console.log('send midi-export');
+          proccessCommunicator.send(MIDI_EXPORT);
         }
       },
       {

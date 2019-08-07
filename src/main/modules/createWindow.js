@@ -1,4 +1,5 @@
 import { BrowserWindow, screen } from 'electron';
+import proccessCommunicator from './proccessCommunicator';
 
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
@@ -16,5 +17,6 @@ export default () => {
     titleBarStyle: 'hidden'
   });
   mainWindow.loadURL(winURL);
+  proccessCommunicator.appendWindow(mainWindow);
   return mainWindow;
 };

@@ -10,10 +10,16 @@
 import MidiExportDialog from './MidiExportDialog';
 import { SELECTED_CLIPS } from '../../constants/midi-export-options';
 import { exportSelectedClips } from '../modules/helpers/midiExportUtils';
-
+import { ipcRenderer } from 'electron';
+import { MIDI_EXPORT } from '../../constants/message-types';
 export default {
   components: {
     MidiExportDialog
+  },
+  mounted () {
+    ipcRenderer.on(MIDI_EXPORT, () => {
+      this.show();
+    });
   },
   methods: {
     show () {
