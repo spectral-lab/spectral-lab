@@ -1,6 +1,6 @@
 import { BaseModel, Note } from './index';
 import { makeMandatory } from '../utils';
-import { NOTE_OFF } from '../../constants/model-types';
+import { NOTE_OFF } from '../../../constants/model-types';
 
 export default class NoteOff extends BaseModel {
   static get entity () {

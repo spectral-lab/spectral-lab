@@ -46,7 +46,7 @@ import OutputManager from '../modules/outputManager';
 import { Clip, Song } from '../store/models';
 import { range } from 'lodash';
 import { noteOffMessage } from '../modules/midi/formatMidiMessage';
-import { transportHeight } from '../constants/layout';
+import { transportHeight } from '../../constants/layout';
 import Vue from 'vue';
 import { processClip } from '../modules/outputManager/utils';
 

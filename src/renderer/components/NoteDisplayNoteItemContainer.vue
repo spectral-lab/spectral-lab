@@ -31,8 +31,8 @@
 import NoteItem from './NoteItem';
 import { Note, PianoRoll, NoteOff, Modulation } from '../store/models';
 import hotkeys from 'hotkeys-js';
-import { DESELECT_NOTES } from '../constants/key-bindings';
-import { PEN } from '../constants/mouse-modes';
+import { DESELECT_NOTES } from '../../constants/key-bindings';
+import { PEN } from '../../constants/mouse-modes';
 import uid from 'uid';
 import { posXToTick, posYToPitch } from '../modules/pianoRoll/utils';
 import { pitchToNoteNumberAndPitchBend } from '../modules/helpers';

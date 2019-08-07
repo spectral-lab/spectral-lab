@@ -1,8 +1,8 @@
-import { NOTE_ON, MODULATION, NOTE_OFF } from '../../constants/model-types';
+import { NOTE_ON, MODULATION, NOTE_OFF } from '../../../constants/model-types';
 import {
   noteOffMessage, noteOnMessage, pitchBendMessage, channelPressureMessage, cc74Message
 } from '../midi/formatMidiMessage';
-import { PITCH_BEND, PRESSURE, TIMBRE } from '../../constants/modulation-types';
+import { PITCH_BEND, PRESSURE, TIMBRE } from '../../../constants/modulation-types';
 import { pick } from 'lodash';
 // eslint-disable-next-line no-unused-vars
 import { NoteOn, NoteOff, Modulation } from '../../store/models';

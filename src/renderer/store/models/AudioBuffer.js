@@ -1,5 +1,5 @@
 import { makeMandatory } from '../utils';
-import { AUDIO_BUFFER } from '../../constants/model-types';
+import { AUDIO_BUFFER } from '../../../constants/model-types';
 import { BaseModel, Spectrogram, Clip } from '.';
 
 export default class AudioBuffer extends BaseModel {

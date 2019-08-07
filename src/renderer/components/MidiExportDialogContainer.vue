@@ -8,7 +8,7 @@
 <script>
 
 import MidiExportDialog from './MidiExportDialog';
-import { SELECTED_CLIPS } from '../constants/midi-export-options';
+import { SELECTED_CLIPS } from '../../constants/midi-export-options';
 import { exportSelectedClips } from '../modules/helpers/midiExportUtils';
 
 export default {

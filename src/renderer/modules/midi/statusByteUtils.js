@@ -5,7 +5,7 @@
  * https://www.midi.org/specifications/item/table-1-summary-of-midi-message
  */
 
-import * as types from '../../constants/midi-message-types';
+import * as types from '../../../constants/midi-message-types';
 
 export const statusByteClassifier = statusByte => {
   const firstNibble = statusByte & 0xf0;

@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { ALL_CLIPS, ALL_TRACKS, SELECTED_TRACKS, SELECTED_CLIPS } from '../constants/midi-export-options';
+import { ALL_CLIPS, ALL_TRACKS, SELECTED_TRACKS, SELECTED_CLIPS } from '../../constants/midi-export-options';
 
 export default {
   data () {

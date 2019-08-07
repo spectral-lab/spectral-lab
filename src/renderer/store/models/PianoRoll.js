@@ -1,6 +1,6 @@
 import { makeMandatory } from '../utils';
-import { PIANO_ROLL } from '../../constants/model-types';
-import { SELECT } from '../../constants/mouse-modes';
+import { PIANO_ROLL } from '../../../constants/model-types';
+import { SELECT } from '../../../constants/mouse-modes';
 import { flatten } from 'lodash';
 import { App, BaseModel, Clip, Song } from '.';
 

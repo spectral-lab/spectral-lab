@@ -1,6 +1,6 @@
 import MemberChannel from './MemberChannel';
 import NoteControl from './NoteControl';
-import { outputManagerOptions } from '../../constants/defaults';
+import { outputManagerOptions } from '../../../constants/defaults';
 // eslint-disable-next-line no-unused-vars
 import { NoteOn } from '../../store/models';
 // eslint-disable-next-line no-unused-vars

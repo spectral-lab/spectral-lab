@@ -51,11 +51,11 @@ import ArrangementZone from './ArrangementZone';
 import ElasticDivStack from './ElasticDivStack';
 import TitleBar from './TitleBar';
 import AppMenu from './AppMenu';
-import { titleBarHeight, transportHeight, borderHeight } from '../constants/layout';
+import { titleBarHeight, transportHeight, borderHeight } from '../../constants/layout';
 import hotkeys from 'hotkeys-js';
-import { SPLIT_WINDOW, SWITCH_WINDOW } from '../constants/key-bindings';
+import { SPLIT_WINDOW, SWITCH_WINDOW } from '../../constants/key-bindings';
 import { App } from '../store/models';
-import { ARRANGEMENT, PIANO_ROLL } from '../constants/model-types';
+import { ARRANGEMENT, PIANO_ROLL } from '../../constants/model-types';
 
 export default {
   components: {

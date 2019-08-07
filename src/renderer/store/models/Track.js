@@ -1,5 +1,5 @@
 import { makeMandatory } from '../utils';
-import { TRACK } from '../../constants/model-types';
+import { TRACK } from '../../../constants/model-types';
 import { Song, BaseModel, Clip } from '.';
 
 export default class Track extends BaseModel {

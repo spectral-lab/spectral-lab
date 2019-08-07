@@ -1,6 +1,6 @@
 // @ts-nocheck
 import OutputManager from '../../src/renderer/modules/outputManager';
-import { NOTE_ON, MODULATION, NOTE_OFF } from '../../src/renderer/constants/model-types';
+import { NOTE_ON, MODULATION, NOTE_OFF } from '../../src/constants/model-types';
 import { processClip } from '../../src/renderer/modules/outputManager/utils';
 
 const options = {
