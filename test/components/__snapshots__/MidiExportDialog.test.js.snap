@@ -6,7 +6,6 @@ exports[`Component renders correctly 1`] = `
   maxwidth="none"
   origin="center center"
   transition="dialog-transition"
-  value="true"
   width="500"
 >
   <v-card-stub

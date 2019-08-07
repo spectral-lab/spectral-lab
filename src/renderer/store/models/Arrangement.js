@@ -1,6 +1,6 @@
 import { makeMandatory } from '../utils';
-import { ARRANGEMENT } from '../../constants/model-types';
-import { SELECT } from '../../constants/mouse-modes';
+import { ARRANGEMENT } from '../../../constants/model-types';
+import { SELECT } from '../../../constants/mouse-modes';
 import { App, BaseModel } from './index';
 
 export default class Arrangement extends BaseModel {

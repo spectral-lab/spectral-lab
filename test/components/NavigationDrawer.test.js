@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import NavigationDrawer from '../../src/renderer/components/NavigationDrawer';
-import menuTemplate from '../../src/renderer/constants/menu';
+import menuTemplate from '../../src/constants/menu';
 import Vue from 'vue';
 import vuetify from 'vuetify';
 

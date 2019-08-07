@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { titleBarHeight } from '../constants/layout';
+import { titleBarHeight } from '../../constants/layout';
 
 export default {
   props: {

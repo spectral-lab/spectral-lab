@@ -1,9 +1,9 @@
 import VuexORM from '@vuex-orm/core';
 import * as models from './models';
-import { APP_ID, SONG_ID } from '../constants/ids';
+import { APP_ID, SONG_ID } from '../../constants/ids';
 import uid from 'uid';
 import hotkeys from 'hotkeys-js';
-import * as modelTypes from '../constants/model-types';
+import * as modelTypes from '../../constants/model-types';
 
 export const makeMandatory = field => val => {
   if (val == null) throw new Error(`Mandatory Field: ${field} cannot be ${val}`);

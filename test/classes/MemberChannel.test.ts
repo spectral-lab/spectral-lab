@@ -32,7 +32,7 @@ test('instanciates', () => {
 });
 
 test('buildNoteOffMessages', () => {
-  const memberChannel = new MemberChannel({ midiChannel: 3, nowCb });
+  const memberChannel: any = new MemberChannel({ midiChannel: 3, nowCb });
   memberChannel.buildNoteOnRelatedMessages({
     parent: { noteNumber: 72 }
   });
@@ -49,7 +49,7 @@ test('buildNoteOffMessages', () => {
 
 test('buildNoteOnRelatedMessages', () => {
   const memberChannel = new MemberChannel({ midiChannel: 3, nowCb });
-  const midiMessages = memberChannel.buildNoteOnRelatedMessages(noteOn);
+  const midiMessages = (<any>memberChannel).buildNoteOnRelatedMessages(noteOn);
   expect(midiMessages).toHaveLength(4);
   expect(midiMessages).toContainEqual([210, 64]);
   expect(midiMessages).toContainEqual([178, 74, 64]);
@@ -60,7 +60,7 @@ test('buildNoteOnRelatedMessages', () => {
 test('buildModulationMessages', () => {
   const memberChannel = new MemberChannel({ midiChannel: 1, nowCb });
   modulations.forEach(modulation => {
-    const actual = memberChannel.buildModulationMessages(modulation.input);
+    const actual =(<any>memberChannel).buildModulationMessages(modulation.input);
     expect(actual).toEqual(modulation.expected);
   });
 });

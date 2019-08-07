@@ -1,5 +1,5 @@
 import { BaseModel, Note } from '.';
-import { NOTE_ON } from '../../constants/model-types';
+import { NOTE_ON } from '../../../constants/model-types';
 import { makeMandatory } from '../utils';
 
 export default class NoteOn extends BaseModel {

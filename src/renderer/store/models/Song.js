@@ -1,6 +1,6 @@
 import { makeMandatory } from '../utils';
-import { SONG } from '../../constants/model-types';
-import { bpm, ticksPerBeat } from '../../constants/defaults';
+import { SONG } from '../../../constants/model-types';
+import { bpm, ticksPerBeat } from '../../../constants/defaults';
 import { BaseModel, Track } from '.';
 
 export default class Song extends BaseModel {

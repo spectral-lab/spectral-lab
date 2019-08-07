@@ -1,7 +1,7 @@
 import hotkeys from 'hotkeys-js';
 import { debounce } from 'lodash';
 import elementResizeDetector from 'element-resize-detector';
-import { ZOOM } from '../../constants/key-bindings';
+import { ZOOM } from '../../../constants/key-bindings';
 
 export default class ZoomManager {
   constructor ({ resizeBasis, horizontalZoomTargets, verticalZoomTargets }) {

@@ -1,6 +1,6 @@
 import { BaseModel, Note } from './index';
 import { makeMandatory } from '../utils';
-import { MODULATION } from '../../constants/model-types';
+import { MODULATION } from '../../../constants/model-types';
 
 export default class Modulation extends BaseModel {
   static get entity () {

@@ -1,7 +1,7 @@
 import { makeMandatory } from '../utils';
-import { CLIP } from '../../constants/model-types';
-import { beatsPerBar, ticksPerBeat } from '../../constants/defaults';
-import { SCALE_COLORS } from '../../constants/colors';
+import { CLIP } from '../../../constants/model-types';
+import { beatsPerBar, ticksPerBeat } from '../../../constants/defaults';
+import { SCALE_COLORS } from '../../../constants/colors';
 import { random, flatten, sortBy } from 'lodash';
 import { AudioBuffer, BaseModel, Track, Note } from '.';
 

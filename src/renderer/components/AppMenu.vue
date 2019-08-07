@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import menuTemplate, * as menu from '../constants/menu';
+import menuTemplate, * as menu from '../../constants/menu';
 import { newProject, saveProject } from '../modules/helpers/projectUtils';
 import MidiExportDialogContainer from './MidiExportDialogContainer';
 import NavigationDrawer from './NavigationDrawer';

@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { NoteAction } from '../../typedef';
-import { NOTE_ON, MODULATION, NOTE_OFF } from '../../constants/model-types';
+import { NOTE_ON, MODULATION, NOTE_OFF } from '../../../constants/model-types';
 // eslint-disable-next-line no-unused-vars
 import { Clip } from '../../store/models';
 // eslint-disable-next-line no-unused-vars

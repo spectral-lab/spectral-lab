@@ -6,7 +6,7 @@ import App from './App';
 import store from './store';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
-import theme from './constants/theme';
+import theme from '../constants/theme';
 import initialize from './initialize';
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
