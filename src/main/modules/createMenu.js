@@ -1,4 +1,5 @@
 import { app, Menu } from 'electron';
+import proccessCommunicator from './proccessCommunicator';
 
 export default () => {
   const application = {
@@ -25,7 +26,8 @@ export default () => {
       {
         label: 'Midi Export',
         click: () => {
-          console.log('midi export');
+          proccessCommunicator.send('midi-export');
+          console.log('send midi-export');
         }
       },
       {

@@ -4,6 +4,7 @@ import { app } from 'electron';
 import launchServer from './modules/launchServer';
 import createMenu from './modules/createMenu';
 import createWindow from './modules/createWindow';
+import proccessCommunicator from './modules/proccessCommunicator';
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -22,6 +23,7 @@ app.on('ready', async () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+  proccessCommunicator.appendWindow(mainWindow);
   createMenu();
 });
 
