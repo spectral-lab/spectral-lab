@@ -3,7 +3,6 @@
     <div class="title-bar-container">
       <title-bar />
     </div>
-    <app-menu />
     <div
       ref="appMainContent"
       class="app-main-content"
@@ -50,7 +49,6 @@ import PianoRollZone from './PianoRollZone';
 import ArrangementZone from './ArrangementZone';
 import ElasticDivStack from './ElasticDivStack';
 import TitleBar from './TitleBar';
-import AppMenu from './AppMenu';
 import { titleBarHeight, transportHeight, borderHeight } from '../../constants/layout';
 import hotkeys from 'hotkeys-js';
 import { SPLIT_WINDOW, SWITCH_WINDOW } from '../../constants/key-bindings';
@@ -63,8 +61,7 @@ export default {
     Transport,
     ArrangementZone,
     TitleBar,
-    ElasticDivStack,
-    AppMenu
+    ElasticDivStack
   },
   data () {
     return {
