@@ -19,7 +19,7 @@ export class OutputManager {
 
   private _now: Now;
 
-  private _send: Send;
+  protected _send: Send;
 
   private _memberChannels: MemberChannel[];
 
@@ -53,7 +53,7 @@ export class OutputManager {
     return this._memberChannels[0];
   }
 
-  set pitchBendRange (val) {
+  set pitchBendRange (val: number) {
     this._memberChannels.forEach(channel => { channel.pitchBendRange = val; });
     this._pitchBendRange = val;
   }

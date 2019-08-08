@@ -42,34 +42,25 @@
 </template>
 
 <script>
-import OutputManager from '../modules/outputManager';
-import { Clip, Song } from '../store/models';
-import { range } from 'lodash';
-import { noteOffMessage } from '../modules/midi/formatMidiMessage';
+import { Clip } from '../store/models';
 import { transportHeight } from '../../constants/layout';
 import Vue from 'vue';
-import { processClip } from '../modules/outputManager/utils';
+import { allNotesOff } from '../modules/helpers/allNotesOff';
+import { MidiPlayer } from '../modules/helpers/MidiPlayer';
+import { timeConverter } from '../modules/helpers/timeUtils';
 
 export default Vue.extend({
   data: function () {
     return {
       isPlaying: false,
       midiOutput: null,
+      midiPlayer: null,
       transportHeight
     };
   },
   computed: {
     playButtonColor () {
       return this.isPlaying ? 'success' : 'white';
-    },
-    song () {
-      return Song.query().first();
-    },
-    bpm () {
-      return this.song.bpm;
-    },
-    ticksPerBeat () {
-      return this.song.ticksPerBeat;
     }
   },
   mounted () {
@@ -77,33 +68,24 @@ export default Vue.extend({
       const ids = [];
       access.outputs.forEach(output => ids.push(output.id));
       this.midiOutput = access.outputs.get(ids[0]);
-      this.outputManager = new OutputManager({
-        send: (message, timestamp) =>
-          this.midiOutput.send(message, window.performance.now() + this.tickToMs(timestamp))
+      this.midiPlayer = new MidiPlayer({
+        send: (message, timestamp) => {
+          if (!timestamp) return this.midiOutput.send(message);
+          this.midiOutput.send(message, window.performance.now() + timeConverter.toMs(timestamp));
+        }
       });
     });
   },
   methods: {
-    testTone () {
-      // Note on, middle C, full velocity
-      // Then, release velocity = 64, timestamp = now + 1000ms.
-      const noteOnMessage = [0x91, 69, 0x7f];
-      this.midiOutput.send(noteOnMessage);
-      this.midiOutput.send([0x81, 69, 0x40], window.performance.now() + 1000.0);
-    },
     playNotes () {
       const clip = Clip.query().where('selected', true).withAllRecursive().last();
-      processClip(clip, this.outputManager);
+      this.midiPlayer.play(clip);
+    },
+    testTone () {
+      this.midiPlayer.testTone();
     },
     allNotesOff () {
-      range(1, 17).forEach(channel => {
-        range(128).forEach(noteNumber => {
-          this.midiOutput.send(noteOffMessage(noteNumber, 0, channel));
-        });
-      });
-    },
-    tickToMs (tick) {
-      return tick / this.ticksPerBeat / this.bpm * 60 * 1e3;
+      allNotesOff(message => this.midiOutput.send(message));
     }
   }
 });
