@@ -21,4 +21,11 @@ export default class Song extends BaseModel {
   get parent () {
     return null;
   }
+
+  get bpmAndTicksPerBeat () {
+    return {
+      bpm: this.bpm,
+      ticksPerBeat: this.ticksPerBeat
+    };
+  }
 }
