@@ -39,3 +39,6 @@ yarn run lint
 ```
 yarn run build
 ```
+
+## Overview of architecture
+![Architecture](https://user-images.githubusercontent.com/31060964/62834483-55a59580-bc88-11e9-9a9e-08a88536795a.png)
