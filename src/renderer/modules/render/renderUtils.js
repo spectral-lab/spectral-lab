@@ -1,5 +1,5 @@
 import { decibelCurve, ftom } from '../helpers';
-import '../../typedef';
+import '../../../types';
 
 /**
  * @param  {object} param

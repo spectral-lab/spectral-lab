@@ -1,4 +1,5 @@
-import '../../typedef';
+// @flow
+import '../../../types';
 // eslint-disable-next-line no-unused-vars
 import { Modulation, NoteOff } from '../../store/models';
 
@@ -6,11 +7,11 @@ type ModulateCb = (modulate: Modulation, timestamp: number) => any;
 type NoteOffCb = (noteOff: NoteOff, timestamp: number) => any;
 
 export default class NoteControl {
-  private _released: boolean;
+  _released: boolean;
 
-  private _modulateCb: ModulateCb;
+  _modulateCb: ModulateCb;
 
-  private _noteOffCb: NoteOffCb;
+  _noteOffCb: NoteOffCb;
 
   constructor (modulateCb: ModulateCb, noteOffCb: NoteOffCb) {
     this._released = false;

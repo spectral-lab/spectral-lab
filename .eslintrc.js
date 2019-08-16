@@ -23,7 +23,8 @@ module.exports = {
   },
 
   plugins: [
-    'vue'
+    'vue',
+    "flowtype"
   ],
   rules: {
     // allow paren-less arrow functions
@@ -41,15 +42,7 @@ module.exports = {
     'space-before-function-paren': process.env.NODE_ENV === 'production' ? 2 : 1,
     'comma-dangle': process.env.NODE_ENV === 'production' ? 2 : 1,
     'vue/require-default-prop': 0,
-    'vue/no-unused-components': process.env.NODE_ENV === 'production' ? 2 : 1
+    'vue/no-unused-components': process.env.NODE_ENV === 'production' ? 2 : 1,
+    'flowtype/define-flow-type': 1
   },
-  overrides: [
-    {
-      files: 'src/**/*.ts',
-      parserOptions: {
-        parser: "@typescript-eslint/parser"
-      },
-      plugins: ['@typescript-eslint']
-    }
-  ]
 };

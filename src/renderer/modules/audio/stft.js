@@ -1,4 +1,4 @@
-import '../../typedef';
+import '../../../types';
 import { FFT, WindowFunction } from 'dsp.js-browser';
 import packIntoNdarray from 'ndarray-pack';
 import unpackFromNdArray from 'ndarray-unpack';

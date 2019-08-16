@@ -6,6 +6,7 @@
         ["@babel/env", {
           "targets": { "node": 7 }
         }],
+        "@babel/preset-flow"
       ],
       "plugins": ["@babel/transform-runtime", "@babel/plugin-proposal-function-bind"]
     },
@@ -14,6 +15,7 @@
         ["@babel/env", {
           "modules": false
         }],
+        "@babel/preset-flow"
       ],
       "plugins": ["@babel/transform-runtime", "@babel/plugin-proposal-function-bind"]
     },
@@ -22,14 +24,16 @@
         ["@babel/env", {
           "modules": false
         }],
+        "@babel/preset-flow"
       ],
       "plugins": ["@babel/transform-runtime", "@babel/plugin-proposal-function-bind"]
     },
     "test": {
       "presets": [
         ["@babel/preset-env", {
-          "targets": { "node": "current" }
-        }]
+          "targets": { "node": 7 }
+        }],
+        "@babel/preset-flow"
       ],
       "plugins": ["@babel/plugin-proposal-class-properties"]
     }

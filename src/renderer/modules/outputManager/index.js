@@ -1,10 +1,11 @@
+// @flow
 import MemberChannel from './MemberChannel';
 import NoteControl from './NoteControl';
 import { outputManagerOptions } from '../../../constants/defaults';
 // eslint-disable-next-line no-unused-vars
 import { NoteOn } from '../../store/models';
 // eslint-disable-next-line no-unused-vars
-import { Send, Now } from '../../typedef';
+import { Send, Now } from '../../../types';
 
 interface Options {
   send?: Send;
@@ -15,15 +16,15 @@ interface Options {
 }
 
 export class OutputManager {
-  private _pitchBendRange: number;
+  _pitchBendRange: number;
 
-  private _now: Now;
+  _now: Now;
 
-  protected _send: Send;
+  _send: Send;
 
-  private _memberChannels: MemberChannel[];
+  _memberChannels: MemberChannel[];
 
-  constructor (options: Options | undefined) {
+  constructor (options: Options): void {
     const defaultedOptions = Object.assign({}, outputManagerOptions, options);
     this._pitchBendRange = defaultedOptions.pitchBendRange;
     this._now = defaultedOptions.nowCb;
@@ -40,14 +41,14 @@ export class OutputManager {
   /**
    * @param  {number} timestamp Either in tick
    */
-  public noteOn (noteOn: NoteOn, timestamp: number = 0): NoteControl {
+  noteOn (noteOn: NoteOn, timestamp: number = 0): NoteControl {
     const channelToSend = this.allocateChannel();
     const midiMessages = channelToSend.noteOn(noteOn);
     midiMessages.forEach(message => this._send(message, timestamp));
     return this.createNoteControl(channelToSend);
   }
 
-  public findMemberChannel (midiChannel: number): MemberChannel {
+  findMemberChannel (midiChannel: number): MemberChannel {
     const memberChannel = this._memberChannels.find(channel => channel.midiChannel === midiChannel);
     if (memberChannel) return memberChannel;
     return this._memberChannels[0];
@@ -58,7 +59,7 @@ export class OutputManager {
     this._pitchBendRange = val;
   }
 
-  private allocateChannel (): MemberChannel {
+  allocateChannel (): MemberChannel {
     const unoccupiedChannels = this._memberChannels.filter(memberChannel => !memberChannel.isOccupied);
     if (unoccupiedChannels.length === 0) {
       const channelWithOldestLastNoteOn = this._memberChannels
@@ -70,7 +71,7 @@ export class OutputManager {
     return channelWithOldestLastNoteOff;
   }
 
-  private createNoteControl (memberChannel: MemberChannel): NoteControl {
+  createNoteControl (memberChannel: MemberChannel): NoteControl {
     const modulateCb = (modulation, timestamp = 0) => {
       const midiMessages = memberChannel.modulate(modulation);
       midiMessages.forEach(message => this._send(message, timestamp));

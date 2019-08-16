@@ -1,5 +1,5 @@
 import { createRect } from './renderUtils';
-import '../../typedef';
+import '../../../types';
 /**
  * @param  {Spectrogram} spectrogram
  * @param  {HTMLCanvasElement} canvas

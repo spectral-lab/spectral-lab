@@ -1,14 +1,15 @@
+// @flow
 import OutputManager from '../outputManager';// eslint-disable-next-line no-unused-vars
-import { NoteAction } from '../../typedef';
+import { NoteAction } from '../../../types';
 import { NOTE_ON, MODULATION, NOTE_OFF, CLIP } from '../../../constants/model-types';
 // eslint-disable-next-line no-unused-vars
 import { Clip } from '../../store/models';
 // eslint-disable-next-line no-unused-vars
 
 export class MidiPlayer extends OutputManager {
-  play (item) {
+  play (item: any) {
     switch (item.type) {
-      case CLIP: return this.playClip(item as Clip);
+      case CLIP: return this.playClip(item);
     }
   }
 
@@ -42,7 +43,7 @@ export class MidiPlayer extends OutputManager {
 }
 
 export class offlineMidiRenderer extends MidiPlayer {
-  render (item) {
+  render (item: any) {
     this.play(item);
   }
 }
