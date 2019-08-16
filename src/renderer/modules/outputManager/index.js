@@ -1,11 +1,11 @@
 // @flow
 import MemberChannel from './MemberChannel';
-import NoteControl from './NoteControl';
+import { INoteControl, NoteControl } from './NoteControl';
 import { outputManagerOptions } from '../../../constants/defaults';
 // eslint-disable-next-line no-unused-vars
 import { NoteOn } from '../../store/models';
 // eslint-disable-next-line no-unused-vars
-import { Send, Now } from '../../../types';
+import type { Send, Now } from '../../../types';
 
 interface Options {
   send?: Send;
@@ -15,12 +15,17 @@ interface Options {
   masterChannels?: number[];
 }
 
-export class OutputManager {
+export interface IOutputManager {
+  noteOn (noteOn: NoteOn, timestamp: number): INoteControl;
+  send: Send;
+}
+
+export class OutputManager implements IOutputManager {
   _pitchBendRange: number;
 
   _now: Now;
 
-  _send: Send;
+  send: Send;
 
   _memberChannels: MemberChannel[];
 
@@ -28,7 +33,7 @@ export class OutputManager {
     const defaultedOptions = Object.assign({}, outputManagerOptions, options);
     this._pitchBendRange = defaultedOptions.pitchBendRange;
     this._now = defaultedOptions.nowCb;
-    this._send = defaultedOptions.send;
+    this.send = defaultedOptions.send;
     // TODO: Implement MasterChannel
     this._memberChannels = defaultedOptions.memberChannels
       .map(midiChannel => new MemberChannel({
@@ -44,7 +49,7 @@ export class OutputManager {
   noteOn (noteOn: NoteOn, timestamp: number = 0): NoteControl {
     const channelToSend = this.allocateChannel();
     const midiMessages = channelToSend.noteOn(noteOn);
-    midiMessages.forEach(message => this._send(message, timestamp));
+    midiMessages.forEach(message => this.send(message, timestamp));
     return this.createNoteControl(channelToSend);
   }
 
@@ -74,11 +79,11 @@ export class OutputManager {
   createNoteControl (memberChannel: MemberChannel): NoteControl {
     const modulateCb = (modulation, timestamp = 0) => {
       const midiMessages = memberChannel.modulate(modulation);
-      midiMessages.forEach(message => this._send(message, timestamp));
+      midiMessages.forEach(message => this.send(message, timestamp));
     };
     const noteOffCb = (noteOff, timestamp = 0) => {
       const midiMessages = memberChannel.noteOff(noteOff);
-      midiMessages.forEach(message => this._send(message, timestamp));
+      midiMessages.forEach(message => this.send(message, timestamp));
     };
     return new NoteControl(modulateCb, noteOffCb);
   }

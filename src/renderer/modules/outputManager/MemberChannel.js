@@ -6,7 +6,7 @@ import { pick } from 'lodash';
 // eslint-disable-next-line no-unused-vars
 import { NoteOn, NoteOff, Modulation } from '../../store/models';
 // eslint-disable-next-line no-unused-vars
-import { MidiMessage, Now } from '../../../types';
+import type { MidiMessage, Now } from '../../../types';
 
 export default class MemberChannel {
   pitchBendRange: number;

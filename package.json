@@ -21,13 +21,13 @@
     "test": "jest --watch",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand --watch",
     "test:update": "jest --updateSnapshot",
-    "type-check": "npx tsc -p . --noEmit",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "type-check": "flow"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
+      "pre-commit": "lint-staged && flow",
       "pre-push": "node node_modules/.bin/jest"
     }
   },

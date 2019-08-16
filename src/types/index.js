@@ -1,4 +1,4 @@
-
+// @flow
 // eslint-disable-next-line no-unused-vars
 import * as models from '../renderer/store/models';
 

@@ -1,6 +1,6 @@
 // @flow
 import MemberChannel from '../../src/renderer/modules/outputManager/MemberChannel';
-import { Now } from '../../src/types/index';
+import type { Now } from '../../src/types/index';
 
 const noteOn: any = {
   pitchBend: 0,

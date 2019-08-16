@@ -6,7 +6,11 @@ import { Modulation, NoteOff } from '../../store/models';
 type ModulateCb = (modulate: Modulation, timestamp: number) => any;
 type NoteOffCb = (noteOff: NoteOff, timestamp: number) => any;
 
-export default class NoteControl {
+export interface INoteControl {
+  modulate (modulation: Modulation, timestamp: number): void;
+  noteOff (noteoff: NoteOff, timestamp: number): void;
+}
+export class NoteControl implements INoteControl {
   _released: boolean;
 
   _modulateCb: ModulateCb;
@@ -40,3 +44,5 @@ export default class NoteControl {
     this._noteOffCb(noteOff, timestamp);
   }
 }
+
+export default NoteControl;
