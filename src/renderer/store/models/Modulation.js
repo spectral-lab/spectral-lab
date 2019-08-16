@@ -1,3 +1,4 @@
+// @flow
 import { BaseModel, Note } from './index';
 import { makeMandatory } from '../utils';
 import { MODULATION } from '../../../constants/model-types';

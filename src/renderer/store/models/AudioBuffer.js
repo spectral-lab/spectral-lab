@@ -1,3 +1,4 @@
+// @flow
 import { makeMandatory } from '../utils';
 import { AUDIO_BUFFER } from '../../../constants/model-types';
 import { BaseModel, Spectrogram, Clip } from '.';

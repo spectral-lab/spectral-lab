@@ -1,3 +1,4 @@
+// @flow
 import { BaseModel, Clip, NoteOn, NoteOff, Modulation } from '.';
 import { NOTE } from '../../../constants/model-types';
 import { makeMandatory } from '../utils';

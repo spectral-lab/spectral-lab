@@ -1,3 +1,5 @@
+// @flow
+
 import { makeMandatory } from '../utils';
 import { TRACK } from '../../../constants/model-types';
 import { Song, BaseModel, Clip } from '.';
