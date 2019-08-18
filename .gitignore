@@ -1,3 +1,4 @@
+storybook-static
 .DS_Store
 dist/electron/*
 dist/web/*
