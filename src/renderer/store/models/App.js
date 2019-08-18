@@ -1,3 +1,4 @@
+// @flow
 import { makeMandatory, setHotkeysScope } from '../utils';
 import { APP, PIANO_ROLL } from '../../../constants/model-types';
 import { Arrangement, BaseModel, PianoRoll } from '.';

@@ -1,3 +1,4 @@
+// @flow
 import { makeMandatory } from '../utils';
 import { ARRANGEMENT } from '../../../constants/model-types';
 import { SELECT } from '../../../constants/mouse-modes';

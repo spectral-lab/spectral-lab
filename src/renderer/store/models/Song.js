@@ -1,3 +1,4 @@
+// @flow
 import { makeMandatory } from '../utils';
 import { SONG } from '../../../constants/model-types';
 import { bpm, ticksPerBeat } from '../../../constants/defaults';

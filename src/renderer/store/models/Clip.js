@@ -1,9 +1,11 @@
+// @flow
 import { makeMandatory } from '../utils';
 import { CLIP } from '../../../constants/model-types';
 import { beatsPerBar, ticksPerBeat } from '../../../constants/defaults';
 import { SCALE_COLORS } from '../../../constants/colors';
 import { random, flatten, sortBy } from 'lodash';
 import { AudioBuffer, BaseModel, Track, Note } from '.';
+import type { NoteAction } from '../../../types';
 
 export default class Clip extends BaseModel {
   static get entity () {
@@ -46,11 +48,11 @@ export default class Clip extends BaseModel {
     return this.selectedNoteIds.length !== 0;
   }
 
-  get noteActions () {
-    return flatten(this.notes.map(note => note.noteActions));
+  get noteActions (): NoteAction[] {
+    return flatten((this.notes.map(note => note.noteActions): NoteAction[]));
   }
 
-  get sortedNoteActions () {
-    return sortBy(this.noteActions, noteAction => noteAction.absoluteTime);
+  get sortedNoteActions ():NoteAction[] {
+    return sortBy<NoteAction>(this.noteActions, [noteAction => noteAction.absoluteTime]);
   }
 }

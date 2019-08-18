@@ -1,12 +1,12 @@
-'use strict'
+'use strict';
 
-process.env.BABEL_ENV = 'main'
+process.env.BABEL_ENV = 'main';
 
-const path = require('path')
-const { dependencies } = require('../package.json')
-const webpack = require('webpack')
+const path = require('path');
+const { dependencies } = require('../package.json');
+const webpack = require('webpack');
 
-const BabiliWebpackPlugin = require('babili-webpack-plugin')
+const BabiliWebpackPlugin = require('babili-webpack-plugin');
 
 let mainConfig = {
   entry: {
@@ -34,19 +34,6 @@ let mainConfig = {
         exclude: /node_modules/
       },
       {
-        test: /\.tsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true,
-              appendTsSuffixTo: [/\.vue$/]
-            }
-          }
-        ]
-      },
-      {
         test: /\.node$/,
         use: 'node-loader'
       }
@@ -65,10 +52,10 @@ let mainConfig = {
     new webpack.NoEmitOnErrorsPlugin()
   ],
   resolve: {
-    extensions: ['.js', '.ts', '.json', '.node']
+    extensions: ['.js', '.json', '.node']
   },
   target: 'electron-main'
-}
+};
 
 /**
  * Adjust mainConfig for development settings
@@ -78,7 +65,7 @@ if (process.env.NODE_ENV !== 'production') {
     new webpack.DefinePlugin({
       '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
     })
-  )
+  );
 }
 
 /**
@@ -90,7 +77,7 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     })
-  )
+  );
 }
 
-module.exports = mainConfig
+module.exports = mainConfig;

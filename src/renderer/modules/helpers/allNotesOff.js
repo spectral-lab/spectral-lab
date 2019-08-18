@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { Send } from '../../typedef';
+import { Send } from '../../../types';
 import { noteOffMessage } from '../midi/formatMidiMessage';
 import { range } from 'lodash';
 export const allNotesOff = (send: Send) => {

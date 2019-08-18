@@ -1,3 +1,4 @@
+// @flow
 export { default as BaseModel } from './BaseModel';
 export { default as Note } from './Note';
 export { default as NoteOn } from './NoteOn';

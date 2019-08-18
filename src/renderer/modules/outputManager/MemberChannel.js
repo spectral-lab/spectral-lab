@@ -6,20 +6,20 @@ import { pick } from 'lodash';
 // eslint-disable-next-line no-unused-vars
 import { NoteOn, NoteOff, Modulation } from '../../store/models';
 // eslint-disable-next-line no-unused-vars
-import { MidiMessage, Now } from '../../typedef';
+import { MidiMessage, Now } from '../../../types';
 
 export default class MemberChannel {
-  public pitchBendRange: number;
+  pitchBendRange: number;
 
-  private _now: Now;
+  _now: Now;
 
-  private _timeOfLastNoteOff: number;
+  _timeOfLastNoteOff: number;
 
-  private _timeOfLastNoteOn: number;
+  _timeOfLastNoteOn: number;
 
-  private _activeNoteOn: NoteOn | null;
+  _activeNoteOn: NoteOn | null;
 
-  private _midiChannel: number;
+  _midiChannel: number;
 
   /**
    * @param  {object} param
@@ -35,21 +35,21 @@ export default class MemberChannel {
     this.pitchBendRange = pitchBendRange;
   };
 
-  public noteOn (noteOn: NoteOn) {
+  noteOn (noteOn: NoteOn) {
     if (this.isOccupied) {
       return [...this.buildNoteOffMessages({}), ...this.buildNoteOnRelatedMessages(noteOn)];
     }
     return this.buildNoteOnRelatedMessages(noteOn);
   }
 
-  public modulate (modulation: Modulation) {
+  modulate (modulation: Modulation) {
     if (this.isOccupied) {
       return this.buildModulationMessages(modulation);
     }
     return [];
   }
 
-  public noteOff (noteOff: NoteOff) {
+  noteOff (noteOff: NoteOff) {
     if (this.isOccupied) {
       return this.buildNoteOffMessages(noteOff);
     }
@@ -72,7 +72,7 @@ export default class MemberChannel {
     return Boolean(this._activeNoteOn);
   }
 
-  private buildNoteOffMessages (noteOff: NoteOff): [MidiMessage] {
+  buildNoteOffMessages (noteOff: NoteOff): [MidiMessage] {
     const noteOffVelocity = noteOff.noteOffVelocity || 0;
     const ret = noteOffMessage(this._activeNoteOn.parent.noteNumber, noteOffVelocity, this._midiChannel);
     this._timeOfLastNoteOff = this._now();
@@ -80,7 +80,7 @@ export default class MemberChannel {
     return [ret];
   };
 
-  private buildNoteOnRelatedMessages (noteOn: NoteOn): MidiMessage[] {
+  buildNoteOnRelatedMessages (noteOn: NoteOn): MidiMessage[] {
     this._activeNoteOn = noteOn;
     this._timeOfLastNoteOn = this._now();
     return [
@@ -91,7 +91,7 @@ export default class MemberChannel {
     ];
   }
 
-  private buildModulationMessages (modulation: Modulation): MidiMessage[] {
+  buildModulationMessages (modulation: Modulation): MidiMessage[] {
     return Object.keys(pick(modulation, [PITCH_BEND, PRESSURE, TIMBRE]))
       .filter(key => modulation[key] !== null)
       .reduce((messages: MidiMessage[], key: PITCH_BEND | PRESSURE | TIMBRE) => {

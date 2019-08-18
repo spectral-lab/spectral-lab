@@ -30,19 +30,6 @@ let webConfig = {
         }
       },
       {
-        test: /\.tsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true,
-              appendTsSuffixTo: [/\.vue$/]
-            }
-          }
-        ]
-      },
-      {
         test: /\.less$/,
         use: ['vue-style-loader', 'css-loader', 'less-loader']
       },

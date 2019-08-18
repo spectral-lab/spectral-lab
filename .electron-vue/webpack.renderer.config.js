@@ -1,16 +1,16 @@
-'use strict'
+'use strict';
 
-process.env.BABEL_ENV = 'renderer'
+process.env.BABEL_ENV = 'renderer';
 
-const path = require('path')
-const { dependencies } = require('../package.json')
-const webpack = require('webpack')
+const path = require('path');
+const { dependencies } = require('../package.json');
+const webpack = require('webpack');
 
-const BabiliWebpackPlugin = require('babili-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { VueLoaderPlugin } = require('vue-loader')
+const BabiliWebpackPlugin = require('babili-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 
 /**
  * List of node_modules to include in webpack bundle
@@ -19,7 +19,7 @@ const { VueLoaderPlugin } = require('vue-loader')
  * that provide pure *.vue files that need compiling
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/webpack-configurations.html#white-listing-externals
  */
-let whiteListedModules = ['vue', 'vuetify']
+let whiteListedModules = ['vue', 'vuetify'];
 
 let rendererConfig = {
   devtool: '#cheap-module-eval-source-map',
@@ -62,19 +62,6 @@ let rendererConfig = {
       {
         test: /\.node$/,
         use: 'node-loader'
-      },
-      {
-        test: /\.tsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true,
-              appendTsSuffixTo: [/\.vue$/]
-            }
-          }
-        ]
       },
       {
         test: /\.vue$/,
@@ -126,7 +113,7 @@ let rendererConfig = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({filename: 'styles.css'}),
+    new MiniCssExtractPlugin({ filename: 'styles.css' }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.resolve(__dirname, '../src/index.ejs'),
@@ -152,10 +139,10 @@ let rendererConfig = {
       '@': path.join(__dirname, '../src/renderer'),
       'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['.js', '.ts', '.vue', '.json', '.css', '.node']
+    extensions: ['.js', '.vue', '.json', '.css', '.node']
   },
   target: 'electron-renderer'
-}
+};
 
 /**
  * Adjust rendererConfig for development settings
@@ -165,14 +152,14 @@ if (process.env.NODE_ENV !== 'production') {
     new webpack.DefinePlugin({
       '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
     })
-  )
+  );
 }
 
 /**
  * Adjust rendererConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
-  rendererConfig.devtool = ''
+  rendererConfig.devtool = '';
 
   rendererConfig.plugins.push(
     new BabiliWebpackPlugin(),
@@ -189,7 +176,7 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
-  )
+  );
 }
 
-module.exports = rendererConfig
+module.exports = rendererConfig;

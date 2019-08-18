@@ -1,6 +1,6 @@
 
 // eslint-disable-next-line no-unused-vars
-import * as models from './store/models';
+import * as models from '../renderer/store/models';
 
 /**
  * @typedef Spectrogram

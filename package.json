@@ -13,8 +13,8 @@
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
     "dev": "node .electron-vue/dev-runner.js",
-    "lint": "eslint --ext .js,.vue,.ts -f ./node_modules/eslint-friendly-formatter src",
-    "lint:fix": "eslint --ext .js,.vue,.ts -f ./node_modules/eslint-friendly-formatter --fix src",
+    "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter {src,test}",
+    "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix {src,test}",
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
@@ -30,7 +30,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,vue}": [
+    "{src,test}/**/*.{js,vue}": [
       "eslint -f ./node_modules/eslint-friendly-formatter --fix",
       "git add"
     ]
@@ -39,23 +39,16 @@
     "moduleFileExtensions": [
       "js",
       "json",
-      "vue",
-      "ts"
+      "vue"
     ],
     "transform": {
       ".*\\.(vue)$": "vue-jest",
-      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.ts$": "ts-jest"
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
     },
     "snapshotSerializers": [
       "jest-serializer-vue"
     ],
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "tsconfig.json"
-      }
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$"
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?)$"
   },
   "build": {
     "productName": "spectral-lab",
@@ -99,6 +92,7 @@
     "dsp.js-browser": "^1.0.1",
     "element-resize-detector": "^1.1.15",
     "express": "^4.16.4",
+    "flow-typed": "^2.6.1",
     "fs-extra": "^8.1.0",
     "hotkeys-js": "^3.6.11",
     "jzz": "^0.8.5",
@@ -122,7 +116,8 @@
     "vuex-electron": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-decorators": "^7.0.0",
     "@babel/plugin-proposal-do-expressions": "^7.0.0",
@@ -141,11 +136,10 @@
     "@babel/plugin-syntax-import-meta": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
+    "@babel/preset-flow": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.5.5",
     "@types/jest": "^24.0.16",
-    "@typescript-eslint/eslint-plugin": "^1.13.0",
-    "@typescript-eslint/parser": "^1.13.0",
     "@vue/test-utils": "^1.0.0-beta.29",
     "ajv": "^6.5.0",
     "babel-core": "^7.0.0-bridge.0",
@@ -168,6 +162,7 @@
     "eslint-config-standard": "^13.0.1",
     "eslint-friendly-formatter": "^4.0.1",
     "eslint-loader": "^2.2.1",
+    "eslint-plugin-flowtype": "^4.2.0",
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^9.1.0",
@@ -175,6 +170,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^5.2.3",
     "file-loader": "^1.1.11",
+    "flow-bin": "^0.105.2",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^2.4.0",
     "jest": "^24.8.0",
@@ -184,9 +180,6 @@
     "multispinner": "^0.2.1",
     "node-loader": "^0.6.0",
     "style-loader": "^0.21.0",
-    "ts-jest": "^24.0.2",
-    "ts-loader": "^6.0.4",
-    "typescript": "^3.5.3",
     "url-loader": "^1.0.1",
     "vue-html-loader": "^1.2.4",
     "vue-jest": "^3.0.4",

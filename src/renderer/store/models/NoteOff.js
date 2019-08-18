@@ -1,3 +1,4 @@
+// @flow
 import { BaseModel, Note } from './index';
 import { makeMandatory } from '../utils';
 import { NOTE_OFF } from '../../../constants/model-types';

@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @flow
 import OutputManager from '../../src/renderer/modules/outputManager';
 import { NOTE_ON, MODULATION, NOTE_OFF } from '../../src/constants/model-types';
 import { processClip } from '../../src/renderer/modules/outputManager/utils';
@@ -38,31 +38,31 @@ describe('allocateChannel', () => {
   test('allocates channel', () => {
     const outputManager = new OutputManager(options);
     memberChannelsExcept5.forEach((ch) => {
-      (<any>outputManager.findMemberChannel(ch)).buildNoteOnRelatedMessages(noteOn);
+      outputManager.findMemberChannel(ch).buildNoteOnRelatedMessages(noteOn);
     });
-    expect((<any>outputManager).allocateChannel().midiChannel).toBe(5);
+    expect(outputManager.allocateChannel().midiChannel).toBe(5);
   });
 
   test('allocates channel when multiple channels are unoccupied', () => {
     const outputManager = new OutputManager(options);
     allMemberChannels.forEach((ch) => {
-      (<any>outputManager.findMemberChannel(ch)).buildNoteOnRelatedMessages(noteOn);
+      outputManager.findMemberChannel(ch).buildNoteOnRelatedMessages(noteOn);
     });
-    (<any>outputManager.findMemberChannel(5)).buildNoteOffMessages(noteOff);
-    (<any>outputManager.findMemberChannel(7)).buildNoteOffMessages(noteOff);
-    (<any>outputManager.findMemberChannel(15)).buildNoteOffMessages(noteOff);
-    expect((<any>outputManager).allocateChannel().midiChannel).toBe(5);
+    outputManager.findMemberChannel(5).buildNoteOffMessages(noteOff);
+    outputManager.findMemberChannel(7).buildNoteOffMessages(noteOff);
+    outputManager.findMemberChannel(15).buildNoteOffMessages(noteOff);
+    expect(outputManager.allocateChannel().midiChannel).toBe(5);
   });
 
   test('allocates channel when all the channels are occupied', () => {
     const outputManager = new OutputManager(options);
     allMemberChannels.forEach((ch) => {
-      (<any>outputManager.findMemberChannel(ch)).buildNoteOnRelatedMessages(noteOn);
+      outputManager.findMemberChannel(ch).buildNoteOnRelatedMessages(noteOn);
     });
     memberChannelsExcept5.forEach((ch) => {
-      (<any>outputManager.findMemberChannel(ch)).buildNoteOnRelatedMessages(noteOn);
+      outputManager.findMemberChannel(ch).buildNoteOnRelatedMessages(noteOn);
     });
-    expect((<any>outputManager).allocateChannel().midiChannel).toBe(5);
+    expect(outputManager.allocateChannel().midiChannel).toBe(5);
   });
 });
 
