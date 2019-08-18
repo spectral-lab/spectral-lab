@@ -3,7 +3,7 @@ import { makeMandatory } from '../utils';
 import { PIANO_ROLL } from '../../../constants/model-types';
 import { SELECT } from '../../../constants/mouse-modes';
 import { flatten } from 'lodash';
-import { App, BaseModel, Clip, Song, Note, AudioBuffer } from '.';
+import { App, BaseModel, Clip, Song, Note } from '.';
 
 export default class PianoRoll extends BaseModel {
   static get entity () {

@@ -75,13 +75,22 @@ import { tickToPosX, pitchToPosY } from '../modules/pianoRoll/utils';
 
 export default {
   props: {
-    noteId: String,
-    pitchTransition: Array,
+    noteId: {
+      type: String,
+      default: 'no_id'
+    },
+    pitchTransition: {
+      type: Array,
+      default: () => []
+    },
     color: {
       type: String,
       default: 'grey'
     },
-    totalTicks: Number,
+    totalTicks: {
+      type: Number,
+      default: 4800
+    },
     isSelected: {
       type: Boolean,
       default: false
