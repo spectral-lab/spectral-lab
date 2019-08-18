@@ -21,7 +21,9 @@
     "test": "jest --watch",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand --watch",
     "test:update": "jest --updateSnapshot",
-    "type-check": "npx tsc -p . --noEmit"
+    "type-check": "npx tsc -p . --noEmit",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "husky": {
     "hooks": {
@@ -139,6 +141,10 @@
     "@babel/preset-flow": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.5.5",
+    "@storybook/addon-actions": "^5.1.11",
+    "@storybook/addon-links": "^5.1.11",
+    "@storybook/addons": "^5.1.11",
+    "@storybook/vue": "^5.1.11",
     "@types/jest": "^24.0.16",
     "@vue/test-utils": "^1.0.0-beta.29",
     "ajv": "^6.5.0",
@@ -146,6 +152,7 @@
     "babel-eslint": "^9.0.0",
     "babel-jest": "^23.4.2",
     "babel-loader": "^8.0.0",
+    "babel-preset-vue": "^2.0.2",
     "babili-webpack-plugin": "^0.1.2",
     "cfonts": "^2.1.2",
     "chalk": "^2.4.1",
