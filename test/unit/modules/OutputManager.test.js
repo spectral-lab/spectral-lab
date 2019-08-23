@@ -1,6 +1,6 @@
 // @flow
-import OutputManager from '../../src/renderer/modules/outputManager';
-import { NOTE_ON, MODULATION, NOTE_OFF } from '../../src/constants/model-types';
+import OutputManager from '../../../src/renderer/modules/outputManager';
+import { NOTE_ON, MODULATION, NOTE_OFF } from '../../../src/constants/model-types';
 
 const options = {
   masterChannels: [1],

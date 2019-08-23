@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import IconBtnWithTip from '../../src/renderer/components/IconBtnWithTip';
+import IconBtnWithTip from '../../../src/renderer/components/IconBtnWithTip';
 import Vue from 'vue';
 import vuetify from 'vuetify';
 

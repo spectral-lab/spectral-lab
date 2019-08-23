@@ -1,5 +1,5 @@
-import { initStore } from '../../src/renderer/store';
-import { Clip, NoteOff, AudioBuffer, Note, Track, PianoRoll } from '../../src/renderer/store/models';
+import { initStore } from '../../../src/renderer/store';
+import { Clip, NoteOff, AudioBuffer, Note, Track, PianoRoll } from '../../../src/renderer/store/models';
 import uid from 'uid';
 import { flatten } from 'lodash';
 
