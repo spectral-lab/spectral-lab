@@ -6,9 +6,9 @@ import { outputManagerOptions } from '../../../constants/defaults';
 import { NoteOn } from '../../store/models';
 // eslint-disable-next-line no-unused-vars
 import type { Send, Now } from '../../../types';
+import type { IMidiIoFacade } from '../helpers/MidiIoFacade';
 
 interface Options {
-  send?: Send;
   pitchBendRange?: number;
   nowCb?: Now;
   memberChannels?: number[];
@@ -17,7 +17,7 @@ interface Options {
 
 export interface IOutputManager {
   noteOn (noteOn: NoteOn, timestamp: number): INoteControl;
-  send: Send;
+  +send: Send;
 }
 
 export class OutputManager implements IOutputManager {
@@ -25,15 +25,15 @@ export class OutputManager implements IOutputManager {
 
   _now: Now;
 
-  send: Send;
-
   _memberChannels: MemberChannel[];
 
-  constructor (options: Options): void {
+  _midiIoFacade: IMidiIoFacade;
+
+  constructor (midiIoFacade: IMidiIoFacade, options: Options): void {
+    this._midiIoFacade = midiIoFacade;
     const defaultedOptions = Object.assign({}, outputManagerOptions, options);
     this._pitchBendRange = defaultedOptions.pitchBendRange;
     this._now = defaultedOptions.nowCb;
-    this.send = defaultedOptions.send;
     // TODO: Implement MasterChannel
     this._memberChannels = defaultedOptions.memberChannels
       .map(midiChannel => new MemberChannel({
@@ -46,7 +46,7 @@ export class OutputManager implements IOutputManager {
   /**
    * @param  {number} timestamp Either in tick
    */
-  noteOn (noteOn: NoteOn, timestamp: number = 0): NoteControl {
+  noteOn (noteOn: NoteOn, timestamp: number | null = null): NoteControl {
     const channelToSend = this.allocateChannel();
     const midiMessages = channelToSend.noteOn(noteOn);
     midiMessages.forEach(message => this.send(message, timestamp));
@@ -57,6 +57,11 @@ export class OutputManager implements IOutputManager {
     const memberChannel = this._memberChannels.find(channel => channel.midiChannel === midiChannel);
     if (memberChannel) return memberChannel;
     return this._memberChannels[0];
+  }
+
+  send (message: Array<number>, timestamp: number | null = null) {
+    if (!timestamp) return this._midiIoFacade.send(message);
+    this._midiIoFacade.send(message, timestamp);
   }
 
   set pitchBendRange (val: number) {
@@ -77,11 +82,11 @@ export class OutputManager implements IOutputManager {
   }
 
   createNoteControl (memberChannel: MemberChannel): NoteControl {
-    const modulateCb = (modulation, timestamp = 0) => {
+    const modulateCb = (modulation, timestamp = null) => {
       const midiMessages = memberChannel.modulate(modulation);
       midiMessages.forEach(message => this.send(message, timestamp));
     };
-    const noteOffCb = (noteOff, timestamp = 0) => {
+    const noteOffCb = (noteOff, timestamp = null) => {
       const midiMessages = memberChannel.noteOff(noteOff);
       midiMessages.forEach(message => this.send(message, timestamp));
     };
