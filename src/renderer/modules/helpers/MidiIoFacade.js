@@ -44,8 +44,8 @@ export class MidiIoFacade implements IMidiIoFacade {
 
   onMidiSuccess (midiAccess :MIDIAccess) {
     this._midiAccess = midiAccess;
-    this._midiInput = this.setInputById(this.listAvailableInputs()[0].id);
-    this._midiOutput = this.setOutputById(this.listAvailableOutputs()[0].id);
+    this._midiInput = midiAccess.inputs.values().next().value;
+    this._midiOutput = midiAccess.outputs.values().next().value;
   }
 
   onMidiFailure (msg: string) {
