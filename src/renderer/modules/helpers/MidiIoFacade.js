@@ -1,12 +1,23 @@
 // @flow
 import type { Send } from '../../../types';
+import { pick } from 'lodash';
+
+type PortInfo = {
+  id: string,
+  name?: string,
+  type?: string,
+  manufacturer?: string,
+  version?: string
+};
 
 export interface IMidiIoFacade {
-  +inputs: MIDIInputMap | null;
-  +outputs: MIDIOutputMap | null;
+  listAvailableInputs(): Array<PortInfo>;
+  listAvailableOutputs(): Array<PortInfo>;
   +send: Send;
-  setMidiInputById(id: string): void;
-  setMidiOutputById(id: string): void;
+  +output: any;
+  +input: any;
+  setInputById(id: string): void;
+  setOutputById(id: string): void;
 }
 
 /**
@@ -14,16 +25,16 @@ export interface IMidiIoFacade {
  * with Web Midi API
  */
 export class MidiIoFacade implements IMidiIoFacade {
-  midiAccess: MIDIAccess | null;
+  _midiAccess: MIDIAccess | null;
 
-  midiInput: any;
+  _midiInput: any;
 
-  midiOutput: any;
+  _midiOutput: any;
 
   constructor (navigator: Navigator) {
-    this.midiAccess = null;
-    this.midiInput = null;
-    this.midiOutput = null;
+    this._midiAccess = null;
+    this._midiInput = null;
+    this._midiOutput = null;
     if (!navigator.requestMIDIAccess) throw new Error('This device does not support MIDI');
     debugger;
     navigator.requestMIDIAccess()
@@ -32,11 +43,9 @@ export class MidiIoFacade implements IMidiIoFacade {
   }
 
   onMidiSuccess (midiAccess :MIDIAccess) {
-    this.midiAccess = midiAccess;
-    if (!this.inputs) return;
-    this.midiInput = this.inputs.get(this.inputIds[0]);
-    if (!this.outputs) return;
-    this.midiOutput = this.outputs.get(this.outputIds[0]);
+    this._midiAccess = midiAccess;
+    this._midiInput = this.setInputById(this.listAvailableInputs()[0].id);
+    this._midiOutput = this.setOutputById(this.listAvailableOutputs()[0].id);
   }
 
   onMidiFailure (msg: string) {
@@ -44,41 +53,45 @@ export class MidiIoFacade implements IMidiIoFacade {
   }
 
   send (...args: any) {
-    if (!this.midiOutput) return;
-    this.midiOutput.send(...args);
+    if (!this._midiOutput) return;
+    this._midiOutput.send(...args);
   }
 
-  setMidiInputById (id: string) {
-    if (!this.inputs) return;
-    this.midiInput = this.inputs.get(id);
+  setInputById (id: string) {
+    if (!this._midiAccess) return;
+    this._midiInput = this._midiAccess.inputs.get(id);
   }
 
-  setMidiOutputById (id: string) {
-    if (!this.outputs) return;
-    this.midiOutput = this.outputs.get(id);
+  setOutputById (id: string) {
+    if (!this._midiAccess) return;
+    this._midiOutput = this._midiAccess.outputs.get(id);
   }
 
-  get inputIds () {
-    if (!this.midiAccess) return [];
-    const ids = [];
-    this.midiAccess.inputs.forEach(input => ids.push(input.id));
-    return ids;
+  get input () {
+    return this._midiInput;
   }
 
-  get outputIds () {
-    if (!this.midiAccess) return [];
-    const ids = [];
-    this.midiAccess.outputs.forEach(output => ids.push(output.id));
-    return ids;
+  get output () {
+    return this._midiOutput;
   }
 
-  get inputs () {
-    if (!this.midiAccess) return null;
-    return this.midiAccess.inputs;
+  listAvailableInputs () {
+    if (!this._midiAccess) return [];
+    const list = [];
+    this._midiAccess.inputs.forEach(input => {
+      const portInfo = pick(input, ['id', 'name', 'type', 'manufacturer', 'version']);
+      list.push(portInfo);
+    });
+    return list;
   }
 
-  get outputs () {
-    if (!this.midiAccess) return null;
-    return this.midiAccess.outputs;
+  listAvailableOutputs () {
+    if (!this._midiAccess) return [];
+    const list = [];
+    this._midiAccess.outputs.forEach(output => {
+      const portInfo = pick(output, ['id', 'name', 'type', 'manufacturer', 'version']);
+      list.push(portInfo);
+    });
+    return list;
   }
 }

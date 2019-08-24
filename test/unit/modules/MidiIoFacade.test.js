@@ -1,9 +1,52 @@
 // @flow
 import { MidiIoFacade } from '../../../src/renderer/modules/helpers/MidiIoFacade';
 
+const genMock = () => {
+  const midiInput1 = {
+    id: '1',
+    name: 'IAC Driver'
+  };
+  const midiInput2 = {
+    id: '2',
+    name: 'Apple Synth'
+  };
+  const midiOutput1 = {
+    id: '1',
+    send: jest.fn()
+  };
+  const midiOutput2 = {
+    id: '2',
+    send: jest.fn()
+  };
+  const midiAccess = {
+    inputs: {
+      get: (id) => {
+        if (id === '1') return midiInput1;
+        if (id === '2') return midiInput2;
+      },
+      forEach: (cb) => { cb(midiInput1); cb(midiInput2); }
+    },
+    outputs: {
+      get: (id) => {
+        if (id === '1') return midiOutput1;
+        if (id === '2') return midiOutput2;
+      },
+      forEach: (cb) => { cb(midiOutput1); cb(midiOutput2); }
+    }
+  };
+  return {
+    midiInput1,
+    midiInput2,
+    midiOutput1,
+    midiOutput2,
+    midiAccess
+  };
+};
+
 describe('Constructor of MidiIoFacade class', () => {
   test('instantiates', () => {
-    const midiIoFacade = new MidiIoFacade(({ requestMIDIAccess: () => Promise.resolve() } : any));
+    const { midiAccess } = genMock();
+    const midiIoFacade = new MidiIoFacade(({ requestMIDIAccess: () => Promise.resolve(midiAccess) } : any));
     expect(midiIoFacade).toBeInstanceOf(MidiIoFacade);
   });
   test('throws Error without `requestMIDIAccess`', () => {
@@ -12,61 +55,58 @@ describe('Constructor of MidiIoFacade class', () => {
 });
 
 describe('Methods of MidiIoFacade', () => {
-  test('get inputs', (done) => {
-    const midiAccess = {
-      inputs: [1, 2, 3]
-    };
+  test('get available inputs', (done) => {
+    const { midiAccess } = genMock();
     const midiIoFacade = new MidiIoFacade(({ requestMIDIAccess: () => Promise.resolve(midiAccess) } : any));
-    expect(midiIoFacade.inputs).toBe(null);
+    expect(midiIoFacade.listAvailableInputs()).toEqual([]);
     setTimeout(() => {
-      expect(midiIoFacade.inputs).toEqual([1, 2, 3]);
+      expect(midiIoFacade.listAvailableInputs()[0]).toHaveProperty('id');
+      expect(midiIoFacade.listAvailableInputs()[1]).toHaveProperty('name');
       done();
     }, 0);
   });
-  test('get outputs', (done) => {
-    const midiAccess = {
-      outputs: [3, 2, 1]
-    };
+  test('get available outputs', (done) => {
+    const { midiAccess } = genMock();
     const midiIoFacade = new MidiIoFacade(({ requestMIDIAccess: () => Promise.resolve(midiAccess) } : any));
-    expect(midiIoFacade.outputs).toBe(null);
+    expect(midiIoFacade.listAvailableOutputs()).toEqual([]);
     setTimeout(() => {
-      expect(midiIoFacade.outputs).toEqual([3, 2, 1]);
+      expect(midiIoFacade.listAvailableInputs()[0]).toHaveProperty('id');
+      expect(midiIoFacade.listAvailableInputs()[1]).not.toHaveProperty('send');
       done();
     }, 0);
   });
-  test('call send', () => {
-    const midiIoFacade = new MidiIoFacade(({ requestMIDIAccess: () => Promise.resolve({}) } : any));
-    const mockSend = jest.fn();
-    midiIoFacade.midiOutput = { send: mockSend };
-    midiIoFacade.send([60, 60, 60], 480);
-    expect(mockSend.mock.calls[0][0]).toEqual([60, 60, 60]);
-    expect(mockSend.mock.calls[0][1]).toBe(480);
+  test('send midi messages', (done) => {
+    const { midiAccess, midiOutput1, midiOutput2 } = genMock();
+    const midiIoFacade = new MidiIoFacade(({ requestMIDIAccess: () => Promise.resolve(midiAccess) } : any));
+    setTimeout(() => {
+      midiIoFacade.setOutputById('1');
+      midiIoFacade.send([60, 60, 60], 480);
+      expect(midiOutput1.send.mock.calls[0][0]).toEqual([60, 60, 60]);
+      expect(midiOutput1.send.mock.calls[0][1]).toBe(480);
+      midiIoFacade.setOutputById('2');
+      midiIoFacade.send([120, 120, 120], 960);
+      expect(midiOutput2.send.mock.calls[0][0]).toEqual([120, 120, 120]);
+      expect(midiOutput2.send.mock.calls[0][1]).toBe(960);
+      done();
+    }, 0);
   });
   test('set MidiInput by Id', (done) => {
-    const mockGet = jest.fn(() => []);
-    const midiAccess = {
-      inputs: {
-        get: mockGet
-      }
-    };
+    const { midiAccess } = genMock();
     const midiIoFacade = new MidiIoFacade(({ requestMIDIAccess: () => Promise.resolve(midiAccess) } : any));
     setTimeout(() => {
-      midiIoFacade.setMidiInputById('1');
-      expect(mockGet.mock.calls[0][0]).toEqual('1');
+      midiIoFacade.setInputById('1');
+      expect(midiIoFacade.input).toHaveProperty('id', '1');
+      expect(midiIoFacade.input).toHaveProperty('name', 'IAC Driver');
       done();
     }, 0);
   });
   test('set MidiOutput by Id', (done) => {
-    const mockGet = jest.fn();
-    const midiAccess = {
-      outputs: {
-        get: mockGet
-      }
-    };
+    const { midiAccess } = genMock();
     const midiIoFacade = new MidiIoFacade(({ requestMIDIAccess: () => Promise.resolve(midiAccess) } : any));
     setTimeout(() => {
-      midiIoFacade.setMidiOutputById('2');
-      expect(mockGet.mock.calls[0][0]).toEqual('2');
+      midiIoFacade.setOutputById('2');
+      expect(midiIoFacade.output).toHaveProperty('id', '2');
+      expect(midiIoFacade.output).toHaveProperty('send');
       done();
     }, 0);
   });
