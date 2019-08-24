@@ -40,17 +40,24 @@ export class Scheduler implements IScheduler {
       const noteOffsetTime = noteAction.parent.offsetTime;
       if (noteAction.type === NOTE_ON) {
         if (!this._outputManager) return;
-        noteControl[noteAction.noteId] = this._outputManager.noteOn(noteAction, noteOffsetTime);
+        noteControl[noteAction.noteId] = this._outputManager.noteOn(
+          noteAction,
+          this._now() + timeConverter.toMs(noteOffsetTime)
+        );
       }
       if (noteAction.type === MODULATION) {
         const nc = noteControl[noteAction.noteId];
         if (!nc) return;
-        nc.modulate(noteAction, noteOffsetTime + noteAction.offsetTime);
+        nc.modulate(
+          noteAction,
+          this._now() + timeConverter.toMs(noteOffsetTime + noteAction.offsetTime));
       }
       if (noteAction.type === NOTE_OFF) {
         const nc = noteControl[noteAction.noteId];
         if (!nc) return;
-        nc.noteOff(noteAction, noteOffsetTime + noteAction.offsetTime);
+        nc.noteOff(
+          noteAction,
+          this._now() + timeConverter.toMs(noteOffsetTime + noteAction.offsetTime));
       }
     });
   }
