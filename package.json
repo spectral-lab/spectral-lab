@@ -18,7 +18,7 @@
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
-    "test": "jest --watch",
+    "test": "jest --watch --silent",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand --watch",
     "test:update": "jest --updateSnapshot",
     "storybook": "start-storybook -p 6006",
