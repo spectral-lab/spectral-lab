@@ -51,9 +51,9 @@ export type MidiMessage = [number, number] | [number, number, number];
 
 /**
  * @param  message Array of midi message eg: [0x90, 63, 127]
- * @param  timestamp Unit is tick.
+ * @param  timestamp Unit is ms.
  */
-export type Send = (message: number[], timestamp?: number) => void;
+export type Send = (message: MidiMessage, timestamp?: number) => void;
 
 /**
  * eg: performance.now

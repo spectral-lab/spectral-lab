@@ -5,7 +5,7 @@ import { outputManagerOptions } from '../../../constants/defaults';
 // eslint-disable-next-line no-unused-vars
 import { NoteOn } from '../../store/models';
 // eslint-disable-next-line no-unused-vars
-import type { Send, Now } from '../../../types';
+import type { Send, Now, MidiMessage } from '../../../types';
 import type { IMidiIoFacade } from '../helpers/MidiIoFacade';
 
 interface Options {
@@ -59,7 +59,7 @@ export class OutputManager implements IOutputManager {
     return this._memberChannels[0];
   }
 
-  send (message: Array<number>, timestamp: number | null = null) {
+  send (message: MidiMessage, timestamp: number | null = null) {
     if (!timestamp) return this._midiIoFacade.send(message);
     this._midiIoFacade.send(message, timestamp);
   }
