@@ -36,7 +36,6 @@ export class MidiIoFacade implements IMidiIoFacade {
     this._midiInput = null;
     this._midiOutput = null;
     if (!navigator.requestMIDIAccess) throw new Error('This device does not support MIDI');
-    debugger;
     navigator.requestMIDIAccess()
       .then(midiAccess => this.onMidiSuccess(midiAccess), msg => this.onMidiFailure(msg))
       .catch(console.error);
