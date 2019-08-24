@@ -29,7 +29,7 @@ export class OutputManager implements IOutputManager {
 
   _midiIoFacade: IMidiIoFacade;
 
-  constructor (midiIoFacade: IMidiIoFacade, options: Options): void {
+  constructor (midiIoFacade: IMidiIoFacade, options: Options = {}): void {
     this._midiIoFacade = midiIoFacade;
     const defaultedOptions = Object.assign({}, outputManagerOptions, options);
     this._pitchBendRange = defaultedOptions.pitchBendRange;
