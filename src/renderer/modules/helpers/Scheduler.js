@@ -3,7 +3,7 @@ import type { IOutputManager } from '../outputManager';
 import { Clip, Note } from '../../store/models';
 import { MODULATION, NOTE_OFF, NOTE_ON } from '../../../constants/model-types';
 import type { MidiMessage, Now } from '../../../types';
-import { timeConverter } from './timeUtils';
+import type { ITimeConverter } from './TimeConverter';
 
 export interface IScheduler {
   immediate(midiMessage: MidiMessage): void;
@@ -17,9 +17,12 @@ export class Scheduler implements IScheduler {
 
   _now: Now;
 
-  constructor (outputManager: IOutputManager | null = null, now: Now) {
+  _timeConverter: ITimeConverter;
+
+  constructor (outputManager: IOutputManager | null = null, now: Now, timeConverter: ITimeConverter) {
     this._outputManager = outputManager;
     this._now = now;
+    this._timeConverter = timeConverter;
   }
 
   immediate (midiMessage: MidiMessage) {
@@ -29,7 +32,7 @@ export class Scheduler implements IScheduler {
 
   addCue (midiMessage: MidiMessage, tick: number) {
     if (!this._outputManager) return;
-    this._outputManager.send(midiMessage, this._now() + timeConverter.toMs(tick));
+    this._outputManager.send(midiMessage, this._now() + this._timeConverter.toMs(tick));
   }
 
   playClip (clip: Clip): void {
@@ -42,7 +45,7 @@ export class Scheduler implements IScheduler {
         if (!this._outputManager) return;
         noteControl[noteAction.noteId] = this._outputManager.noteOn(
           noteAction,
-          this._now() + timeConverter.toMs(noteOffsetTime)
+          this._now() + this._timeConverter.toMs(noteOffsetTime)
         );
       }
       if (noteAction.type === MODULATION) {
@@ -50,14 +53,14 @@ export class Scheduler implements IScheduler {
         if (!nc) return;
         nc.modulate(
           noteAction,
-          this._now() + timeConverter.toMs(noteOffsetTime + noteAction.offsetTime));
+          this._now() + this._timeConverter.toMs(noteOffsetTime + noteAction.offsetTime));
       }
       if (noteAction.type === NOTE_OFF) {
         const nc = noteControl[noteAction.noteId];
         if (!nc) return;
         nc.noteOff(
           noteAction,
-          this._now() + timeConverter.toMs(noteOffsetTime + noteAction.offsetTime));
+          this._now() + this._timeConverter.toMs(noteOffsetTime + noteAction.offsetTime));
       }
     });
   }
