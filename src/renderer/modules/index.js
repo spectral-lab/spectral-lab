@@ -1,11 +1,11 @@
 // @flow
-import { MidiPlayer } from './helpers/MidiPlayer';
-import { OutputManager } from './outputManager';
-import { MidiIoFacade } from './helpers/MidiIoFacade';
-import { Scheduler } from './helpers/Scheduler';
-import { TimeConverter } from './helpers/TimeConverter';
-import { SmfGenerator } from './helpers/SmfGenerator';
-import { MidiWriter } from './helpers/MidiWriter';
+import { MidiPlayer } from './MidiPlayer';
+import { OutputManager } from './OutputManager';
+import { MidiIoFacade } from './MidiIoFacade';
+import { Scheduler } from './Scheduler';
+import { TimeConverter } from './TimeConverter';
+import { SmfGenerator } from './SmfGenerator';
+import { MidiWriter } from './MidiWriter';
 
 export const timeConverter = new TimeConverter();
 const midiIoFacade = new MidiIoFacade(navigator);

@@ -1,7 +1,7 @@
 // @flow
-import { Song } from '../../store/models';
-import { msToTick, tickToMs } from './timeUtils';
-import type { Ms, Tick } from './timeUtils';
+import { Song } from '../store/models';
+import { msToTick, tickToMs } from '../utils/helpers/timeUtils';
+import type { Ms, Tick } from '../utils/helpers/timeUtils';
 
 export interface ITimeConverter {
   toTick(ms: Ms): Tick;

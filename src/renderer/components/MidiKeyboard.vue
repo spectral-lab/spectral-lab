@@ -7,7 +7,7 @@
 
 <script>
 import { range } from 'lodash';
-import { drawMidiKeyboard } from '../modules/pianoRoll/midiKeyboard';
+import { drawMidiKeyboard } from '../utils/view/pianoRoll/midiKeyboard';
 
 export default {
   data () {

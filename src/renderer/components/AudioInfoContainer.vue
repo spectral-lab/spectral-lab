@@ -14,14 +14,14 @@
 <script>
 import AudioInfo from './AudioInfo';
 import { AudioBuffer, Spectrogram, Clip } from '../store/models';
-import { playAudioBuffer } from '../modules/helpers';
-import processAudioFile from '../modules/helpers/processAudioFile';
+import { playAudioBuffer } from '../utils/helpers';
+import processAudioFile from '../utils/helpers/processAudioFile';
 import uid from 'uid';
 import { basename } from 'path';
-import resample from '../modules/audio/resample';
-import stft from '../modules/audio/stft';
-import { secToTick } from '../modules/helpers/timeUtils';
-import audioCtx from '../modules/audio/audioCtx';
+import resample from '../utils/audio/resample';
+import stft from '../utils/audio/stft';
+import { secToTick } from '../utils/helpers/timeUtils';
+import audioCtx from '../utils/audio/audioCtx';
 
 export default {
   components: {

@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { pitchBendMessage, cc74Message, channelPressureMessage, noteOffMessage, noteOnMessage } from '../../../src/renderer/modules/midi/formatMidiMessage';
+import { pitchBendMessage, cc74Message, channelPressureMessage, noteOffMessage, noteOnMessage } from '../../../src/renderer/utils/midi/formatMidiMessage';
 
 test('pitchBendMessage', () => {
   const pitchBendRange = 48;

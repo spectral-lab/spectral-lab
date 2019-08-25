@@ -1,8 +1,8 @@
-import { Note, NoteOn, NoteOff, Modulation } from '../../store/models';
+import { Note, NoteOn, NoteOff, Modulation } from '../../../store/models';
 import {
   NOTE_SHIFT,
   DELETE_NOTES
-} from '../../../constants/key-bindings';
+} from '../../../../constants/key-bindings';
 import hotkeys from 'hotkeys-js';
 
 /**

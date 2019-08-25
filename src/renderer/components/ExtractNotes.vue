@@ -14,7 +14,7 @@ import {
   parsePointAsModulation,
   parsePointAsNoteOff,
   parsePointAsNoteOn, postImage
-} from '../modules/helpers/postImageUtils';
+} from '../utils/helpers/postImageUtils';
 import uid from 'uid';
 
 export default {

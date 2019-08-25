@@ -1,6 +1,5 @@
 // @flow
 import '../../../types';
-// eslint-disable-next-line no-unused-vars
 import { Modulation, NoteOff } from '../../store/models';
 
 type ModulateCb = (modulate: Modulation, timestamp: number) => any;

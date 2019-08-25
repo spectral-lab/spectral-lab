@@ -1,11 +1,9 @@
 import {
   noteOffMessage, noteOnMessage, pitchBendMessage, channelPressureMessage, cc74Message
-} from '../midi/formatMidiMessage';
+} from '../../utils/midi/formatMidiMessage';
 import { PITCH_BEND, PRESSURE, TIMBRE } from '../../../constants/modulation-types';
 import { pick } from 'lodash';
-// eslint-disable-next-line no-unused-vars
 import { NoteOn, NoteOff, Modulation } from '../../store/models';
-// eslint-disable-next-line no-unused-vars
 import type { MidiMessage, Now } from '../../../types';
 
 export default class MemberChannel {

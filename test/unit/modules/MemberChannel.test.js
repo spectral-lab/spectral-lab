@@ -1,5 +1,5 @@
 // @flow
-import MemberChannel from '../../../src/renderer/modules/outputManager/MemberChannel';
+import MemberChannel from '../../../src/renderer/modules/OutputManager/MemberChannel';
 import type { Now } from '../../../src/types';
 
 const noteOn: any = {

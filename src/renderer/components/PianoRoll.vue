@@ -72,8 +72,8 @@
 import NoteDisplay from './NoteDisplay';
 import MidiKeyboardContainer from './MidiKeyboardContainer';
 import ElasticDivStack from './ElasticDivStack';
-import ZoomManager from '../modules/pianoRoll/ZoomManager';
-import { syncScroll } from '../modules/pianoRoll/scroll';
+import ZoomManager from '../utils/view/pianoRoll/ZoomManager';
+import { syncScroll } from '../utils/view/pianoRoll/scroll';
 import RulerContainer from './RulerContainer';
 import AutomationDisplay from './AutomationDisplay';
 

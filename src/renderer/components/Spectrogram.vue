@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import renderSpectrogram from '../modules/render/renderSpectrogram';
+import renderSpectrogram from '../utils/view/renderSpectrogram';
 import { Spectrogram } from '../store/models';
 export default {
   props: {

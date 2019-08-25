@@ -10,8 +10,8 @@ import {
   noteShiftRight,
   noteShiftUp,
   selectAllNotes
-} from './modules/noteManipulations';
-import { saveProject } from './modules/helpers/projectUtils';
+} from './utils/noteManipulations';
+import { saveProject } from './utils/helpers/projectUtils';
 
 export default () => {
   bindKeys();

@@ -1,7 +1,7 @@
 // @flow
 import type { ISmfGenerator } from './SmfGenerator';
 import fs from 'fs-extra';
-import { Clip } from '../../store/models';
+import { Clip } from '../store/models';
 
 export interface IMidiWriter {
   exportClip(clip: Clip, dir: string): Promise<void>

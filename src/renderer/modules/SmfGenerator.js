@@ -1,8 +1,8 @@
-import type { IOutputManager } from '../outputManager';
-import { Clip } from '../../store/models';
-import { MODULATION, NOTE_OFF, NOTE_ON } from '../../../constants/model-types';
+import type { IOutputManager } from './outputManager';
+import { Clip } from '../store/models';
+import { MODULATION, NOTE_OFF, NOTE_ON } from '../../constants/model-types';
 import JZZ from 'jzz';
-import type { NoteAction } from '../../../types';
+import type { NoteAction } from '../../types';
 import JzzMidiSmf from 'jzz-midi-smf';
 
 JzzMidiSmf(JZZ);
