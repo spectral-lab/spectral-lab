@@ -37,9 +37,3 @@ export class MidiPlayer implements IMidiPlayer {
     allNotesOff(message => this.scheduler.immediate(message));
   }
 }
-
-export class offlineMidiRenderer extends MidiPlayer {
-  render (item: any) {
-    this.play(item);
-  }
-}

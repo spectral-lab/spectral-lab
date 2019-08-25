@@ -44,9 +44,6 @@ import * as models from '../renderer/store/models';
  * @property {number} noteOffVelocity
  */
 
-/**
- * @typedef {NoteOn | Modulation | NoteOff} NoteAction
- */
 export type MidiMessage = [number, number] | [number, number, number];
 
 /**
