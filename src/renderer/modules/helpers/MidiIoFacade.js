@@ -1,5 +1,5 @@
 // @flow
-import type { Send } from '../../../types';
+import type { MidiMessage, Send } from '../../../types';
 import { pick } from 'lodash';
 
 type PortInfo = {
@@ -52,9 +52,9 @@ export class MidiIoFacade implements IMidiIoFacade {
     throw new Error(msg);
   }
 
-  send (...args: any) {
+  send (message: MidiMessage, timestamp?: number) {
     if (!this._midiOutput) return;
-    this._midiOutput.send(...args);
+    this._midiOutput.send(message, timestamp);
   }
 
   setInputById (id: string) {

@@ -13,30 +13,28 @@ export interface IScheduler {
 }
 
 export class Scheduler implements IScheduler {
-  _outputManager: IOutputManager | null;
+  _outputManager: IOutputManager;
 
   _now: Now;
 
   _timeConverter: ITimeConverter;
 
-  constructor (outputManager: IOutputManager | null = null, now: Now, timeConverter: ITimeConverter) {
+  constructor (outputManager: IOutputManager, now: Now, timeConverter: ITimeConverter) {
     this._outputManager = outputManager;
     this._now = now;
     this._timeConverter = timeConverter;
   }
 
   immediate (midiMessage: MidiMessage) {
-    if (!this._outputManager) return;
-    this._outputManager.send(midiMessage);
+    this._outputManager.send && this._outputManager.send(midiMessage);
   }
 
   addCue (midiMessage: MidiMessage, tick: number) {
-    if (!this._outputManager) return;
-    this._outputManager.send(midiMessage, this._now() + this._timeConverter.toMs(tick));
+    // $FlowFixMe
+    this._outputManager.send && this._outputManager.send(midiMessage, this._now() + this._timeConverter.toMs(tick));
   }
 
   playClip (clip: Clip): void {
-    if (!this._outputManager) throw new Error('outputManager is not set');
     const noteActions = clip.sortedNoteActions;
     const noteControl = {};
     noteActions.forEach(noteAction => {
