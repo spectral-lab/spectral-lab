@@ -43,6 +43,7 @@ export class MidiIoFacade implements IMidiIoFacade {
 
   onMidiSuccess (midiAccess :MIDIAccess) {
     this._midiAccess = midiAccess;
+    // set default i/o
     this._midiInput = midiAccess.inputs.values().next().value;
     this._midiOutput = midiAccess.outputs.values().next().value;
   }
