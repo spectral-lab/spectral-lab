@@ -1,25 +1,16 @@
+// @flow
 import { remote } from 'electron';
 import fs from 'fs-extra';
 import { Clip } from '../../store/models';
 import JZZ from 'jzz';
 import jzzMidiSmf from 'jzz-midi-smf';
 import { OutputManager } from '../outputManager';
-import { processClip } from '../outputManager/utils';
+// import { processClip } from '../outputManager/utils';
 const { dialog } = remote;
 jzzMidiSmf(JZZ);
 
-type MTrk = JZZ.MIDI.SMF.MTrk;
-
-export const exportSelectedClips = async (): Promise<void> => {
-  const exportDir = await dialog.showOpenDialog({
-    message: 'Choose a directory where you export',
-    properties: ['openDirectory', 'createDirectory']
-  });
-  if (!exportDir) return;
-  const selectedClips = Clip.query().where('selected', true).withAllRecursive().get();
-  await Promise.all(selectedClips.map(clip => exportClip(clip, exportDir[0])));
-  console.log('All done');
-};
+export type MTrk = JZZ.MIDI.SMF.MTrk;
+export type SMF = JZZ.MIDI.SMF;
 
 export const exportClip = async (clip: Clip, dir: string) => {
   if (clip.notes === []) return;
@@ -40,9 +31,9 @@ const clipToMTrk = (clip: Clip): MTrk => {
     .add(0, JZZ.MIDI.smfSeqName(clip.name || clip.id))
     .add(0, JZZ.MIDI.smfBPM(bpm))
     .add(clip.duration, JZZ.MIDI.smfEndOfTrack());
-  const offlineOutputManager = new OutputManager({
-    send: (message, timestamp) => MTrk.add(timestamp, JZZ.MIDI(message))
-  });
-  processClip(clip, offlineOutputManager);
+  // const offlineOutputManager = new OutputManager({
+  //   send: (message, timestamp) => MTrk.add(timestamp, JZZ.MIDI(message))
+  // });
+  // processClip(clip, offlineOutputManager);
   return MTrk;
 };
