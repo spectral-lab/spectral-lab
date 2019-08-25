@@ -1,15 +1,16 @@
+// @flow
 import { Clip } from '../store/models';
-import { exportClip } from '../modules/helpers/midiExportUtils';
 import { remote } from 'electron';
+import { midiWriter } from '../modules';
 const { dialog } = remote;
 
 export const exportSelectedClips = async (): Promise<void> => {
-  const exportDir = await dialog.showOpenDialog({
+  const exportDirs = await dialog.showOpenDialog({
     message: 'Choose a directory where you export',
     properties: ['openDirectory', 'createDirectory']
   });
-  if (!exportDir) return;
+  if (!exportDirs || exportDirs === []) return;
   const selectedClips = Clip.query().where('selected', true).withAllRecursive().get();
-  await Promise.all(selectedClips.map(clip => exportClip(clip, exportDir[0])));
-  console.log('All done');
+  await Promise.all(selectedClips.map(clip => midiWriter.exportClip(clip, exportDirs[0])));
+  console.log('All clips are exported successfully');
 };
