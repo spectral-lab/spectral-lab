@@ -15,7 +15,7 @@ export class MidiWriter implements IMidiWriter {
   }
 
   async exportClip (clip: Clip, dir: string) {
-    const smf = this._smfGenerator.processClip(clip);
+    const smf = this._smfGenerator.from(clip);
     const name = clip.name || clip.id;
     const path = `${dir}/${name}.mid`;
     await fs.writeFile(path, smf.dump(), 'binary');

@@ -11,7 +11,7 @@ export type MTrk = JZZ.MIDI.SMF.MTrk;
 export type SMF = JZZ.MIDI.SMF;
 
 export interface ISmfGenerator {
-  processClip(clip: Clip): SMF;
+  from(clip: Clip): SMF;
 }
 
 export class SmfGenerator implements ISmfGenerator {
@@ -21,7 +21,7 @@ export class SmfGenerator implements ISmfGenerator {
     this._offlineOutputManager = offlineOutputManager;
   }
 
-  processClip (clip: Clip): SMF {
+  from (clip: Clip): SMF {
     if (clip.notes === []) return;
     console.log(`generating SMF from clip ${name}`);
     const { ticksPerBeat } = clip.parent.parent;
