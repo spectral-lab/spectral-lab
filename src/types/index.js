@@ -59,3 +59,5 @@ export type Send = (message: MidiMessage, timestamp?: number) => void;
 export type Now = () => number;
 
 export type NoteAction = models.NoteOn | models.Modulation | models.NoteOff;
+
+export type Callable = (...args: Array<any>) => any;
