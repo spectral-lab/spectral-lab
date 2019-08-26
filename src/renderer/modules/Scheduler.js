@@ -7,7 +7,7 @@ import type { ITimeConverter } from './TimeConverter';
 
 export interface IScheduler {
   immediate(midiMessage: MidiMessage): void;
-  addCue(midiMessage: MidiMessage, tick: number): void;
+  timeout(midiMessage: MidiMessage, tick: number): void;
   playClip(clip: Clip): void;
   playNote(note: Note): void;
 }
@@ -29,7 +29,7 @@ export class Scheduler implements IScheduler {
     this._outputManager.send && this._outputManager.send(midiMessage);
   }
 
-  addCue (midiMessage: MidiMessage, tick: number) {
+  timeout (midiMessage: MidiMessage, tick: number) {
     // $FlowFixMe
     this._outputManager.send && this._outputManager.send(midiMessage, this._now() + this._timeConverter.toMs(tick));
   }
