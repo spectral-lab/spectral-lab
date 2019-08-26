@@ -18,17 +18,17 @@
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
-    "test": "jest --watch",
+    "test": "jest --watch --silent",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand --watch",
     "test:update": "jest --updateSnapshot",
-    "type-check": "npx tsc -p . --noEmit",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "type-check": "flow"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "node node_modules/.bin/jest"
+      "pre-commit": "lint-staged && flow",
+      "pre-push": "node node_modules/.bin/jest --silent"
     }
   },
   "lint-staged": {

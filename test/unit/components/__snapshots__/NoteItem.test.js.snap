@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component renders correctly 1`] = `
+<g>
+  <defs>
+    <filter
+      id="shadow"
+    >
+      <fedropshadow
+        dx="0.2"
+        dy="0.4"
+        std-deviation="2"
+      />
+    </filter>
+  </defs>
+   
+  <g>
+    <g
+      class="note-line"
+    >
+      <line
+        stroke="grey"
+        stroke-width="10"
+        x1="3.048680272108843%"
+        x2="5.260136054421769%"
+        y1="45.643767533234914%"
+        y2="69.08126753323438%"
+      />
+       
+      <circle
+        cx="3.048680272108843%"
+        cy="45.643767533234914%"
+        fill="grey"
+        r="5"
+      />
+    </g>
+    <g
+      class="note-line"
+    >
+      <line
+        stroke="grey"
+        stroke-width="10"
+        x1="5.260136054421769%"
+        x2="7.371591836734695%"
+        y1="69.08126753323438%"
+        y2="22.206267533234115%"
+      />
+       
+      <circle
+        cx="5.260136054421769%"
+        cy="69.08126753323438%"
+        fill="grey"
+        r="5"
+      />
+    </g>
+    <g
+      class="note-line"
+    >
+      <line
+        stroke="grey"
+        stroke-width="10"
+        x1="7.371591836734695%"
+        x2="12.48304761904762%"
+        y1="22.206267533234115%"
+        y2="14.39376753323267%"
+      />
+       
+      <circle
+        cx="7.371591836734695%"
+        cy="22.206267533234115%"
+        fill="grey"
+        r="5"
+      />
+    </g>
+    <g
+      class="note-line"
+    >
+      <!---->
+       
+      <circle
+        cx="12.48304761904762%"
+        cy="14.39376753323267%"
+        fill="grey"
+        r="5"
+      />
+    </g>
+  </g>
+</g>
+`;

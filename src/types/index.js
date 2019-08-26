@@ -1,4 +1,4 @@
-
+// @flow
 // eslint-disable-next-line no-unused-vars
 import * as models from '../renderer/store/models';
 
@@ -44,16 +44,13 @@ import * as models from '../renderer/store/models';
  * @property {number} noteOffVelocity
  */
 
-/**
- * @typedef {NoteOn | Modulation | NoteOff} NoteAction
- */
 export type MidiMessage = [number, number] | [number, number, number];
 
 /**
  * @param  message Array of midi message eg: [0x90, 63, 127]
- * @param  timestamp Unit is tick.
+ * @param  timestamp Unit is ms.
  */
-export type Send = (message: number[], timestamp?: number) => void;
+export type Send = (message: MidiMessage, timestamp?: number) => void;
 
 /**
  * eg: performance.now
@@ -62,3 +59,21 @@ export type Send = (message: number[], timestamp?: number) => void;
 export type Now = () => number;
 
 export type NoteAction = models.NoteOn | models.Modulation | models.NoteOff;
+
+export type Callable = (...args: Array<any>) => any;
+/**
+ * Unit is Hz
+ * eg 48000
+ */
+export type SamplingRate = number;
+
+/**
+ * Unit is Hz
+ * eg: 440
+ */
+export type Frequency = number;
+
+/**
+ * from 0.0 to 1.0
+ */
+export type Magnitude = number;

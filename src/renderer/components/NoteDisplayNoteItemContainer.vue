@@ -34,8 +34,8 @@ import hotkeys from 'hotkeys-js';
 import { DESELECT_NOTES } from '../../constants/key-bindings';
 import { PEN } from '../../constants/mouse-modes';
 import uid from 'uid';
-import { posXToTick, posYToPitch } from '../modules/pianoRoll/utils';
-import { pitchToNoteNumberAndPitchBend } from '../modules/helpers';
+import { posXToTick, posYToPitch } from '../utils/view/pianoRoll/utils';
+import { pitchToNoteNumberAndPitchBend } from '../utils/helpers';
 
 export default {
   components: {

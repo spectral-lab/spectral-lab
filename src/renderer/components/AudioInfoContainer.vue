@@ -13,23 +13,22 @@
 
 <script>
 import AudioInfo from './AudioInfo';
-import { AudioBuffer, Spectrogram, Clip } from '../store/models';
-import { playAudioBuffer } from '../modules/helpers';
-import processAudioFile from '../modules/helpers/processAudioFile';
+import { AudioBuffer, Clip } from '../store/models';
+import processAudioFile from '../utils/helpers/processAudioFile';
 import uid from 'uid';
 import { basename } from 'path';
-import resample from '../modules/audio/resample';
-import stft from '../modules/audio/stft';
-import { secToTick } from '../modules/helpers/timeUtils';
-import audioCtx from '../modules/audio/audioCtx';
+import { audioPlayer } from '../modules';
+import { audioCtx as ctx } from '../utils/audio/audioCtx';
+import Vue from 'vue';
+import { buildSpectrogram } from '../usecases/buildSpectrogram';
 
-export default {
+export default Vue.extend({
   components: {
     AudioInfo
   },
   data () {
     return {
-      sourceNode: null
+      isPlaying: false
     };
   },
   computed: {
@@ -43,41 +42,27 @@ export default {
     basename () {
       return basename(this.filepath);
     },
-    isPlaying () {
-      return Boolean(this.sourceNode);
-    },
     clip () {
       return Clip.query().last();
     },
     clipId () {
       return this.clip.id;
-    },
-    song () {
-      return this.clip.parent.parent;
     }
+  },
+  mounted () {
+    audioPlayer.onStop = () => { this.isPlaying = false; };
+    audioPlayer.onStart = () => { this.isPlaying = true; };
   },
   methods: {
     handleClickPlay () {
-      if (!this.audioBuffer) return;
-      if (this.sourceNode != null) {
-        this.sourceNode.stop();
-        this.sourceNode = null;
-        return;
-      }
-      const ab = this.audioBuffer.data;
-      const ctx = audioCtx;
-      this.sourceNode = playAudioBuffer(ab, ctx);
-      this.sourceNode.onended = () => {
-        if (this.sourceNode != null) {
-          this.sourceNode = null;
-        }
-      };
+      if (audioPlayer.isPlaying) audioPlayer.stop();
+      audioPlayer.play();
     },
     async handleFileUpdate (file) {
       if (!file) return;
-      const ctx = audioCtx;
       const { buffer, filepath } = await processAudioFile(file, ctx);
-      AudioBuffer.insert({
+      audioPlayer.buffer = buffer;
+      await AudioBuffer.insert({
         data: {
           id: uid(),
           clipId: this.clipId,
@@ -88,24 +73,10 @@ export default {
     },
     async buildSpectrogram () {
       if (!this.audioBuffer) return;
-      const buffer = this.audioBuffer.data;
-      const audioBufferId = this.audioBuffer.id;
-      const DESIRED_SAMPLE_RATE = 22050;
-      const resampleEvent = await resample(buffer, DESIRED_SAMPLE_RATE);
-      const resampledBuffer = resampleEvent.renderedBuffer;
-      const { times, freqs, magnitude2d } = await stft(resampledBuffer, DESIRED_SAMPLE_RATE);
-      Spectrogram.insert({
-        data: {
-          id: uid(),
-          audioBufferId,
-          times: times.map(time => secToTick(time, this.song.bpm, this.song.ticksPerBeat)),
-          freqs,
-          magnitude2d
-        }
-      });
+      await buildSpectrogram(this.audioBuffer);
     }
   }
-};
+});
 </script>
 
 <style scoped>
