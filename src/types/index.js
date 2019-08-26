@@ -61,3 +61,19 @@ export type Now = () => number;
 export type NoteAction = models.NoteOn | models.Modulation | models.NoteOff;
 
 export type Callable = (...args: Array<any>) => any;
+/**
+ * Unit is Hz
+ * eg 48000
+ */
+export type SamplingRate = number;
+
+/**
+ * Unit is Hz
+ * eg: 440
+ */
+export type Frequency = number;
+
+/**
+ * from 0.0 to 1.0
+ */
+export type Magnitude = number;

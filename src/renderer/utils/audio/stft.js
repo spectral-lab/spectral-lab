@@ -1,22 +1,30 @@
+// @flow
 import '../../../types';
 import { FFT, WindowFunction } from 'dsp.js-browser';
 import packIntoNdarray from 'ndarray-pack';
 import unpackFromNdArray from 'ndarray-unpack';
 import { initWin, collectCenterFreqs } from './audioUtils';
+import type { Frequency, Magnitude, SamplingRate } from '../../../types';
+import type { Sec } from '../helpers/timeUtils';
 
+type spectrogram = {
+  times: Sec[],
+  freqs: Frequency[],
+  magnitude2d: Magnitude[][]
+};
 /**
- * @param  {AudioBuffer} audioBuffer
- * @param  {Number} sr
- * @return {Promise.<Spectrogram>}
+ * Short Time Fourier Transform
+ * @param audioBuffer
+ * @param sr
+ * @return {Promise<R>}
  */
-const stft = (audioBuffer, sr) => new Promise(resolve => {
-  // Initialize and calculate necessary informations for subsequenct runFFTAndPlot
+const stft = (audioBuffer: AudioBuffer, sr: SamplingRate): Promise<spectrogram> => new Promise(resolve => {
   const originalFloatArray = audioBuffer.getChannelData(0);
   const win = initWin(1024, originalFloatArray);
   const windowFunction = new WindowFunction(7); // "7" corresponds to HANN window
   const fft = new FFT(win.size, sr);
   const freqs = collectCenterFreqs(win.size, fft);
-  /** @type {Array.<Array>} Array of spectrum (magnitude values from low freq bin to high freq bin) */
+  /** @type {number[][]} Array of spectrum (magnitude values from low freq bin to high freq bin) */
   const spectra = [];
   const times = [];
   for (let i = 0; win.getRightEdgeSampleIdx(i) < originalFloatArray.length; i++) {
