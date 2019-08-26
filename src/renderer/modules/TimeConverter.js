@@ -10,6 +10,10 @@ export interface ITimeConverter {
 
 export class TimeConverter implements ITimeConverter {
   toTick (ms: Ms): Tick {
+    /**
+     *  TODO: bpm and ticksPerBeat should be cached as a class property,
+     *    and update them by observing vuex store
+     */
     const { bpm, ticksPerBeat } = Song.query().first().bpmAndTicksPerBeat;
     return msToTick(ms, bpm, ticksPerBeat);
   }
