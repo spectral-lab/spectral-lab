@@ -10,7 +10,7 @@ import {
   noteShiftRight,
   noteShiftUp,
   selectAllNotes
-} from './utils/noteManipulations';
+} from './interactors/Note';
 import { saveProject } from './utils/helpers/projectUtils';
 
 export default () => {
