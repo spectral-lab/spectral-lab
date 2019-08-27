@@ -1,5 +1,5 @@
 // @flow
-import OutputManager from '../../../src/renderer/modules/OutputManager';
+import MidiMessageGenerator from '../../../src/renderer/modules/MidiMessageGenerator';
 import { NOTE_ON, MODULATION, NOTE_OFF } from '../../../src/constants/model-types';
 
 const options = {
@@ -35,7 +35,7 @@ const noteOff: any = { noteOffVelocity: 0.5 };
 
 describe('allocateChannel', () => {
   test('allocates channel', () => {
-    const outputManager = new OutputManager(() => {}, options);
+    const outputManager = new MidiMessageGenerator(() => {}, options);
     memberChannelsExcept5.forEach((ch) => {
       outputManager.findMemberChannel(ch).buildNoteOnRelatedMessages(noteOn);
     });
@@ -43,7 +43,7 @@ describe('allocateChannel', () => {
   });
 
   test('allocates channel when multiple channels are unoccupied', () => {
-    const outputManager = new OutputManager(() => {}, options);
+    const outputManager = new MidiMessageGenerator(() => {}, options);
     allMemberChannels.forEach((ch) => {
       outputManager.findMemberChannel(ch).buildNoteOnRelatedMessages(noteOn);
     });
@@ -54,7 +54,7 @@ describe('allocateChannel', () => {
   });
 
   test('allocates channel when all the channels are occupied', () => {
-    const outputManager = new OutputManager(() => {}, options);
+    const outputManager = new MidiMessageGenerator(() => {}, options);
     allMemberChannels.forEach((ch) => {
       outputManager.findMemberChannel(ch).buildNoteOnRelatedMessages(noteOn);
     });
@@ -68,7 +68,7 @@ describe('allocateChannel', () => {
 describe('executes noteActions', () => {
   test('noteOn => modulation => noteOff', () => {
     const mockFn = jest.fn();
-    const outputManager = new OutputManager(mockFn, Object.assign({}, options));
+    const outputManager = new MidiMessageGenerator(mockFn, Object.assign({}, options));
     const noteControl = outputManager.noteOn(noteOn);
     expect(mockFn.mock.calls).toHaveLength(4);
     expect(mockFn.mock.calls[0][0]).toEqual([177, 74, 64]);
@@ -83,7 +83,7 @@ describe('executes noteActions', () => {
   });
   test('noteOn => noteOff => modulation => noteOn => modulation', () => {
     const mockFn = jest.fn();
-    const outputManager = new OutputManager(mockFn, Object.assign({}, options));
+    const outputManager = new MidiMessageGenerator(mockFn, Object.assign({}, options));
     const firstNoteControl = outputManager.noteOn(noteOn);
     const firstModulation = modulations[0];
     expect(mockFn.mock.calls).toHaveLength(4);
@@ -102,7 +102,7 @@ describe('executes noteActions', () => {
   });
   test('executes noteOn 18 times', () => {
     const mockFn = jest.fn();
-    const outputManager = new OutputManager(mockFn, Object.assign({}, options));
+    const outputManager = new MidiMessageGenerator(mockFn, Object.assign({}, options));
     for (let i = 0; i < 15; i++) {
       outputManager.noteOn(noteOn);
     }

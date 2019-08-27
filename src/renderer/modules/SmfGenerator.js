@@ -1,4 +1,4 @@
-import type { IOutputManager } from './outputManager';
+import type { IMidiMessageGenerator } from './MidiMessageGenerator';
 import { Clip } from '../store/models';
 import { MODULATION, NOTE_OFF, NOTE_ON } from '../../constants/model-types';
 import JZZ from 'jzz';
@@ -15,10 +15,10 @@ export interface ISmfGenerator {
 }
 
 export class SmfGenerator implements ISmfGenerator {
-  _offlineOutputManager: IOutputManager;
+  _offlineMidiMessageGenerator: IMidiMessageGenerator;
 
-  constructor (offlineOutputManager: IOutputManager) {
-    this._offlineOutputManager = offlineOutputManager;
+  constructor (offlineMidiMessageGenerator: IMidiMessageGenerator) {
+    this._offlineMidiMessageGenerator = offlineMidiMessageGenerator;
   }
 
   from (clip: Clip): SMF {
@@ -37,20 +37,20 @@ export class SmfGenerator implements ISmfGenerator {
       .add(0, JZZ.MIDI.smfSeqName(clip.name || clip.id))
       .add(0, JZZ.MIDI.smfBPM(bpm))
       .add(clip.duration, JZZ.MIDI.smfEndOfTrack());
-    this._offlineOutputManager.send = (message, timestamp) => MTrk.add(timestamp, JZZ.MIDI(message));
+    this._offlineMidiMessageGenerator.send = (message, timestamp) => MTrk.add(timestamp, JZZ.MIDI(message));
     this.dumpClip(clip);
     return MTrk;
   }
 
   dumpClip (clip: Clip): void {
-    if (!this._offlineOutputManager) throw new Error('offlineOutputManager is not set');
+    if (!this._offlineMidiMessageGenerator) throw new Error('offlineMidiMessageGenerator is not set');
     const noteActions: NoteAction[] = clip.sortedNoteActions;
     const noteControl = {};
     noteActions.forEach(noteAction => {
       const noteOffsetTime = noteAction.parent.offsetTime;
       if (noteAction.type === NOTE_ON) {
-        if (!this._offlineOutputManager) return;
-        noteControl[noteAction.noteId] = this._offlineOutputManager.noteOn(
+        if (!this._offlineMidiMessageGenerator) return;
+        noteControl[noteAction.noteId] = this._offlineMidiMessageGenerator.noteOn(
           noteAction,
           noteOffsetTime
         );
