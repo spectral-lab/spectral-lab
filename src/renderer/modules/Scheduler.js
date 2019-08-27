@@ -1,5 +1,5 @@
 // @flow
-import type { IOutputManager } from './OutputManager';
+import type { IMidiMessageGenerator } from './MidiMessageGenerator';
 import { Clip, Note } from '../store/models';
 import { MODULATION, NOTE_OFF, NOTE_ON } from '../../constants/model-types';
 import type { MidiMessage, Now } from '../../types';
@@ -7,31 +7,31 @@ import type { ITimeConverter } from './TimeConverter';
 
 export interface IScheduler {
   immediate(midiMessage: MidiMessage): void;
-  addCue(midiMessage: MidiMessage, tick: number): void;
+  timeout(midiMessage: MidiMessage, tick: number): void;
   playClip(clip: Clip): void;
   playNote(note: Note): void;
 }
 
 export class Scheduler implements IScheduler {
-  _outputManager: IOutputManager;
+  _midiMessageGenerator: IMidiMessageGenerator;
 
   _now: Now;
 
   _timeConverter: ITimeConverter;
 
-  constructor (outputManager: IOutputManager, now: Now, timeConverter: ITimeConverter) {
-    this._outputManager = outputManager;
+  constructor (midiMessageGenerator: IMidiMessageGenerator, now: Now, timeConverter: ITimeConverter) {
+    this._midiMessageGenerator = midiMessageGenerator;
     this._now = now;
     this._timeConverter = timeConverter;
   }
 
   immediate (midiMessage: MidiMessage) {
-    this._outputManager.send && this._outputManager.send(midiMessage);
+    this._midiMessageGenerator.send && this._midiMessageGenerator.send(midiMessage);
   }
 
-  addCue (midiMessage: MidiMessage, tick: number) {
+  timeout (midiMessage: MidiMessage, tick: number) {
     // $FlowFixMe
-    this._outputManager.send && this._outputManager.send(midiMessage, this._now() + this._timeConverter.toMs(tick));
+    this._midiMessageGenerator.send && this._midiMessageGenerator.send(midiMessage, this._now() + this._timeConverter.toMs(tick));
   }
 
   playClip (clip: Clip): void {
@@ -40,8 +40,8 @@ export class Scheduler implements IScheduler {
     noteActions.forEach(noteAction => {
       const noteOffsetTime = noteAction.parent.offsetTime;
       if (noteAction.type === NOTE_ON) {
-        if (!this._outputManager) return;
-        noteControl[noteAction.noteId] = this._outputManager.noteOn(
+        if (!this._midiMessageGenerator) return;
+        noteControl[noteAction.noteId] = this._midiMessageGenerator.noteOn(
           noteAction,
           this._now() + this._timeConverter.toMs(noteOffsetTime)
         );

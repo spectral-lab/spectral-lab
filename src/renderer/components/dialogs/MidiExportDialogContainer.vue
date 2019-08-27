@@ -8,10 +8,10 @@
 <script>
 
 import MidiExportDialog from './MidiExportDialog';
-import { SELECTED_CLIPS } from '../../constants/midi-export-options';
+import { SELECTED_CLIPS } from '../../../constants/midi-export-options';
 import { ipcRenderer } from 'electron';
-import { MIDI_EXPORT } from '../../constants/message-types';
-import { exportSelectedClips } from '../usecases/midiExport';
+import { MIDI_EXPORT } from '../../../constants/message-types';
+import { exportSelectedClips } from '../../usecases/midiExport';
 export default {
   components: {
     MidiExportDialog

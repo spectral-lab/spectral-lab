@@ -71,10 +71,10 @@
 <script>
 import NoteDisplay from './NoteDisplay';
 import MidiKeyboardContainer from './MidiKeyboardContainer';
-import ElasticDivStack from './ElasticDivStack';
-import ZoomManager from '../utils/view/pianoRoll/ZoomManager';
-import { syncScroll } from '../utils/view/pianoRoll/scroll';
-import RulerContainer from './RulerContainer';
+import ElasticDivStack from '../misc/ElasticDivStack';
+import ZoomManager from '../../utils/view/pianoRoll/ZoomManager';
+import { syncScroll } from '../../utils/view/pianoRoll/scroll';
+import RulerContainer from '../misc/RulerContainer';
 import AutomationDisplay from './AutomationDisplay';
 
 export default {

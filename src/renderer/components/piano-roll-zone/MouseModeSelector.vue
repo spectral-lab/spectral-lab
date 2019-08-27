@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import * as MOUSE_MODES from '../../constants/mouse-modes';
+import * as MOUSE_MODES from '../../../constants/mouse-modes';
 export default {
   methods: {
     emitMouseMode (modeIdx) {

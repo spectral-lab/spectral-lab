@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import MidiExportDialog from '../../../src/renderer/components/MidiExportDialog';
+import MidiExportDialog from '../../../src/renderer/components/dialogs/MidiExportDialog';
 import Vue from 'vue';
 import vuetify from 'vuetify';
 

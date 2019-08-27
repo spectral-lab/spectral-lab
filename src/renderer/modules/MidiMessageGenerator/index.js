@@ -1,7 +1,7 @@
 // @flow
 import MemberChannel from './MemberChannel';
 import { INoteControl, NoteControl } from './NoteControl';
-import { outputManagerOptions } from '../../../constants/defaults';
+import { midiMessageGeneratorOptions } from '../../../constants/defaults';
 import { NoteOn } from '../../store/models';
 import type { Send, Now } from '../../../types';
 
@@ -12,12 +12,15 @@ type Options = {
   masterChannels?: number[]
 }
 
-export interface IOutputManager {
+/**
+ * Generates Midi Messages and pass them to its `send` callback
+ */
+export interface IMidiMessageGenerator {
   noteOn (noteOn: NoteOn, timestamp?: number): INoteControl;
   send: Send | null;
 }
 
-export class OutputManager implements IOutputManager {
+export class MidiMessageGenerator implements IMidiMessageGenerator {
   _pitchBendRange: number;
 
   _now: Now;
@@ -28,7 +31,7 @@ export class OutputManager implements IOutputManager {
 
   constructor (send?: Send, options?: Options = {}): void {
     this.send = send || null;
-    const defaultedOptions = Object.assign({}, outputManagerOptions, options);
+    const defaultedOptions = Object.assign({}, midiMessageGeneratorOptions, options);
     this._pitchBendRange = defaultedOptions.pitchBendRange;
     this._now = defaultedOptions.nowCb;
     // TODO: Implement MasterChannel
@@ -89,4 +92,4 @@ export class OutputManager implements IOutputManager {
   }
 }
 
-export default OutputManager;
+export default MidiMessageGenerator;

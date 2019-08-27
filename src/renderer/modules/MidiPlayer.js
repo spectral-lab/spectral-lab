@@ -30,7 +30,7 @@ export class MidiPlayer implements IMidiPlayer {
     const noteOnMessage = [0x91, 69, 0x7f];
     const noteOffMessage = [0x81, 69, 0x40];
     this.scheduler.immediate(noteOnMessage);
-    this.scheduler.addCue(noteOffMessage, 480);
+    this.scheduler.timeout(noteOffMessage, 480);
   }
 
   allNotesOff () {

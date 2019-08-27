@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils';
-import NoteItem from '../../../src/renderer/components/NoteItem';
+import NoteItem from '../../../src/renderer/components/piano-roll-zone/NoteItem';
 import mockPitchTransition from '../../data/mockPitchTransition';
 
 describe('Component', () => {

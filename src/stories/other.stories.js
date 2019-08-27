@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
-import ElasticDivStack from '../renderer/components/ElasticDivStack';
+import ElasticDivStack from '../renderer/components/misc/ElasticDivStack';
 
 storiesOf('ElasticDivStack', module)
   .add('with Hello World', () => ({

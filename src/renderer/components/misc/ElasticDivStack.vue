@@ -21,7 +21,7 @@
 
 <script>
 import { clamp, debounce } from 'lodash';
-import { getOffsetTopFromRoot } from '../utils/view/pianoRoll/utils';
+import { getOffsetTopFromRoot } from '../../utils/view/pianoRoll/utils';
 import elementResizeDetector from 'element-resize-detector';
 
 export default {

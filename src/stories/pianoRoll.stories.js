@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/vue';
-import MidiKeyboard from '../renderer/components/MidiKeyboard';
-import NoteItem from '../renderer/components/NoteItem';
+import MidiKeyboard from '../renderer/components/piano-roll-zone/MidiKeyboard';
+import NoteItem from '../renderer/components/piano-roll-zone/NoteItem';
 import mockPitchTransition from '../../test/data/mockPitchTransition';
 
 storiesOf('MidiKeyboard', module)

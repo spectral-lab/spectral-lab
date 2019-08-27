@@ -3,18 +3,18 @@
     <v-app dark>
       <app-layout />
     </v-app>
-    <dialog-container />
+    <dialogs />
   </div>
 </template>
 
 <script>
-import AppLayout from './components/AppLayout';
-import DialogContainer from './components/DialogContainer';
+import AppLayout from './components/misc/AppLayout';
+import Dialogs from './components/dialogs/Dialogs';
 export default {
   name: 'App',
   components: {
     AppLayout,
-    DialogContainer
+    Dialogs
   }
 };
 </script>

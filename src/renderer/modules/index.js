@@ -1,6 +1,6 @@
 // @flow
 import { MidiPlayer } from './MidiPlayer';
-import { OutputManager } from './OutputManager';
+import { MidiMessageGenerator } from './MidiMessageGenerator';
 import { MidiIoFacade } from './MidiIoFacade';
 import { Scheduler } from './Scheduler';
 import { TimeConverter } from './TimeConverter';
@@ -10,10 +10,10 @@ import { AudioPlayer } from './AudioPlayer';
 
 export const timeConverter = new TimeConverter();
 const midiIoFacade = new MidiIoFacade(navigator);
-const outputManager = new OutputManager((message, timestamp) => midiIoFacade.send(message, timestamp));
-const offlineOutputManager = new OutputManager();
-const scheduler = new Scheduler(outputManager, () => window.performance.now(), timeConverter);
-const smfGenerator = new SmfGenerator(offlineOutputManager);
+const midiMessageGenerator = new MidiMessageGenerator((message, timestamp) => midiIoFacade.send(message, timestamp));
+const offlineMidiMessageGenerator = new MidiMessageGenerator();
+const scheduler = new Scheduler(midiMessageGenerator, () => window.performance.now(), timeConverter);
+const smfGenerator = new SmfGenerator(offlineMidiMessageGenerator);
 export const midiPlayer = new MidiPlayer(scheduler);
 export const midiWriter = new MidiWriter(smfGenerator);
 export const audioPlayer = new AudioPlayer();

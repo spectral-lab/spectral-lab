@@ -45,17 +45,18 @@
 
 <script>
 import Transport from './Transport';
-import PianoRollZone from './PianoRollZone';
-import ArrangementZone from './ArrangementZone';
+import PianoRollZone from '../piano-roll-zone/PianoRollZone';
+import ArrangementZone from '../arrangement-zone/ArrangementZone';
 import ElasticDivStack from './ElasticDivStack';
 import TitleBar from './TitleBar';
-import { titleBarHeight, transportHeight, borderHeight } from '../../constants/layout';
+import { titleBarHeight, transportHeight, borderHeight } from '../../../constants/layout';
 import hotkeys from 'hotkeys-js';
-import { SPLIT_WINDOW, SWITCH_WINDOW } from '../../constants/key-bindings';
-import { App } from '../store/models';
-import { ARRANGEMENT, PIANO_ROLL } from '../../constants/model-types';
+import { SPLIT_WINDOW, SWITCH_WINDOW } from '../../../constants/key-bindings';
+import { App } from '../../store/models';
+import { ARRANGEMENT, PIANO_ROLL } from '../../../constants/model-types';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   components: {
     PianoRollZone,
     Transport,
@@ -144,7 +145,7 @@ export default {
       return this.$refs.appMainContent.offsetHeight;
     }
   }
-};
+});
 </script>
 
 <style scoped>

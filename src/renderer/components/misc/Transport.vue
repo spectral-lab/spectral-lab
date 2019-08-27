@@ -42,10 +42,10 @@
 </template>
 
 <script>
-import { Clip } from '../store/models';
-import { transportHeight } from '../../constants/layout';
+import { Clip } from '../../store/models';
+import { transportHeight } from '../../../constants/layout';
 import Vue from 'vue';
-import { midiPlayer } from '../modules';
+import { midiPlayer } from '../../modules';
 
 export default Vue.extend({
   data: function () {

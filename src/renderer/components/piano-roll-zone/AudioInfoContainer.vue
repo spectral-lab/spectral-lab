@@ -13,14 +13,14 @@
 
 <script>
 import AudioInfo from './AudioInfo';
-import { AudioBuffer, Clip } from '../store/models';
-import processAudioFile from '../utils/helpers/processAudioFile';
+import { AudioBuffer, Clip } from '../../store/models';
+import processAudioFile from '../../utils/helpers/processAudioFile';
 import uid from 'uid';
 import { basename } from 'path';
-import { audioPlayer } from '../modules';
-import { audioCtx as ctx } from '../utils/audio/audioCtx';
+import { audioPlayer } from '../../modules';
+import { audioCtx as ctx } from '../../utils/audio/audioCtx';
 import Vue from 'vue';
-import { buildSpectrogram } from '../usecases/buildSpectrogram';
+import { buildSpectrogram } from '../../usecases/buildSpectrogram';
 
 export default Vue.extend({
   components: {
@@ -55,7 +55,7 @@ export default Vue.extend({
   },
   methods: {
     handleClickPlay () {
-      if (audioPlayer.isPlaying) audioPlayer.stop();
+      if (audioPlayer.isPlaying) return audioPlayer.stop();
       audioPlayer.play();
     },
     async handleFileUpdate (file) {
