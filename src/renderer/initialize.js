@@ -13,7 +13,7 @@ import {
 } from './interactors/Note';
 import { saveProject } from './utils/helpers/projectUtils';
 
-export default () => {
+export const initialize = () => {
   bindKeys();
   if (process.env.NODE_ENV === 'development') loadMockEntities();
 };
@@ -31,3 +31,5 @@ const bindKeys = () => {
 const loadMockEntities = () => {
   store.commit(SET_ENTITIES, mockEntities);
 };
+
+export default initialize;
