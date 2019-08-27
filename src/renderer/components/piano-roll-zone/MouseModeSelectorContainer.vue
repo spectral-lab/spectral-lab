@@ -4,7 +4,7 @@
 
 <script>
 import MouseModeSelector from './MouseModeSelector';
-import { PianoRoll } from '../store/models';
+import { PianoRoll } from '../../store/models';
 export default {
   components: {
     MouseModeSelector

@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { tickToPosX, pitchToPosY } from '../utils/view/pianoRoll/utils';
+import { tickToPosX, pitchToPosY } from '../../utils/view/pianoRoll/utils';
 
 export default {
   props: {

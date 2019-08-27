@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import IconBtnWithTip from './IconBtnWithTip';
+import IconBtnWithTip from '../misc/IconBtnWithTip';
 import Vue from 'vue';
-import { extractNotes } from '../usecases/extractNotes';
+import { extractNotes } from '../../usecases/extractNotes';
 
 export default Vue.extend({
   components: {

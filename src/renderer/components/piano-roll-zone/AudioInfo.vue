@@ -38,7 +38,7 @@
 
 <script>
 import UploadButton from 'vuetify-upload-button';
-import IconBtnWithTip from './IconBtnWithTip';
+import IconBtnWithTip from '../misc/IconBtnWithTip';
 
 export default {
   components: {

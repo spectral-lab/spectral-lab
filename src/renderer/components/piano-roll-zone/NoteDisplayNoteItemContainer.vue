@@ -29,13 +29,13 @@
 
 <script>
 import NoteItem from './NoteItem';
-import { Note, PianoRoll, NoteOff, Modulation } from '../store/models';
+import { Note, PianoRoll, NoteOff, Modulation } from '../../store/models';
 import hotkeys from 'hotkeys-js';
-import { DESELECT_NOTES } from '../../constants/key-bindings';
-import { PEN } from '../../constants/mouse-modes';
+import { DESELECT_NOTES } from '../../../constants/key-bindings';
+import { PEN } from '../../../constants/mouse-modes';
 import uid from 'uid';
-import { posXToTick, posYToPitch } from '../utils/view/pianoRoll/utils';
-import { pitchToNoteNumberAndPitchBend } from '../utils/helpers';
+import { posXToTick, posYToPitch } from '../../utils/view/pianoRoll/utils';
+import { pitchToNoteNumberAndPitchBend } from '../../utils/helpers';
 
 export default {
   components: {

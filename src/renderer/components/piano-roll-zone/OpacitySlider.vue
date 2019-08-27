@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { PianoRoll } from '../store/models';
+import { PianoRoll } from '../../store/models';
 import { debounce } from 'lodash';
 
 export default {

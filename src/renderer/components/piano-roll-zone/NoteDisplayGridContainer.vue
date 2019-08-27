@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import GridRowContainer from './GridRowContainer';
-import GridColumnContainer from './GridColumnContainer';
-import { PianoRoll } from '../store/models';
+import GridRowContainer from '../misc/GridRowContainer';
+import GridColumnContainer from '../misc/GridColumnContainer';
+import { PianoRoll } from '../../store/models';
 
 export default {
   components: {

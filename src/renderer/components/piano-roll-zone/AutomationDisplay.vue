@@ -1,18 +1,15 @@
 <template>
-  <div
-    ref="rulerContainer"
-    class="ruler-container"
-  >
+  <div class="automation-display">
     <grid-column-container
       :total-bars="totalBars"
       :beats-per-bar="beatsPerBar"
-      :show-number="true"
     />
   </div>
 </template>
+
 <script>
-import { PianoRoll } from '../store/models';
-import GridColumnContainer from './GridColumnContainer';
+import GridColumnContainer from '../misc/GridColumnContainer';
+import { PianoRoll } from '../../store/models';
 export default {
   components: {
     GridColumnContainer
@@ -32,10 +29,9 @@ export default {
 </script>
 
 <style scoped>
-    .ruler-container {
-        height: 100%;
-        width: 100%;
-        background: rgb(100, 112, 114);
-        position: absolute;
-    }
+  .automation-display {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
 </style>
