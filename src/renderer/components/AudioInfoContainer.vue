@@ -55,7 +55,7 @@ export default Vue.extend({
   },
   methods: {
     handleClickPlay () {
-      if (audioPlayer.isPlaying) audioPlayer.stop();
+      if (audioPlayer.isPlaying) return audioPlayer.stop();
       audioPlayer.play();
     },
     async handleFileUpdate (file) {
