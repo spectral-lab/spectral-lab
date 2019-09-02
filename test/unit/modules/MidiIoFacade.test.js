@@ -24,14 +24,24 @@ const genMock = () => {
         if (id === '1') return midiInput1;
         if (id === '2') return midiInput2;
       },
-      forEach: (cb) => { cb(midiInput1); cb(midiInput2); }
+      forEach: (cb) => { cb(midiInput1); cb(midiInput2); },
+      values: () => ({
+        next: () => ({
+          value: midiInput1
+        })
+      })
     },
     outputs: {
       get: (id) => {
         if (id === '1') return midiOutput1;
         if (id === '2') return midiOutput2;
       },
-      forEach: (cb) => { cb(midiOutput1); cb(midiOutput2); }
+      forEach: (cb) => { cb(midiOutput1); cb(midiOutput2); },
+      values: () => ({
+        next: () => ({
+          value: midiOutput1
+        })
+      })
     }
   };
   return {
