@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component renders correctly 1`] = `
+<v-card-stub
+  class="track-header-panel"
+  color="rgb(30, 216, 77)"
+  tag="div"
+>
+  <v-card-title-stub
+    primarytitle="true"
+  >
+    <h3>
+      
+      2 Synthesizer
+    
+    </h3>
+  </v-card-title-stub>
+   
+  <v-card-actions-stub>
+    <v-layout-stub
+      row=""
+      tag="div"
+    >
+      <v-spacer-stub />
+       
+      <icon-btn-with-tip-stub
+        color="rgb(30, 216, 77)"
+        icon="fa-cog"
+        tip="Tack setting"
+      />
+    </v-layout-stub>
+  </v-card-actions-stub>
+</v-card-stub>
+`;
