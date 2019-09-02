@@ -1,6 +1,6 @@
 import TrackRow from '../renderer/components/arrangement-zone/TrackRow';
 import { storiesOf } from '@storybook/vue';
-import mockTrack from '../../test/data/mockTrack';
+import mockTrack from '../../test/data/json/mockTrack';
 
 storiesOf('TrackRow', module)
   .add('view', () => ({
