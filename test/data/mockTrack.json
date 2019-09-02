@@ -1,0 +1,15 @@
+{
+  "id": "kkvn16e",
+  "name": "Synthesizer",
+  "color": "#149033",
+  "type": "Track",
+  "speed": [
+    {
+      "offsetTime": 0,
+      "val": 1
+    }
+  ],
+  "selected": false,
+  "songId": "song",
+  "clips": []
+}

@@ -4,9 +4,9 @@
       <v-btn
         v-on="on"
         @click="emitClickEvent"
+        :color="color"
         small
         fab
-        color="primary"
         class="elevation-0"
       >
         <v-icon>{{ icon }}</v-icon>
@@ -20,8 +20,18 @@
 import Vue from 'vue';
 export default Vue.extend({
   props: {
-    icon: String,
-    tip: String
+    icon: {
+      type: String,
+      default: ''
+    },
+    tip: {
+      type: String,
+      default: ''
+    },
+    color: {
+      type: String,
+      default: 'primary'
+    }
   },
   methods: {
     emitClickEvent () {
