@@ -2,10 +2,11 @@
   <v-card
     :color="bgColor"
     class="track-header-panel"
+    flat
   >
     <v-card-title primary-title>
       <h3>
-        {{ idx }} {{ track.name }}
+        {{ idx + 1 }} {{ track.name }}
       </h3>
     </v-card-title>
     <v-card-actions>
@@ -42,7 +43,7 @@ export default Vue.extend({
   },
   computed: {
     bgColor () {
-      return Color(this.track.color).lighten(0.5).rgb().string();
+      return Color(this.track.color).darken(0.5).rgb().string();
     }
   }
 });
