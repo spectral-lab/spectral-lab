@@ -1,45 +1,49 @@
 import { Note } from '../../store/models';
 
-export const noteShiftLeft = (ticks) => {
-  Note.query().where('selected', true).get().forEach(note => {
-    Note.update({
+export const noteShiftLeft = async (ticks) => {
+  const notes = Note.query().where('selected', true).get();
+  await Promise.all(notes.map(async (note) => {
+    await Note.update({
       where: note.id,
       data: {
         offsetTime: note.offsetTime - ticks
       }
     });
-  });
+  }));
 };
 
-export const noteShiftRight = (ticks) => {
-  Note.query().where('selected', true).get().forEach(note => {
-    Note.update({
+export const noteShiftRight = async (ticks) => {
+  const notes = Note.query().where('selected', true).get();
+  await Promise.all(notes.map(async (note) => {
+    await Note.update({
       where: note.id,
       data: {
         offsetTime: note.offsetTime + ticks
       }
     });
-  });
+  }));
 };
 
-export const noteShiftUp = (noteNumber) => {
-  Note.query().where('selected', true).get().forEach(note => {
-    Note.update({
+export const noteShiftUp = async (noteNumber) => {
+  const notes = Note.query().where('selected', true).get();
+  await Promise.all(notes.map(async (note) => {
+    await Note.update({
       where: note.id,
       data: {
         noteNumber: note.noteNumber + noteNumber
       }
     });
-  });
+  }));
 };
 
-export const noteShiftDown = (noteNumber) => {
-  Note.query().where('selected', true).get().forEach(note => {
-    Note.update({
+export const noteShiftDown = async (noteNumber) => {
+  const notes = Note.query().where('selected', true).get();
+  await Promise.all(notes.map(async (note) => {
+    await Note.update({
       where: note.id,
       data: {
         noteNumber: note.noteNumber - noteNumber
       }
     });
-  });
+  }));
 };
