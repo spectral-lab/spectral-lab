@@ -1,12 +1,12 @@
 <template>
   <div
     :style="{
-      opacity: spectrogramOpacity
+      opacity: opacity
     }"
     class="spectrogram-container"
   >
     <div
-      v-for="spectrogram in spectrograms"
+      v-for="spectrogram in pianoRoll.spectrograms"
       :key="spectrogram.id"
       class="spectrogram-wrapper"
     >
@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import { PianoRoll } from '../../store/models';
 import Spectrogram from './Spectrogram';
+import { getPianoRollData } from '../../interactors/PianoRoll';
 
 export default {
   components: {
@@ -28,12 +28,9 @@ export default {
   },
   computed: {
     pianoRoll () {
-      return PianoRoll.query().last();
+      return getPianoRollData();
     },
-    spectrograms () {
-      return this.pianoRoll.spectrograms;
-    },
-    spectrogramOpacity () {
+    opacity () {
       return this.pianoRoll.spectrogramOpacity;
     },
     totalTicks () {

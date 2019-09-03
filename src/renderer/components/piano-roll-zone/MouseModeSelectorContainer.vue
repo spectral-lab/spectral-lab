@@ -5,13 +5,14 @@
 <script>
 import MouseModeSelector from './MouseModeSelector';
 import { PianoRoll } from '../../store/models';
+import { getPianoRollData } from '../../interactors/PianoRoll';
 export default {
   components: {
     MouseModeSelector
   },
   computed: {
     pianoRoll () {
-      return PianoRoll.query().first();
+      return getPianoRollData();
     }
   },
   methods: {

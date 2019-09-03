@@ -14,7 +14,7 @@
 <script>
 import GridRowContainer from '../misc/GridRowContainer';
 import GridColumnContainer from '../misc/GridColumnContainer';
-import { PianoRoll } from '../../store/models';
+import { getPianoRollData } from '../../interactors/PianoRoll';
 
 export default {
   components: {
@@ -22,14 +22,14 @@ export default {
     GridColumnContainer
   },
   computed: {
+    pianoRoll () {
+      return getPianoRollData();
+    },
     beatsPerBar () {
       return this.pianoRoll.beatsPerBar;
     },
     totalBars () {
       return this.pianoRoll.totalBars;
-    },
-    pianoRoll () {
-      return PianoRoll.query().first();
     },
     gridOpacity () {
       return this.pianoRoll.gridOpacity;

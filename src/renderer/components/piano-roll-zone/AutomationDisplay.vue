@@ -9,14 +9,14 @@
 
 <script>
 import GridColumnContainer from '../misc/GridColumnContainer';
-import { PianoRoll } from '../../store/models';
+import { getPianoRollData } from '../../interactors/PianoRoll';
 export default {
   components: {
     GridColumnContainer
   },
   computed: {
     pianoRoll () {
-      return PianoRoll.query().last();
+      return getPianoRollData();
     },
     totalBars () {
       return this.pianoRoll.totalBars;
