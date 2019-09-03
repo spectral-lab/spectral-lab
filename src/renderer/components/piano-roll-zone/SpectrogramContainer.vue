@@ -1,6 +1,7 @@
 <template>
   <div
     :style="{
+      willChange: willChange,
       opacity: opacity
     }"
     class="spectrogram-container"
@@ -32,6 +33,10 @@ export default {
     },
     opacity () {
       return this.pianoRoll.spectrogramOpacity;
+    },
+    willChange () {
+      if (this.pianoRoll.opacityWillChange) return 'opacity';
+      return `auto`;
     },
     totalTicks () {
       return this.pianoRoll.totalTicks;

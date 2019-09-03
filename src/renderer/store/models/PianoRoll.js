@@ -17,7 +17,8 @@ export default class PianoRoll extends BaseModel {
       appId: this.attr(null, makeMandatory('appId')),
       gridOpacity: this.attr(1),
       spectrogramOpacity: this.attr(1),
-      mouseMode: this.string(SELECT)
+      mouseMode: this.string(SELECT),
+      opacityWillChange: this.attr(false)
     };
   }
 

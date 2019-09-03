@@ -17,6 +17,15 @@ export const setPianoRollOpacity = async (spectrogram: Opacity, grid: Opacity) =
   });
 };
 
+export const setPianoRollOpacityWillChange = async (val: boolean) => {
+  await PianoRoll.update({
+    where: PIANO_ROLL_ID,
+    data: {
+      opacityWillChange: val
+    }
+  });
+};
+
 export const getPianoRollData = () => {
   return PianoRoll.query().whereId(PIANO_ROLL_ID).first();
 };
