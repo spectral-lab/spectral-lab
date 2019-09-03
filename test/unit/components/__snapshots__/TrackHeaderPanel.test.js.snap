@@ -3,7 +3,8 @@
 exports[`Component renders correctly 1`] = `
 <v-card-stub
   class="track-header-panel"
-  color="rgb(30, 216, 77)"
+  color="rgb(45, 43, 67)"
+  flat="true"
   tag="div"
 >
   <v-card-title-stub
@@ -11,7 +12,7 @@ exports[`Component renders correctly 1`] = `
   >
     <h3>
       
-      2 Synthesizer
+      3 Track
     
     </h3>
   </v-card-title-stub>
@@ -24,7 +25,7 @@ exports[`Component renders correctly 1`] = `
       <v-spacer-stub />
        
       <icon-btn-with-tip-stub
-        color="rgb(30, 216, 77)"
+        color="rgb(45, 43, 67)"
         icon="fa-cog"
         tip="Tack setting"
       />
