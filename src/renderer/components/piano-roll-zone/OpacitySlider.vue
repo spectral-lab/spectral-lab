@@ -1,19 +1,24 @@
 <template>
-  <v-slider
-    :value="value"
-    @input="debouncedHandleInput"
-    @click:prepend="handleClickGrid"
-    @click:append="handleClickWaves"
-    prepend-icon="grid_on"
-    append-icon="waves"
-    thumb-color="rgb(0, 139, 139)"
-  />
+  <div
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
+  >
+    <v-slider
+      :value="value"
+      @input="debouncedHandleInput"
+      @click:prepend="handleClickGrid"
+      @click:append="handleClickWaves"
+      prepend-icon="grid_on"
+      append-icon="waves"
+      thumb-color="rgb(0, 139, 139)"
+    />
+  </div>
 </template>
 
 <script>
 // @flow
 import { debounce } from 'lodash';
-import { getPianoRollData, setPianoRollOpacity } from '../../interactors/PianoRoll';
+import { getPianoRollData, setPianoRollOpacity, setPianoRollOpacityWillChange } from '../../interactors/PianoRoll';
 
 export default {
   computed: {
@@ -24,7 +29,7 @@ export default {
     }
   },
   created () {
-    this.debouncedHandleInput = debounce(this.handleInput, 60);
+    this.debouncedHandleInput = debounce(this.handleInput, 12);
   },
   methods: {
     handleInput (val) {
@@ -39,6 +44,12 @@ export default {
     },
     handleClickWaves () {
       setPianoRollOpacity(1, 0);
+    },
+    handleMouseEnter () {
+      setPianoRollOpacityWillChange(true);
+    },
+    handleMouseLeave () {
+      setPianoRollOpacityWillChange(false);
     }
   }
 };

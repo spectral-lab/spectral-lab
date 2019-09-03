@@ -1,6 +1,6 @@
 <template>
   <div
-    :style="{ opacity: gridOpacity }"
+    :style="{ willChange: willChange, opacity: opacity }"
     class="grid-container"
   >
     <grid-row-container />
@@ -31,8 +31,12 @@ export default {
     totalBars () {
       return this.pianoRoll.totalBars;
     },
-    gridOpacity () {
+    opacity () {
       return this.pianoRoll.gridOpacity;
+    },
+    willChange () {
+      if (this.pianoRoll.opacityWillChange) return 'opacity';
+      return `auto`;
     }
   }
 };
