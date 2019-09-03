@@ -11,7 +11,7 @@ import {
   noteShiftUp,
   selectAllNotes
 } from './interactors/Note';
-import { saveProject } from './utils/helpers/projectUtils';
+import { saveProject } from './usecases/project';
 
 export const initialize = () => {
   bindKeys();
