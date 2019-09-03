@@ -11,16 +11,14 @@
 </template>
 
 <script>
-import { PianoRoll } from '../../store/models';
+// @flow
 import { debounce } from 'lodash';
+import { getPianoRollData, setPianoRollOpacity } from '../../interactors/PianoRoll';
 
 export default {
   computed: {
-    pianoRoll () {
-      return PianoRoll.query().first();
-    },
     value () {
-      const { spectrogramOpacity, gridOpacity } = this.pianoRoll;
+      const { spectrogramOpacity, gridOpacity } = getPianoRollData();
       if (spectrogramOpacity < 1) return spectrogramOpacity * 50;
       return (1 - gridOpacity) * 50 + 50;
     }
@@ -31,41 +29,16 @@ export default {
   methods: {
     handleInput (val) {
       if (val > 50) {
-        PianoRoll.update({
-          where: this.pianoRoll.id,
-          data: {
-            gridOpacity: 1 - (val - 50) / 50,
-            spectrogramOpacity: 1
-          }
-        });
+        setPianoRollOpacity(1, 1 - (val - 50) / 50);
+        return;
       }
-      if (val <= 50) {
-        PianoRoll.update({
-          where: this.pianoRoll.id,
-          data: {
-            gridOpacity: 1,
-            spectrogramOpacity: val / 50
-          }
-        });
-      }
+      setPianoRollOpacity(val / 50, 1);
     },
     handleClickGrid () {
-      PianoRoll.update({
-        where: this.pianoRoll.id,
-        data: {
-          gridOpacity: 1,
-          spectrogramOpacity: 0
-        }
-      });
+      setPianoRollOpacity(0, 1);
     },
     handleClickWaves () {
-      PianoRoll.update({
-        where: this.pianoRoll.id,
-        data: {
-          gridOpacity: 0,
-          spectrogramOpacity: 1
-        }
-      });
+      setPianoRollOpacity(1, 0);
     }
   }
 };
