@@ -4,19 +4,21 @@
       :track="track"
       :idx="idx"
     />
-    <div class="track-content">
-      <div class="clip" />
-    </div>
+    <track-content
+      :track="track"
+    />
   </div>
 </template>
 
 <script>
 // @flow
 import TrackHeaderPanel from './TrackHeaderPanel';
+import TrackContent from './TrackContent';
 import Vue from 'vue';
 export default Vue.extend({
   components: {
-    TrackHeaderPanel
+    TrackHeaderPanel,
+    TrackContent
   },
   props: {
     idx: {
@@ -38,18 +40,5 @@ export default Vue.extend({
         position: relative;
         display: grid;
         grid-template-columns: 250px 1fr;
-    }
-    .track-content {
-      background: darkgreen;
-      position: relative;
-    }
-    .clip {
-        width: 100px;
-        height: 100px;
-        resize: horizontal;
-        position: absolute;
-        left: 0%;
-        overflow: auto;
-        background: darkred;
     }
 </style>
