@@ -4,27 +4,18 @@
       <div class="arrangement-ruler">
         ruler
       </div>
-      <div class="track-container">
-        <track-row />
-        <track-row />
-        <track-row />
-        <track-row />
-        <track-row />
-        <track-row />
-        <track-row />
-        <track-row />
-        <track-row />
+      <div class="track-area">
+        <track-row-container />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import TrackRow from './TrackRow';
-
+import TrackRowContainer from './TrackRowContainer';
 export default {
   components: {
-    TrackRow
+    TrackRowContainer
   }
 };
 </script>
@@ -42,7 +33,7 @@ export default {
         grid-template-columns: 1fr;
         grid-template-rows: 20px 1fr;
     }
-    .track-container {
+    .track-area {
         grid-area: 2 / 1 / 3 / 2;
         overflow: scroll;
     }

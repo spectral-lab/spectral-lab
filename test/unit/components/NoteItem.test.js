@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils';
 import NoteItem from '../../../src/renderer/components/piano-roll-zone/NoteItem';
-import mockNote from '../../data/mockNote';
-import mockPitchTransition from '../../data/mockPitchTransition';
+import mockNote from '../../data/json/mockNote';
+import mockPitchTransition from '../../data/json/mockPitchTransition';
 
 mockNote.pitchTransition = mockPitchTransition;
 

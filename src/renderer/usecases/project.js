@@ -1,4 +1,4 @@
-import store from '../../store';
+import store from '../store';
 import { remote } from 'electron';
 import fs from 'fs-extra';
 const { dialog } = remote;

@@ -1,7 +1,7 @@
 import store from './store';
 import hotkeys from 'hotkeys-js';
 import { DELETE_NOTES, NOTE_SHIFT, SAVE_PROJECT, SELECT_ALL_NOTES } from '../constants/key-bindings';
-import mockEntities from '../../test/data/mockEntities';
+import mockEntities from '../../test/data/json/mockEntities';
 import { SET_ENTITIES } from './store/mutation-types';
 import {
   deleteNotes,
@@ -11,7 +11,7 @@ import {
   noteShiftUp,
   selectAllNotes
 } from './interactors/Note';
-import { saveProject } from './utils/helpers/projectUtils';
+import { saveProject } from './usecases/project';
 
 export const initialize = () => {
   bindKeys();

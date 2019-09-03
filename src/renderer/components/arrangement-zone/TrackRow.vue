@@ -1,20 +1,36 @@
 <template>
   <div class="track-row">
-    <div class="track-header-panel">
-      track header panel
-    </div>
-    <div class="track-content">
-      <div class="clip" />
-    </div>
+    <track-header-panel
+      :track="track"
+      :idx="idx"
+    />
+    <track-content
+      :track="track"
+    />
   </div>
 </template>
 
 <script>
-
-export default {
+// @flow
+import TrackHeaderPanel from './TrackHeaderPanel';
+import TrackContent from './TrackContent';
+import Vue from 'vue';
+export default Vue.extend({
   components: {
+    TrackHeaderPanel,
+    TrackContent
+  },
+  props: {
+    idx: {
+      type: Number,
+      default: 1
+    },
+    track: {
+      type: Object,
+      default: () => ({})
+    }
   }
-};
+});
 </script>
 
 <style scoped>
@@ -24,18 +40,5 @@ export default {
         position: relative;
         display: grid;
         grid-template-columns: 250px 1fr;
-    }
-    .track-header-panel {
-        background: blueviolet;
-    }
-    .track-content {
-        background: darkgreen;
-    }
-    .clip {
-        width:100px;
-        height: 100px;
-        resize: horizontal;
-        overflow: auto;
-        background: darkred;
     }
 </style>
