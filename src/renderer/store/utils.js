@@ -1,6 +1,6 @@
 import VuexORM from '@vuex-orm/core';
 import * as models from './models';
-import { APP_ID, SONG_ID } from '../../constants/ids';
+import { APP_ID, PIANO_ROLL_ID, SONG_ID } from '../../constants/ids';
 import uid from 'uid';
 import hotkeys from 'hotkeys-js';
 import * as modelTypes from '../../constants/model-types';
@@ -49,7 +49,7 @@ export const instanciateModels = () => {
   });
   models.PianoRoll.insert({
     data: {
-      id: uid(),
+      id: PIANO_ROLL_ID,
       appId: APP_ID
     }
   });
