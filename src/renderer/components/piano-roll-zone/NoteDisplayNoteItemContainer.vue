@@ -12,12 +12,10 @@
       height="100%"
     >
       <note-item
-        v-for="note in notes"
+        v-for="note in pianoRoll.notes"
         :key="note.id"
-        :note-id="note.id"
-        :pitch-transition="note.pitchTransition"
-        :total-ticks="totalTicks"
-        :is-selected="isSelected(note)"
+        :note="note"
+        :total-ticks="pianoRoll.totalTicks"
         :is-edited="isEdited(note)"
         :color="note.parent.color"
         @click="handleClick"
@@ -28,46 +26,31 @@
 </template>
 
 <script>
+// @flow
 import NoteItem from './NoteItem';
-import { Note, PianoRoll, NoteOff, Modulation } from '../../store/models';
+import { Note } from '../../store/models';
 import hotkeys from 'hotkeys-js';
 import { DESELECT_NOTES } from '../../../constants/key-bindings';
-import { PEN } from '../../../constants/mouse-modes';
-import uid from 'uid';
-import { posXToTick, posYToPitch } from '../../utils/view/pianoRoll/utils';
-import { pitchToNoteNumberAndPitchBend } from '../../utils/helpers';
+import { getPianoRollData } from '../../interactors/PianoRoll';
+import { drawHandler } from '../../mixins/drawHandler';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   components: {
     NoteItem
   },
+  mixins: [drawHandler],
   data () {
     return {
-      editingNoteId: null,
-      drawingNote: null
+      editingNoteId: null
     };
   },
   computed: {
     pianoRoll () {
-      return PianoRoll.query().last();
+      return getPianoRollData();
     },
-    notes () {
-      return this.pianoRoll.notes;
-    },
-    totalTicks () {
-      return this.pianoRoll.totalTicks;
-    },
-    beatsPerBar () {
-      return this.pianoRoll.beatsPerBar;
-    },
-    totalBars () {
-      return this.pianoRoll.totalBars;
-    },
-    selectedNoteIds () {
-      return this.pianoRoll.selectedNoteIds;
-    },
-    drawing () {
-      return Boolean(this.drawingNote);
+    noteContainer () {
+      return this.$refs.noteContainer;
     }
   },
   mounted () {
@@ -77,11 +60,7 @@ export default {
     isEdited (note) {
       return this.editingNoteId === note.id;
     },
-    isSelected (note) {
-      return this.selectedNoteIds.includes(note.id);
-    },
     handleClick (ev, id) {
-      console.log('click');
       if (!ev.metaKey && !ev.shiftKey) {
         this.editingNoteId = null;
         Note.update({
@@ -110,60 +89,9 @@ export default {
           selected: false
         }
       });
-    },
-    handleMouseDown (ev) {
-      if (this.pianoRoll.mouseMode !== PEN) return;
-      const offsetTime = posXToTick(ev.offsetX / this.$refs.noteContainer.offsetWidth, this.totalTicks);
-      const { noteNumber, pitchBend } = pitchToNoteNumberAndPitchBend(
-        posYToPitch(ev.offsetY / this.$refs.noteContainer.offsetHeight)
-      );
-      this.drawingNote = {
-        id: uid(),
-        offsetTime,
-        noteNumber
-      };
-      Note.insert({
-        data: {
-          id: this.drawingNote.id,
-          clipId: this.pianoRoll.clips[0].id,
-          offsetTime,
-          noteNumber,
-          noteOn: {
-            id: uid(),
-            pitchBend
-          }
-        }
-      });
-    },
-    handleMouseMove (ev) {
-      if (!this.drawing) return;
-      const offsetTime = posXToTick(ev.offsetX / this.$refs.noteContainer.offsetWidth, this.totalTicks);
-      const pitch = posYToPitch(ev.offsetY / this.$refs.noteContainer.offsetHeight);
-      Modulation.insert({
-        data: {
-          id: uid(),
-          noteId: this.drawingNote.id,
-          offsetTime: offsetTime - this.drawingNote.offsetTime,
-          pitchBend: pitch - this.drawingNote.noteNumber
-        }
-      });
-    },
-    handleMouseUp (ev) {
-      if (!this.drawing) return;
-      const offsetTime = posXToTick(ev.offsetX / this.$refs.noteContainer.offsetWidth, this.totalTicks);
-      const pitch = posYToPitch(ev.offsetY / this.$refs.noteContainer.offsetHeight);
-      NoteOff.insert({
-        data: {
-          id: uid(),
-          noteId: this.drawingNote.id,
-          offsetTime: offsetTime - this.drawingNote.offsetTime,
-          pitchBend: pitch - this.drawingNote.noteNumber
-        }
-      });
-      this.drawingNote = null;
     }
   }
-};
+});
 </script>
 
 <style scoped>

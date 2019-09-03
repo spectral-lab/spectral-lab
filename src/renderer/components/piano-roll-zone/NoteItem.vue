@@ -71,17 +71,14 @@
 </template>
 
 <script>
+// @flow
 import { tickToPosX, pitchToPosY } from '../../utils/view/pianoRoll/utils';
 
 export default {
   props: {
-    noteId: {
-      type: String,
-      default: 'no_id'
-    },
-    pitchTransition: {
-      type: Array,
-      default: () => []
+    note: {
+      type: Object,
+      default: () => ({})
     },
     color: {
       type: String,
@@ -91,16 +88,15 @@ export default {
       type: Number,
       default: 4800
     },
-    isSelected: {
-      type: Boolean,
-      default: false
-    },
     isEdited: {
       type: Boolean,
       default: false
     }
   },
   computed: {
+    pitchTransition () {
+      return this.note.pitchTransition;
+    },
     positions () {
       return this.pitchTransition.map(point => ({
         x: tickToPosX(point.offsetTime, this.totalTicks),
@@ -111,12 +107,12 @@ export default {
     },
     lineColor () {
       if (this.isEdited) return 'Honeydew';
-      if (this.isSelected) return 'Honeydew';
+      if (this.note.selected) return 'Honeydew';
       return this.color;
     },
     circleColor () {
       if (this.isEdited) return this.color;
-      if (this.isSelected) return 'Honeydew';
+      if (this.note.selected) return 'Honeydew';
       return this.color;
     }
   },
@@ -125,10 +121,10 @@ export default {
       return this.positions[idx + 1];
     },
     handleClick (ev) {
-      this.$emit('click', ev, this.noteId);
+      this.$emit('click', ev, this.note.id);
     },
     handleDblClick (ev) {
-      this.$emit('dblclick', ev, this.noteId);
+      this.$emit('dblclick', ev, this.note.id);
     }
   }
 };
