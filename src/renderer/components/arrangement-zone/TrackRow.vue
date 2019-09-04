@@ -6,7 +6,11 @@
     />
     <track-content
       :track="track"
-    />
+    >
+      <template slot="clips">
+        <slot name="clips" />
+      </template>
+    </track-content>
   </div>
 </template>
 
@@ -15,6 +19,7 @@
 import TrackHeaderPanel from './TrackHeaderPanel';
 import TrackContent from './TrackContent';
 import Vue from 'vue';
+
 export default Vue.extend({
   components: {
     TrackHeaderPanel,
