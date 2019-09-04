@@ -1,6 +1,8 @@
 // @flow
 import { eventHub } from '../modules';
 import { CLIP } from '../../constants/model-types';
+import { DIALOG } from '../../constants/event-types';
+import { INSPECT } from '../../constants/dialog-types';
 
 export type Option = {
   label: string,
@@ -12,8 +14,9 @@ export const contextMenuTemplate = {
     {
       label: 'Inspect',
       click ({ id }) {
-        eventHub.$emit('inspect', {
-          type: CLIP,
+        eventHub.$emit(DIALOG, {
+          type: INSPECT,
+          context: CLIP,
           id
         });
       }

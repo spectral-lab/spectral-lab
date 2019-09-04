@@ -16,6 +16,7 @@
 import Vue from 'vue';
 import Color from 'color';
 import { CLIP } from '../../../constants/model-types';
+import { CONTEXT_MENU } from '../../../constants/event-types';
 export default Vue.extend({
   components: {},
   props: {
@@ -34,8 +35,8 @@ export default Vue.extend({
   },
   methods: {
     handleContextMenu (ev) {
-      this.$emit('contextmenu', ev, {
-        type: CLIP,
+      this.$emit(CONTEXT_MENU, ev, {
+        context: CLIP,
         id: this.clip.id
       });
     }

@@ -12,11 +12,21 @@ import {
   selectAllNotes
 } from './interactors/Note';
 import { saveProject } from './usecases/project';
+import { ipcRenderer } from 'electron';
+import { DIALOG } from '../constants/event-types';
+import { eventHub } from './modules';
+
+// =====================================================================================================================
 
 export const initialize = () => {
   bindKeys();
+  listenIpc();
   if (process.env.NODE_ENV === 'development') loadMockEntities();
 };
+
+export default initialize;
+
+// =====================================================================================================================
 
 const bindKeys = () => {
   hotkeys(SAVE_PROJECT.keys, SAVE_PROJECT.scope, saveProject);
@@ -32,4 +42,8 @@ const loadMockEntities = () => {
   store.commit(SET_ENTITIES, mockEntities);
 };
 
-export default initialize;
+const listenIpc = () => {
+  ipcRenderer.on(DIALOG, (...args) => {
+    eventHub.$emit(DIALOG, ...args);
+  });
+};

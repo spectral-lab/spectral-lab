@@ -25,32 +25,33 @@
 import { VueContext } from 'vue-context';
 import templates from '../../templates/context-menu';
 import type { Option } from '../../templates/context-menu';
+import { CONTEXT_MENU } from '../../../constants/event-types';
 export default {
   components: {
     VueContext
   },
   data () {
     return {
-      type: null,
+      context: null,
       payload: null
     };
   },
   computed: {
     template (): Option[] {
-      if (!this.type) return [];
-      return templates[this.type];
+      if (!this.context) return [];
+      return templates[this.context];
     }
   },
   mounted () {
-    this.$eventHub.$on('contextmenu', (ev, payload: { type: string, id: string }) => {
-      this.type = payload.type;
+    this.$eventHub.$on(CONTEXT_MENU, (ev, payload: { context: string, id: string }) => {
+      this.context = payload.context;
       this.payload = payload;
       this.$refs.menu.open(ev);
     });
   },
   methods: {
     handleClose () {
-      this.type = null;
+      this.context = null;
       this.payload = null;
     }
   }

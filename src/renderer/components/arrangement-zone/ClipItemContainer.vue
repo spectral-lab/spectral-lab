@@ -16,6 +16,7 @@
 <script>
 import ClipItem from './ClipItem';
 import Vue from 'vue';
+import { CONTEXT_MENU } from '../../../constants/event-types';
 export default Vue.extend({
   components: {
     ClipItem
@@ -28,7 +29,7 @@ export default Vue.extend({
   },
   methods: {
     handleContextMenu (ev, payload) {
-      this.$eventHub.$emit('contextmenu', ev, payload);
+      this.$eventHub.$emit(CONTEXT_MENU, ev, payload);
     }
   }
 });
