@@ -7,6 +7,7 @@ import { TimeConverter } from './TimeConverter';
 import { SmfGenerator } from './SmfGenerator';
 import { MidiWriter } from './MidiWriter';
 import { AudioPlayer } from './AudioPlayer';
+import Vue from 'vue';
 
 export const timeConverter = new TimeConverter();
 const midiIoFacade = new MidiIoFacade(navigator);
@@ -17,3 +18,4 @@ const smfGenerator = new SmfGenerator(offlineMidiMessageGenerator);
 export const midiPlayer = new MidiPlayer(scheduler);
 export const midiWriter = new MidiWriter(smfGenerator);
 export const audioPlayer = new AudioPlayer();
+export const eventHub = new Vue();

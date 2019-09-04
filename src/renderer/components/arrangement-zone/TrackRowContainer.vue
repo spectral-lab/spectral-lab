@@ -7,18 +7,24 @@
       <track-row
         :track="track"
         :idx="idx"
-      />
+      >
+        <template slot="clips">
+          <clip-item-container :clips="track.clips" />
+        </template>
+      </track-row>
     </div>
   </div>
 </template>
 
 <script>
 import TrackRow from './TrackRow';
+import ClipItemContainer from './ClipItemContainer';
 import { Track } from '../../store/models';
 import { SONG_ID } from '../../../constants/ids';
 export default {
   components: {
-    TrackRow
+    TrackRow,
+    ClipItemContainer
   },
   computed: {
     tracks () {
@@ -29,6 +35,4 @@ export default {
 </script>
 
 <style scoped>
-    .track-container {
-    }
 </style>
