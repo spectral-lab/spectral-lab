@@ -1,4 +1,4 @@
-class ProcessCommunicator {
+export class IpcSender {
   constructor () {
     this.windows = [];
   }
@@ -20,4 +20,4 @@ const log = (channel, ...args) => {
   else console.log(`send ${channel} with ${args}`);
 };
 
-export default new ProcessCommunicator();
+export default new IpcSender();
