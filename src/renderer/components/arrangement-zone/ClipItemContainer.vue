@@ -5,7 +5,10 @@
       :key="clip.id"
       class="clip-item-container"
     >
-      <clip-item :clip="clip" />
+      <clip-item
+        :clip="clip"
+        @contextmenu="handleContextMenu"
+      />
     </div>
   </div>
 </template>
@@ -21,6 +24,11 @@ export default Vue.extend({
     clips: {
       type: Array,
       default: () => []
+    }
+  },
+  methods: {
+    handleContextMenu (ev, payload) {
+      this.$eventHub.$emit('contextmenu', ev, payload);
     }
   }
 });

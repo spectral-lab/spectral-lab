@@ -1,6 +1,7 @@
 <template>
   <div
     :style="{ backgroundColor: bgColor, width: '300px' }"
+    @contextmenu.prevent="handleContextMenu"
     class="clip-item"
   >
     <div class="clip-title">
@@ -14,6 +15,7 @@
 // @flow
 import Vue from 'vue';
 import Color from 'color';
+import { CLIP } from '../../../constants/model-types';
 export default Vue.extend({
   components: {},
   props: {
@@ -27,8 +29,15 @@ export default Vue.extend({
       return Color(this.clip.color).darken(0.1).string();
     },
     notes () {
-      console.log(this.clip);
       return this.clip.notes;
+    }
+  },
+  methods: {
+    handleContextMenu (ev) {
+      this.$emit('contextmenu', ev, {
+        type: CLIP,
+        id: this.clip.id
+      });
     }
   }
 });

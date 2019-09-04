@@ -110,6 +110,7 @@
     "teoria": "^2.5.0",
     "uid": "^0.0.2",
     "vue": "^2.5.16",
+    "vue-context": "^4.0.3",
     "vue-electron": "^1.0.6",
     "vue-eslint-parser": "^6.0.4",
     "vuetify": "1.5.16",
