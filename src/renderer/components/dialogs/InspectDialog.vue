@@ -9,17 +9,19 @@
         class="headline accent darken-2"
         primary-title
       >
-        Clip
+        {{ target.type }}
       </v-card-title>
       <v-card-text>
         <div
-          v-for="key in properties"
+          v-for="key in propertiesToShow"
           :key="key"
         >
           <v-text-field
             @change="handleChange(key, $event)"
-            :value="target[key]"
-            :label="key"
+            :value="template[key].format(target[key])"
+            :label="template[key].label"
+            :suffix="template[key].suffix"
+            :hint="template[key].hint"
           />
         </div>
       </v-card-text>
@@ -29,6 +31,8 @@
 
 <script>
 // @flow
+import { userInputTemplates } from '../../templates/user-input';
+
 export default {
   props: {
     target: {
@@ -40,14 +44,20 @@ export default {
       default: false
     }
   },
+  data () {
+    return {
+      template: userInputTemplates
+    };
+  },
   computed: {
-    properties () {
+    propertiesToShow () {
       if (!this.target) return [];
-      return this.target.editableProperties;
+      return Object.keys(this.target).filter(key => userInputTemplates[key]);
     }
   },
   methods: {
-    handleChange (key: string, newVal: string) {
+    handleChange (key: string, input: string) {
+      const newVal = userInputTemplates[key].parse(input);
       this.$emit('change', { target: this.target, key, newVal });
     },
     handleVisibility (newVal) {
