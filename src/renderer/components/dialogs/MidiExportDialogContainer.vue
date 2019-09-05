@@ -2,6 +2,7 @@
   <midi-export-dialog
     ref="midiExportDialog"
     @click="handleClick"
+    @visibility="handleVisibility"
     :visible="visible"
   />
 </template>
@@ -15,6 +16,11 @@ export default {
   components: {
     MidiExportDialog
   },
+  data () {
+    return {
+      visible: false
+    };
+  },
   methods: {
     open () {
       if (this.visible === false) this.visible = true;
@@ -23,10 +29,14 @@ export default {
       if (this.visible === true) this.visible = false;
     },
     handleClick (target) {
+      this.close();
       switch (target) {
         case SELECTED_CLIPS: return exportSelectedClips();
         default: exportSelectedClips();
       }
+    },
+    handleVisibility (val) {
+      if (this.visible !== val) this.visible = val;
     }
   }
 };

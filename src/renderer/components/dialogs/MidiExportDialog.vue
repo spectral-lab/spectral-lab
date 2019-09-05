@@ -1,6 +1,7 @@
 <template>
   <v-dialog
     :value="visible"
+    @input="handleVisibility"
     width="500"
   >
     <v-card>
@@ -72,8 +73,10 @@ export default {
   },
   methods: {
     handleClick () {
-      this.visible = false;
       this.$emit('click', this.target);
+    },
+    handleVisibility (newVal) {
+      this.$emit('visibility', newVal);
     }
   }
 };
