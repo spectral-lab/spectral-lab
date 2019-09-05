@@ -6,5 +6,5 @@ storiesOf('ClipItem', module)
   .add('view', () => ({
     components: { ClipItem },
     data: () => ({ clip: mockClip }),
-    template: `<ClipItem :clip="clip" />`
+    template: `<clip-item :clip="clip" />`
   }));
