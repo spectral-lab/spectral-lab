@@ -2,6 +2,7 @@
   <midi-export-dialog
     ref="midiExportDialog"
     @click="handleClick"
+    :visible="visible"
   />
 </template>
 
@@ -15,8 +16,11 @@ export default {
     MidiExportDialog
   },
   methods: {
-    show () {
-      this.$refs.midiExportDialog.show();
+    open () {
+      if (this.visible === false) this.visible = true;
+    },
+    close () {
+      if (this.visible === true) this.visible = false;
     },
     handleClick (target) {
       switch (target) {
