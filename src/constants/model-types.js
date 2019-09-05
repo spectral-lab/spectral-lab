@@ -1,3 +1,4 @@
+// @flow
 export const NOTE_ON = 'NoteOn';
 export const MODULATION = 'Modulation';
 export const NOTE_OFF = 'NoteOff';
