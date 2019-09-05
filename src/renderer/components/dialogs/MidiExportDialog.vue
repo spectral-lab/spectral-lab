@@ -1,6 +1,7 @@
 <template>
   <v-dialog
-    v-model="showDialog"
+    :value="visible"
+    @input="handleVisibility"
     width="500"
   >
     <v-card>
@@ -55,9 +56,14 @@
 import { ALL_CLIPS, ALL_TRACKS, SELECTED_TRACKS, SELECTED_CLIPS } from '../../../constants/midi-export-options';
 
 export default {
+  props: {
+    visible: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
-      showDialog: false,
       target: ALL_TRACKS,
       ALL_CLIPS,
       ALL_TRACKS,
@@ -66,15 +72,11 @@ export default {
     };
   },
   methods: {
-    show () {
-      if (this.showDialog === false) this.showDialog = true;
-    },
-    hide () {
-      if (this.showDialog === true) this.showDialog = false;
-    },
     handleClick () {
-      this.hide();
       this.$emit('click', this.target);
+    },
+    handleVisibility (newVal) {
+      this.$emit('visibility', newVal);
     }
   }
 };

@@ -1,7 +1,8 @@
 <template>
   <div>
     <inspect-dialog
-      :show="showDialog"
+      @visibility="handleVisibility"
+      :visible="visible"
       :target="target"
     />
   </div>
@@ -16,17 +17,20 @@ export default {
   },
   data () {
     return {
-      showDialog: false,
+      visible: false,
       target: null
     };
   },
   methods: {
-    show ({ type, context, id }) {
-      if (this.showDialog === false) this.showDialog = true;
+    open ({ type, context, id }) {
+      if (this.visible === false) this.visible = true;
       this.target = models[context].query().whereId(id).first();
     },
-    hide () {
-      if (this.showDialog === true) this.showDialog = false;
+    close () {
+      if (this.visible === true) this.visible = false;
+    },
+    handleVisibility (val) {
+      if (this.visible !== val) this.visible = val;
     }
   }
 };

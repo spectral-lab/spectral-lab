@@ -1,14 +1,14 @@
-import InspectDialog from '../renderer/components/dialogs/InspectDialog';
+import MidiExportDialog from '../renderer/components/dialogs/MidiExportDialog';
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
 import mockClip from '../../test/data/json/mockClip';
 
 mockClip.editableProperties = ['name', 'duration', 'offsetTime'];
 
-storiesOf('InspectDialog', module)
+storiesOf('MidiExportDialog', module)
   .add('view', () => ({
-    components: { InspectDialog },
+    components: { MidiExportDialog },
     data: () => ({ clip: mockClip }),
-    methods: { action: action('value-changed') },
-    template: `<inspect-dialog :target="clip" :visible="true" @change="action"/>`
+    methods: { action: action('clicked') },
+    template: `<midi-export-dialog :visible="true" @click="action"/>`
   }));

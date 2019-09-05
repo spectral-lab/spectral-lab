@@ -12,7 +12,7 @@ storiesOf('TrackRow', module)
     components: { TrackRow },
     data: () => ({ track: mockTrack }),
     template: `
-        <TrackRow :track="track" :idx="23">
+        <track-row :track="track" :idx="23">
             <template slot="clips"><h1>Here come clips!</h1></template>
-        </TrackRow>`
+        </track-row>`
   }));
