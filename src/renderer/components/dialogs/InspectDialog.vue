@@ -1,6 +1,7 @@
 <template>
   <v-dialog
-    :value="show"
+    :value="visible"
+    @input="handleVisibility"
     width="500"
   >
     <v-card>
@@ -34,7 +35,7 @@ export default {
       type: Object,
       default: null
     },
-    show: {
+    visible: {
       type: Boolean,
       default: false
     }
@@ -48,6 +49,9 @@ export default {
   methods: {
     handleChange (key: string, newVal: string) {
       this.$emit('change', { target: this.target, key, newVal });
+    },
+    handleVisibility (newVal) {
+      this.$emit('visibility', newVal);
     }
   }
 };

@@ -10,5 +10,5 @@ storiesOf('InspectDialog', module)
     components: { InspectDialog },
     data: () => ({ clip: mockClip }),
     methods: { action: action('value-changed') },
-    template: `<inspect-dialog :target="clip" :show="true" @change="action"/>`
+    template: `<inspect-dialog :target="clip" :visible="true" @change="action"/>`
   }));

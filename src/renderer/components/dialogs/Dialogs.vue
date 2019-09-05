@@ -23,7 +23,7 @@ export default Vue.extend({
   },
   mounted (): void {
     this.$eventHub.$on(DIALOG, (_ev, payload) => {
-      this.$refs[payload.type].show(payload);
+      this.$refs[payload.type].open(payload);
     });
   }
 });
