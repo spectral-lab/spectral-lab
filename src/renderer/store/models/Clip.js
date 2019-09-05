@@ -55,4 +55,8 @@ export default class Clip extends BaseModel {
   get sortedNoteActions ():NoteAction[] {
     return sortBy<NoteAction>(this.noteActions, [noteAction => noteAction.absoluteTime]);
   }
+
+  get editableProperties (): string[] {
+    return ['name', 'offsetTime', 'duration', 'beatsPerBar', 'color'];
+  }
 }
