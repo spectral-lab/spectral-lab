@@ -1,25 +1,29 @@
 <template>
   <div>
     <midi-export-dialog-container :ref="MIDI_EXPORT" />
+    <inspect-dialog-container :ref="INSPECT" />
   </div>
 </template>
 <script>
 import MidiExportDialogContainer from './MidiExportDialogContainer';
+import InspectDialogContainer from './InspectDialogContainer';
 import { DIALOG } from '../../../constants/event-types';
-import { MIDI_EXPORT } from '../../../constants/dialog-types';
+import { INSPECT, MIDI_EXPORT } from '../../../constants/dialog-types';
 import Vue from 'vue';
 export default Vue.extend({
   components: {
-    MidiExportDialogContainer
+    MidiExportDialogContainer,
+    InspectDialogContainer
   },
   data () {
     return {
-      MIDI_EXPORT
+      MIDI_EXPORT,
+      INSPECT
     };
   },
   mounted (): void {
-    this.$eventHub.$on(DIALOG, (_ev, { type }) => {
-      this.$refs[type].show();
+    this.$eventHub.$on(DIALOG, (_ev, payload) => {
+      this.$refs[payload.type].show(payload);
     });
   }
 });
