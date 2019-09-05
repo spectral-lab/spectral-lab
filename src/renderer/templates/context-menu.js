@@ -14,7 +14,7 @@ export const contextMenuTemplate = {
     {
       label: 'Inspect',
       click ({ id }) {
-        eventHub.$emit(DIALOG, {
+        eventHub.$emit(DIALOG, null, {
           type: INSPECT,
           context: CLIP,
           id
