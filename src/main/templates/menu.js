@@ -1,7 +1,8 @@
 import { app } from 'electron';
 import ipcSender from '../modules/IpcSender';
-import { DIALOG } from '../../constants/event-types';
+import { CREATE, DIALOG } from '../../constants/event-types';
 import { MIDI_EXPORT } from '../../constants/dialog-types';
+import { TRACK } from '../../constants/model-types';
 
 const application = {
   label: 'Application',
@@ -48,5 +49,16 @@ const edit = {
   ]
 };
 
-export const menuTemplate = [application, edit];
+const create = {
+  label: 'Create',
+  submenu: [
+    {
+      label: 'New Track',
+      click: () => {
+        ipcSender.send(CREATE, { type: TRACK });
+      }
+    }
+  ]
+};
+export const menuTemplate = [application, edit, create];
 export default menuTemplate;
