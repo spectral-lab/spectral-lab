@@ -21,9 +21,11 @@ import {
 } from './interactors/Note';
 import { saveProject } from './usecases/project';
 import { ipcRenderer } from 'electron';
-import { DIALOG } from '../constants/event-types';
+import { CREATE, DIALOG } from '../constants/event-types';
 import { dialogEventHub, windowSwitchEventHub } from './modules';
 import { ALTERNATE, SPLIT, ARRANGEMENT } from '../constants/layout';
+import { TRACK } from '../constants/model-types';
+import { createTrack } from './interactors/Track';
 
 // =====================================================================================================================
 
@@ -63,5 +65,8 @@ const loadMockEntities = () => {
 const listenIpc = () => {
   ipcRenderer.on(DIALOG, (...args) => {
     dialogEventHub.emit(...args);
+  });
+  ipcRenderer.on(CREATE, (_ev, { type }) => {
+    if (type === TRACK) createTrack();
   });
 };
