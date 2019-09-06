@@ -13,6 +13,7 @@
       <v-layout row>
         <v-spacer />
         <icon-btn-with-tip
+          @click="handleClick"
           :color="bgColor"
           icon="fa-cog"
           tip="Tack setting"
@@ -27,6 +28,10 @@
 import IconBtnWithTip from '../misc/IconBtnWithTip';
 import Color from 'color';
 import Vue from 'vue';
+import { TRACK } from '../../../constants/model-types';
+import { INSPECT } from '../../../constants/dialog-types';
+import { dialogEventHub } from '../../modules';
+
 export default Vue.extend({
   components: {
     IconBtnWithTip
@@ -44,6 +49,15 @@ export default Vue.extend({
   computed: {
     bgColor () {
       return Color(this.track.color).darken(0.5).rgb().string();
+    }
+  },
+  methods: {
+    handleClick () {
+      dialogEventHub.emit(null, {
+        type: INSPECT,
+        context: TRACK,
+        id: this.track.id
+      });
     }
   }
 });
