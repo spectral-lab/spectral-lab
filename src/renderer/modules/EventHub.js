@@ -1,9 +1,11 @@
 // @flow
 import type { Callable } from '../../types';
 
+type Event = any;
+type Payload = any;
 export interface IEventHub {
-  addListener ((event: any, payload: any) => void): void,
-  emit (event: any, payload: any): void
+  addListener ((Event, Payload) => void): void,
+  emit (Event, Payload): void
 }
 
 export class EventHub implements IEventHub {
@@ -13,11 +15,11 @@ export class EventHub implements IEventHub {
     this._listeners = [];
   }
 
-  addListener (cb: (event: any, payload: any) => void) {
+  addListener (cb: (event: Event, payload: Payload) => void) {
     this._listeners.push(cb);
   }
 
-  emit (event: any, payload: any) {
+  emit (event: Event, payload: Payload) {
     this._listeners.forEach(listener => {
       listener(event, payload);
     });

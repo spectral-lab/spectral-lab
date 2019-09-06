@@ -1,7 +1,6 @@
 // @flow
-import { eventHub } from '../modules';
+import { dialogEventHub } from '../modules';
 import { CLIP } from '../../constants/model-types';
-import { DIALOG } from '../../constants/event-types';
 import { INSPECT } from '../../constants/dialog-types';
 
 // =====================================================================================================================
@@ -23,7 +22,7 @@ export const contextMenuTemplates: IContextMenuTemplates = {
     {
       label: 'Inspect',
       click ({ id }) {
-        eventHub.$emit(DIALOG, null, {
+        dialogEventHub.emit(null, {
           type: INSPECT,
           context: CLIP,
           id

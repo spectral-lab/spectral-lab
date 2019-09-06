@@ -8,11 +8,9 @@ import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 import theme from '../constants/theme';
 import initialize from './initialize';
-import { eventHub } from './modules';
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
 Vue.config.productionTip = false;
-Vue.prototype.$eventHub = eventHub; // Global event bus
 
 Vue.use(Vuetify, {
   theme, iconfont: 'md'

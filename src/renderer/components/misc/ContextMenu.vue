@@ -25,7 +25,7 @@
 import { VueContext } from 'vue-context';
 import templates from '../../templates/context-menu';
 import type { Option } from '../../templates/context-menu';
-import { CONTEXT_MENU } from '../../../constants/event-types';
+import { contextMenuEventHub } from '../../modules';
 export default {
   components: {
     VueContext
@@ -43,7 +43,7 @@ export default {
     }
   },
   mounted () {
-    this.$eventHub.$on(CONTEXT_MENU, (ev, payload: { context: string, id: string }) => {
+    contextMenuEventHub.addListener((ev, payload: { context: string, id: string }) => {
       this.context = payload.context;
       this.payload = payload;
       this.$refs.menu.open(ev);

@@ -1,3 +1,4 @@
+// @flow
 import store from './store';
 import hotkeys from 'hotkeys-js';
 import { DELETE_NOTES, NOTE_SHIFT, SAVE_PROJECT, SELECT_ALL_NOTES } from '../constants/key-bindings';
@@ -14,7 +15,7 @@ import {
 import { saveProject } from './usecases/project';
 import { ipcRenderer } from 'electron';
 import { DIALOG } from '../constants/event-types';
-import { eventHub } from './modules';
+import { dialogEventHub } from './modules';
 
 // =====================================================================================================================
 
@@ -44,6 +45,6 @@ const loadMockEntities = () => {
 
 const listenIpc = () => {
   ipcRenderer.on(DIALOG, (...args) => {
-    eventHub.$emit(DIALOG, ...args);
+    dialogEventHub.emit(...args);
   });
 };

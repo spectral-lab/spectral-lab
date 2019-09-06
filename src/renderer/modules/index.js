@@ -9,7 +9,7 @@ import { MidiWriter } from './MidiWriter';
 import { AudioPlayer } from './AudioPlayer';
 import { TemplateGenerator } from './TemplateGenerator';
 import { userInputTemplates } from '../templates/user-input';
-import Vue from 'vue';
+import { EventHub } from './EventHub';
 
 export const timeConverter = new TimeConverter();
 const midiIoFacade = new MidiIoFacade(navigator);
@@ -21,4 +21,5 @@ export const templateGenerator = TemplateGenerator({ userInputTemplates });
 export const midiPlayer = new MidiPlayer(scheduler);
 export const midiWriter = new MidiWriter(smfGenerator);
 export const audioPlayer = new AudioPlayer();
-export const eventHub = new Vue();
+export const dialogEventHub = new EventHub();
+export const contextMenuEventHub = new EventHub();
