@@ -9,17 +9,19 @@
         class="headline accent darken-2"
         primary-title
       >
-        Clip
+        {{ title }}
       </v-card-title>
       <v-card-text>
         <div
-          v-for="key in properties"
-          :key="key"
+          v-for="template in templates"
+          :key="template.id"
         >
           <v-text-field
-            @change="handleChange(key, $event)"
-            :value="target[key]"
-            :label="key"
+            @change="handleChange(template.id, template.parse($event))"
+            :value="template.value"
+            :label="template.label"
+            :suffix="template.suffix"
+            :hint="template.hint"
           />
         </div>
       </v-card-text>
@@ -29,32 +31,31 @@
 
 <script>
 // @flow
-export default {
+import Vue from 'vue';
+export default Vue.extend({
   props: {
-    target: {
-      type: Object,
-      default: null
+    title: {
+      type: String,
+      default: 'Inspect'
+    },
+    templates: {
+      type: Array,
+      default: () => []
     },
     visible: {
       type: Boolean,
       default: false
     }
   },
-  computed: {
-    properties () {
-      if (!this.target) return [];
-      return this.target.editableProperties;
-    }
-  },
   methods: {
     handleChange (key: string, newVal: string) {
-      this.$emit('change', { target: this.target, key, newVal });
+      this.$emit('change', { [key]: newVal });
     },
     handleVisibility (newVal) {
       this.$emit('visibility', newVal);
     }
   }
-};
+});
 </script>
 
 <style scoped>

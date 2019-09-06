@@ -2,16 +2,22 @@
   <div>
     <inspect-dialog
       @visibility="handleVisibility"
+      @change="handleChange"
+      :title="title"
       :visible="visible"
-      :target="target"
+      :templates="templates"
     />
   </div>
 </template>
 
 <script>
+// @flow
 import InspectDialog from './InspectDialog';
 import * as models from '../../store/models';
-export default {
+import Vue from 'vue';
+import { templateGenerator } from '../../modules';
+import type { InspectDialogTemplate } from '../../modules/TemplateGenerator';
+export default Vue.extend({
   components: {
     InspectDialog
   },
@@ -21,8 +27,18 @@ export default {
       target: null
     };
   },
+  computed: {
+    title (): string {
+      if (this.target && this.target.type) return this.target.type;
+      return 'Inspect';
+    },
+    templates (): InspectDialogTemplate[] {
+      if (!this.target) return [];
+      return templateGenerator.makeInspectDialog(this.target);
+    }
+  },
   methods: {
-    open ({ type, context, id }) {
+    open ({ context, id }) {
       if (this.visible === false) this.visible = true;
       this.target = models[context].query().whereId(id).first();
     },
@@ -31,9 +47,15 @@ export default {
     },
     handleVisibility (val) {
       if (this.visible !== val) this.visible = val;
+    },
+    handleChange (data) {
+      models[this.target.type].update({
+        where: this.target.id,
+        data
+      });
     }
   }
-};
+});
 </script>
 
 <style scoped>
