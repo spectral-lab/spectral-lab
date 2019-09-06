@@ -7,6 +7,7 @@
       <track-row
         :track="track"
         :idx="idx"
+        @click="handleClick"
       >
         <template slot="clips">
           <clip-item-container :clips="track.clips" />
