@@ -7,9 +7,9 @@
 <script>
 import MidiExportDialogContainer from './MidiExportDialogContainer';
 import InspectDialogContainer from './InspectDialogContainer';
-import { DIALOG } from '../../../constants/event-types';
 import { INSPECT, MIDI_EXPORT } from '../../../constants/dialog-types';
 import Vue from 'vue';
+import { dialogEventHub } from '../../modules';
 export default Vue.extend({
   components: {
     MidiExportDialogContainer,
@@ -22,7 +22,7 @@ export default Vue.extend({
     };
   },
   mounted (): void {
-    this.$eventHub.$on(DIALOG, (_ev, payload) => {
+    dialogEventHub.addListener((_ev, payload) => {
       this.$refs[payload.type].open(payload);
     });
   }
