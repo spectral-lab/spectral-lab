@@ -7,7 +7,10 @@
     <div class="clip-title">
       {{ clip.name }}
     </div>
-    <div class="clip-content" />
+    <div
+      @dblclick="handleDblClick"
+      class="clip-content"
+    />
   </div>
 </template>
 
@@ -16,7 +19,7 @@
 import Vue from 'vue';
 import Color from 'color';
 import { CLIP } from '../../../constants/model-types';
-import { CONTEXT_MENU } from '../../../constants/event-types';
+import { CONTEXT_MENU, DBL_CLICK } from '../../../constants/event-types';
 export default Vue.extend({
   components: {},
   props: {
@@ -36,6 +39,12 @@ export default Vue.extend({
   methods: {
     handleContextMenu (ev) {
       this.$emit(CONTEXT_MENU, ev, {
+        context: CLIP,
+        id: this.clip.id
+      });
+    },
+    handleDblClick (ev) {
+      this.$emit(DBL_CLICK, ev, {
         context: CLIP,
         id: this.clip.id
       });
