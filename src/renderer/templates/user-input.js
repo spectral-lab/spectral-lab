@@ -1,6 +1,5 @@
 // @flow
 import mapValues from 'lodash/mapValues';
-import clamp from 'lodash/clamp';
 import { COLOR, DURATION, NAME, OFFSET_TIME } from '../../constants/model-properties';
 import { noCase } from 'change-case';
 // =====================================================================================================================
