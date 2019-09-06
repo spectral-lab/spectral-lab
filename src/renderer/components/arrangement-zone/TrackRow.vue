@@ -1,6 +1,7 @@
 <template>
   <div class="track-row">
     <track-header-panel
+      @click="handleClick"
       :track="track"
       :idx="idx"
     />
@@ -33,6 +34,11 @@ export default Vue.extend({
     track: {
       type: Object,
       default: () => ({})
+    }
+  },
+  methods: {
+    handleClick (ev, payload) {
+      this.$emit('click', ev, payload);
     }
   }
 });
