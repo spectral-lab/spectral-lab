@@ -23,3 +23,4 @@ export const midiWriter = new MidiWriter(smfGenerator);
 export const audioPlayer = new AudioPlayer();
 export const dialogEventHub = new EventHub();
 export const contextMenuEventHub = new EventHub();
+export const windowSwitchEventHub = new EventHub();
