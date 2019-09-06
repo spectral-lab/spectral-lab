@@ -8,6 +8,7 @@
       <clip-item
         :clip="clip"
         @contextmenu="handleContextMenu"
+        @dblclick="handleDblClick"
       />
     </div>
   </div>
@@ -16,7 +17,8 @@
 <script>
 import ClipItem from './ClipItem';
 import Vue from 'vue';
-import { contextMenuEventHub } from '../../modules';
+import { contextMenuEventHub, windowSwitchEventHub } from '../../modules';
+import { SPLIT } from '../../../constants/layout';
 export default Vue.extend({
   components: {
     ClipItem
@@ -30,6 +32,9 @@ export default Vue.extend({
   methods: {
     handleContextMenu (ev, payload) {
       contextMenuEventHub.emit(ev, payload);
+    },
+    handleDblClick () {
+      windowSwitchEventHub.emit(null, { layout: SPLIT });
     }
   }
 });

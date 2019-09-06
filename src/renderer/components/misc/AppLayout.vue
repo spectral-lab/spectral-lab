@@ -49,12 +49,18 @@ import PianoRollZone from '../piano-roll-zone/PianoRollZone';
 import ArrangementZone from '../arrangement-zone/ArrangementZone';
 import ElasticDivStack from './ElasticDivStack';
 import TitleBar from './TitleBar';
-import { titleBarHeight, transportHeight, borderHeight } from '../../../constants/layout';
-import hotkeys from 'hotkeys-js';
-import { SPLIT_WINDOW, SWITCH_WINDOW } from '../../../constants/key-bindings';
+import {
+  titleBarHeight,
+  transportHeight,
+  borderHeight,
+  SPLIT,
+  PIANO_ROLL,
+  ARRANGEMENT,
+  ALTERNATE
+} from '../../../constants/layout';
 import { App } from '../../store/models';
-import { ARRANGEMENT, PIANO_ROLL } from '../../../constants/model-types';
 import Vue from 'vue';
+import { windowSwitchEventHub } from '../../modules';
 
 export default Vue.extend({
   components: {
@@ -96,16 +102,28 @@ export default Vue.extend({
     }
   },
   mounted () {
-    hotkeys(SWITCH_WINDOW.keys, SWITCH_WINDOW.scope, this.switchWindow);
-    hotkeys(SPLIT_WINDOW.keys, SPLIT_WINDOW.scope, this.splitWindow);
-    this.expandArrangementZone();
-    this.selectArrangementZone();
-    // this.expandPianoRollZone();
-    // this.selectPianoRollZone();
+    windowSwitchEventHub.addListener((_ev, { layout }) => {
+      if (layout === ARRANGEMENT) {
+        this.expandArrangementZone();
+        this.selectArrangementZone();
+        return;
+      }
+      if (layout === PIANO_ROLL) {
+        this.expandPianoRollZone();
+        this.selectPianoRollZone();
+        return;
+      }
+      if (layout === SPLIT) {
+        this.splitWindow();
+        return;
+      }
+      if (layout === ALTERNATE) {
+        this.switchWindow();
+      }
+    });
   },
   methods: {
-    switchWindow (ev) {
-      ev.preventDefault();
+    switchWindow () {
       if (this.selectedZone === ARRANGEMENT) {
         this.expandPianoRollZone();
         this.selectPianoRollZone();

@@ -1,7 +1,14 @@
 // @flow
 import store from './store';
 import hotkeys from 'hotkeys-js';
-import { DELETE_NOTES, NOTE_SHIFT, SAVE_PROJECT, SELECT_ALL_NOTES } from '../constants/key-bindings';
+import {
+  DELETE_NOTES,
+  NOTE_SHIFT,
+  SAVE_PROJECT,
+  SELECT_ALL_NOTES,
+  SPLIT_WINDOW,
+  SWITCH_WINDOW
+} from '../constants/key-bindings';
 import mockEntities from '../../test/data/json/mockEntities';
 import { SET_ENTITIES } from './store/mutation-types';
 import {
@@ -15,7 +22,8 @@ import {
 import { saveProject } from './usecases/project';
 import { ipcRenderer } from 'electron';
 import { DIALOG } from '../constants/event-types';
-import { dialogEventHub } from './modules';
+import { dialogEventHub, windowSwitchEventHub } from './modules';
+import { ALTERNATE, SPLIT, ARRANGEMENT } from '../constants/layout';
 
 // =====================================================================================================================
 
@@ -23,6 +31,7 @@ export const initialize = () => {
   bindKeys();
   listenIpc();
   if (process.env.NODE_ENV === 'development') loadMockEntities();
+  windowSwitchEventHub.emit(null, { layout: ARRANGEMENT });
 };
 
 export default initialize;
@@ -37,6 +46,14 @@ const bindKeys = () => {
   hotkeys(NOTE_SHIFT.up.keys, NOTE_SHIFT.up.scope, (ev) => { ev.preventDefault(); noteShiftUp(1); });
   hotkeys(NOTE_SHIFT.down.keys, NOTE_SHIFT.down.scope, (ev) => { ev.preventDefault(); noteShiftDown(1); });
   hotkeys(DELETE_NOTES.keys, DELETE_NOTES.scope, (ev) => { ev.preventDefault(); deleteNotes(); });
+  hotkeys(SWITCH_WINDOW.keys, SWITCH_WINDOW.scope, (ev) => {
+    ev.preventDefault();
+    windowSwitchEventHub.emit(null, { layout: ALTERNATE });
+  });
+  hotkeys(SPLIT_WINDOW.keys, SPLIT_WINDOW.scope, (ev) => {
+    ev.preventDefault();
+    windowSwitchEventHub.emit(null, { layout: SPLIT });
+  });
 };
 
 const loadMockEntities = () => {
