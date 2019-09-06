@@ -1,14 +1,18 @@
+// @flow
+// $FlowFixMe
 import InspectDialog from '../renderer/components/dialogs/InspectDialog';
 import { storiesOf } from '@storybook/vue';
 import { action } from '@storybook/addon-actions';
 import mockClip from '../../test/data/json/mockClip';
+import { TemplateGenerator } from '../renderer/modules/TemplateGenerator';
+import userInputTemplates from '../renderer/templates/user-input';
 
-mockClip.editableProperties = ['name', 'duration', 'offsetTime'];
+const templates = TemplateGenerator({ userInputTemplates }).makeInspectDialog(mockClip);
 
 storiesOf('InspectDialog', module)
   .add('view', () => ({
     components: { InspectDialog },
-    data: () => ({ clip: mockClip }),
+    data: () => ({ templates }),
     methods: { action: action('value-changed') },
-    template: `<inspect-dialog :target="clip" :visible="true" @change="action"/>`
+    template: `<inspect-dialog :templates="templates" :visible="true" @change="action"/>`
   }));

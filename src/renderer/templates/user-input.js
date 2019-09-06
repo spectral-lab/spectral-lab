@@ -1,7 +1,8 @@
 // @flow
-import { clamp, mapValues } from 'lodash';
-import { NAME, OFFSET_TIME } from '../../constants/model-properties';
-
+import mapValues from 'lodash/mapValues';
+import clamp from 'lodash/clamp';
+import { COLOR, DURATION, NAME, OFFSET_TIME } from '../../constants/model-properties';
+import { noCase } from 'change-case';
 // =====================================================================================================================
 // types
 export type UserInputTemplate = {
@@ -39,16 +40,26 @@ const assignDefault = (templates): IUserInputTemplates => {
 
 export const userInputTemplates: IUserInputTemplates = assignDefault({
   [NAME]: {
-    label: 'name'
+    label: noCase(NAME)
   },
   [OFFSET_TIME]: {
-    label: 'offset time',
+    label: noCase(OFFSET_TIME),
     type: 'number',
     suffix: 'tick',
-    hint: 'relative time position from its parent',
     parse (input) {
       return Math.max(parseInt(input), 0);
     }
+  },
+  [DURATION]: {
+    label: noCase(DURATION),
+    type: 'number',
+    suffix: 'tick',
+    parse (input) {
+      return Math.max(parseInt(input), 0);
+    }
+  },
+  [COLOR]: {
+    label: noCase(COLOR)
   }
 });
 

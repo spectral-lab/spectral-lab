@@ -9,19 +9,19 @@
         class="headline accent darken-2"
         primary-title
       >
-        {{ target.type }}
+        {{ title }}
       </v-card-title>
       <v-card-text>
         <div
-          v-for="key in propertiesToShow"
-          :key="key"
+          v-for="template in templates"
+          :key="template.id"
         >
           <v-text-field
-            @change="handleChange(key, $event)"
-            :value="template[key].format(target[key])"
-            :label="template[key].label"
-            :suffix="template[key].suffix"
-            :hint="template[key].hint"
+            @change="handleChange(template.id, template.parse($event))"
+            :value="template.value"
+            :label="template.label"
+            :suffix="template.suffix"
+            :hint="template.hint"
           />
         </div>
       </v-card-text>
@@ -31,40 +31,31 @@
 
 <script>
 // @flow
-import { userInputTemplates } from '../../templates/user-input';
-
-export default {
+import Vue from 'vue';
+export default Vue.extend({
   props: {
-    target: {
-      type: Object,
-      default: null
+    title: {
+      type: String,
+      default: 'Inspect'
+    },
+    templates: {
+      type: Array,
+      default: () => []
     },
     visible: {
       type: Boolean,
       default: false
     }
   },
-  data () {
-    return {
-      template: userInputTemplates
-    };
-  },
-  computed: {
-    propertiesToShow () {
-      if (!this.target) return [];
-      return Object.keys(this.target).filter(key => userInputTemplates[key]);
-    }
-  },
   methods: {
-    handleChange (key: string, input: string) {
-      const newVal = userInputTemplates[key].parse(input);
-      this.$emit('change', { target: this.target, key, newVal });
+    handleChange (key: string, newVal: string) {
+      this.$emit('change', { [key]: newVal });
     },
     handleVisibility (newVal) {
       this.$emit('visibility', newVal);
     }
   }
-};
+});
 </script>
 
 <style scoped>
