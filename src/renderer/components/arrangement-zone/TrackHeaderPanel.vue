@@ -28,9 +28,6 @@
 import IconBtnWithTip from '../misc/IconBtnWithTip';
 import Color from 'color';
 import Vue from 'vue';
-import { TRACK } from '../../../constants/model-types';
-import { INSPECT } from '../../../constants/dialog-types';
-import { dialogEventHub } from '../../modules';
 
 export default Vue.extend({
   components: {
@@ -53,11 +50,7 @@ export default Vue.extend({
   },
   methods: {
     handleClick () {
-      dialogEventHub.emit(null, {
-        type: INSPECT,
-        context: TRACK,
-        id: this.track.id
-      });
+      this.$emit('click', null, { type: 'setting', id: this.track.id });
     }
   }
 });
