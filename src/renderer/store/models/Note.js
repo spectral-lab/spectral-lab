@@ -2,6 +2,7 @@
 import { BaseModel, Clip, NoteOn, NoteOff, Modulation } from '.';
 import { NOTE } from '../../../constants/model-types';
 import { makeMandatory } from '../utils';
+import { pitchTransition } from '../../utils/helpers/transition';
 
 export default class Note extends BaseModel {
   static get entity () {
@@ -32,14 +33,7 @@ export default class Note extends BaseModel {
   }
 
   get pitchTransition () {
-    const pitchBendMods = this.modulations.filter(mod => mod.pitchBend !== null);
-    const noteActions = [{ offsetTime: 0, ...this.noteOn }, ...pitchBendMods, this.noteOff && this.noteOff].filter(v => v);
-    return noteActions.map(noteAction => ({
-      offsetTime: this.offsetTime + noteAction.offsetTime,
-      pitch: this.noteNumber + noteAction.pitchBend,
-      id: noteAction.id,
-      type: noteAction.type
-    }));
+    return pitchTransition(this);
   }
 
   get parent () {

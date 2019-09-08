@@ -74,6 +74,13 @@ export type SamplingRate = number;
 export type Frequency = number;
 
 /**
+ * Unit is MIDI Note Number.
+ * from 0 to 127
+ * eg: 60
+ */
+export type NoteNumber = number;
+
+/**
  * from 0.0 to 1.0
  */
 export type Magnitude = number;
