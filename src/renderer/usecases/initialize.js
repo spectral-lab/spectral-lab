@@ -1,5 +1,5 @@
 // @flow
-import store from './store';
+import store from '../store';
 import hotkeys from 'hotkeys-js';
 import {
   DELETE_NOTES,
@@ -8,9 +8,9 @@ import {
   SELECT_ALL_NOTES,
   SPLIT_WINDOW,
   SWITCH_WINDOW
-} from '../constants/key-bindings';
-import mockEntities from '../../test/data/json/mockEntities';
-import { SET_ENTITIES } from './store/mutation-types';
+} from '../../constants/key-bindings';
+import mockEntities from '../../../test/data/json/mockEntities';
+import { SET_ENTITIES } from '../store/mutation-types';
 import {
   deleteNotes,
   noteShiftDown,
@@ -18,14 +18,14 @@ import {
   noteShiftRight,
   noteShiftUp,
   selectAllNotes
-} from './interactors/Note';
-import { saveProject } from './usecases/project';
+} from '../interactors/Note';
+import { saveProject } from './project';
 import { ipcRenderer } from 'electron';
-import { CREATE, DIALOG } from '../constants/event-types';
-import { dialogEventHub, windowSwitchEventHub } from './modules';
-import { ALTERNATE, SPLIT, ARRANGEMENT } from '../constants/layout';
-import { TRACK } from '../constants/model-types';
-import { createTrack } from './interactors/Track';
+import { CREATE, DIALOG } from '../../constants/event-types';
+import { dialogEventHub, windowSwitchEventHub } from '../modules';
+import { ALTERNATE, SPLIT, ARRANGEMENT } from '../../constants/layout';
+import { TRACK } from '../../constants/model-types';
+import { createTrack } from '../interactors/Track';
 
 // =====================================================================================================================
 
