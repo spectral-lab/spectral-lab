@@ -2,8 +2,10 @@
 import { makeMandatory } from '../utils';
 import { PIANO_ROLL } from '../../../constants/model-types';
 import { SELECT } from '../../../constants/mouse-modes';
-import { flatten } from 'lodash';
-import { App, BaseModel, Clip, Song, Note } from '.';
+import flatMap from 'lodash/flatMap';
+import { App, BaseModel, Clip, Song, Note, Track } from '.';
+import { SELECTED } from '../../../constants/model-properties';
+import { beatsPerBar } from '../../../constants/defaults';
 
 export default class PianoRoll extends BaseModel {
   static get entity () {
@@ -27,15 +29,19 @@ export default class PianoRoll extends BaseModel {
   }
 
   get clips (): Clip[] {
-    return Clip.query().where('selected', true).withAllRecursive().get();
+    const selectedClips = Clip.query().where(SELECTED, true).withAllRecursive().get();
+    if (selectedClips.length) return selectedClips;
+    const selectedTracks = Track.query().where(SELECTED, true).withAllRecursive().get();
+    if (selectedTracks.length) return flatMap<Track[], Clip>(selectedTracks, track => track.clips);
+    return [];
   }
 
   get notes () {
-    return flatten<Note, Note>(this.clips.map(clip => clip.notes));
+    return flatMap<Clip[], Note>(this.clips, clip => clip.notes);
   }
 
   get selectedNoteIds () {
-    return flatten<number, number>(this.clips.map(clip => clip.selectedNoteIds));
+    return flatMap<Clip[], Number>(this.clips, clip => clip.selectedNoteIds);
   }
 
   get someNotesAreSelected () {
@@ -53,7 +59,8 @@ export default class PianoRoll extends BaseModel {
   }
 
   get beatsPerBar () {
-    return this.clips[0].beatsPerBar[0].val;
+    if (this.clips[0]) return this.clips[0].beatsPerBar[0].val;
+    return beatsPerBar;
   }
 
   get ticksPerBeat () {

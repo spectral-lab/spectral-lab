@@ -36,6 +36,7 @@ export const instanciateModels = () => {
   models.Track.insert({
     data: {
       id: trackId,
+      selected: true,
       songId: SONG_ID
     }
   });
