@@ -1,7 +1,7 @@
 <template>
   <div
-    ref="pianoRoll"
-    class="piano-roll"
+    ref="pianoRollLayout"
+    class="piano-roll-layout"
   >
     <elastic-div-stack
       :border-width="24"
@@ -18,7 +18,7 @@
               ref="rulerContent"
               class="ruler-content"
             >
-              <ruler-container />
+              <slot name="ruler" />
             </div>
           </div>
           <div
@@ -29,7 +29,7 @@
               ref="noteDisplayContent"
               class="note-display-content"
             >
-              <note-display />
+              <slot name="note-display" />
             </div>
           </div>
           <div
@@ -40,7 +40,7 @@
               ref="midiKeyboardContent"
               class="midi-keyboard-content"
             >
-              <midi-keyboard-container />
+              <slot name="midi-keyboard" />
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@
               ref="automationDisplayContent"
               class="automation-display-content"
             >
-              <automation-display />
+              <slot name="automation-display" />
             </div>
           </div>
         </div>
@@ -69,28 +69,21 @@
 </template>
 
 <script>
-import NoteDisplay from './NoteDisplay';
-import MidiKeyboardContainer from './MidiKeyboardContainer';
 import ElasticDivStack from '../misc/ElasticDivStack';
 import ZoomManager from '../../utils/view/pianoRoll/ZoomManager';
 import { syncScroll } from '../../utils/view/pianoRoll/scroll';
-import RulerContainer from '../misc/RulerContainer';
-import AutomationDisplay from './AutomationDisplay';
 
 export default {
   components: {
-    NoteDisplay,
-    MidiKeyboardContainer,
-    ElasticDivStack,
-    RulerContainer,
-    AutomationDisplay
+    ElasticDivStack
   },
   data () {
     return {
-      upperContentHeight: 500
+      upperContentHeight: 350
     };
   },
   mounted () {
+    this.upperContentHeight = this.$refs.pianoRollLayout.offsetHeight * 0.75;
     /* eslint-disable no-new */
     new ZoomManager({
       resizeBasis: this.$refs.noteDisplayViewport,
@@ -114,9 +107,9 @@ export default {
 </script>
 
 <style scoped>
-.piano-roll {
+.piano-roll-layout {
     background: rgb(66,66,66);
-    height: 60vh;
+    height: 100%;
     animation: fadein 1s;
 }
 
