@@ -12,7 +12,7 @@ Vue.use(Vuetify, {
 });
 
 addDecorator(() => ({
-  template: "<v-app><story/></v-app>"
+  template: "<v-app dark><story/></v-app>"
 }));
 
 addParameters({

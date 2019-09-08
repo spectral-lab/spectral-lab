@@ -1,26 +1,34 @@
 <template>
-  <v-card
-    :color="bgColor"
+  <div
+    @click="handleClickPanel"
     class="track-header-panel"
-    flat
   >
-    <v-card-title primary-title>
-      <h3>
-        {{ idx + 1 }} {{ track.name }}
-      </h3>
-    </v-card-title>
-    <v-card-actions>
-      <v-layout row>
-        <v-spacer />
-        <icon-btn-with-tip
-          @click="handleClick"
-          :color="bgColor"
-          icon="fa-cog"
-          tip="Tack setting"
-        />
-      </v-layout>
-    </v-card-actions>
-  </v-card>
+    <div
+      :style="{backgroundColor: labelColor}"
+      class="color-label"
+    />
+    <div
+      :style="{backgroundColor: bgColor}"
+      class="panel-content"
+    >
+      <v-card-title>
+        <h3 :style="{color: titleColor}">
+          {{ idx + 1 }}. {{ track.name }}
+        </h3>
+      </v-card-title>
+      <v-card-actions>
+        <v-layout row>
+          <v-spacer />
+          <icon-btn-with-tip
+            @click="handleClickSetting"
+            :color="bgColor"
+            icon="fa-cog"
+            tip="Tack setting"
+          />
+        </v-layout>
+      </v-card-actions>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -45,12 +53,28 @@ export default Vue.extend({
     }
   },
   computed: {
-    bgColor () {
+    labelColor () {
       return Color(this.track.color).darken(0.5).rgb().string();
+    },
+    bgColor () {
+      if (this.track.selected) return 'rgb(200,200,200)';
+      return 'rgb(35,36,39)';
+    },
+    titleColor () {
+      if (this.track.selected) return 'black';
+      return 'white';
     }
   },
   methods: {
-    handleClick (ev) {
+    handleClickPanel (ev) {
+      if (ev.target.matches('button,i')) return;
+      this.$emit('click', ev, {
+        type: 'panel',
+        id: this.track.id,
+        context: TRACK
+      });
+    },
+    handleClickSetting (ev) {
       this.$emit('click', ev, {
         type: 'setting',
         id: this.track.id,
@@ -62,5 +86,17 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-
+  .track-header-panel {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  .color-label {
+    width: 25px;
+    height: 100%;
+  }
+  .panel-content {
+    height: 100%;
+    flex: 1 10 auto;
+  }
 </style>
