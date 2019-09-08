@@ -1,35 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Component renders correctly 1`] = `
-<v-card-stub
+<div
   class="track-header-panel"
-  color="rgb(45, 43, 67)"
-  flat="true"
-  tag="div"
 >
-  <v-card-title-stub
-    primarytitle="true"
-  >
-    <h3>
-      
-      3 Track
-    
-    </h3>
-  </v-card-title-stub>
+  <div
+    class="color-label"
+    style="background-color: rgb(45, 43, 67);"
+  />
    
-  <v-card-actions-stub>
-    <v-layout-stub
-      row=""
-      tag="div"
-    >
-      <v-spacer-stub />
-       
-      <icon-btn-with-tip-stub
-        color="rgb(45, 43, 67)"
-        icon="fa-cog"
-        tip="Tack setting"
-      />
-    </v-layout-stub>
-  </v-card-actions-stub>
-</v-card-stub>
+  <div
+    class="panel-content"
+    style="background-color: rgb(30, 30, 30);"
+  >
+    <v-card-title-stub>
+      <h3>
+        
+        3. Track
+      
+      </h3>
+    </v-card-title-stub>
+     
+    <v-card-actions-stub>
+      <v-layout-stub
+        row=""
+        tag="div"
+      >
+        <v-spacer-stub />
+         
+        <icon-btn-with-tip-stub
+          color="rgb(30,30,30)"
+          icon="fa-cog"
+          tip="Tack setting"
+        />
+      </v-layout-stub>
+    </v-card-actions-stub>
+  </div>
+</div>
 `;
