@@ -1,5 +1,8 @@
 <template>
-  <div class="clip-item-wrapper">
+  <div
+    @click="handleClickWrapper"
+    class="clip-item-wrapper"
+  >
     <div
       v-for="clip in clips"
       :key="clip.id"
@@ -7,6 +10,7 @@
     >
       <clip-item
         :clip="clip"
+        @click="handleClickItem"
         @contextmenu="handleContextMenu"
         @dblclick="handleDblClick"
       />
@@ -19,6 +23,8 @@ import ClipItem from './ClipItem';
 import Vue from 'vue';
 import { contextMenuEventHub, windowSwitchEventHub } from '../../modules';
 import { SPLIT } from '../../../constants/layout';
+import { Clip } from '../../store/models';
+import { CLIP } from '../../../constants/model-types';
 export default Vue.extend({
   components: {
     ClipItem
@@ -35,6 +41,28 @@ export default Vue.extend({
     },
     handleDblClick () {
       windowSwitchEventHub.emit(null, { layout: SPLIT });
+    },
+    handleClickWrapper (ev) {
+      if (ev.target.matches('.clip-item-wrapper')) {
+        if (ev.metaKey || ev.shiftKey) return;
+        Clip.update({
+          where: clip => clip.selected,
+          data: { selected: false }
+        });
+      }
+    },
+    handleClickItem (ev, payload) {
+      const { id } = payload;
+      if (!(ev.metaKey || ev.shiftKey)) {
+        Clip.update({
+          where: clip => clip.selected && clip.id !== id,
+          data: { selected: false }
+        });
+      }
+      Clip.update({
+        where: id,
+        data: { selected: true }
+      });
     }
   }
 });

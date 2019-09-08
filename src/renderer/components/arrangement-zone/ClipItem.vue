@@ -1,7 +1,8 @@
 <template>
   <div
-    :style="{ backgroundColor: bgColor, width: '300px' }"
+    :style="{ backgroundColor: bgColor, width: '300px', borderColor: borderColor }"
     @contextmenu.prevent="handleContextMenu"
+    @click="handleClick"
     class="clip-item"
   >
     <div class="clip-title">
@@ -19,7 +20,7 @@
 import Vue from 'vue';
 import Color from 'color';
 import { CLIP } from '../../../constants/model-types';
-import { CONTEXT_MENU, DBL_CLICK } from '../../../constants/event-types';
+import { CLICK, CONTEXT_MENU, DBL_CLICK } from '../../../constants/event-types';
 export default Vue.extend({
   components: {},
   props: {
@@ -32,6 +33,10 @@ export default Vue.extend({
     bgColor () {
       return Color(this.clip.color).darken(0.1).string();
     },
+    borderColor () {
+      if (this.clip.selected) return 'Honeydew';
+      return 'transparent';
+    },
     notes () {
       return this.clip.notes;
     }
@@ -39,6 +44,12 @@ export default Vue.extend({
   methods: {
     handleContextMenu (ev) {
       this.$emit(CONTEXT_MENU, ev, {
+        context: CLIP,
+        id: this.clip.id
+      });
+    },
+    handleClick (ev) {
+      this.$emit(CLICK, ev, {
         context: CLIP,
         id: this.clip.id
       });
@@ -58,12 +69,15 @@ export default Vue.extend({
         height: 100%;
         display: flex;
         flex-direction: column;
+        border: solid 2px;
+        border-radius: 3%;
     }
 
     .clip-title {
         overflow: hidden;
         text-overflow: ellipsis;
         flex: 0 0 28px;
+        padding: 0 5%;
     }
 
     .clip-content {
