@@ -1,5 +1,8 @@
 <template>
-  <div class="track-header-panel">
+  <div
+    @click="handleClickPanel"
+    class="track-header-panel"
+  >
     <div
       :style="{backgroundColor: labelColor}"
       class="color-label"
@@ -9,7 +12,7 @@
       class="panel-content"
     >
       <v-card-title>
-        <h3>
+        <h3 :style="{color: titleColor}">
           {{ idx + 1 }}. {{ track.name }}
         </h3>
       </v-card-title>
@@ -17,7 +20,7 @@
         <v-layout row>
           <v-spacer />
           <icon-btn-with-tip
-            @click="handleClick"
+            @click="handleClickSetting"
             :color="bgColor"
             icon="fa-cog"
             tip="Tack setting"
@@ -54,11 +57,24 @@ export default Vue.extend({
       return Color(this.track.color).darken(0.5).rgb().string();
     },
     bgColor () {
-      return 'rgb(30,30,30)';
+      if (this.track.selected) return 'rgb(200,200,200)';
+      return 'rgb(35,36,39)';
+    },
+    titleColor () {
+      if (this.track.selected) return 'black';
+      return 'white';
     }
   },
   methods: {
-    handleClick (ev) {
+    handleClickPanel (ev) {
+      if (ev.target.matches('button,i')) return;
+      this.$emit('click', ev, {
+        type: 'panel',
+        id: this.track.id,
+        context: TRACK
+      });
+    },
+    handleClickSetting (ev) {
       this.$emit('click', ev, {
         type: 'setting',
         id: this.track.id,

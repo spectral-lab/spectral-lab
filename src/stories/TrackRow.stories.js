@@ -6,7 +6,13 @@ import { action } from '@storybook/addon-actions';
 storiesOf('TrackRow', module)
   .add('view', () => ({
     components: { TrackRow },
-    data: () => ({ track: mockTrack }),
+    data: () => ({ track: Object.assign({}, mockTrack, { selected: false }) }),
+    methods: { action: action('clicked') },
+    template: `<TrackRow @click="action" :track="track" :idx="23" />`
+  }))
+  .add('is selected', () => ({
+    components: { TrackRow },
+    data: () => ({ track: Object.assign({}, mockTrack, { selected: true }) }),
     methods: { action: action('clicked') },
     template: `<TrackRow @click="action" :track="track" :idx="23" />`
   }))

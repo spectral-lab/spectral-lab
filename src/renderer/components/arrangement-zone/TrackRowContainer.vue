@@ -45,6 +45,19 @@ export default {
           id: payload.id
         });
       }
+      if (payload.type === 'panel') {
+        const { id } = payload;
+        if (!(ev.metaKey || ev.shiftKey)) {
+          Track.update({
+            where: track => track.selected && track.id !== id,
+            data: { selected: false }
+          });
+        }
+        Track.update({
+          where: id,
+          data: { selected: true }
+        });
+      }
     }
   }
 };
