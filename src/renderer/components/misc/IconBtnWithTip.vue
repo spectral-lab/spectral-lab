@@ -34,8 +34,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    emitClickEvent () {
-      this.$emit('click');
+    emitClickEvent (ev) {
+      this.$emit('click', ev);
     }
   }
 });

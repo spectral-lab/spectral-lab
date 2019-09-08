@@ -28,6 +28,7 @@
 import IconBtnWithTip from '../misc/IconBtnWithTip';
 import Color from 'color';
 import Vue from 'vue';
+import { TRACK } from '../../../constants/model-types';
 
 export default Vue.extend({
   components: {
@@ -49,8 +50,12 @@ export default Vue.extend({
     }
   },
   methods: {
-    handleClick () {
-      this.$emit('click', null, { type: 'setting', id: this.track.id });
+    handleClick (ev) {
+      this.$emit('click', ev, {
+        type: 'setting',
+        id: this.track.id,
+        context: TRACK
+      });
     }
   }
 });
