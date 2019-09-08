@@ -11,10 +11,12 @@ exports[`Component renders correctly 1`] = `
    
   <div
     class="panel-content"
-    style="background-color: rgb(30, 30, 30);"
+    style="background-color: rgb(35, 36, 39);"
   >
     <v-card-title-stub>
-      <h3>
+      <h3
+        style="color: white;"
+      >
         
         3. Track
       
@@ -29,7 +31,7 @@ exports[`Component renders correctly 1`] = `
         <v-spacer-stub />
          
         <icon-btn-with-tip-stub
-          color="rgb(30,30,30)"
+          color="rgb(35,36,39)"
           icon="fa-cog"
           tip="Tack setting"
         />
