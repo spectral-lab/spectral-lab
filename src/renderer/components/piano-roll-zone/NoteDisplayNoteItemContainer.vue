@@ -12,10 +12,10 @@
       height="100%"
     >
       <note-item
-        v-for="note in pianoRoll.notes"
+        v-for="note in notes"
         :key="note.id"
         :note="note"
-        :total-ticks="pianoRoll.totalTicks"
+        :total-ticks="totalTicks"
         :is-edited="isEdited(note)"
         :color="note.parent.color"
         @click="handleClick"
@@ -31,7 +31,6 @@ import NoteItem from './NoteItem';
 import { Note } from '../../store/models';
 import hotkeys from 'hotkeys-js';
 import { DESELECT_NOTES } from '../../../constants/key-bindings';
-import { getPianoRollData } from '../../interactors/PianoRoll';
 import { drawHandler } from '../../mixins/drawHandler';
 import Vue from 'vue';
 
@@ -40,15 +39,22 @@ export default Vue.extend({
     NoteItem
   },
   mixins: [drawHandler],
+  props: {
+    notes: {
+      type: Array,
+      default: () => []
+    },
+    totalTicks: {
+      type: Number,
+      default: 7680
+    }
+  },
   data () {
     return {
       editingNoteId: null
     };
   },
   computed: {
-    pianoRoll () {
-      return getPianoRollData();
-    },
     noteContainer () {
       return this.$refs.noteContainer;
     }
@@ -100,4 +106,9 @@ export default Vue.extend({
         height: 100%;
         position: absolute;
     }
+   .drawing-canvas {
+     width: 100%;
+     height: 100%;
+     position: absolute;
+   }
 </style>

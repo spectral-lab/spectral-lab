@@ -1,15 +1,19 @@
 <template>
-  <div class="automation-display">
+  <div
+    class="piano-roll-ruler"
+  >
     <grid-column-container
       :total-bars="totalBars"
       :beats-per-bar="beatsPerBar"
+      :show-number="true"
     />
   </div>
 </template>
-
 <script>
 import GridColumnContainer from '../misc/GridColumnContainer';
-export default {
+import Vue from 'vue';
+
+export default Vue.extend({
   components: {
     GridColumnContainer
   },
@@ -23,13 +27,14 @@ export default {
       default: 4
     }
   }
-};
+});
 </script>
 
 <style scoped>
-  .automation-display {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
+    .piano-roll-ruler {
+        height: 100%;
+        width: 100%;
+        background: rgb(100, 112, 114);
+        position: absolute;
+    }
 </style>

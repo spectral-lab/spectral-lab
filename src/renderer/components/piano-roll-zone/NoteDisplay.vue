@@ -3,24 +3,44 @@
     ref="note-display"
     class="note-display"
   >
-    <note-display-grid-container />
-    <spectrogram-container />
-    <note-display-note-item-container />
+    <note-display-grid
+      :beatsPerBar="pianoRoll.beatsPerBar"
+      :totalBars="pianoRoll.totalBars"
+      :opacity="pianoRoll.gridOpacity"
+      :opacityWillChange="pianoRoll.opacityWillChange"
+    />
+    <piano-roll-spectrogram
+      :spectrograms="pianoRoll.spectrograms"
+      :opacity="pianoRoll.spectrogramOpacity"
+      :opacityWillChange="pianoRoll.opacityWillChange"
+      :totalTicks="pianoRoll.totalTicks"
+    />
+    <note-display-note-item-container
+      :notes="pianoRoll.notes"
+      :totalTicks="pianoRoll.totalTicks"
+    />
   </div>
 </template>
 
 <script>
-import NoteDisplayGridContainer from './NoteDisplayGridContainer';
+import NoteDisplayGrid from './NoteDisplayGrid';
 import NoteDisplayNoteItemContainer from './NoteDisplayNoteItemContainer';
-import SpectrogramContainer from './SpectrogramContainer';
+import PianoRollSpectrogram from './PianoRollSpectrogram';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   components: {
-    NoteDisplayGridContainer,
+    NoteDisplayGrid,
     NoteDisplayNoteItemContainer,
-    SpectrogramContainer
+    PianoRollSpectrogram
+  },
+  props: {
+    pianoRoll: {
+      type: Object,
+      default: () => ({})
+    }
   }
-};
+});
 </script>
 
 <style scoped>

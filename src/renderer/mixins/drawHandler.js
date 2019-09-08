@@ -11,6 +11,12 @@ import { getPianoRollData } from '../interactors/PianoRoll';
  * for `NoteDisplayNoteItemContainer` component
  */
 export const drawHandler = Vue.extend({
+  props: {
+    totalTicks: {
+      type: Number,
+      default: 7680
+    }
+  },
   data () {
     return {
       drawingNote: null
@@ -23,9 +29,6 @@ export const drawHandler = Vue.extend({
     drawing () {
       return Boolean(this.drawingNote);
     },
-    totalTicks () {
-      return this.pianoRoll.totalTicks;
-    },
     /**
      * should be overrided by parent
      */
@@ -35,6 +38,7 @@ export const drawHandler = Vue.extend({
   },
   methods: {
     handleMouseDown (ev) {
+      console.log('mousedown', ev.target);
       if (!this.noteContainer) return;
       if (this.pianoRoll.mouseMode !== PEN) return;
       const offsetTime = posXToTick(ev.offsetX / this.noteContainer.offsetWidth, this.totalTicks);

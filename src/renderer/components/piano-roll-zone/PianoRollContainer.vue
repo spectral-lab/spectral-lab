@@ -1,16 +1,24 @@
 <template>
   <piano-roll-layout>
     <template #ruler>
-      <ruler-container />
+      <piano-roll-ruler
+        :total-bars="pianoRoll.totalBars"
+        :beats-per-bar="pianoRoll.beatsPerBar"
+      />
     </template>
     <template #midi-keyboard>
       <midi-keyboard-container />
     </template>
     <template #note-display>
-      <note-display />
+      <note-display
+        :pianoRoll="pianoRoll"
+      />
     </template>
     <template #automation-display>
-      <automation-display />
+      <automation-display
+        :total-bars="pianoRoll.totalBars"
+        :beats-per-bar="pianoRoll.beatsPerBar"
+      />
     </template>
   </piano-roll-layout>
 </template>
@@ -19,17 +27,23 @@
 import PianoRollLayout from './PianoRollLayout';
 import NoteDisplay from './NoteDisplay';
 import MidiKeyboardContainer from './MidiKeyboardContainer';
-import RulerContainer from '../misc/RulerContainer';
+import PianoRollRuler from './PianoRollRuler';
 import AutomationDisplay from './AutomationDisplay';
 import Vue from 'vue';
+import { getPianoRollData } from '../../interactors/PianoRoll';
 
 export default Vue.extend({
   components: {
     PianoRollLayout,
     MidiKeyboardContainer,
     NoteDisplay,
-    RulerContainer,
+    PianoRollRuler,
     AutomationDisplay
+  },
+  computed: {
+    pianoRoll () {
+      return getPianoRollData();
+    }
   }
 });
 
