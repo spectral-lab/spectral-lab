@@ -28,7 +28,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged && flow",
-      "pre-push": "node node_modules/.bin/jest --silent & NODE_ENV=production npm run lint "
+      "pre-push": "node node_modules/.bin/jest --silent && NODE_ENV=production npm run lint "
     }
   },
   "lint-staged": {
