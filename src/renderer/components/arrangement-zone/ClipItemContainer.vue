@@ -24,7 +24,6 @@ import Vue from 'vue';
 import { contextMenuEventHub, windowSwitchEventHub } from '../../modules';
 import { SPLIT } from '../../../constants/layout';
 import { Clip } from '../../store/models';
-import { CLIP } from '../../../constants/model-types';
 export default Vue.extend({
   components: {
     ClipItem
