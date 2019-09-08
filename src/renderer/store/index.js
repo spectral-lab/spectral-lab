@@ -8,6 +8,7 @@ import mutations from './mutations';
 Vue.use(Vuex);
 const database = initDatabase();
 const logger = process.env.NODE_ENV === 'development' ? createLogger() : null;
+
 export const initStore = () => {
   const store = new Vuex.Store({
     strict: true,
