@@ -18,7 +18,7 @@
     <drawing-area
       :total-ticks="pianoRoll.totalTicks"
       :mouse-mode="pianoRoll.mouseMode"
-      :editing-clip-id="editingClipId"
+      :id-of-clip-being-edited="idOfClipBeingEdited"
     >
       <note-display-note-item-container
         :notes="pianoRoll.notes"
@@ -49,7 +49,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    editingClipId () {
+    idOfClipBeingEdited () {
       if (this.pianoRoll.clips[0]) return this.pianoRoll.clips[0].id;
       return null;
     }

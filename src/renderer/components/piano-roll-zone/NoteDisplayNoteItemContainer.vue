@@ -40,7 +40,7 @@ export default Vue.extend({
   },
   data () {
     return {
-      editingNoteId: null
+      idOfNoteBeingEdited: null
     };
   },
   computed: {
@@ -50,11 +50,11 @@ export default Vue.extend({
   },
   methods: {
     isEdited (note) {
-      return this.editingNoteId === note.id;
+      return this.idOfNoteBeingEdited === note.id;
     },
     handleClick (ev, id) {
       if (!ev.metaKey && !ev.shiftKey) {
-        this.editingNoteId = null;
+        this.idOfNoteBeingEdited = null;
         Note.update({
           where: note => note.selected && note.id !== id,
           data: {
@@ -62,7 +62,7 @@ export default Vue.extend({
           }
         });
       }
-      this.editingNoteId = null;
+      this.idOfNoteBeingEdited = null;
       Note.update({
         where: id,
         data: {
@@ -71,10 +71,10 @@ export default Vue.extend({
       });
     },
     handleDblClick (ev, id) {
-      this.editingNoteId = id;
+      this.idOfNoteBeingEdited = id;
     },
     deselectNotes () {
-      this.editingNoteId = null;
+      this.idOfNoteBeingEdited = null;
       Note.update({
         where: note => note.selected,
         data: {
