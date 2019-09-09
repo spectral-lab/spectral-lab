@@ -19,8 +19,9 @@
 // @flow
 import Vue from 'vue';
 import Color from 'color';
-import { CLIP } from '../../../constants/model-types';
+import { CLIP } from '../../../constants/context';
 import { CLICK, CONTEXT_MENU, DBL_CLICK } from '../../../constants/event-types';
+
 export default Vue.extend({
   components: {},
   props: {
