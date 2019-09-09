@@ -15,10 +15,16 @@
       :opacityWillChange="pianoRoll.opacityWillChange"
       :totalTicks="pianoRoll.totalTicks"
     />
-    <note-display-note-item-container
-      :notes="pianoRoll.notes"
-      :totalTicks="pianoRoll.totalTicks"
-    />
+    <drawing-area
+      :total-ticks="pianoRoll.totalTicks"
+      :mouse-mode="pianoRoll.mouseMode"
+      :editing-clip-id="pianoRoll.clips[0].id"
+    >
+      <note-display-note-item-container
+        :notes="pianoRoll.notes"
+        :totalTicks="pianoRoll.totalTicks"
+      />
+    </drawing-area>
   </div>
 </template>
 
@@ -26,13 +32,15 @@
 import NoteDisplayGrid from './NoteDisplayGrid';
 import NoteDisplayNoteItemContainer from './NoteDisplayNoteItemContainer';
 import PianoRollSpectrogram from './PianoRollSpectrogram';
+import DrawingArea from './DrawingArea';
 import Vue from 'vue';
 
 export default Vue.extend({
   components: {
     NoteDisplayGrid,
     NoteDisplayNoteItemContainer,
-    PianoRollSpectrogram
+    PianoRollSpectrogram,
+    DrawingArea
   },
   props: {
     pianoRoll: {
