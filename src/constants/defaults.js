@@ -10,3 +10,5 @@ export const bpm = 120;
 /** @type {number} ticks per beat `ticks = minutes * bpm * tpb` */
 export const ticksPerBeat = 480;
 export const beatsPerBar = 4;
+/** 8 bars */
+export const songDuration = 8 * ticksPerBeat * beatsPerBar;
