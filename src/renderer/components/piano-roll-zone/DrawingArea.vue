@@ -1,42 +1,57 @@
+<template>
+  <div
+    ref="noteContainer"
+    @mousedown="handleMouseDown"
+    @mousemove="handleMouseMove"
+    @mouseup="handleMouseUp"
+    @mouseleave="handleMouseUp"
+    class="note-container"
+  >
+    <slot />
+  </div>
+</template>
+<script>
 // @flow
-import { Note, NoteOff, Modulation } from '../store/models';
-import { PEN } from '../../constants/mouse-modes';
+import { Note, NoteOff, Modulation } from '../../store/models';
+import { PEN, SELECT } from '../../../constants/mouse-modes';
 import uid from 'uid';
-import { posXToTick, posYToPitch } from '../utils/view/pianoRoll/utils';
-import { pitchToNoteNumberAndPitchBend } from '../utils/helpers';
+import { posXToTick, posYToPitch } from '../../utils/view/pianoRoll/utils';
+import { pitchToNoteNumberAndPitchBend } from '../../utils/helpers';
 import Vue from 'vue';
-import { getPianoRollData } from '../interactors/PianoRoll';
 
-/**
- * for `NoteDisplayNoteItemContainer` component
- */
-export const drawHandler = Vue.extend({
+export default Vue.extend({
+  props: {
+    totalTicks: {
+      type: Number,
+      default: 7680
+    },
+    mouseMode: {
+      type: String,
+      default: SELECT
+    },
+    editingClipId: {
+      type: String,
+      default: null
+    }
+  },
   data () {
     return {
       drawingNote: null
     };
   },
   computed: {
-    pianoRoll () {
-      return getPianoRollData();
-    },
     drawing () {
       return Boolean(this.drawingNote);
     },
-    totalTicks () {
-      return this.pianoRoll.totalTicks;
-    },
-    /**
-     * should be overrided by parent
-     */
-    noteContainer (): null | HTMLElement {
-      return null;
+    noteContainer () {
+      return this.$refs.noteContainer;
     }
   },
   methods: {
     handleMouseDown (ev) {
+      if (!this.editingClipId) return;
       if (!this.noteContainer) return;
-      if (this.pianoRoll.mouseMode !== PEN) return;
+      if (this.mouseMode !== PEN) return;
       const offsetTime = posXToTick(ev.offsetX / this.noteContainer.offsetWidth, this.totalTicks);
       const { noteNumber, pitchBend } = pitchToNoteNumberAndPitchBend(
         posYToPitch(ev.offsetY / this.noteContainer.offsetHeight)
@@ -49,7 +64,7 @@ export const drawHandler = Vue.extend({
       Note.insert({
         data: {
           id: this.drawingNote.id,
-          clipId: this.pianoRoll.clips[0].id,
+          clipId: this.editingClipId,
           offsetTime,
           noteNumber,
           noteOn: {
@@ -90,3 +105,12 @@ export const drawHandler = Vue.extend({
     }
   }
 });
+</script>
+
+<style scoped>
+  .note-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+</style>

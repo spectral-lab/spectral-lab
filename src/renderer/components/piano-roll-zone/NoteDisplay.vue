@@ -3,24 +3,58 @@
     ref="note-display"
     class="note-display"
   >
-    <note-display-grid-container />
-    <spectrogram-container />
-    <note-display-note-item-container />
+    <note-display-grid
+      :beatsPerBar="pianoRoll.beatsPerBar"
+      :totalBars="pianoRoll.totalBars"
+      :opacity="pianoRoll.gridOpacity"
+      :opacityWillChange="pianoRoll.opacityWillChange"
+    />
+    <note-display-spectrogram
+      :spectrograms="pianoRoll.spectrograms"
+      :opacity="pianoRoll.spectrogramOpacity"
+      :opacityWillChange="pianoRoll.opacityWillChange"
+      :totalTicks="pianoRoll.totalTicks"
+    />
+    <drawing-area
+      :total-ticks="pianoRoll.totalTicks"
+      :mouse-mode="pianoRoll.mouseMode"
+      :editing-clip-id="editingClipId"
+    >
+      <note-display-note-item-container
+        :notes="pianoRoll.notes"
+        :totalTicks="pianoRoll.totalTicks"
+      />
+    </drawing-area>
   </div>
 </template>
 
 <script>
-import NoteDisplayGridContainer from './NoteDisplayGridContainer';
+import NoteDisplayGrid from './NoteDisplayGrid';
 import NoteDisplayNoteItemContainer from './NoteDisplayNoteItemContainer';
-import SpectrogramContainer from './SpectrogramContainer';
+import NoteDisplaySpectrogram from './NoteDisplaySpectrogram';
+import DrawingArea from './DrawingArea';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   components: {
-    NoteDisplayGridContainer,
+    NoteDisplayGrid,
     NoteDisplayNoteItemContainer,
-    SpectrogramContainer
+    NoteDisplaySpectrogram,
+    DrawingArea
+  },
+  props: {
+    pianoRoll: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  computed: {
+    editingClipId () {
+      if (this.pianoRoll.clips[0]) return this.pianoRoll.clips[0].id;
+      return null;
+    }
   }
-};
+});
 </script>
 
 <style scoped>

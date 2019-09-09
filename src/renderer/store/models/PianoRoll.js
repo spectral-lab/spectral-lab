@@ -68,6 +68,7 @@ export default class PianoRoll extends BaseModel {
   }
 
   get displayRange () {
+    if (!this.clips.length) return { start: 0, end: 0 };
     const start = Math.min(...this.clips.map(clip => clip.startTime));
     const end = Math.max(...this.clips.map(clip => clip.endTime));
     return { start, end };

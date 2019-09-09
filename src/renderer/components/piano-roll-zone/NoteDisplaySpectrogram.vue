@@ -7,7 +7,7 @@
     class="spectrogram-container"
   >
     <div
-      v-for="spectrogram in pianoRoll.spectrograms"
+      v-for="spectrogram in spectrograms"
       :key="spectrogram.id"
       class="spectrogram-wrapper"
     >
@@ -21,25 +21,33 @@
 
 <script>
 import Spectrogram from './Spectrogram';
-import { getPianoRollData } from '../../interactors/PianoRoll';
 
 export default {
   components: {
     Spectrogram
   },
+  props: {
+    spectrograms: {
+      type: Array,
+      default: () => []
+    },
+    opacity: {
+      type: Number,
+      default: 1
+    },
+    opacityWillChange: {
+      type: Boolean,
+      default: false
+    },
+    totalTicks: {
+      type: Number,
+      default: 7680
+    }
+  },
   computed: {
-    pianoRoll () {
-      return getPianoRollData();
-    },
-    opacity () {
-      return this.pianoRoll.spectrogramOpacity;
-    },
     willChange () {
-      if (this.pianoRoll.opacityWillChange) return 'opacity';
+      if (this.opacityWillChange) return 'opacity';
       return `auto`;
-    },
-    totalTicks () {
-      return this.pianoRoll.totalTicks;
     }
   }
 };

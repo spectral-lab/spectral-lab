@@ -14,28 +14,33 @@
 <script>
 import GridRowContainer from '../misc/GridRowContainer';
 import GridColumnContainer from '../misc/GridColumnContainer';
-import { getPianoRollData } from '../../interactors/PianoRoll';
 
 export default {
   components: {
     GridRowContainer,
     GridColumnContainer
   },
+  props: {
+    beatsPerBar: {
+      type: Number,
+      default: 4
+    },
+    totalBars: {
+      type: Number,
+      default: 4
+    },
+    opacity: {
+      type: Number,
+      default: 1
+    },
+    opacitywillChange: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
-    pianoRoll () {
-      return getPianoRollData();
-    },
-    beatsPerBar () {
-      return this.pianoRoll.beatsPerBar;
-    },
-    totalBars () {
-      return this.pianoRoll.totalBars;
-    },
-    opacity () {
-      return this.pianoRoll.gridOpacity;
-    },
     willChange () {
-      if (this.pianoRoll.opacityWillChange) return 'opacity';
+      if (this.opacityWillChange) return 'opacity';
       return `auto`;
     }
   }
