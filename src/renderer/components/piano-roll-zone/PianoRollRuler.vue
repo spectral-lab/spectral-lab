@@ -5,7 +5,6 @@
     <grid-column-container
       :total-bars="totalBars"
       :beats-per-bar="beatsPerBar"
-      :show-number="true"
     />
   </div>
 </template>
