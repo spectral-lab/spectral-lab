@@ -1,7 +1,7 @@
 // @flow
 import { makeMandatory } from '../utils';
 import { SONG } from '../../../constants/model-types';
-import { bpm, ticksPerBeat } from '../../../constants/defaults';
+import { bpm, songDuration, ticksPerBeat } from '../../../constants/defaults';
 import { BaseModel, Track } from '.';
 
 export default class Song extends BaseModel {
@@ -15,7 +15,8 @@ export default class Song extends BaseModel {
       type: this.string(SONG),
       bpm: this.number(bpm),
       ticksPerBeat: this.number(ticksPerBeat),
-      tracks: this.hasMany(Track, 'songId')
+      tracks: this.hasMany(Track, 'songId'),
+      duration: this.number(songDuration)
     };
   }
 

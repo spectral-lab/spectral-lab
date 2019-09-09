@@ -1,6 +1,6 @@
 <template>
   <div
-    :style="{ backgroundColor: bgColor, width: '300px', borderColor: borderColor }"
+    :style="{ backgroundColor: bgColor, borderColor: borderColor }"
     @contextmenu.prevent="handleContextMenu"
     @click="handleClick"
     class="clip-item"
@@ -19,8 +19,9 @@
 // @flow
 import Vue from 'vue';
 import Color from 'color';
-import { CLIP } from '../../../constants/model-types';
+import { CLIP } from '../../../constants/context';
 import { CLICK, CONTEXT_MENU, DBL_CLICK } from '../../../constants/event-types';
+
 export default Vue.extend({
   components: {},
   props: {
@@ -67,6 +68,7 @@ export default Vue.extend({
 <style scoped>
     .clip-item {
         height: 100%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         border: solid 2px;
@@ -81,6 +83,6 @@ export default Vue.extend({
     }
 
     .clip-content {
-        flex: 1 1 auto;
+      flex: 1 1 auto;
     }
 </style>

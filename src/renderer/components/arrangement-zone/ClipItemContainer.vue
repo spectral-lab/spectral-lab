@@ -1,37 +1,36 @@
 <template>
-  <div
-    @click="handleClickWrapper"
-    class="clip-item-wrapper"
-  >
-    <div
-      v-for="clip in clips"
-      :key="clip.id"
-      class="clip-item-container"
-    >
-      <clip-item
-        :clip="clip"
-        @click="handleClickItem"
-        @contextmenu="handleContextMenu"
-        @dblclick="handleDblClick"
-      />
-    </div>
+  <div class="clip-item-container">
+    <clip-item-layout
+      :clips="clips"
+      :song-duration="songDuration"
+      @click="handleClick"
+      @dblclick="handleDblClick"
+      @contextmenu="handleContextMenu"
+    />
   </div>
 </template>
 
 <script>
-import ClipItem from './ClipItem';
+import ClipItemLayout from './ClipItemLayout';
 import Vue from 'vue';
 import { contextMenuEventHub, windowSwitchEventHub } from '../../modules';
 import { SPLIT } from '../../../constants/layout';
-import { Clip } from '../../store/models';
+import { Clip, Song } from '../../store/models';
+import { OUTSIDE_CLIP, CLIP } from '../../../constants/context';
+
 export default Vue.extend({
   components: {
-    ClipItem
+    ClipItemLayout
   },
   props: {
     clips: {
       type: Array,
       default: () => []
+    }
+  },
+  computed: {
+    songDuration () {
+      return Song.query().first().songDuration;
     }
   },
   methods: {
@@ -41,14 +40,18 @@ export default Vue.extend({
     handleDblClick () {
       windowSwitchEventHub.emit(null, { layout: SPLIT });
     },
-    handleClickWrapper (ev) {
-      if (ev.target.matches('.clip-item-wrapper')) {
-        if (ev.metaKey || ev.shiftKey) return;
-        Clip.update({
-          where: clip => clip.selected,
-          data: { selected: false }
-        });
+    handleClick (ev, payload) {
+      switch (payload.context) {
+        case OUTSIDE_CLIP: return this.handleClickWrapper(ev);
+        case CLIP: return this.handleClickItem(ev, payload);
       }
+    },
+    handleClickWrapper (ev) {
+      if (ev.metaKey || ev.shiftKey) return;
+      Clip.update({
+        where: clip => clip.selected,
+        data: { selected: false }
+      });
     },
     handleClickItem (ev, payload) {
       const { id } = payload;
@@ -68,12 +71,8 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-    .clip-item-wrapper {
-        position: relative;
-        height: 100%;
-    }
     .clip-item-container {
-        position: absolute;
+        position: relative;
         height: 100%;
     }
 </style>
