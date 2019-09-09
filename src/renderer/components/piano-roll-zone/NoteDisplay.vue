@@ -9,7 +9,7 @@
       :opacity="pianoRoll.gridOpacity"
       :opacityWillChange="pianoRoll.opacityWillChange"
     />
-    <piano-roll-spectrogram
+    <note-display-spectrogram
       :spectrograms="pianoRoll.spectrograms"
       :opacity="pianoRoll.spectrogramOpacity"
       :opacityWillChange="pianoRoll.opacityWillChange"
@@ -31,7 +31,7 @@
 <script>
 import NoteDisplayGrid from './NoteDisplayGrid';
 import NoteDisplayNoteItemContainer from './NoteDisplayNoteItemContainer';
-import PianoRollSpectrogram from './PianoRollSpectrogram';
+import NoteDisplaySpectrogram from './NoteDisplaySpectrogram';
 import DrawingArea from './DrawingArea';
 import Vue from 'vue';
 
@@ -39,7 +39,7 @@ export default Vue.extend({
   components: {
     NoteDisplayGrid,
     NoteDisplayNoteItemContainer,
-    PianoRollSpectrogram,
+    NoteDisplaySpectrogram,
     DrawingArea
   },
   props: {
