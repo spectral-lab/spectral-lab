@@ -6,6 +6,10 @@
     <div
       v-for="clip in clips"
       :key="clip.id"
+      :style="{
+        left: `${clip.offsetTime / songDuration * 100}%`,
+        width: `${clip.duration / songDuration * 100}%`
+      }"
       class="clip-item-wrapper"
     >
       <clip-item
@@ -23,6 +27,7 @@ import ClipItem from './ClipItem';
 import Vue from 'vue';
 import { CLICK, CONTEXT_MENU, DBL_CLICK } from '../../../constants/event-types';
 import { OUTSIDE_CLIP } from '../../../constants/context';
+import { songDuration } from '../../../constants/defaults';
 
 export default Vue.extend({
   components: {
@@ -32,6 +37,10 @@ export default Vue.extend({
     clips: {
       type: Array,
       default: () => []
+    },
+    songDuration: {
+      type: Number,
+      default: songDuration
     }
   },
   methods: {

@@ -2,6 +2,7 @@
   <div class="clip-item-container">
     <clip-item-layout
       :clips="clips"
+      :song-duration="songDuration"
       @click="handleClick"
       @dblclick="handleDblClick"
       @contextmenu="handleContextMenu"
@@ -14,7 +15,7 @@ import ClipItemLayout from './ClipItemLayout';
 import Vue from 'vue';
 import { contextMenuEventHub, windowSwitchEventHub } from '../../modules';
 import { SPLIT } from '../../../constants/layout';
-import { Clip } from '../../store/models';
+import { Clip, Song } from '../../store/models';
 import { OUTSIDE_CLIP, CLIP } from '../../../constants/context';
 
 export default Vue.extend({
@@ -25,6 +26,11 @@ export default Vue.extend({
     clips: {
       type: Array,
       default: () => []
+    }
+  },
+  computed: {
+    songDuration () {
+      return Song.query().first().songDuration;
     }
   },
   methods: {

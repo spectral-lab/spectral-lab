@@ -1,6 +1,6 @@
 <template>
   <div
-    :style="{ backgroundColor: bgColor, width: '300px', borderColor: borderColor }"
+    :style="{ backgroundColor: bgColor, borderColor: borderColor }"
     @contextmenu.prevent="handleContextMenu"
     @click="handleClick"
     class="clip-item"
@@ -68,6 +68,7 @@ export default Vue.extend({
 <style scoped>
     .clip-item {
         height: 100%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         border: solid 2px;
@@ -82,6 +83,6 @@ export default Vue.extend({
     }
 
     .clip-content {
-        flex: 1 1 auto;
+      flex: 1 1 auto;
     }
 </style>
