@@ -1,11 +1,10 @@
 // @flow
 import '../../../types';
 import { FFT, WindowFunction } from 'dsp.js-browser';
-import packIntoNdarray from 'ndarray-pack';
-import unpackFromNdArray from 'ndarray-unpack';
 import { initWin, collectCenterFreqs } from './audioUtils';
 import type { Frequency, Magnitude, SamplingRate } from '../../../types';
 import type { Sec } from '../helpers/timeUtils';
+import zip from 'lodash/zip';
 
 type spectrogram = {
   times: Sec[],
@@ -38,8 +37,8 @@ const stft = (audioBuffer: AudioBuffer, sr: SamplingRate): Promise<spectrogram> 
     win.spectrum = fft.spectrum;
     spectra.push(Array.from(win.spectrum));
   }
-  const magnitude2d = unpackFromNdArray(packIntoNdarray(spectra).transpose(1, 0));
-
+  // $FlowFixMe
+  const magnitude2d = zip(...spectra);
   resolve({ times, freqs, magnitude2d });
 });
 
