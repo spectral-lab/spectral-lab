@@ -1,7 +1,6 @@
 // @flow
-import { Song } from '../store/models';
-import { msToTick, tickToMs } from '../utils/helpers/timeUtils';
-import type { Ms, Tick } from '../utils/helpers/timeUtils';
+import type { Ms, Tick } from '../../types/units';
+import { getSongData } from '../interactors/Song';
 
 export interface ITimeConverter {
   toTick(ms: Ms): Tick;
@@ -11,15 +10,13 @@ export interface ITimeConverter {
 export class TimeConverter implements ITimeConverter {
   toTick (ms: Ms): Tick {
     /**
-     *  TODO: bpm and ticksPerBeat should be cached as a class property,
+     *  TODO: Song data should be cached as a class property,
      *    and update them by observing vuex store
      */
-    const { bpm, ticksPerBeat } = Song.query().first().bpmAndTicksPerBeat;
-    return msToTick(ms, bpm, ticksPerBeat);
+    return getSongData().msToTick(ms);
   }
 
   toMs (tick: Tick): Ms {
-    const { bpm, ticksPerBeat } = Song.query().first().bpmAndTicksPerBeat;
-    return tickToMs(tick, bpm, ticksPerBeat);
+    return getSongData().tickToMs(tick);
   }
 }

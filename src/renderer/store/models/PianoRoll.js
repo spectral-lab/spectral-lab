@@ -3,9 +3,10 @@ import { makeMandatory } from '../utils';
 import { PIANO_ROLL } from '../../../constants/model-types';
 import { SELECT } from '../../../constants/mouse-modes';
 import flatMap from 'lodash/flatMap';
-import { App, BaseModel, Clip, Song, Note, Track } from '.';
+import { App, BaseModel, Clip, Note, Track } from '.';
 import { SELECTED } from '../../../constants/model-properties';
 import { beatsPerBar } from '../../../constants/defaults';
+import { getSongData } from '../../interactors/Song';
 
 export default class PianoRoll extends BaseModel {
   static get entity () {
@@ -64,7 +65,7 @@ export default class PianoRoll extends BaseModel {
   }
 
   get ticksPerBeat () {
-    return Song.query().last().ticksPerBeat;
+    return getSongData().ticksPerBeat;
   }
 
   get displayRange () {

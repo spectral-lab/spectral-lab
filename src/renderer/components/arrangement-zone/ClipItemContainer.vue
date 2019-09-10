@@ -15,8 +15,9 @@ import ClipItemLayout from './ClipItemLayout';
 import Vue from 'vue';
 import { contextMenuEventHub, windowSwitchEventHub } from '../../modules';
 import { SPLIT } from '../../../constants/layout';
-import { Clip, Song } from '../../store/models';
+import { Clip } from '../../store/models';
 import { OUTSIDE_CLIP, CLIP } from '../../../constants/context';
+import { getSongData } from '../../interactors/Song';
 
 export default Vue.extend({
   components: {
@@ -30,7 +31,7 @@ export default Vue.extend({
   },
   computed: {
     songDuration () {
-      return Song.query().first().songDuration;
+      return getSongData().songDuration;
     }
   },
   methods: {

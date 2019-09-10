@@ -1,8 +1,9 @@
 // @flow
 import { makeMandatory } from '../utils';
 import { SONG } from '../../../constants/model-types';
-import { bpm, songDuration, ticksPerBeat } from '../../../constants/defaults';
+import { msPerTick, songDuration, ticksPerBeat } from '../../../constants/defaults';
 import { BaseModel, Track } from '.';
+import type { Ms, Tick } from '../../../types/units';
 
 export default class Song extends BaseModel {
   static get entity () {
@@ -13,21 +14,26 @@ export default class Song extends BaseModel {
     return {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(SONG),
-      bpm: this.number(bpm),
+      msPerTick: this.number(msPerTick),
       ticksPerBeat: this.number(ticksPerBeat),
       tracks: this.hasMany(Track, 'songId'),
       duration: this.number(songDuration)
     };
   }
 
-  get parent () {
-    return null;
+  msToTick (ms: Ms): Tick {
+    return ms / msPerTick;
   }
 
-  get bpmAndTicksPerBeat () {
-    return {
-      bpm: this.bpm,
-      ticksPerBeat: this.ticksPerBeat
-    };
+  tickToMs (tick: Tick): Ms {
+    return tick * msPerTick;
+  }
+
+  get bpm () {
+    return 60 * 1e3 / this.ticksPerBeat / this.msPerTick;
+  }
+
+  get parent () {
+    return null;
   }
 }
