@@ -1,6 +1,7 @@
 <template>
   <div
     @click="handleClickPanel"
+    @contextmenu="handleContextMenu"
     class="track-header-panel"
   >
     <div
@@ -37,6 +38,7 @@ import IconBtnWithTip from '../misc/IconBtnWithTip';
 import Color from 'color';
 import Vue from 'vue';
 import { TRACK } from '../../../constants/model-types';
+import { CLICK, CONTEXT_MENU } from '../../../constants/event-types';
 
 export default Vue.extend({
   components: {
@@ -68,14 +70,22 @@ export default Vue.extend({
   methods: {
     handleClickPanel (ev) {
       if (ev.target.matches('button,i')) return;
-      this.$emit('click', ev, {
+      this.$emit(CLICK, ev, {
+        type: 'panel',
+        id: this.track.id,
+        context: TRACK
+      });
+    },
+    handleContextMenu (ev) {
+      if (ev.target.matches('button,i')) return;
+      this.$emit(CONTEXT_MENU, ev, {
         type: 'panel',
         id: this.track.id,
         context: TRACK
       });
     },
     handleClickSetting (ev) {
-      this.$emit('click', ev, {
+      this.$emit(CLICK, ev, {
         type: 'setting',
         id: this.track.id,
         context: TRACK

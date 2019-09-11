@@ -56,6 +56,7 @@
           :stroke-width="10"
           @click="handleClick"
           @dblclick="handleDblClick"
+          @contextmenu="handleContextMenu"
         />
         <circle
           :cx="`${point.x * 100}%`"
@@ -63,6 +64,7 @@
           :fill="circleColor"
           @click="handleClick"
           @dblclick="handleDblClick"
+          @contextmenu="handleContextMenu"
           r="5"
         />
       </g>
@@ -73,6 +75,7 @@
 <script>
 // @flow
 import { tickToPosX, pitchToPosY } from '../../utils/view/pianoRoll/utils';
+import { CLICK, CONTEXT_MENU, DBL_CLICK } from '../../../constants/event-types';
 
 export default {
   props: {
@@ -121,10 +124,13 @@ export default {
       return this.positions[idx + 1];
     },
     handleClick (ev) {
-      this.$emit('click', ev, this.note.id);
+      this.$emit(CLICK, ev, this.note.id);
     },
     handleDblClick (ev) {
-      this.$emit('dblclick', ev, this.note.id);
+      this.$emit(DBL_CLICK, ev, this.note.id);
+    },
+    handleContextMenu (ev) {
+      this.$emit(CONTEXT_MENU, ev, this.note.id);
     }
   }
 };

@@ -12,6 +12,7 @@
       :color="note.parent.color"
       @click="handleClick"
       @dblclick="handleDblClick"
+      @contextmenu="handleContextMenu"
     />
   </svg>
 </template>
@@ -23,6 +24,8 @@ import { Note } from '../../store/models';
 import hotkeys from 'hotkeys-js';
 import { DESELECT_NOTES } from '../../../constants/key-bindings';
 import Vue from 'vue';
+import { contextMenuEventHub } from '../../modules';
+import { NOTE } from '../../../constants/model-types';
 
 export default Vue.extend({
   components: {
@@ -72,6 +75,9 @@ export default Vue.extend({
     },
     handleDblClick (ev, id) {
       this.idOfNoteBeingEdited = id;
+    },
+    handleContextMenu (ev, id) {
+      contextMenuEventHub.emit(ev, { id, context: NOTE });
     },
     deselectNotes () {
       this.idOfNoteBeingEdited = null;

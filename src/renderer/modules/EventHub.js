@@ -1,8 +1,8 @@
 // @flow
 import type { Callable } from '../../types';
 
-type Event = any;
-type Payload = any;
+type Event = Object;
+type Payload = Object;
 export interface IEventHub {
   addListener ((Event, Payload) => void): void,
   emit (Event, Payload): void
