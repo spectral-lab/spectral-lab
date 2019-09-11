@@ -4,8 +4,9 @@ import { CLIP } from '../../../constants/model-types';
 import { beatsPerBar, ticksPerBeat } from '../../../constants/defaults';
 import { SCALE_COLORS } from '../../../constants/colors';
 import { random, flatten, sortBy } from 'lodash';
-import { AudioBuffer, BaseModel, Track, Note } from '.';
+import { AudioBuffer, BaseModel, Track, Note, Bar, Beat } from '.';
 import type { NoteAction } from '../../../types';
+import flatMap from 'lodash/flatMap';
 
 export default class Clip extends BaseModel {
   static get entity () {
@@ -18,10 +19,10 @@ export default class Clip extends BaseModel {
       type: this.string(CLIP),
       name: this.attr(null),
       offsetTime: this.number(0), // in tick
-      duration: this.number(4 * beatsPerBar * ticksPerBeat), // in tick. default is 4 bars
+      duration: this.number(4 * beatsPerBar * ticksPerBeat), // in tick. default is 4 bars. min=1
       notes: this.hasMany(Note, 'clipId'),
+      bars: this.hasMany(Bar, 'clipId'),
       audioBuffer: this.hasOne(AudioBuffer, 'clipId'),
-      beatsPerBar: this.attr([{ barIdx: 0, val: beatsPerBar }]),
       selected: this.boolean(false),
       trackId: this.attr(null),
       color: this.attr(() => SCALE_COLORS.hHelmholtz[random(11)])
@@ -37,7 +38,7 @@ export default class Clip extends BaseModel {
   }
 
   get endTime () {
-    return this.absoluteTime + this.duration;
+    return this.absoluteTime + this.duration - 1;
   }
 
   get selectedNoteIds () {
@@ -54,5 +55,9 @@ export default class Clip extends BaseModel {
 
   get sortedNoteActions ():NoteAction[] {
     return sortBy<NoteAction>(this.noteActions, [noteAction => noteAction.absoluteTime]);
+  }
+
+  get beats () {
+    return flatMap<Bar[], Beat>(this.bars, bar => bar.beats);
   }
 }

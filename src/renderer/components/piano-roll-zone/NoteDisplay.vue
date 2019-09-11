@@ -4,10 +4,11 @@
     class="note-display"
   >
     <note-display-grid
-      :beatsPerBar="pianoRoll.beatsPerBar"
-      :totalBars="pianoRoll.totalBars"
       :opacity="pianoRoll.gridOpacity"
       :opacityWillChange="pianoRoll.opacityWillChange"
+      :clips="pianoRoll.clips"
+      :totalTicks="pianoRoll.totalTicks"
+      :startTime="pianoRoll.displayRange.start"
     />
     <note-display-spectrogram
       :spectrograms="pianoRoll.spectrograms"
@@ -50,7 +51,7 @@ export default Vue.extend({
   },
   computed: {
     idOfClipBeingEdited () {
-      if (this.pianoRoll.clips[0]) return this.pianoRoll.clips[0].id;
+      if (this.pianoRoll.clips.length) return this.pianoRoll.clips[0].id;
       return null;
     }
   }

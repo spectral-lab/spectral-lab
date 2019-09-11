@@ -15,7 +15,6 @@ export default class Song extends BaseModel {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(SONG),
       msPerTick: this.number(msPerTick),
-      ticksPerBeat: this.number(ticksPerBeat),
       tracks: this.hasMany(Track, 'songId'),
       duration: this.number(songDuration)
     };
@@ -30,7 +29,7 @@ export default class Song extends BaseModel {
   }
 
   get bpm () {
-    return 60 * 1e3 / this.ticksPerBeat / this.msPerTick;
+    return 60 * 1e3 / ticksPerBeat / this.msPerTick;
   }
 
   get parent () {

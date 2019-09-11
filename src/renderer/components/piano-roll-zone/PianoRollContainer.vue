@@ -2,8 +2,9 @@
   <piano-roll-layout>
     <template #ruler>
       <piano-roll-ruler
-        :total-bars="pianoRoll.totalBars"
-        :beats-per-bar="pianoRoll.beatsPerBar"
+        :clips="pianoRoll.clips"
+        :totalTicks="pianoRoll.totalTicks"
+        :startTime="pianoRoll.displayRange.start"
       />
     </template>
     <template #midi-keyboard>
@@ -16,8 +17,9 @@
     </template>
     <template #automation-display>
       <automation-display
-        :total-bars="pianoRoll.totalBars"
-        :beats-per-bar="pianoRoll.beatsPerBar"
+        :clips="pianoRoll.clips"
+        :totalTicks="pianoRoll.totalTicks"
+        :startTime="pianoRoll.displayRange.start"
       />
     </template>
   </piano-roll-layout>

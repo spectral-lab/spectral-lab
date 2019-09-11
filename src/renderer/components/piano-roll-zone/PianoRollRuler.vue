@@ -2,28 +2,33 @@
   <div
     class="piano-roll-ruler"
   >
-    <grid-column-container
-      :total-bars="totalBars"
-      :beats-per-bar="beatsPerBar"
+    <grid-vertical-lines-layout
+      :clips="clips"
+      :duration="totalTicks"
+      :startTime="startTime"
     />
   </div>
 </template>
 <script>
-import GridColumnContainer from '../misc/GridColumnContainer';
+import GridVerticalLinesLayout from '../misc/GridVerticalLinesLayout';
 import Vue from 'vue';
 
 export default Vue.extend({
   components: {
-    GridColumnContainer
+    GridVerticalLinesLayout
   },
   props: {
-    totalBars: {
-      type: Number,
-      default: 4
+    clips: {
+      type: Array,
+      default: () => []
     },
-    beatsPerBar: {
+    totalTicks: {
       type: Number,
-      default: 4
+      default: 1
+    },
+    startTime: {
+      type: Number,
+      default: 0
     }
   }
 });
