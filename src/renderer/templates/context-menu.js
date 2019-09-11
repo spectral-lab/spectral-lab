@@ -1,8 +1,8 @@
 // @flow
 import { dialogEventHub } from '../modules';
-import { CLIP, TRACK } from '../../constants/model-types';
+import { CLIP, NOTE, TRACK } from '../../constants/model-types';
 import { INSPECT } from '../../constants/dialog-types';
-import { exportClipAsJson, exportTrackAsJson } from '../usecases/jsonExport';
+import { exportClipAsJson, exportNoteAsJson, exportTrackAsJson } from '../usecases/jsonExport';
 
 // =====================================================================================================================
 
@@ -42,6 +42,14 @@ export const contextMenuTemplates: IContextMenuTemplates = {
       label: 'Export as text',
       async click ({ id }) {
         await exportTrackAsJson(id);
+      }
+    }
+  ],
+  [NOTE]: [
+    {
+      label: 'Export as text',
+      async click ({ id }) {
+        await exportNoteAsJson(id);
       }
     }
   ]
