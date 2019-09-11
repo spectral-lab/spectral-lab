@@ -2,6 +2,7 @@
   <div class="track-row">
     <track-header-panel
       @click="handleClick"
+      @contextmenu="handleContextMenu"
       :track="track"
       :idx="idx"
     />
@@ -20,6 +21,7 @@
 import TrackHeaderPanel from './TrackHeaderPanel';
 import TrackContent from './TrackContent';
 import Vue from 'vue';
+import { CLICK, CONTEXT_MENU } from '../../../constants/event-types';
 
 export default Vue.extend({
   components: {
@@ -38,7 +40,10 @@ export default Vue.extend({
   },
   methods: {
     handleClick (ev, payload) {
-      this.$emit('click', ev, payload);
+      this.$emit(CLICK, ev, payload);
+    },
+    handleContextMenu (ev, payload) {
+      this.$emit(CONTEXT_MENU, ev, payload);
     }
   }
 });

@@ -8,6 +8,7 @@
         :track="track"
         :idx="idx"
         @click="handleClick"
+        @contextmenu="handleContextMenu"
       >
         <template slot="clips">
           <clip-item-container :clips="track.clips" />
@@ -24,7 +25,7 @@ import { Track } from '../../store/models';
 import { SONG_ID } from '../../../constants/ids';
 import { TRACK } from '../../../constants/model-types';
 import { INSPECT } from '../../../constants/dialog-types';
-import { dialogEventHub } from '../../modules';
+import { contextMenuEventHub, dialogEventHub } from '../../modules';
 
 export default {
   components: {
@@ -58,6 +59,9 @@ export default {
           data: { selected: true }
         });
       }
+    },
+    handleContextMenu (ev, payload) {
+      contextMenuEventHub.emit(ev, payload);
     }
   }
 };
