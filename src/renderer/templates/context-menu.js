@@ -2,7 +2,7 @@
 import { dialogEventHub } from '../modules';
 import { CLIP, NOTE, TRACK } from '../../constants/model-types';
 import { INSPECT } from '../../constants/dialog-types';
-import { exportClipAsJson, exportNoteAsJson, exportTrackAsJson } from '../usecases/jsonExport';
+import { exportJson } from '../usecases/jsonExport';
 
 // =====================================================================================================================
 
@@ -31,25 +31,25 @@ export const contextMenuTemplates: IContextMenuTemplates = {
       }
     },
     {
-      label: 'Export as text',
+      label: 'Export Clip as JSON',
       async click ({ id }) {
-        await exportClipAsJson(id);
+        await exportJson(CLIP, id);
       }
     }
   ],
   [TRACK]: [
     {
-      label: 'Export as text',
+      label: 'Export Track as JSON',
       async click ({ id }) {
-        await exportTrackAsJson(id);
+        await exportJson(TRACK, id);
       }
     }
   ],
   [NOTE]: [
     {
-      label: 'Export as text',
+      label: 'Export Note as JSON',
       async click ({ id }) {
-        await exportNoteAsJson(id);
+        await exportJson(NOTE, id);
       }
     }
   ]

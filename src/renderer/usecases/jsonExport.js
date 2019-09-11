@@ -1,26 +1,15 @@
 // @flow
 import fs from 'fs-extra';
 import { remote } from 'electron';
-import { Clip, Track, Note } from '../store/models';
+import { noCase } from 'change-case';
+import * as models from '../store/models';
 const { dialog } = remote;
 
-export const exportClipAsJson = async (id: string): Promise<void> => {
+export const exportJson = async (type: string, id: string): Promise<void> => {
+  const model = models[type];
+  if (!model) throw new Error('Invalid model type');
   const path = await dialog.showSaveDialog({
-    message: 'Export clip as'
+    message: `Export ${noCase(type)} as`
   });
-  if (path) fs.writeJson(path, Clip.query().whereId(id).withAllRecursive().first());
-};
-
-export const exportTrackAsJson = async (id: string): Promise<void> => {
-  const path = await dialog.showSaveDialog({
-    message: 'Export track as'
-  });
-  if (path) fs.writeJson(path, Track.query().whereId(id).withAllRecursive().first());
-};
-
-export const exportNoteAsJson = async (id: string): Promise<void> => {
-  const path = await dialog.showSaveDialog({
-    message: 'Export note as'
-  });
-  if (path) fs.writeJson(path, Note.query().whereId(id).withAllRecursive().first());
+  if (path) fs.writeJson(path, model.query().whereId(id).withAllRecursive().first());
 };
