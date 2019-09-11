@@ -1,6 +1,6 @@
 // @flow
 import { Model } from '@vuex-orm/core';
-import { sum } from 'lodash';
+import { sumBy } from 'lodash';
 
 export default class BaseModel extends Model {
   get path () {
@@ -9,10 +9,9 @@ export default class BaseModel extends Model {
   }
 
   get absoluteTime () {
-    const offsetTimes = this.path.map(modelInstance => {
-      return modelInstance.offsetTime == null ? 0 : modelInstance.offsetTime;
+    return sumBy(this.path, modelInstance => {
+      return modelInstance.offsetTime ? modelInstance.offsetTime : 0;
     });
-    return sum(offsetTimes);
   }
 
   get parent () {

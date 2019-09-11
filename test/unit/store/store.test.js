@@ -1,10 +1,12 @@
-import { initStore } from '../../../src/renderer/store';
+import { createStore } from '../../../src/renderer/store';
 import { Clip, NoteOff, AudioBuffer, Note, Track, PianoRoll } from '../../../src/renderer/store/models';
 import uid from 'uid';
 import { flatten } from 'lodash';
+import { insertInitialRecords } from '../../../src/renderer/usecases/initialize/insertInitialRecords';
 
 beforeEach(() => {
-  initStore();
+  createStore();
+  insertInitialRecords();
 });
 
 describe('utils', () => {

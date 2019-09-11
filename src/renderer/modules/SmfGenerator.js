@@ -4,6 +4,7 @@ import { MODULATION, NOTE_OFF, NOTE_ON } from '../../constants/model-types';
 import JZZ from 'jzz';
 import type { NoteAction } from '../../types';
 import JzzMidiSmf from 'jzz-midi-smf';
+import { ticksPerBeat } from '../../constants/defaults';
 
 JzzMidiSmf(JZZ);
 
@@ -24,7 +25,6 @@ export class SmfGenerator implements ISmfGenerator {
   from (clip: Clip): SMF {
     if (clip.notes === []) return;
     console.log(`generating SMF from clip ${name}`);
-    const { ticksPerBeat } = clip.parent.parent;
     const smf = new JZZ.MIDI.SMF(1, ticksPerBeat);
     smf.push(this.clipToMTrk(clip));
     return smf;

@@ -29,7 +29,7 @@ export default Vue.extend({
       type: String,
       default: SELECT
     },
-    editingClipId: {
+    idOfClipBeingEdited: {
       type: String,
       default: null
     }
@@ -49,7 +49,7 @@ export default Vue.extend({
   },
   methods: {
     handleMouseDown (ev) {
-      if (!this.editingClipId) return;
+      if (!this.idOfClipBeingEdited) return;
       if (!this.noteContainer) return;
       if (this.mouseMode !== PEN) return;
       const offsetTime = posXToTick(ev.offsetX / this.noteContainer.offsetWidth, this.totalTicks);
@@ -64,7 +64,7 @@ export default Vue.extend({
       Note.insert({
         data: {
           id: this.drawingNote.id,
-          clipId: this.editingClipId,
+          clipId: this.idOfClipBeingEdited,
           offsetTime,
           noteNumber,
           noteOn: {

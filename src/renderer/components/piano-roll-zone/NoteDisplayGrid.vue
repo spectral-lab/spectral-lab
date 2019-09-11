@@ -4,31 +4,25 @@
     class="grid-container"
   >
     <grid-row-container />
-    <grid-column-container
-      :beats-per-bar="beatsPerBar"
-      :total-bars="totalBars"
+    <grid-vertical-lines-layout
+      :clips="clips"
+      :startTime="startTime"
+      :duration="totalTicks"
     />
   </div>
 </template>
 
 <script>
 import GridRowContainer from '../misc/GridRowContainer';
-import GridColumnContainer from '../misc/GridColumnContainer';
+import GridVerticalLinesLayout from '../misc/GridVerticalLinesLayout';
+import { beatsPerBar, ticksPerBeat } from '../../../constants/defaults';
 
 export default {
   components: {
     GridRowContainer,
-    GridColumnContainer
+    GridVerticalLinesLayout
   },
   props: {
-    beatsPerBar: {
-      type: Number,
-      default: 4
-    },
-    totalBars: {
-      type: Number,
-      default: 4
-    },
     opacity: {
       type: Number,
       default: 1
@@ -36,6 +30,18 @@ export default {
     opacitywillChange: {
       type: Boolean,
       default: false
+    },
+    clips: {
+      type: Array,
+      default: () => []
+    },
+    totalTicks: {
+      type: Number,
+      default: 4 * ticksPerBeat * beatsPerBar
+    },
+    startTime: {
+      type: Number,
+      default: 0
     }
   },
   computed: {

@@ -3,7 +3,7 @@ import '../../../types';
 import { FFT, WindowFunction } from 'dsp.js-browser';
 import { initWin, collectCenterFreqs } from './audioUtils';
 import type { Frequency, Magnitude, SamplingRate } from '../../../types';
-import type { Sec } from '../helpers/timeUtils';
+import type { Sec } from '../../../types/units';
 import zip from 'lodash/zip';
 
 type spectrogram = {

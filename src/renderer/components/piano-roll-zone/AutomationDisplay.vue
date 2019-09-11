@@ -1,26 +1,32 @@
 <template>
   <div class="automation-display">
-    <grid-column-container
-      :total-bars="totalBars"
-      :beats-per-bar="beatsPerBar"
+    <grid-vertical-lines-layout
+      :clips="clips"
+      :duration="totalTicks"
+      :start-time="startTime"
     />
   </div>
 </template>
 
 <script>
-import GridColumnContainer from '../misc/GridColumnContainer';
+import { beatsPerBar, ticksPerBeat } from '../../../constants/defaults';
+import GridVerticalLinesLayout from '../misc/GridVerticalLinesLayout';
 export default {
   components: {
-    GridColumnContainer
+    GridVerticalLinesLayout
   },
   props: {
-    totalBars: {
-      type: Number,
-      default: 4
+    clips: {
+      type: Array,
+      default: () => []
     },
-    beatsPerBar: {
+    totalTicks: {
       type: Number,
-      default: 4
+      default: 4 * ticksPerBeat * beatsPerBar
+    },
+    startTime: {
+      type: Number,
+      default: 0
     }
   }
 };

@@ -3,9 +3,9 @@ import { makeMandatory } from '../utils';
 import { PIANO_ROLL } from '../../../constants/model-types';
 import { SELECT } from '../../../constants/mouse-modes';
 import flatMap from 'lodash/flatMap';
-import { App, BaseModel, Clip, Song, Note, Track } from '.';
+import { App, BaseModel, Clip, Note, Track } from '.';
 import { SELECTED } from '../../../constants/model-properties';
-import { beatsPerBar } from '../../../constants/defaults';
+import { ticksPerBeat } from '../../../constants/defaults';
 
 export default class PianoRoll extends BaseModel {
   static get entity () {
@@ -58,15 +58,6 @@ export default class PianoRoll extends BaseModel {
     return this.audioBuffers.map(audioBuffer => audioBuffer.spectrogram).filter(v => v);
   }
 
-  get beatsPerBar () {
-    if (this.clips[0]) return this.clips[0].beatsPerBar[0].val;
-    return beatsPerBar;
-  }
-
-  get ticksPerBeat () {
-    return Song.query().last().ticksPerBeat;
-  }
-
   get displayRange () {
     if (!this.clips.length) return { start: 0, end: 0 };
     const start = Math.min(...this.clips.map(clip => clip.startTime));
@@ -79,7 +70,7 @@ export default class PianoRoll extends BaseModel {
   }
 
   get totalBeats () {
-    return this.totalTicks / this.ticksPerBeat;
+    return this.totalTicks / ticksPerBeat;
   }
 
   get totalBars () {

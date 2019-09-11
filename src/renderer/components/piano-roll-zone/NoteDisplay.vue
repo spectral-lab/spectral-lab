@@ -4,10 +4,11 @@
     class="note-display"
   >
     <note-display-grid
-      :beatsPerBar="pianoRoll.beatsPerBar"
-      :totalBars="pianoRoll.totalBars"
       :opacity="pianoRoll.gridOpacity"
       :opacityWillChange="pianoRoll.opacityWillChange"
+      :clips="pianoRoll.clips"
+      :totalTicks="pianoRoll.totalTicks"
+      :startTime="pianoRoll.displayRange.start"
     />
     <note-display-spectrogram
       :spectrograms="pianoRoll.spectrograms"
@@ -18,7 +19,7 @@
     <drawing-area
       :total-ticks="pianoRoll.totalTicks"
       :mouse-mode="pianoRoll.mouseMode"
-      :editing-clip-id="editingClipId"
+      :id-of-clip-being-edited="idOfClipBeingEdited"
     >
       <note-display-note-item-container
         :notes="pianoRoll.notes"
@@ -49,8 +50,8 @@ export default Vue.extend({
     }
   },
   computed: {
-    editingClipId () {
-      if (this.pianoRoll.clips[0]) return this.pianoRoll.clips[0].id;
+    idOfClipBeingEdited () {
+      if (this.pianoRoll.clips.length) return this.pianoRoll.clips[0].id;
       return null;
     }
   }
