@@ -1,13 +1,14 @@
 // @flow
 import { dialogEventHub } from '../modules';
-import { CLIP } from '../../constants/model-types';
+import { CLIP, TRACK } from '../../constants/model-types';
 import { INSPECT } from '../../constants/dialog-types';
+import { exportClipAsJson, exportTrackAsJson } from '../usecases/jsonExport';
 
 // =====================================================================================================================
 
 export type Option = {
   label: string,
-  click(any): any
+  click({ context: string, id: string }): void
 }
 
 export interface IContextMenuTemplates {
@@ -27,6 +28,20 @@ export const contextMenuTemplates: IContextMenuTemplates = {
           context: CLIP,
           id
         });
+      }
+    },
+    {
+      label: 'Export as text',
+      async click ({ id }) {
+        await exportClipAsJson(id);
+      }
+    }
+  ],
+  [TRACK]: [
+    {
+      label: 'Export as text',
+      async click ({ id }) {
+        await exportTrackAsJson(id);
       }
     }
   ]
