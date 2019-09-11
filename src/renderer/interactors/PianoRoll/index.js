@@ -1,6 +1,6 @@
 // @flow
 import { PianoRoll } from '../../store/models';
-import { PIANO_ROLL_ID } from '../../../constants/ids';
+import { APP_ID, PIANO_ROLL_ID } from '../../../constants/ids';
 
 /**
  * from 0 to 1
@@ -28,4 +28,13 @@ export const setPianoRollOpacityWillChange = async (val: boolean) => {
 
 export const getPianoRollData = () => {
   return PianoRoll.query().whereId(PIANO_ROLL_ID).first();
+};
+
+export const createPianoRoll = () => {
+  PianoRoll.insert({
+    data: {
+      id: PIANO_ROLL_ID,
+      appId: APP_ID
+    }
+  });
 };

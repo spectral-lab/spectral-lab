@@ -1,21 +1,9 @@
-// @ts-nocheck
-import 'material-design-icons-iconfont/dist/material-design-icons.css';
-import '@fortawesome/fontawesome-free/css/all.css';
 import Vue from 'vue';
 import App from './App';
 import store from './store';
-import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
-import theme from '../constants/theme';
-import initialize from './usecases/initialize';
+import { preMount, postMount } from './usecases/initialize';
 
-if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
-Vue.config.productionTip = false;
-
-Vue.use(Vuetify, {
-  theme, iconfont: 'md'
-});
-
+preMount();
 /* eslint-disable no-new */
 new Vue({
   components: { App },
@@ -23,4 +11,4 @@ new Vue({
   template: '<App/>'
 }).$mount('#app');
 
-initialize();
+postMount();
