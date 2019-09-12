@@ -23,7 +23,7 @@
     "test:update": "jest --updateSnapshot",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "type-check": "flow"
+    "type-check": "flow-watch"
   },
   "husky": {
     "hooks": {
@@ -166,6 +166,7 @@
     "eslint-plugin-vue": "^5.2.3",
     "file-loader": "^1.1.11",
     "flow-bin": "^0.105.2",
+    "flow-watch": "^1.1.4",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^2.4.0",
     "jest": "^24.8.0",
