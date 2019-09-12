@@ -2,7 +2,9 @@
 import { Clip } from '../../store/models';
 import uid from 'uid';
 import range from 'lodash/range';
-import { ticksPerBar, ticksPerBeat } from '../../../constants/defaults';
+import { ticksPerBar } from '../../../constants/defaults';
+import { getSelectedTrackIds } from '../Track';
+import { generateBarData } from '../Bar';
 
 export const createDefaultClip = async (parentTrackId: string, data?: Object): Promise<string> => {
   const clipId = data && data.id ? data.id : uid();
@@ -16,16 +18,11 @@ export const createDefaultClip = async (parentTrackId: string, data?: Object): P
   return clipId;
 };
 
-const generateBarData = (offsetTime: number): Object => ({
-  id: uid(),
-  offsetTime,
-  beats: range(4).map(i => generateBeatData(i * ticksPerBeat))
-});
-
-const generateBeatData = (offsetTime: number): Object => ({
-  id: uid(),
-  offsetTime: offsetTime
-});
+export const moveToSelectedTrack = async (id: string) => {
+  const trackIds = getSelectedTrackIds();
+  if (!trackIds.length) return;
+  await setTrackId(id, trackIds[0]);
+};
 
 export const setTrackId = async (clipId: string, trackId: string) => {
   await Clip.update({
