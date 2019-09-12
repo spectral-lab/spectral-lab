@@ -6,7 +6,7 @@ import { ticksPerBar } from '../../../constants/defaults';
 import { getSelectedTrackIds } from '../Track';
 import { generateBarData } from '../Bar';
 
-export const createDefaultClip = async (parentTrackId: string, data?: Object): Promise<string> => {
+export const insertDefaultClip = async (parentTrackId: string, data?: Object): Promise<string> => {
   const clipId = data && data.id ? data.id : uid();
   await Clip.insert({
     data: Object.assign({

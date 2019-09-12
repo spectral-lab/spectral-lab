@@ -2,7 +2,7 @@
 import { ipcRenderer } from 'electron';
 import { CREATE, DIALOG } from '../../../constants/event-types';
 import { dialogEventHub } from '../../modules';
-import * as insertRecord from '../insertRecord';
+import * as create from '../create';
 import { noCase } from 'change-case';
 
 export const listenIpc = () => {
@@ -10,6 +10,6 @@ export const listenIpc = () => {
     dialogEventHub.emit(...args);
   });
   ipcRenderer.on(CREATE, (_ev, payload) => {
-    insertRecord[noCase(payload.type)](payload);
+    create[noCase(payload.type)](payload);
   });
 };

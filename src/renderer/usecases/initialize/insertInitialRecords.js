@@ -2,7 +2,7 @@
 import uid from 'uid';
 import {
   createApp, createPianoRoll, createArrangement,
-  createSong, createTrack, createDefaultClip
+  createSong, insertTrack, insertDefaultClip
 } from '../../interactors';
 
 export const insertInitialRecords = (): void => {
@@ -11,6 +11,6 @@ export const insertInitialRecords = (): void => {
   createPianoRoll();
   createArrangement();
   createSong();
-  createTrack({ id: trackId, selected: true });
-  createDefaultClip(trackId, { selected: true });
+  insertTrack({ id: trackId, selected: true });
+  insertDefaultClip(trackId, { selected: true });
 };
