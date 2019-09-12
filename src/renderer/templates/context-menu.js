@@ -3,6 +3,7 @@ import { dialogEventHub } from '../modules';
 import { CLIP, NOTE, TRACK } from '../../constants/model-types';
 import { INSPECT } from '../../constants/dialog-types';
 import { exportJson } from '../usecases/jsonExport';
+import { moveClipToSelectedTrack } from '../usecases/clipManipulation';
 
 // =====================================================================================================================
 
@@ -34,6 +35,12 @@ export const contextMenuTemplates: IContextMenuTemplates = {
       label: 'Export Clip as JSON',
       async click ({ id }) {
         await exportJson(CLIP, id);
+      }
+    },
+    {
+      label: 'Move to Selected Track',
+      async click ({ id }) {
+        await moveClipToSelectedTrack(id);
       }
     }
   ],

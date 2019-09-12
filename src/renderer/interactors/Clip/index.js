@@ -26,3 +26,12 @@ const generateBeatData = (offsetTime: number): Object => ({
   id: uid(),
   offsetTime: offsetTime
 });
+
+export const setTrackId = async (clipId: string, trackId: string) => {
+  await Clip.update({
+    where: clipId,
+    data: {
+      trackId: trackId
+    }
+  });
+};
