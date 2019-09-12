@@ -15,6 +15,7 @@ const application = {
     },
     {
       label: 'Quit',
+      accelerator: 'Command+Q',
       click: () => {
         app.quit();
       }
