@@ -2,7 +2,7 @@ import { app } from 'electron';
 import ipcSender from '../modules/IpcSender';
 import { CREATE, DIALOG } from '../../constants/event-types';
 import { MIDI_EXPORT } from '../../constants/dialog-types';
-import { TRACK } from '../../constants/model-types';
+import { CLIP, TRACK } from '../../constants/model-types';
 
 const application = {
   label: 'Application',
@@ -56,6 +56,12 @@ const create = {
       label: 'New Track',
       click: () => {
         ipcSender.send(CREATE, { type: TRACK });
+      }
+    },
+    {
+      label: 'New Clip',
+      click: () => {
+        ipcSender.send(CREATE, { type: CLIP });
       }
     }
   ]

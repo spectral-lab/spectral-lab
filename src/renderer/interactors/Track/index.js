@@ -7,3 +7,7 @@ export const createTrack = (data?: Object): void => {
     data: Object.assign({ id: uid(), songId: SONG_ID }, data)
   });
 };
+
+export const getSelectedTrackIds = (): string[] => {
+  return Track.query().where('selected', true).get().map(track => track.id);
+};

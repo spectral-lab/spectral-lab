@@ -4,15 +4,16 @@ import uid from 'uid';
 import range from 'lodash/range';
 import { ticksPerBar, ticksPerBeat } from '../../../constants/defaults';
 
-export const createDefaultClip = (parentTrackId: string, data?: Object): void => {
+export const createDefaultClip = async (parentTrackId: string, data?: Object): Promise<string> => {
   const clipId = data && data.id ? data.id : uid();
-  Clip.insert({
+  await Clip.insert({
     data: Object.assign({
       id: clipId,
       trackId: parentTrackId,
       bars: range(4).map(i => generateBarData(i * ticksPerBar))
     }, data)
   });
+  return clipId;
 };
 
 const generateBarData = (offsetTime: number): Object => ({
