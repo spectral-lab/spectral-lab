@@ -32,8 +32,6 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         architecture: 'x64'
-    - name: install yarn
-      run: npm install -g yarn
     - name: yarn install and build
       run: |
         yarn install
