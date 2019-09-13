@@ -7,15 +7,16 @@ on:
   push:
     branches:
       - master
-
+      
       
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
+        os: [macOS-latest, ubuntu-latest, windows-latest]
         node-version: [10.x, 12.x]
 
     steps:
@@ -24,7 +25,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
+    - name: npm install and build
       run: |
         npm install
         npm run build
