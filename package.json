@@ -9,7 +9,7 @@
     "postinstall": "[ -d static/server/venv ] || npm run install:server",
     "install:server": "cd static/server && python3 -m venv venv && ./venv/bin/python3 -m pip install -r requirements.txt",
     "build": "node .electron-vue/build.js && electron-builder",
-    "build:dir": "node .electron-vue/build.js && electron-builder --dir",
+    "build:dir": "node .electron-vue/build.js && CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --dir",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
     "dev": "node .electron-vue/dev-runner.js",
