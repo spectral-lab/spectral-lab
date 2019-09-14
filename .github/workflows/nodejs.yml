@@ -32,9 +32,9 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         architecture: 'x64'
-    - name: yarn install and build
-      run: |
-        yarn install
-        yarn build
+    - name: install
+      run: yarn install
+    - name: build
+      run: yarn build
       env:
         CI: true
