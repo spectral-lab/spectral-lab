@@ -79,6 +79,7 @@
     "mac": {
       "forceCodeSigning": false,
       "identity": null,
+      "publish": null,
       "icon": "build/icons/icon.icns"
     },
     "win": {
