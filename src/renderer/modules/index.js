@@ -1,4 +1,7 @@
 // @flow
+/**
+ * Instanciate and export modules
+ */
 import { MidiPlayer } from './MidiPlayer';
 import { MidiMessageGenerator } from './MidiMessageGenerator';
 import { MidiIoFacade } from './MidiIoFacade';
