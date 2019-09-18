@@ -46,6 +46,16 @@ export const contextMenuTemplates: IContextMenuTemplates = {
   ],
   [TRACK]: [
     {
+      label: 'Inspect',
+      click ({ id }) {
+        dialogEventHub.emit(null, {
+          type: INSPECT,
+          context: TRACK,
+          id
+        });
+      }
+    },
+    {
       label: 'Export Track as JSON',
       async click ({ id }) {
         await exportJson(TRACK, id);
