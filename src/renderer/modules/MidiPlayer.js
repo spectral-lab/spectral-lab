@@ -1,10 +1,8 @@
 // @flow
 import { IScheduler } from './Scheduler';
 import { CLIP, NOTE } from '../../constants/model-types';
-// eslint-disable-next-line no-unused-vars
 import { Clip, Note } from '../store/models';
 import { allNotesOff } from '../utils/helpers/allNotesOff';
-// eslint-disable-next-line no-unused-vars
 
 export interface IMidiPlayer {
   play(item: Clip | Note): void;

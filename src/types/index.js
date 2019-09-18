@@ -1,5 +1,4 @@
 // @flow
-// eslint-disable-next-line no-unused-vars
 import * as models from '../renderer/store/models';
 import type { Ms, Tick, Sec, Magnitude, SamplingRate, Frequency, NoteNumber } from './units';
 export type { Ms, Tick, Sec, Magnitude, SamplingRate, Frequency, NoteNumber };
