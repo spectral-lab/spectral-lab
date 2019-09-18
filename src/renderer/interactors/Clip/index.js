@@ -24,6 +24,12 @@ export const moveToSelectedTrack = async (id: string) => {
   await setTrackId(id, trackIds[0]);
 };
 
+export const deleteClip = async (id: string) => {
+  await Clip.delete({
+    where: id
+  });
+};
+
 export const setTrackId = async (clipId: string, trackId: string) => {
   await Clip.update({
     where: clipId,
