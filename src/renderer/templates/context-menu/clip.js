@@ -5,6 +5,7 @@ import { CLIP } from '../../../constants/model-types';
 import { exportJson } from '../../usecases/jsonExport';
 import { deleteClip, moveToSelectedTrack } from '../../interactors/Clip';
 import type { Option } from './types';
+import { selectAudioFileForClip } from '../../usecases/selectAudioFileForClip';
 
 export const clip: Option[] = [
   {
@@ -33,6 +34,12 @@ export const clip: Option[] = [
     label: 'Move to Selected Track',
     async click ({ id }) {
       await moveToSelectedTrack(id);
+    }
+  },
+  {
+    label: 'Select Audio File',
+    async click ({ id }) {
+      await selectAudioFileForClip(id);
     }
   }
 ];
