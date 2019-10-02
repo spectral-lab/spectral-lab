@@ -18,6 +18,7 @@ import { SPLIT } from '../../../constants/layout';
 import { Clip } from '../../store/models';
 import { OUTSIDE_CLIP, CLIP } from '../../../constants/context';
 import { getSongData } from '../../interactors/Song';
+import { selectClip } from '../../interactors/Clip';
 
 export default Vue.extend({
   components: {
@@ -35,7 +36,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    handleContextMenu (ev, payload) {
+    async handleContextMenu (ev, payload: { context: string, id: string }) {
+      await selectClip(payload.id, ev);
       contextMenuEventHub.emit(ev, payload);
     },
     handleDblClick () {
@@ -54,18 +56,8 @@ export default Vue.extend({
         data: { selected: false }
       });
     },
-    handleClickItem (ev, payload) {
-      const { id } = payload;
-      if (!(ev.metaKey || ev.shiftKey)) {
-        Clip.update({
-          where: clip => clip.selected && clip.id !== id,
-          data: { selected: false }
-        });
-      }
-      Clip.update({
-        where: id,
-        data: { selected: true }
-      });
+    async handleClickItem (ev, payload) {
+      await selectClip(payload.id, ev);
     }
   }
 });

@@ -38,3 +38,16 @@ export const setTrackId = async (clipId: string, trackId: string) => {
     }
   });
 };
+
+export const selectClip = async (id: string, ev: Object) => {
+  if (!(ev.metaKey || ev.shiftKey)) {
+    await Clip.update({
+      where: clip => clip.selected && clip.id !== id,
+      data: { selected: false }
+    });
+  }
+  await Clip.update({
+    where: id,
+    data: { selected: true }
+  });
+};
