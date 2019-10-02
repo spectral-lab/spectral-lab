@@ -6,9 +6,6 @@
     >
       <v-layout column>
         <v-flex>
-          <audio-info-container />
-        </v-flex>
-        <v-flex>
           <toolbar />
         </v-flex>
         <v-flex>
@@ -27,12 +24,10 @@
 <script>
 import PianoRollContainer from './PianoRollContainer';
 import Toolbar from './Toolbar';
-import AudioInfoContainer from './AudioInfoContainer';
 import FooterToolbar from './FooterToolbar';
 
 export default {
   components: {
-    AudioInfoContainer,
     PianoRollContainer,
     Toolbar,
     FooterToolbar
