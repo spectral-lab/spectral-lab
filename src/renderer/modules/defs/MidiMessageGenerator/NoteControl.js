@@ -1,6 +1,6 @@
 // @flow
-import '../../../types';
-import { Modulation, NoteOff } from '../../store/models';
+import '../../../../types';
+import { Modulation, NoteOff } from '../../../store/models';
 
 type ModulateCb = (modulate: Modulation, timestamp: number) => any;
 type NoteOffCb = (noteOff: NoteOff, timestamp: number) => any;

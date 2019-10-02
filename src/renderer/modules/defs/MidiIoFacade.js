@@ -1,5 +1,5 @@
 // @flow
-import type { MidiMessage, Send } from '../../types';
+import type { MidiMessage, Send } from '../../../types';
 import { pick } from 'lodash';
 
 type PortInfo = {

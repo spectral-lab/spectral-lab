@@ -1,6 +1,6 @@
 // @flow
-import type { Ms, Tick } from '../../types/units';
-import { getSongData } from '../interactors/Song';
+import type { Ms, Tick } from '../../../types/units';
+import { getSongData } from '../../interactors/Song';
 
 export interface ITimeConverter {
   toTick(ms: Ms): Tick;

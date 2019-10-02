@@ -1,10 +1,10 @@
 import type { IMidiMessageGenerator } from './MidiMessageGenerator';
-import { Clip } from '../store/models';
-import { MODULATION, NOTE_OFF, NOTE_ON } from '../../constants/model-types';
+import { Clip } from '../../store/models';
+import { MODULATION, NOTE_OFF, NOTE_ON } from '../../../constants/model-types';
 import JZZ from 'jzz';
-import type { NoteAction } from '../../types';
+import type { NoteAction } from '../../../types';
 import JzzMidiSmf from 'jzz-midi-smf';
-import { ticksPerBeat } from '../../constants/defaults';
+import { ticksPerBeat } from '../../../constants/defaults';
 
 JzzMidiSmf(JZZ);
 

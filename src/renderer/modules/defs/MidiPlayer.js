@@ -1,8 +1,8 @@
 // @flow
 import { IScheduler } from './Scheduler';
-import { CLIP, NOTE } from '../../constants/model-types';
-import { Clip, Note } from '../store/models';
-import { allNotesOff } from '../utils/helpers/allNotesOff';
+import { CLIP, NOTE } from '../../../constants/model-types';
+import { Clip, Note } from '../../store/models';
+import { allNotesOff } from '../../utils/helpers/allNotesOff';
 
 export interface IMidiPlayer {
   play(item: Clip | Note): void;

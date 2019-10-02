@@ -1,7 +1,7 @@
 // @flow
-import { audioCtx as ctx } from '../utils/audio/audioCtx';
-import playAudioBuffer from '../utils/helpers/playAudioBuffer';
-import type { Callable } from '../../types';
+import { audioCtx as ctx } from '../../utils/audio/audioCtx';
+import playAudioBuffer from '../../utils/helpers/playAudioBuffer';
+import type { Callable } from '../../../types';
 
 export interface IAudioPlayer {
   play(): void;

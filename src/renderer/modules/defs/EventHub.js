@@ -1,5 +1,5 @@
 // @flow
-import type { Callable } from '../../types';
+import type { Callable } from '../../../types';
 
 type Event = Object;
 type Payload = {

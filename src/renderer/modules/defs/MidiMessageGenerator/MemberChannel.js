@@ -1,10 +1,10 @@
 import {
   noteOffMessage, noteOnMessage, pitchBendMessage, channelPressureMessage, cc74Message
-} from '../../utils/midi/formatMidiMessage';
-import { PITCH_BEND, PRESSURE, TIMBRE } from '../../../constants/modulation-types';
+} from '../../../utils/midi/formatMidiMessage';
+import { PITCH_BEND, PRESSURE, TIMBRE } from '../../../../constants/modulation-types';
 import { pick } from 'lodash';
-import { NoteOn, NoteOff, Modulation } from '../../store/models';
-import type { MidiMessage, Now } from '../../../types';
+import { NoteOn, NoteOff, Modulation } from '../../../store/models';
+import type { MidiMessage, Now } from '../../../../types';
 
 export default class MemberChannel {
   pitchBendRange: number;

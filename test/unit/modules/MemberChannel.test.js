@@ -1,5 +1,5 @@
 // @flow
-import MemberChannel from '../../../src/renderer/modules/MidiMessageGenerator/MemberChannel';
+import MemberChannel from '../../../src/renderer/modules/defs/MidiMessageGenerator/MemberChannel';
 import type { Now } from '../../../src/types';
 
 const noteOn: any = {

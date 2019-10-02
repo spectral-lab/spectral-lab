@@ -2,17 +2,16 @@
 /**
  * Instanciate and export modules
  */
-import { MidiPlayer } from './MidiPlayer';
-import { MidiMessageGenerator } from './MidiMessageGenerator';
-import { MidiIoFacade } from './MidiIoFacade';
-import { Scheduler } from './Scheduler';
-import { TimeConverter } from './TimeConverter';
-import { SmfGenerator } from './SmfGenerator';
-import { MidiWriter } from './MidiWriter';
-import { AudioPlayer } from './AudioPlayer';
-import { TemplateGenerator } from './TemplateGenerator';
+import { MidiPlayer } from './defs/MidiPlayer';
+import { MidiMessageGenerator } from './defs/MidiMessageGenerator';
+import { MidiIoFacade } from './defs/MidiIoFacade';
+import { Scheduler } from './defs/Scheduler';
+import { TimeConverter } from './defs/TimeConverter';
+import { SmfGenerator } from './defs/SmfGenerator';
+import { MidiWriter } from './defs/MidiWriter';
+import { AudioPlayer } from './defs/AudioPlayer';
+import { TemplateGenerator } from './defs/TemplateGenerator';
 import { userInputTemplates } from '../templates/user-input';
-import { EventHub } from './EventHub';
 
 export const timeConverter = new TimeConverter();
 const midiIoFacade = new MidiIoFacade(navigator);
@@ -24,6 +23,4 @@ export const templateGenerator = TemplateGenerator({ userInputTemplates });
 export const midiPlayer = new MidiPlayer(scheduler);
 export const midiWriter = new MidiWriter(smfGenerator);
 export const audioPlayer = new AudioPlayer();
-export const dialogEventHub = new EventHub();
-export const contextMenuEventHub = new EventHub();
-export const windowSwitchEventHub = new EventHub();
+export * from './eventHubs';

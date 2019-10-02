@@ -1,5 +1,5 @@
 // @flow
-import { MidiIoFacade } from '../../../src/renderer/modules/MidiIoFacade';
+import { MidiIoFacade } from '../../../src/renderer/modules/defs/MidiIoFacade';
 
 const genMock = () => {
   const midiInput1 = {
