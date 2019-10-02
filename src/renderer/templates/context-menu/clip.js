@@ -5,7 +5,7 @@ import { CLIP } from '../../../constants/model-types';
 import { exportJson } from '../../usecases/jsonExport';
 import { deleteClip, moveToSelectedTrack } from '../../interactors/Clip';
 import type { Option } from './types';
-import { selectAudioFileForClip } from '../../usecases/selectAudioFileForClip';
+import { setSpectrogramForClip } from '../../usecases/setSpectrogramForClip';
 
 export const clip: Option[] = [
   {
@@ -37,9 +37,9 @@ export const clip: Option[] = [
     }
   },
   {
-    label: 'Select Audio File',
+    label: 'Set Spectrogram',
     async click ({ id }) {
-      await selectAudioFileForClip(id);
+      await setSpectrogramForClip(id);
     }
   }
 ];
