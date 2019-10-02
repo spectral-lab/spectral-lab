@@ -17,7 +17,7 @@ export const track: Option[] = [
     }
   },
   {
-    label: 'Export Track as JSON',
+    label: 'Export as JSON',
     async click ({ id }) {
       await exportJson(TRACK, id);
     }

@@ -19,13 +19,13 @@ export const clip: Option[] = [
     }
   },
   {
-    label: 'Export Clip as JSON',
+    label: 'Export as JSON',
     async click ({ id }) {
       await exportJson(CLIP, id);
     }
   },
   {
-    label: 'Delete Clip',
+    label: 'Delete',
     async click ({ id }) {
       await deleteClip(id);
     }
