@@ -1,9 +1,6 @@
 <template>
   <div class="arrangement-zone">
     <div class="arrangement-zone-content">
-      <div class="arrangement-ruler">
-        ruler
-      </div>
       <div class="track-area">
         <track-row-container />
       </div>
@@ -29,16 +26,8 @@ export default {
     .arrangement-zone-content {
         width: 100%;
         height: 100%;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 20px 1fr;
     }
     .track-area {
-        grid-area: 2 / 1 / 3 / 2;
         overflow: scroll;
-    }
-    .arrangement-ruler {
-        grid-area: 1 / 1 / 2 / 2;
-        background: darkcyan;
     }
 </style>
