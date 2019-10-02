@@ -11,3 +11,25 @@ export const insertTrack = (data?: Object): void => {
 export const getSelectedTrackIds = (): string[] => {
   return Track.query().where('selected', true).get().map(track => track.id);
 };
+
+export const selectTrack = async (id: string, ev: Object) => {
+  if (ev.metaKey || ev.shiftKey) {
+    await addSelection(id);
+    return;
+  }
+  await Promise.all([deselectOtherTracks(id), addSelection(id)]);
+};
+
+const addSelection = async (trackId: string) => {
+  await Track.update({
+    where: trackId,
+    data: { selected: true }
+  });
+};
+
+const deselectOtherTracks = async (id: string) => {
+  await Track.update({
+    where: track => track.selected && track.id !== id,
+    data: { selected: false }
+  });
+};

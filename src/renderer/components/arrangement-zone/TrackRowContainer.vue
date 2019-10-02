@@ -26,6 +26,7 @@ import { SONG_ID } from '../../../constants/ids';
 import { TRACK } from '../../../constants/model-types';
 import { INSPECT } from '../../../constants/dialog-types';
 import { contextMenuEventHub, dialogEventHub } from '../../modules';
+import { selectTrack } from '../../interactors/Track';
 
 export default {
   components: {
@@ -38,7 +39,7 @@ export default {
     }
   },
   methods: {
-    handleClick (ev, payload) {
+    async handleClick (ev, payload) {
       if (payload.type === 'setting') {
         dialogEventHub.emit(null, {
           type: INSPECT,
@@ -47,20 +48,11 @@ export default {
         });
       }
       if (payload.type === 'panel') {
-        const { id } = payload;
-        if (!(ev.metaKey || ev.shiftKey)) {
-          Track.update({
-            where: track => track.selected && track.id !== id,
-            data: { selected: false }
-          });
-        }
-        Track.update({
-          where: id,
-          data: { selected: true }
-        });
+        await selectTrack(payload.id, ev);
       }
     },
-    handleContextMenu (ev, payload) {
+    async handleContextMenu (ev, payload) {
+      await selectTrack(payload.id, ev);
       contextMenuEventHub.emit(ev, payload);
     }
   }
