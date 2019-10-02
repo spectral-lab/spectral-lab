@@ -39,15 +39,21 @@ export const setTrackId = async (clipId: string, trackId: string) => {
   });
 };
 
-export const selectClip = async (id: string, ev: Object) => {
-  if (!(ev.metaKey || ev.shiftKey)) {
-    await Clip.update({
-      where: clip => clip.selected && clip.id !== id,
-      data: { selected: false }
-    });
-  }
+export const selectClip = (id: string, ev: Object): Promise<any> => {
+  if (ev.metaKey || ev.shiftKey) return addSelection(id);
+  return Promise.all([deselectClipsExcept(id), addSelection(id)]);
+};
+
+const addSelection = async (clipId: string) => {
   await Clip.update({
-    where: id,
+    where: clipId,
     data: { selected: true }
+  });
+};
+
+const deselectClipsExcept = async (id: string) => {
+  await Clip.update({
+    where: clip => clip.selected && clip.id !== id,
+    data: { selected: false }
   });
 };
