@@ -10,12 +10,11 @@ beforeEach(() => {
 });
 
 describe('utils', () => {
-  test('gets path', () => {
-    const path = Clip.query().last().path;
-    expect(path.length).toBe(3);
-    expect(path[0].type).toBe('Song');
-    expect(path[1].type).toBe('Track');
-    expect(path[2].type).toBe('Clip');
+  test('gets ancestors', () => {
+    const ancestors = Clip.query().last().ancestors;
+    expect(ancestors.length).toBe(2);
+    expect(ancestors[0].type).toBe('Song');
+    expect(ancestors[1].type).toBe('Track');
   });
   test('gets absolute time', async (done) => {
     const noteOffId = uid();

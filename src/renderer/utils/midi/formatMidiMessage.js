@@ -2,7 +2,6 @@
 import { NOTE_OFF, NOTE_ON, PITCH_BEND, CONTROL_CHANGE, CHANNEL_PRESSURE } from '../../../constants/midi-message-types';
 import { uint14ToDataBytes, signedFloatToInt14, unsignedFloatToInt7 } from './dataByteUtils';
 import { deriveStatusByte } from './statusByteUtils';
-// eslint-disable-next-line no-unused-vars
 import { MidiMessage } from '../../../types';
 
 /**

@@ -3,15 +3,16 @@ import { Model } from '@vuex-orm/core';
 import { sumBy } from 'lodash';
 
 export default class BaseModel extends Model {
-  get path () {
-    if (!this.parent) return [this];
-    return [...this.parent.path, this];
+  get ancestors () {
+    if (!this.parent) return [];
+    return [...this.parent.ancestors, this.parent];
   }
 
   get absoluteTime () {
-    return sumBy(this.path, modelInstance => {
-      return modelInstance.offsetTime ? modelInstance.offsetTime : 0;
-    });
+    return sumBy(
+      [...this.ancestors, this],
+      modelInstance => modelInstance.offsetTime || 0
+    );
   }
 
   get parent () {

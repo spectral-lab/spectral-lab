@@ -16,7 +16,7 @@ import InspectDialog from './InspectDialog';
 import * as models from '../../store/models';
 import Vue from 'vue';
 import { templateGenerator } from '../../modules';
-import type { InspectDialogTemplate } from '../../modules/TemplateGenerator';
+import type { InspectDialogTemplate } from '../../modules/defs/TemplateGenerator';
 export default Vue.extend({
   components: {
     InspectDialog

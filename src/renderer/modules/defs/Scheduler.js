@@ -1,8 +1,8 @@
 // @flow
 import type { IMidiMessageGenerator } from './MidiMessageGenerator';
-import { Clip, Note } from '../store/models';
-import { MODULATION, NOTE_OFF, NOTE_ON } from '../../constants/model-types';
-import type { MidiMessage, Now } from '../../types';
+import { Clip, Note } from '../../store/models';
+import { MODULATION, NOTE_OFF, NOTE_ON } from '../../../constants/model-types';
+import type { MidiMessage, Now } from '../../../types';
 import type { ITimeConverter } from './TimeConverter';
 
 export interface IScheduler {

@@ -1,5 +1,5 @@
 // @flow
-import type { IUserInputTemplates, UserInputTemplate } from '../templates/user-input';
+import type { IUserInputTemplates, UserInputTemplate } from '../../templates/user-input';
 
 export type InspectDialogTemplate = UserInputTemplate & {
   id: string,

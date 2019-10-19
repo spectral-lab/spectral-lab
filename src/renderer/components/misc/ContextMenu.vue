@@ -23,9 +23,10 @@
 <script>
 // @flow
 import { VueContext } from 'vue-context';
-import templates from '../../templates/context-menu';
+import * as templates from '../../templates/context-menu';
 import type { Option } from '../../templates/context-menu';
 import { contextMenuEventHub } from '../../modules';
+import { camelCase } from 'change-case';
 export default {
   components: {
     VueContext
@@ -39,7 +40,7 @@ export default {
   computed: {
     template (): Option[] {
       if (!this.context) return [];
-      return templates[this.context];
+      return templates[camelCase(this.context)];
     }
   },
   mounted () {
