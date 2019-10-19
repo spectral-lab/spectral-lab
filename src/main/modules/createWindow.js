@@ -14,7 +14,10 @@ export default () => {
     width,
     height,
     useContentSize: false,
-    titleBarStyle: 'hidden'
+    titleBarStyle: 'hidden',
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
   mainWindow.loadURL(winURL);
   ipcSender.appendWindow(mainWindow);
