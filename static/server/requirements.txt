@@ -75,7 +75,7 @@ SQLAlchemy-FullText-Search==0.2.5
 SQLAlchemy-Utc==0.10.0
 SQLAlchemy-Utils==0.35.0
 urllib3==1.25.7
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 wrapt==1.11.2
 WTForms==2.2.1
 zipp==0.6.0
