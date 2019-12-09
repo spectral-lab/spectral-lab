@@ -22,7 +22,7 @@
 
 <script>
 // @flow
-import { VueContext } from 'vue-context';
+import VueContext from 'vue-context-menu';
 import * as templates from '../../templates/context-menu';
 import type { Option } from '../../templates/context-menu';
 import { contextMenuEventHub } from '../../modules';
