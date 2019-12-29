@@ -21,7 +21,6 @@
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
     "test": "jest --watch",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand --watch",
-    "test:update": "jest --updateSnapshot",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "type-check": "flow-watch"
