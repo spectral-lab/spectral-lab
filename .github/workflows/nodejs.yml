@@ -31,6 +31,10 @@ jobs:
         architecture: 'x64'
     - name: install
       run: yarn install
+    - name: test
+      run: yarn jest
+    - name: build storybook
+      run: yarn build-storybook
     - name: build
       run: yarn build
       env:

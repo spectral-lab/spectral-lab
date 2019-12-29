@@ -21,15 +21,13 @@
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
     "test": "jest --watch",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand --watch",
-    "test:update": "jest --updateSnapshot",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "type-check": "flow-watch"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && flow",
-      "pre-push": "node node_modules/.bin/jest --silent && NODE_ENV=production npm run lint "
+      "pre-commit": "lint-staged && flow"
     }
   },
   "lint-staged": {
@@ -118,9 +116,9 @@
     "vuex-electron": "^1.0.0"
   },
   "devDependencies": {
-    "babel-core": "^7.0.0-bridge.0",
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-function-bind": "^7.7.4",
     "@babel/plugin-transform-runtime": "^7.7.6",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-flow": "^7.7.4",
@@ -133,6 +131,7 @@
     "@types/jest": "^24.0.16",
     "@vue/test-utils": "^1.0.0-beta.29",
     "ajv": "^6.5.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
