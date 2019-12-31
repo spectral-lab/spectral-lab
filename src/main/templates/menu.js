@@ -23,18 +23,21 @@ const application = {
   ]
 };
 
-const edit = {
-  label: 'Edit',
+const file = {
+  label: 'File',
   submenu: [
     {
       label: 'Export MIDI',
       click: () => {
         ipcSender.send(DIALOG, { type: MIDI_EXPORT });
       }
-    },
-    {
-      type: 'separator'
-    },
+    }
+  ]
+};
+
+const edit = {
+  label: 'Edit',
+  submenu: [
     {
       role: 'cut'
     },
@@ -67,5 +70,6 @@ const create = {
     }
   ]
 };
-export const menuTemplate = [application, edit, create];
+
+export const menuTemplate = [application, file, edit, create];
 export default menuTemplate;
