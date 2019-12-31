@@ -5,6 +5,18 @@ export const SAVE_PROJECT = {
   scope: ALL,
   keys: 'cmd+s'
 };
+export const NEW_PROJECT = {
+  scope: ALL,
+  keys: 'cmd+n'
+};
+export const QUIT = {
+  scope: ALL,
+  keys: 'cmd+q'
+};
+export const EXPORT_MIDI = {
+  scope: ALL,
+  keys: 'cmd+shift+e'
+};
 export const DESELECT_NOTES = {
   scope: PIANO_ROLL,
   keys: 'esc'

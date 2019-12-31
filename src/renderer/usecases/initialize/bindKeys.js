@@ -19,7 +19,6 @@ import { windowSwitchEventHub } from '../../modules';
 import { ALTERNATE, SPLIT } from '../../../constants/layout';
 
 export const bindKeys = () => {
-  hotkeys(SAVE_PROJECT.keys, SAVE_PROJECT.scope, saveProject);
   hotkeys(SELECT_ALL_NOTES.keys, SELECT_ALL_NOTES.scope, (ev) => { ev.preventDefault(); selectAllNotes(); });
   hotkeys(NOTE_SHIFT.left.keys, NOTE_SHIFT.left.scope, (ev) => { ev.preventDefault(); noteShiftLeft(240); });
   hotkeys(NOTE_SHIFT.right.keys, NOTE_SHIFT.right.scope, (ev) => { ev.preventDefault(); noteShiftRight(240); });
