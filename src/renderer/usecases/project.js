@@ -5,10 +5,10 @@ import fs from 'fs-extra';
 const { dialog } = remote;
 
 export const saveProject = async (): Promise<void> => {
-  const path = await dialog.showSaveDialog({
+  const { filePath } = await dialog.showSaveDialog({
     message: 'Save your project'
   });
-  if (path) fs.writeJson(path, store.state.entities);
+  if (filePath) fs.writeJson(filePath, store.state.entities);
 };
 
 export const newProject = (): void => {
