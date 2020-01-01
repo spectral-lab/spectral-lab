@@ -20,12 +20,11 @@
 <script>
 // @flow
 import NoteItem from './NoteItem';
-import { Note } from '../../store/models';
-import hotkeys from 'hotkeys-js';
-import { DESELECT_NOTES } from '../../../constants/key-bindings';
 import Vue from 'vue';
 import { contextMenuEventHub } from '../../modules';
 import { NOTE } from '../../../constants/model-types';
+import { getPianoRollData, setIdOfNoteInEdit } from '../../interactors/PianoRoll';
+import { addNoteToSelection, selectSingleNote } from '../../usecases/pianoRoll';
 
 export default Vue.extend({
   components: {
@@ -41,52 +40,24 @@ export default Vue.extend({
       default: 7680
     }
   },
-  data () {
-    return {
-      idOfNoteBeingEdited: null
-    };
-  },
   computed: {
-  },
-  mounted () {
-    hotkeys(DESELECT_NOTES.keys, DESELECT_NOTES.scope, this.deselectNotes);
+    idOfNoteInEdit () {
+      return getPianoRollData().idOfNoteInEdit;
+    }
   },
   methods: {
     isEdited (note) {
-      return this.idOfNoteBeingEdited === note.id;
+      return this.idOfNoteInEdit === note.id;
     },
     handleClick (ev, id) {
-      if (!ev.metaKey && !ev.shiftKey) {
-        this.idOfNoteBeingEdited = null;
-        Note.update({
-          where: note => note.selected && note.id !== id,
-          data: {
-            selected: false
-          }
-        });
-      }
-      this.idOfNoteBeingEdited = null;
-      Note.update({
-        where: id,
-        data: {
-          selected: true
-        }
-      });
+      if (!ev.metaKey && !ev.shiftKey) return selectSingleNote(id);
+      return addNoteToSelection(id);
     },
     handleDblClick (ev, id) {
-      this.idOfNoteBeingEdited = id;
+      setIdOfNoteInEdit(id);
     },
     handleContextMenu (ev, id) {
       contextMenuEventHub.emit(ev, { id, context: NOTE });
-    },
-    deselectNotes () {
-      this.idOfNoteBeingEdited = null;
-      Note.update({
-        where: note => note.selected,
-        data: {
-          selected: false
-        }
-      });
     }
   }
 });

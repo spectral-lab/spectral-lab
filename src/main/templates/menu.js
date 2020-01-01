@@ -1,9 +1,9 @@
 import { app } from 'electron';
 import ipcSender from '../modules/IpcSender';
 import { CREATE, DIALOG, NEW_PROJECT, SAVE_PROJECT } from '../../constants/event-types';
-import * as KeyBindings from '../../constants/key-bindings';
 import { MIDI_EXPORT } from '../../constants/dialog-types';
 import { CLIP, TRACK } from '../../constants/model-types';
+import { ApplicationMenuAccelerator } from '../../constants/key-bindings';
 
 const application = {
   label: 'Application',
@@ -16,7 +16,7 @@ const application = {
     },
     {
       label: 'Quit',
-      accelerator: KeyBindings.QUIT.keys,
+      accelerator: ApplicationMenuAccelerator.Quit,
       click: () => {
         app.quit();
       }
@@ -29,21 +29,21 @@ const file = {
   submenu: [
     {
       label: 'New Project',
-      accelerator: KeyBindings.NEW_PROJECT.keys,
+      accelerator: ApplicationMenuAccelerator.NewProject,
       click: () => {
         ipcSender.send(NEW_PROJECT);
       }
     },
     {
       label: 'Save Project',
-      accelerator: KeyBindings.SAVE_PROJECT.keys,
+      accelerator: ApplicationMenuAccelerator.SaveProject,
       click: () => {
         ipcSender.send(SAVE_PROJECT);
       }
     },
     {
       label: 'Export MIDI',
-      accelerator: KeyBindings.EXPORT_MIDI.keys,
+      accelerator: ApplicationMenuAccelerator.ExportMidi,
       click: () => {
         ipcSender.send(DIALOG, { type: MIDI_EXPORT });
       }

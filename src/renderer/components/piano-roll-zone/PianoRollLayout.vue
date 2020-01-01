@@ -70,7 +70,7 @@
 
 <script>
 import ElasticDivStack from '../misc/ElasticDivStack';
-import ZoomManager from '../../utils/view/pianoRoll/ZoomManager';
+import { getZoomManager } from '../../utils/view/pianoRoll/ZoomManager';
 import { syncScroll } from '../../utils/view/pianoRoll/scroll';
 
 export default {
@@ -84,8 +84,7 @@ export default {
   },
   mounted () {
     this.upperContentHeight = this.$refs.pianoRollLayout.offsetHeight * 0.75;
-    /* eslint-disable no-new */
-    new ZoomManager({
+    getZoomManager().initialize({
       resizeBasis: this.$refs.noteDisplayViewport,
       horizontalZoomTargets: [
         this.$refs.noteDisplayContent,

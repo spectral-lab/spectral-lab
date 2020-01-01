@@ -26,8 +26,6 @@
 <script>
 import Transport from './Transport';
 import PianoRollZone from '../piano-roll-zone/PianoRollZone';
-import ArrangementZone from '../arrangement-zone/ArrangementZone';
-import ElasticDivStack from './ElasticDivStack';
 import TitleBar from './TitleBar';
 import {
   titleBarHeight,
@@ -46,9 +44,7 @@ export default Vue.extend({
   components: {
     PianoRollZone,
     Transport,
-    ArrangementZone,
-    TitleBar,
-    ElasticDivStack
+    TitleBar
   },
   data () {
     return {

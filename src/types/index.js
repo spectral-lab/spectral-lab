@@ -61,3 +61,9 @@ export type Now = () => number;
 export type NoteAction = models.NoteOn | models.Modulation | models.NoteOff;
 
 export type Callable = (...args: Array<any>) => any;
+
+export type KeyBinding = {
+  scope: string,
+  keys: string,
+  keyHandler: () => any
+};
