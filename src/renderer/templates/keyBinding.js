@@ -9,86 +9,77 @@ import {
 } from '../interactors/Note';
 import { windowSwitchEventHub } from '../modules';
 import { ALTERNATE, SPLIT } from '../../constants/layout';
-import { deselectNotes as deselectNotesFn } from '../usecases/pianoRoll';
+import { deselectNotes } from '../usecases/pianoRoll';
 import { getZoomManager } from '../utils/view/pianoRoll/ZoomManager';
-
-const zoomManager = getZoomManager();
+import { PIANO_ROLL } from '../../constants/model-types';
+import { RendererHotKeys } from '../../constants/key-bindings';
 
 const ALL = 'ALL';
-const PIANO_ROLL = 'PIANO_ROLL';
-// const ARRANGEMENT = 'ARRANGEMENT';
-
-export const ApplicationMenuKeyBindings = {
-  SaveProject: 'cmd+s',
-  NewProject: 'cmd+n',
-  Quit: 'cmd+q',
-  ExportMidi: 'cmd+shift+e'
-};
 
 export const keyBindingTemplate = {
   deselectNotes: {
     scope: PIANO_ROLL,
-    keys: 'esc',
-    keyHandler: () => deselectNotesFn()
+    keys: RendererHotKeys.DeselectNotes,
+    keyHandler: () => deselectNotes()
   },
   selectAllNotes: {
     scope: PIANO_ROLL,
-    keys: 'cmd+a',
+    keys: RendererHotKeys.SelectAllNotes,
     keyHandler: () => selectAllNotes()
   },
   horizontalZoomIn: {
     scope: PIANO_ROLL,
-    keys: 'h',
-    keyHandler: () => zoomManager.horizontalZoomIn()
+    keys: RendererHotKeys.HorizontalZoomIn,
+    keyHandler: () => getZoomManager().horizontalZoomIn()
   },
   horizontalZoomOut: {
     scope: PIANO_ROLL,
-    keys: 'g',
-    keyHandler: () => zoomManager.horizontalZoomOut()
+    keys: RendererHotKeys.HorizontalZoomOut,
+    keyHandler: () => getZoomManager().horizontalZoomOut()
   },
   verticalZoomIn: {
     scope: PIANO_ROLL,
-    keys: 'shift+h',
-    keyHandler: () => zoomManager.verticalZoomIn()
+    keys: RendererHotKeys.VerticalZoomIn,
+    keyHandler: () => getZoomManager().verticalZoomIn()
   },
   verticalZoomOut: {
     scope: PIANO_ROLL,
-    keys: 'shift+g',
-    keyHandler: () => zoomManager.verticalZoomOut()
+    keys: RendererHotKeys.VerticalZoomOut,
+    keyHandler: () => getZoomManager().verticalZoomOut()
   },
   noteShiftLeft: {
     scope: PIANO_ROLL,
-    keys: 'left',
+    keys: RendererHotKeys.NoteShiftLeft,
     keyHandler: () => noteShiftLeft(240)
   },
   noteShiftRight: {
     scope: PIANO_ROLL,
-    keys: 'right',
+    keys: RendererHotKeys.NoteShiftRight,
     keyHandler: () => noteShiftRight(240)
   },
   noteShiftUp: {
     scope: PIANO_ROLL,
-    keys: 'up',
+    keys: RendererHotKeys.NoteShiftUp,
     keyHandler: () => noteShiftUp(1)
   },
   noteShiftDown: {
     scope: PIANO_ROLL,
-    keys: 'down',
+    keys: RendererHotKeys.NoteShiftDown,
     keyHandler: () => noteShiftDown(1)
   },
   deleteNotes: {
     scope: PIANO_ROLL,
-    keys: 'clear,backspace,del,delete',
+    keys: RendererHotKeys.DeleteNotes,
     keyHandler: () => deleteNotes()
   },
   switchWindow: {
     scope: ALL,
-    keys: 'tab',
+    keys: RendererHotKeys.SwitchWindow,
     keyHandler: () => windowSwitchEventHub.emit(null, { layout: ALTERNATE })
   },
   splitWindow: {
     scope: ALL,
-    keys: 'cmd+d',
+    keys: RendererHotKeys.SplitWindow,
     keyHandler: () => windowSwitchEventHub.emit(null, { layout: SPLIT })
   }
 };

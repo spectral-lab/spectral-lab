@@ -3,7 +3,7 @@ import ipcSender from '../modules/IpcSender';
 import { CREATE, DIALOG, NEW_PROJECT, SAVE_PROJECT } from '../../constants/event-types';
 import { MIDI_EXPORT } from '../../constants/dialog-types';
 import { CLIP, TRACK } from '../../constants/model-types';
-import { ApplicationMenuKeyBindings } from '../../renderer/templates/keyBinding';
+import { ApplicationMenuAccelerator } from '../../constants/key-bindings';
 
 const application = {
   label: 'Application',
@@ -16,7 +16,7 @@ const application = {
     },
     {
       label: 'Quit',
-      accelerator: ApplicationMenuKeyBindings.Quit,
+      accelerator: ApplicationMenuAccelerator.Quit,
       click: () => {
         app.quit();
       }
@@ -29,21 +29,21 @@ const file = {
   submenu: [
     {
       label: 'New Project',
-      accelerator: ApplicationMenuKeyBindings.NewProject,
+      accelerator: ApplicationMenuAccelerator.NewProject,
       click: () => {
         ipcSender.send(NEW_PROJECT);
       }
     },
     {
       label: 'Save Project',
-      accelerator: ApplicationMenuKeyBindings.SaveProject,
+      accelerator: ApplicationMenuAccelerator.SaveProject,
       click: () => {
         ipcSender.send(SAVE_PROJECT);
       }
     },
     {
       label: 'Export MIDI',
-      accelerator: ApplicationMenuKeyBindings.ExportMidi,
+      accelerator: ApplicationMenuAccelerator.ExportMidi,
       click: () => {
         ipcSender.send(DIALOG, { type: MIDI_EXPORT });
       }

@@ -1,12 +1,12 @@
 // @flow
 import { windowSwitchEventHub } from '../../modules';
-import { ARRANGEMENT } from '../../../constants/layout';
 import { bindKeys } from './bindKeys';
 import { loadMockEntities } from './loadMockEntities';
 import { listenIpc } from './listenIpc';
 import { insertInitialRecords } from './insertInitialRecords';
 import Vue from 'vue';
 import { installVuetify } from './InstallVuetify';
+import { PIANO_ROLL } from '../../../constants/model-types';
 
 export const preMount = () => {
   if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
@@ -19,5 +19,5 @@ export const postMount = () => {
   bindKeys();
   listenIpc();
   if (process.env.NODE_ENV === 'development') loadMockEntities();
-  windowSwitchEventHub.emit(null, { layout: ARRANGEMENT });
+  windowSwitchEventHub.emit(null, { layout: PIANO_ROLL });
 };
