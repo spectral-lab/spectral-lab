@@ -26,8 +26,6 @@ export default {
   components: {
     MouseModeSelectorContainer,
     ExtractNotes
-  },
-  methods: {
   }
 };
 </script>

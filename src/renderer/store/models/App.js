@@ -1,6 +1,6 @@
 // @flow
 import { makeMandatory, setHotkeysScope } from '../utils';
-import { APP, PIANO_ROLL } from '../../../constants/model-types';
+import { APP } from '../../../constants/model-types';
 import { Arrangement, BaseModel, PianoRoll } from '.';
 
 export default class App extends BaseModel {
@@ -12,7 +12,7 @@ export default class App extends BaseModel {
     return {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(APP),
-      selectedZone: this.string(PIANO_ROLL, setHotkeysScope),
+      selectedZone: this.string(null, setHotkeysScope),
       pianoRoll: this.hasOne(PianoRoll, 'appId'),
       arrangement: this.hasOne(Arrangement, 'appId')
     };

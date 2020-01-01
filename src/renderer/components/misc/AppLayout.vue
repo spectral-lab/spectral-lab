@@ -7,35 +7,15 @@
       ref="appMainContent"
       class="app-main-content"
     >
-      <elastic-div-stack
-        :border-width="24"
-        :upper-content-height="arrangementZoneHeight"
-        @change-height="arrangementZoneHeight = $event.upperContentHeight"
+      <div
+        :style="{
+          borderColor: pianoRollZoneBorderColor
+        }"
+        @click="selectPianoRollZone"
+        class="piano-roll-zone-container"
       >
-        <template #upper>
-          <div
-            ref="arrangementZoneContainer"
-            :style="{
-              borderColor: arrangementZoneBorderColor
-            }"
-            @click="selectArrangementZone"
-            class="arrangement-zone-container"
-          >
-            <arrangement-zone />
-          </div>
-        </template>
-        <template #lower>
-          <div
-            :style="{
-              borderColor: pianoRollZoneBorderColor
-            }"
-            @click="selectPianoRollZone"
-            class="piano-roll-zone-container"
-          >
-            <piano-roll-zone />
-          </div>
-        </template>
-      </elastic-div-stack>
+        <piano-roll-zone />
+      </div>
     </div>
     <div class="transport-container">
       <transport />
@@ -46,8 +26,6 @@
 <script>
 import Transport from './Transport';
 import PianoRollZone from '../piano-roll-zone/PianoRollZone';
-import ArrangementZone from '../arrangement-zone/ArrangementZone';
-import ElasticDivStack from './ElasticDivStack';
 import TitleBar from './TitleBar';
 import {
   titleBarHeight,
@@ -66,9 +44,7 @@ export default Vue.extend({
   components: {
     PianoRollZone,
     Transport,
-    ArrangementZone,
-    TitleBar,
-    ElasticDivStack
+    TitleBar
   },
   data () {
     return {
