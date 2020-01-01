@@ -2,11 +2,9 @@ import hotkeys from 'hotkeys-js';
 import {
   DELETE_NOTES,
   NOTE_SHIFT,
-  SAVE_PROJECT,
   SELECT_ALL_NOTES, SPLIT_WINDOW,
   SWITCH_WINDOW
 } from '../../../constants/key-bindings';
-import { saveProject } from '../project';
 import {
   deleteNotes,
   noteShiftDown,
