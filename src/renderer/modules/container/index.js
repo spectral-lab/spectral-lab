@@ -2,16 +2,16 @@
 /**
  * Instanciate and export modules
  */
-import { MidiPlayer } from './defs/MidiPlayer';
-import { MidiMessageGenerator } from './defs/MidiMessageGenerator';
-import { MidiIoFacade } from './defs/MidiIoFacade';
-import { Scheduler } from './defs/Scheduler';
-import { TimeConverter } from './defs/TimeConverter';
-import { SmfGenerator } from './defs/SmfGenerator';
-import { MidiWriter } from './defs/MidiWriter';
-import { AudioPlayer } from './defs/AudioPlayer';
-import { TemplateGenerator } from './defs/TemplateGenerator';
-import { userInputTemplates } from '../templates/user-input';
+import { MidiPlayer } from '../definitions/MidiPlayer';
+import { MidiMessageGenerator } from '../definitions/MidiMessageGenerator';
+import { MidiIoFacade } from '../definitions/MidiIoFacade';
+import { Scheduler } from '../definitions/Scheduler';
+import { TimeConverter } from '../definitions/TimeConverter';
+import { SmfGenerator } from '../definitions/SmfGenerator';
+import { MidiWriter } from '../definitions/MidiWriter';
+import { AudioPlayer } from '../definitions/AudioPlayer';
+import { TemplateGenerator } from '../definitions/TemplateGenerator';
+import { userInputTemplates } from '../../templates/user-input';
 
 export const timeConverter = new TimeConverter();
 const midiIoFacade = new MidiIoFacade(navigator);

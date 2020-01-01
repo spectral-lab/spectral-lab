@@ -1,5 +1,5 @@
 import type { IMidiMessageGenerator } from './MidiMessageGenerator';
-import { Clip } from '../../store/models';
+import { Clip } from '../../models';
 import { MODULATION, NOTE_OFF, NOTE_ON } from '../../../constants/model-types';
 import JZZ from 'jzz';
 import type { NoteAction } from '../../../types';

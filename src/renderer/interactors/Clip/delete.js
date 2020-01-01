@@ -1,5 +1,5 @@
 // @flow
-import { Clip } from '../../store/models';
+import { Clip } from '../../models';
 
 export const deleteClip = async (id: string) => {
   await Clip.delete({

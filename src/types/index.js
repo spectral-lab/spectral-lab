@@ -1,5 +1,5 @@
 // @flow
-import * as models from '../renderer/store/models';
+import * as models from '../renderer/models';
 import type { Ms, Tick, Sec, Magnitude, SamplingRate, Frequency, NoteNumber } from './units';
 export type { Ms, Tick, Sec, Magnitude, SamplingRate, Frequency, NoteNumber };
 /**

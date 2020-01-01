@@ -1,6 +1,6 @@
 // @flow
 import { SONG_ID } from '../../../constants/ids';
-import { Song } from '../../store/models';
+import { Song } from '../../models';
 
 export const getSongData = (): Song => {
   return Song.query().whereId(SONG_ID).first();

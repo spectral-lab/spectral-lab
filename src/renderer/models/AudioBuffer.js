@@ -1,7 +1,7 @@
 // @flow
-import { makeMandatory } from '../utils';
-import { AUDIO_BUFFER } from '../../../constants/model-types';
-import { BaseModel, Spectrogram, Clip } from '.';
+import { makeMandatory } from '../store/utils';
+import { AUDIO_BUFFER } from '../../constants/model-types';
+import { BaseModel, Spectrogram, Clip } from './index';
 
 export default class AudioBuffer extends BaseModel {
   static get entity () {

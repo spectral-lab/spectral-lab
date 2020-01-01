@@ -1,9 +1,9 @@
 // @flow
 
-import { makeMandatory } from '../utils';
-import { TRACK } from '../../../constants/model-types';
-import { Song, BaseModel, Clip } from '.';
-import { SCALE_COLORS } from '../../../constants/colors';
+import { makeMandatory } from '../store/utils';
+import { TRACK } from '../../constants/model-types';
+import { Song, BaseModel, Clip } from './index';
+import { SCALE_COLORS } from '../../constants/colors';
 import { random } from 'lodash';
 
 export default class Track extends BaseModel {

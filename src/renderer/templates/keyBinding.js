@@ -7,7 +7,7 @@ import {
   noteShiftUp,
   selectAllNotes
 } from '../interactors/Note';
-import { windowSwitchEventHub } from '../modules';
+import { windowSwitchEventHub } from '../modules/container';
 import { ALTERNATE, SPLIT } from '../../constants/layout';
 import { deselectNotes } from '../usecases/pianoRoll';
 import { getZoomManager } from '../utils/view/pianoRoll/ZoomManager';

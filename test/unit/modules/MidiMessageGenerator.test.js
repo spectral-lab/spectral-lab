@@ -1,5 +1,5 @@
 // @flow
-import MidiMessageGenerator from '../../../src/renderer/modules/defs/MidiMessageGenerator';
+import MidiMessageGenerator from '../../../src/renderer/modules/definitions/MidiMessageGenerator';
 import { NOTE_ON, MODULATION, NOTE_OFF } from '../../../src/constants/model-types';
 
 const options = {

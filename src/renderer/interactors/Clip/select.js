@@ -1,5 +1,5 @@
 // @flow
-import { Clip } from '../../store/models';
+import { Clip } from '../../models';
 
 export const selectClip = (id: string, ev: Object): Promise<any> => {
   if (ev.metaKey || ev.shiftKey) return addSelection(id);

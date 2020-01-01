@@ -1,6 +1,6 @@
 // @flow
 import uid from 'uid';
-import { Clip } from '../../store/models';
+import { Clip } from '../../models';
 import range from 'lodash/range';
 import { generateBarData } from '../Bar';
 import { ticksPerBar } from '../../../constants/defaults';

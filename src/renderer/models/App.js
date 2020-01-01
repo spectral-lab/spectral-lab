@@ -1,7 +1,7 @@
 // @flow
-import { makeMandatory, setHotkeysScope } from '../utils';
-import { APP } from '../../../constants/model-types';
-import { Arrangement, BaseModel, PianoRoll } from '.';
+import { makeMandatory, setHotkeysScope } from '../store/utils';
+import { APP } from '../../constants/model-types';
+import { Arrangement, BaseModel, PianoRoll } from './index';
 
 export default class App extends BaseModel {
   static get entity () {

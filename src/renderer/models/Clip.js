@@ -1,11 +1,11 @@
 // @flow
-import { makeMandatory } from '../utils';
-import { CLIP } from '../../../constants/model-types';
-import { beatsPerBar, ticksPerBeat } from '../../../constants/defaults';
-import { SCALE_COLORS } from '../../../constants/colors';
+import { makeMandatory } from '../store/utils';
+import { CLIP } from '../../constants/model-types';
+import { beatsPerBar, ticksPerBeat } from '../../constants/defaults';
+import { SCALE_COLORS } from '../../constants/colors';
 import { random, flatten, sortBy } from 'lodash';
-import { AudioBuffer, BaseModel, Track, Note, Bar, Beat } from '.';
-import type { NoteAction } from '../../../types';
+import { AudioBuffer, BaseModel, Track, Note, Bar, Beat } from './index';
+import type { NoteAction } from '../../types';
 import flatMap from 'lodash/flatMap';
 
 export default class Clip extends BaseModel {

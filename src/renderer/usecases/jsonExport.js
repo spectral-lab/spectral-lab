@@ -2,7 +2,7 @@
 import fs from 'fs-extra';
 import { remote } from 'electron';
 import { noCase } from 'change-case';
-import * as models from '../store/models';
+import * as models from '../models';
 const { dialog } = remote;
 
 export const exportJson = async (type: string, id: string): Promise<void> => {

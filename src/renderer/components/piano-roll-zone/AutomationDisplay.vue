@@ -10,7 +10,7 @@
 
 <script>
 import { beatsPerBar, ticksPerBeat } from '../../../constants/defaults';
-import GridVerticalLinesLayout from '../misc/GridVerticalLinesLayout';
+import GridVerticalLinesLayout from '../grid/GridVerticalLinesLayout';
 export default {
   components: {
     GridVerticalLinesLayout

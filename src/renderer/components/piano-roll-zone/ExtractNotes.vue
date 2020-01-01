@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import IconBtnWithTip from '../misc/IconBtnWithTip';
+import IconBtnWithTip from '../utils/IconBtnWithTip';
 import Vue from 'vue';
 import { extractNotes } from '../../usecases/extractNotes';
 

@@ -13,11 +13,11 @@
 
 <script>
 import AudioInfo from './AudioInfo';
-import { AudioBuffer, Clip } from '../../store/models';
+import { AudioBuffer, Clip } from '../../models';
 import processAudioFile from '../../utils/helpers/processAudioFile';
 import uid from 'uid';
 import { basename } from 'path';
-import { audioPlayer } from '../../modules';
+import { audioPlayer } from '../../modules/container';
 import { audioCtx as ctx } from '../../utils/audio/audioCtx';
 import Vue from 'vue';
 import { buildSpectrogram } from '../../usecases/buildSpectrogram';

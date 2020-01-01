@@ -2,7 +2,7 @@
 import MemberChannel from './MemberChannel';
 import { INoteControl, NoteControl } from './NoteControl';
 import { midiMessageGeneratorOptions } from '../../../../constants/defaults';
-import { NoteOn } from '../../../store/models';
+import { NoteOn } from '../../../models';
 import type { Send, Now } from '../../../../types';
 
 type Options = {

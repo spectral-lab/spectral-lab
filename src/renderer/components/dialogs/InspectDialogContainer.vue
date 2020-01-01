@@ -13,10 +13,10 @@
 <script>
 // @flow
 import InspectDialog from './InspectDialog';
-import * as models from '../../store/models';
+import * as models from '../../models';
 import Vue from 'vue';
-import { templateGenerator } from '../../modules';
-import type { InspectDialogTemplate } from '../../modules/defs/TemplateGenerator';
+import { templateGenerator } from '../../modules/container';
+import type { InspectDialogTemplate } from '../../modules/definitions/TemplateGenerator';
 export default Vue.extend({
   components: {
     InspectDialog

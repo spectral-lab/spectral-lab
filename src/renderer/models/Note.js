@@ -1,8 +1,8 @@
 // @flow
-import { BaseModel, Clip, NoteOn, NoteOff, Modulation } from '.';
-import { NOTE } from '../../../constants/model-types';
-import { makeMandatory } from '../utils';
-import { pitchTransition } from '../../utils/helpers/transition';
+import { BaseModel, Clip, NoteOn, NoteOff, Modulation } from './index';
+import { NOTE } from '../../constants/model-types';
+import { makeMandatory } from '../store/utils';
+import { pitchTransition } from '../utils/helpers/transition';
 
 export default class Note extends BaseModel {
   static get entity () {

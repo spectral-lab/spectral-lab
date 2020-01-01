@@ -21,7 +21,7 @@
 // @flow
 import NoteItem from './NoteItem';
 import Vue from 'vue';
-import { contextMenuEventHub } from '../../modules';
+import { contextMenuEventHub } from '../../modules/container';
 import { NOTE } from '../../../constants/model-types';
 import { getPianoRollData, setIdOfNoteInEdit } from '../../interactors/PianoRoll';
 import { addNoteToSelection, selectSingleNote } from '../../usecases/pianoRoll';

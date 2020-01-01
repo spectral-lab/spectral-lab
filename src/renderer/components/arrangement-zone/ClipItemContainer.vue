@@ -13,9 +13,9 @@
 <script>
 import ClipItemLayout from './ClipItemLayout';
 import Vue from 'vue';
-import { contextMenuEventHub, windowSwitchEventHub } from '../../modules';
+import { contextMenuEventHub, windowSwitchEventHub } from '../../modules/container';
 import { SPLIT } from '../../../constants/layout';
-import { Clip } from '../../store/models';
+import { Clip } from '../../models';
 import { OUTSIDE_CLIP, CLIP } from '../../../constants/context';
 import { getSongData } from '../../interactors/Song';
 import { selectClip } from '../../interactors/Clip';

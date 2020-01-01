@@ -1,7 +1,7 @@
 // @flow
 import { ipcRenderer } from 'electron';
 import { CREATE, DIALOG, NEW_PROJECT, SAVE_PROJECT } from '../../../constants/event-types';
-import { dialogEventHub } from '../../modules';
+import { dialogEventHub } from '../../modules/container';
 import * as create from '../create';
 import { noCase } from 'change-case';
 import { newProject, saveProject } from '../project';

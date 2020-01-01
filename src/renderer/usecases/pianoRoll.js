@@ -1,5 +1,5 @@
 import { setIdOfNoteInEdit } from '../interactors/PianoRoll';
-import { Note } from '../store/models';
+import { Note } from '../models';
 
 export const deselectNotes = () => {
   setIdOfNoteInEdit(null);

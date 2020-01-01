@@ -1,5 +1,5 @@
 // @flow
-import { EventHub } from './defs/EventHub';
+import { EventHub } from '../definitions/EventHub';
 
 export const dialogEventHub = new EventHub();
 export const contextMenuEventHub = new EventHub();

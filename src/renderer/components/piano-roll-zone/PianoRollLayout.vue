@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import ElasticDivStack from '../misc/ElasticDivStack';
+import ElasticDivStack from '../utils/ElasticDivStack';
 import { getZoomManager } from '../../utils/view/pianoRoll/ZoomManager';
 import { syncScroll } from '../../utils/view/pianoRoll/scroll';
 

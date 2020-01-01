@@ -1,7 +1,7 @@
 // @flow
-import { Clip } from '../store/models';
+import { Clip } from '../models';
 import { remote } from 'electron';
-import { midiWriter } from '../modules';
+import { midiWriter } from '../modules/container';
 const { dialog } = remote;
 
 export const exportSelectedClips = async (): Promise<void> => {

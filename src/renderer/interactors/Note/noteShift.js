@@ -1,4 +1,4 @@
-import { Note } from '../../store/models';
+import { Note } from '../../models';
 
 export const noteShiftLeft = async (ticks) => {
   const notes = Note.query().where('selected', true).get();

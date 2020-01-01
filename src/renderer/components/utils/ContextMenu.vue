@@ -25,7 +25,7 @@
 import VueContext from 'vue-context-menu';
 import * as templates from '../../templates/context-menu';
 import type { Option } from '../../templates/context-menu';
-import { contextMenuEventHub } from '../../modules';
+import { contextMenuEventHub } from '../../modules/container';
 import { camelCase } from 'change-case';
 export default {
   components: {

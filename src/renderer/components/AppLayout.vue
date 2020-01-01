@@ -25,7 +25,7 @@
 
 <script>
 import Transport from './Transport';
-import PianoRollZone from '../piano-roll-zone/PianoRollZone';
+import PianoRollZone from './piano-roll-zone/PianoRollZone';
 import TitleBar from './TitleBar';
 import {
   titleBarHeight,
@@ -35,10 +35,10 @@ import {
   PIANO_ROLL,
   ARRANGEMENT,
   ALTERNATE
-} from '../../../constants/layout';
-import { App } from '../../store/models';
+} from '../../constants/layout';
+import { App } from '../models';
 import Vue from 'vue';
-import { windowSwitchEventHub } from '../../modules';
+import { windowSwitchEventHub } from '../modules/container';
 
 export default Vue.extend({
   components: {

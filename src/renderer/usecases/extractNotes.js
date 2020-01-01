@@ -1,4 +1,4 @@
-import { Spectrogram, Note } from '../store/models';
+import { Spectrogram, Note } from '../models';
 import {
   makePNGBuffer,
   parsePointAsModulation,

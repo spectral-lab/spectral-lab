@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import GridRowContainer from '../misc/GridRowContainer';
-import GridVerticalLinesLayout from '../misc/GridVerticalLinesLayout';
+import GridRowContainer from '../grid/GridRowContainer';
+import GridVerticalLinesLayout from '../grid/GridVerticalLinesLayout';
 import { beatsPerBar, ticksPerBeat } from '../../../constants/defaults';
 
 export default {

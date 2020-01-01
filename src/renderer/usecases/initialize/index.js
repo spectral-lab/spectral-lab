@@ -1,5 +1,5 @@
 // @flow
-import { windowSwitchEventHub } from '../../modules';
+import { windowSwitchEventHub } from '../../modules/container';
 import { bindKeys } from './bindKeys';
 import { loadMockEntities } from './loadMockEntities';
 import { listenIpc } from './listenIpc';

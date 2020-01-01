@@ -1,6 +1,6 @@
 // @flow
 import { getSelectedTrackIds } from '../Track';
-import { Clip } from '../../store/models';
+import { Clip } from '../../models';
 
 export const moveToSelectedTrack = async (id: string) => {
   const trackIds = getSelectedTrackIds();
