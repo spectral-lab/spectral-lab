@@ -19,8 +19,6 @@ export const openExtractNotesDialog = () => {
 
 export const extractNotes = async (options: { degree: Degree, sensitivity: Sensitivity }) => {
   const spectrogram = Spectrogram.query().last();
-  if (!spectrogram) return;
-  if (spectrogram.times.length === 0) return;
   const buff = makePNGBuffer(spectrogram.magnitude2d);
   const extractedLines = await postImage(buff, options);
   extractedLines.forEach((line) => {
