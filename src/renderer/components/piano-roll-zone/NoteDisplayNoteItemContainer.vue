@@ -20,12 +20,13 @@
 <script>
 // @flow
 import NoteItem from './NoteItem';
-import { Note } from '../../store/models';
+import { Note, PianoRoll } from '../../store/models';
 import hotkeys from 'hotkeys-js';
 import { DESELECT_NOTES } from '../../../constants/key-bindings';
 import Vue from 'vue';
 import { contextMenuEventHub } from '../../modules';
 import { NOTE } from '../../../constants/model-types';
+import { getPianoRollData, setIdOfNoteInEdit } from '../../interactors/PianoRoll';
 
 export default Vue.extend({
   components: {
@@ -41,23 +42,21 @@ export default Vue.extend({
       default: 7680
     }
   },
-  data () {
-    return {
-      idOfCurrentlyEditedNote: null
-    };
-  },
   computed: {
+    idOfNoteInEdit () {
+      return getPianoRollData().idOfNoteInEdit;
+    }
   },
   mounted () {
     hotkeys(DESELECT_NOTES.keys, DESELECT_NOTES.scope, this.deselectNotes);
   },
   methods: {
     isEdited (note) {
-      return this.idOfCurrentlyEditedNote === note.id;
+      return this.idOfNoteInEdit === note.id;
     },
     handleClick (ev, id) {
       if (!ev.metaKey && !ev.shiftKey) {
-        this.idOfCurrentlyEditedNote = null;
+        setIdOfNoteInEdit(null);
         Note.update({
           where: note => note.selected && note.id !== id,
           data: {
@@ -65,7 +64,7 @@ export default Vue.extend({
           }
         });
       }
-      this.idOfCurrentlyEditedNote = null;
+      setIdOfNoteInEdit(null);
       Note.update({
         where: id,
         data: {
@@ -74,13 +73,13 @@ export default Vue.extend({
       });
     },
     handleDblClick (ev, id) {
-      this.idOfCurrentlyEditedNote = id;
+      setIdOfNoteInEdit(id);
     },
     handleContextMenu (ev, id) {
       contextMenuEventHub.emit(ev, { id, context: NOTE });
     },
     deselectNotes () {
-      this.idOfCurrentlyEditedNote = null;
+      setIdOfNoteInEdit(null);
       Note.update({
         where: note => note.selected,
         data: {

@@ -20,7 +20,8 @@ export default class PianoRoll extends BaseModel {
       gridOpacity: this.attr(1),
       spectrogramOpacity: this.attr(1),
       mouseMode: this.string(SELECT),
-      opacityWillChange: this.attr(false)
+      opacityWillChange: this.attr(false),
+      idOfNoteInEdit: this.string(null)
     };
   }
 

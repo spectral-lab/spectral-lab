@@ -38,3 +38,12 @@ export const createPianoRoll = () => {
     }
   });
 };
+
+export const setIdOfNoteInEdit = async (val: string) => {
+  await PianoRoll.update({
+    where: PIANO_ROLL_ID,
+    data: {
+      idOfNoteInEdit: val
+    }
+  });
+};
