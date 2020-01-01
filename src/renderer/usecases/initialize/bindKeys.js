@@ -3,7 +3,7 @@ import {
   DELETE_NOTES, DESELECT_NOTES,
   NOTE_SHIFT,
   SELECT_ALL_NOTES, SPLIT_WINDOW,
-  SWITCH_WINDOW
+  SWITCH_WINDOW, ZOOM
 } from '../../../constants/key-bindings';
 import {
   deleteNotes,
@@ -16,6 +16,7 @@ import {
 import { windowSwitchEventHub } from '../../modules';
 import { ALTERNATE, SPLIT } from '../../../constants/layout';
 import { deselectNotes } from '../pianoRoll';
+import { getZoomManager } from '../../utils/view/pianoRoll/ZoomManager';
 
 export const bindKeys = () => {
   hotkeys(SELECT_ALL_NOTES.keys, SELECT_ALL_NOTES.scope, (ev) => { ev.preventDefault(); selectAllNotes(); });
@@ -33,4 +34,9 @@ export const bindKeys = () => {
     windowSwitchEventHub.emit(null, { layout: SPLIT });
   });
   hotkeys(DESELECT_NOTES.keys, DESELECT_NOTES.scope, deselectNotes);
+  const zoomManager = getZoomManager();
+  hotkeys(ZOOM.horizontalZoomIn.keys, ZOOM.horizontalZoomIn.scope, () => zoomManager.horizontalZoomIn());
+  hotkeys(ZOOM.horizontalZoomOut.keys, ZOOM.horizontalZoomOut.scope, () => zoomManager.horizontalZoomOut());
+  hotkeys(ZOOM.verticalZoomIn.keys, ZOOM.verticalZoomIn.scope, () => zoomManager.verticalZoomIn());
+  hotkeys(ZOOM.verticalZoomOut.keys, ZOOM.verticalZoomOut.scope, () => zoomManager.verticalZoomOut());
 };
