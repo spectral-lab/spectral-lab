@@ -43,7 +43,7 @@ export default Vue.extend({
   },
   data () {
     return {
-      idOfNoteBeingEdited: null
+      idOfCurrentlyEditedNote: null
     };
   },
   computed: {
@@ -53,11 +53,11 @@ export default Vue.extend({
   },
   methods: {
     isEdited (note) {
-      return this.idOfNoteBeingEdited === note.id;
+      return this.idOfCurrentlyEditedNote === note.id;
     },
     handleClick (ev, id) {
       if (!ev.metaKey && !ev.shiftKey) {
-        this.idOfNoteBeingEdited = null;
+        this.idOfCurrentlyEditedNote = null;
         Note.update({
           where: note => note.selected && note.id !== id,
           data: {
@@ -65,7 +65,7 @@ export default Vue.extend({
           }
         });
       }
-      this.idOfNoteBeingEdited = null;
+      this.idOfCurrentlyEditedNote = null;
       Note.update({
         where: id,
         data: {
@@ -74,13 +74,13 @@ export default Vue.extend({
       });
     },
     handleDblClick (ev, id) {
-      this.idOfNoteBeingEdited = id;
+      this.idOfCurrentlyEditedNote = id;
     },
     handleContextMenu (ev, id) {
       contextMenuEventHub.emit(ev, { id, context: NOTE });
     },
     deselectNotes () {
-      this.idOfNoteBeingEdited = null;
+      this.idOfCurrentlyEditedNote = null;
       Note.update({
         where: note => note.selected,
         data: {
