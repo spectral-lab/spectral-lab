@@ -27,11 +27,6 @@
       >
         Open
       </upload-button>
-      <icon-btn-with-tip
-        @click="handleClickBuild"
-        icon="build"
-        tip="Build a spectrogram of the source audio."
-      />
     </v-toolbar>
   </div>
 </template>
@@ -62,9 +57,6 @@ export default {
     },
     handleClickPlay () {
       this.$emit('click-play');
-    },
-    handleClickBuild () {
-      this.$emit('click-build');
     }
   }
 };
