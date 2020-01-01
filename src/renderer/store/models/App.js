@@ -1,6 +1,6 @@
 // @flow
 import { makeMandatory, setHotkeysScope } from '../utils';
-import { APP, PIANO_ROLL } from '../../../constants/model-types';
+import { APP } from '../../../constants/model-types';
 import { Arrangement, BaseModel, PianoRoll } from '.';
 
 export default class App extends BaseModel {
