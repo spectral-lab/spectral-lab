@@ -20,9 +20,6 @@
 <script>
 // @flow
 import NoteItem from './NoteItem';
-import { Note, PianoRoll } from '../../store/models';
-import hotkeys from 'hotkeys-js';
-import { DESELECT_NOTES } from '../../../constants/key-bindings';
 import Vue from 'vue';
 import { contextMenuEventHub } from '../../modules';
 import { NOTE } from '../../../constants/model-types';
