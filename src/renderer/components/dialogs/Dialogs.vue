@@ -25,7 +25,8 @@ export default Vue.extend({
       EXTRACT_NOTES
     };
   },
-  mounted (): void {
+  // TODO: remove this with vuex store
+  mounted () {
     dialogEventHub.addListener((_ev, payload) => {
       this.$refs[payload.type].open(payload);
     });
