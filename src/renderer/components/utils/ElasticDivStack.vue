@@ -111,7 +111,7 @@ export default {
     }
     .border {
         grid-area: 2 / 1 / 4 / 2;
-        z-index: 1000;
+        z-index: 2;
         cursor: row-resize;
         background: transparent;
     }

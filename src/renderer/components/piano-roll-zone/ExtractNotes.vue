@@ -9,7 +9,7 @@
 <script>
 import IconBtnWithTip from '../utils/IconBtnWithTip';
 import Vue from 'vue';
-import { extractNotes } from '../../usecases/extractNotes';
+import { openExtractNotesDialog } from '../../usecases/extractNotes';
 
 export default Vue.extend({
   components: {
@@ -17,7 +17,7 @@ export default Vue.extend({
   },
   methods: {
     extractNotes () {
-      extractNotes();
+      openExtractNotesDialog();
     }
   }
 });

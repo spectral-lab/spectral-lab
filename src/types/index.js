@@ -67,3 +67,9 @@ export type KeyBinding = {
   keys: string,
   keyHandler: () => any
 };
+
+/** default = 5 */
+export type Sensitivity = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+
+/** default = 0 */
+export type Degree = 0 | 1 | 2 | 3 | 4 | 5 | 6;
