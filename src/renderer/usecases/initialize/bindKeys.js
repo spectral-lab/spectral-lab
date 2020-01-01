@@ -1,6 +1,6 @@
 import hotkeys from 'hotkeys-js';
 import {
-  DELETE_NOTES,
+  DELETE_NOTES, DESELECT_NOTES,
   NOTE_SHIFT,
   SELECT_ALL_NOTES, SPLIT_WINDOW,
   SWITCH_WINDOW
@@ -15,6 +15,7 @@ import {
 } from '../../interactors/Note';
 import { windowSwitchEventHub } from '../../modules';
 import { ALTERNATE, SPLIT } from '../../../constants/layout';
+import { deselectNotes } from '../pianoRoll';
 
 export const bindKeys = () => {
   hotkeys(SELECT_ALL_NOTES.keys, SELECT_ALL_NOTES.scope, (ev) => { ev.preventDefault(); selectAllNotes(); });
@@ -31,4 +32,5 @@ export const bindKeys = () => {
     ev.preventDefault();
     windowSwitchEventHub.emit(null, { layout: SPLIT });
   });
+  hotkeys(DESELECT_NOTES.keys, DESELECT_NOTES.scope, deselectNotes);
 };

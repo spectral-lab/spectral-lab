@@ -27,6 +27,7 @@ import Vue from 'vue';
 import { contextMenuEventHub } from '../../modules';
 import { NOTE } from '../../../constants/model-types';
 import { getPianoRollData, setIdOfNoteInEdit } from '../../interactors/PianoRoll';
+import { addNoteToSelection, selectSingleNote } from '../../usecases/pianoRoll';
 
 export default Vue.extend({
   components: {
@@ -47,45 +48,19 @@ export default Vue.extend({
       return getPianoRollData().idOfNoteInEdit;
     }
   },
-  mounted () {
-    hotkeys(DESELECT_NOTES.keys, DESELECT_NOTES.scope, this.deselectNotes);
-  },
   methods: {
     isEdited (note) {
       return this.idOfNoteInEdit === note.id;
     },
     handleClick (ev, id) {
-      if (!ev.metaKey && !ev.shiftKey) {
-        setIdOfNoteInEdit(null);
-        Note.update({
-          where: note => note.selected && note.id !== id,
-          data: {
-            selected: false
-          }
-        });
-      }
-      setIdOfNoteInEdit(null);
-      Note.update({
-        where: id,
-        data: {
-          selected: true
-        }
-      });
+      if (!ev.metaKey && !ev.shiftKey) return selectSingleNote(id);
+      return addNoteToSelection(id);
     },
     handleDblClick (ev, id) {
       setIdOfNoteInEdit(id);
     },
     handleContextMenu (ev, id) {
       contextMenuEventHub.emit(ev, { id, context: NOTE });
-    },
-    deselectNotes () {
-      setIdOfNoteInEdit(null);
-      Note.update({
-        where: note => note.selected,
-        data: {
-          selected: false
-        }
-      });
     }
   }
 });
