@@ -27,7 +27,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && flow"
+      "pre-commit": "lint-staged && flow",
+      "pre-push": "git branch | grep \"*\" | grep -v master"
     }
   },
   "lint-staged": {
