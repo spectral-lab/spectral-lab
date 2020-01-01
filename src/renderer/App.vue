@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import AppLayout from './components/misc/AppLayout';
+import AppLayout from './components/AppLayout';
 import Dialogs from './components/dialogs/Dialogs';
-import ContextMenu from './components/misc/ContextMenu';
+import ContextMenu from './components/utils/ContextMenu';
 import { postMount } from './usecases/initialize';
 export default {
   name: 'App',

@@ -34,7 +34,7 @@
 
 <script>
 // @flow
-import IconBtnWithTip from '../misc/IconBtnWithTip';
+import IconBtnWithTip from '../utils/IconBtnWithTip';
 import Color from 'color';
 import Vue from 'vue';
 import { TRACK } from '../../../constants/model-types';

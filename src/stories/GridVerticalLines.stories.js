@@ -1,8 +1,8 @@
 // @flow
 // $FlowFixMe
-import GridVerticalLines from '../renderer/components/misc/GridVerticalLines';
+import GridVerticalLines from '../renderer/components/grid/GridVerticalLines';
 // $FlowFixMe
-import GridVerticalLinesLayout from '../renderer/components/misc/GridVerticalLinesLayout';
+import GridVerticalLinesLayout from '../renderer/components/grid/GridVerticalLinesLayout';
 import { storiesOf } from '@storybook/vue';
 import uid from 'uid';
 import { ticksPerBeat } from '../constants/defaults';

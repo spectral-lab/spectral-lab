@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import GridVerticalLinesLayout from '../misc/GridVerticalLinesLayout';
+import GridVerticalLinesLayout from '../grid/GridVerticalLinesLayout';
 import Vue from 'vue';
 
 export default Vue.extend({
