@@ -1,9 +1,9 @@
 // @flow
-import { AudioBuffer, Spectrogram } from '../store/models';
+import { AudioBuffer, Spectrogram } from '../models';
 import resample from '../utils/audio/resample';
 import stft from '../utils/audio/stft';
 import uid from 'uid';
-import { timeConverter } from '../modules';
+import { timeConverter } from '../modules/container';
 
 export const buildSpectrogram = async (audioBuffer: AudioBuffer) => {
   const buffer = audioBuffer.data;

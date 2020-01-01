@@ -1,5 +1,5 @@
 // @flow
-import { Note } from '../../store/models';
+import { Note } from '../../models';
 import type { NoteNumber } from '../../../types';
 
 type pitchPoint = {

@@ -1,7 +1,7 @@
 // @flow
-import { makeMandatory } from '../utils';
-import { SPECTROGRAM } from '../../../constants/model-types';
-import { BaseModel, AudioBuffer } from '.';
+import { makeMandatory } from '../store/utils';
+import { SPECTROGRAM } from '../../constants/model-types';
+import { BaseModel, AudioBuffer } from './index';
 
 export default class Spectrogram extends BaseModel {
   static get entity () {

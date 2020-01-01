@@ -1,7 +1,7 @@
 // @flow
-import { BaseModel, Note } from '.';
-import { NOTE_ON } from '../../../constants/model-types';
-import { makeMandatory } from '../utils';
+import { BaseModel, Note } from './index';
+import { NOTE_ON } from '../../constants/model-types';
+import { makeMandatory } from '../store/utils';
 
 export default class NoteOn extends BaseModel {
   static get entity () {

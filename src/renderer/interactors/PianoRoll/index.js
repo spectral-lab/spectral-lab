@@ -1,5 +1,5 @@
 // @flow
-import { PianoRoll } from '../../store/models';
+import { PianoRoll } from '../../models';
 import { APP_ID, PIANO_ROLL_ID } from '../../../constants/ids';
 
 /**

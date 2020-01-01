@@ -36,9 +36,9 @@ import {
   ARRANGEMENT,
   ALTERNATE
 } from '../../../constants/layout';
-import { App } from '../../store/models';
+import { App } from '../../models';
 import Vue from 'vue';
-import { windowSwitchEventHub } from '../../modules';
+import { windowSwitchEventHub } from '../../modules/container';
 
 export default Vue.extend({
   components: {

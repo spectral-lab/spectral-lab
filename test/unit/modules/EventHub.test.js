@@ -1,5 +1,5 @@
 // @flow
-import { EventHub } from '../../../src/renderer/modules/defs/EventHub';
+import { EventHub } from '../../../src/renderer/modules/definitions/EventHub';
 
 const genMock = () => ({
   event: { type: 'contextmenu' },

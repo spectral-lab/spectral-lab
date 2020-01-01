@@ -21,11 +21,11 @@
 <script>
 import TrackRow from './TrackRow';
 import ClipItemContainer from './ClipItemContainer';
-import { Track } from '../../store/models';
+import { Track } from '../../models';
 import { SONG_ID } from '../../../constants/ids';
 import { TRACK } from '../../../constants/model-types';
 import { INSPECT } from '../../../constants/dialog-types';
-import { contextMenuEventHub, dialogEventHub } from '../../modules';
+import { contextMenuEventHub, dialogEventHub } from '../../modules/container';
 import { selectTrack } from '../../interactors/Track';
 
 export default {

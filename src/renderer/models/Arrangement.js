@@ -1,7 +1,7 @@
 // @flow
-import { makeMandatory } from '../utils';
-import { ARRANGEMENT } from '../../../constants/model-types';
-import { SELECT } from '../../../constants/mouse-modes';
+import { makeMandatory } from '../store/utils';
+import { ARRANGEMENT } from '../../constants/model-types';
+import { SELECT } from '../../constants/mouse-modes';
 import { App, BaseModel } from './index';
 
 export default class Arrangement extends BaseModel {

@@ -1,5 +1,5 @@
 // @flow
-import { Track } from '../../store/models';
+import { Track } from '../../models';
 import uid from 'uid';
 import { SONG_ID } from '../../../constants/ids';
 

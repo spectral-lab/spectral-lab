@@ -3,7 +3,7 @@ import {
 } from '../../../utils/midi/formatMidiMessage';
 import { PITCH_BEND, PRESSURE, TIMBRE } from '../../../../constants/modulation-types';
 import { pick } from 'lodash';
-import { NoteOn, NoteOff, Modulation } from '../../../store/models';
+import { NoteOn, NoteOff, Modulation } from '../../../models';
 import type { MidiMessage, Now } from '../../../../types';
 
 export default class MemberChannel {

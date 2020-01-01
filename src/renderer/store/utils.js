@@ -1,6 +1,6 @@
 // @flow
 import VuexORM from '@vuex-orm/core';
-import * as models from './models';
+import * as models from '../models';
 import hotkeys from 'hotkeys-js';
 import * as modelTypes from '../../constants/model-types';
 

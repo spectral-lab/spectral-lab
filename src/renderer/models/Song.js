@@ -1,9 +1,9 @@
 // @flow
-import { makeMandatory } from '../utils';
-import { SONG } from '../../../constants/model-types';
-import { msPerTick, songDuration, ticksPerBeat } from '../../../constants/defaults';
-import { BaseModel, Track } from '.';
-import type { Ms, Tick } from '../../../types/units';
+import { makeMandatory } from '../store/utils';
+import { SONG } from '../../constants/model-types';
+import { msPerTick, songDuration, ticksPerBeat } from '../../constants/defaults';
+import { BaseModel, Track } from './index';
+import type { Ms, Tick } from '../../types/units';
 
 export default class Song extends BaseModel {
   static get entity () {

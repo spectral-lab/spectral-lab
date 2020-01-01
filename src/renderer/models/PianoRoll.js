@@ -1,11 +1,11 @@
 // @flow
-import { makeMandatory } from '../utils';
-import { PIANO_ROLL } from '../../../constants/model-types';
-import { SELECT } from '../../../constants/mouse-modes';
+import { makeMandatory } from '../store/utils';
+import { PIANO_ROLL } from '../../constants/model-types';
+import { SELECT } from '../../constants/mouse-modes';
 import flatMap from 'lodash/flatMap';
-import { App, BaseModel, Clip, Note, Track } from '.';
-import { SELECTED } from '../../../constants/model-properties';
-import { ticksPerBeat } from '../../../constants/defaults';
+import { App, BaseModel, Clip, Note, Track } from './index';
+import { SELECTED } from '../../constants/model-properties';
+import { ticksPerBeat } from '../../constants/defaults';
 
 export default class PianoRoll extends BaseModel {
   static get entity () {

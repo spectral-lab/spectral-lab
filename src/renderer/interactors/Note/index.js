@@ -1,4 +1,4 @@
-import { Modulation, Note, NoteOff, NoteOn } from '../../store/models';
+import { Modulation, Note, NoteOff, NoteOn } from '../../models';
 
 export * from './noteShift';
 

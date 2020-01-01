@@ -7,7 +7,7 @@ import { storiesOf } from '@storybook/vue';
 import uid from 'uid';
 import { ticksPerBeat } from '../constants/defaults';
 import flatMap from 'lodash/flatMap';
-import { Bar, Beat } from '../renderer/store/models';
+import { Bar, Beat } from '../renderer/models';
 import mockClip from '../../test/data/json/mockClip';
 const bars = [
   {

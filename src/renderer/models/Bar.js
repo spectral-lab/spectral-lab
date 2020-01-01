@@ -1,7 +1,7 @@
 // @flow
-import { makeMandatory } from '../utils';
-import { BEAT } from '../../../constants/model-types';
-import { Clip, BaseModel, Beat } from '.';
+import { makeMandatory } from '../store/utils';
+import { BEAT } from '../../constants/model-types';
+import { Clip, BaseModel, Beat } from './index';
 
 export default class Bar extends BaseModel {
   static get entity () {

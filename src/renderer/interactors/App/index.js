@@ -1,4 +1,4 @@
-import { App } from '../../store/models';
+import { App } from '../../models';
 import { APP_ID } from '../../../constants/ids';
 
 export const createApp = (): void => {

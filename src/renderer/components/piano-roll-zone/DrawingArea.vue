@@ -12,7 +12,7 @@
 </template>
 <script>
 // @flow
-import { Note, NoteOff, Modulation } from '../../store/models';
+import { Note, NoteOff, Modulation } from '../../models';
 import { PEN, SELECT } from '../../../constants/mouse-modes';
 import uid from 'uid';
 import { posXToTick, posYToPitch } from '../../utils/view/pianoRoll/utils';

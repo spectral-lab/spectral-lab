@@ -1,5 +1,5 @@
 // @flow
-import { Track } from '../../store/models';
+import { Track } from '../../models';
 
 export const selectTrack = (id: string, ev: Object): Promise<any> => {
   if (ev.metaKey || ev.shiftKey) return addSelection(id);

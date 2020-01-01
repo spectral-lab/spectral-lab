@@ -1,5 +1,5 @@
 // @flow
-import { Arrangement } from '../../store/models';
+import { Arrangement } from '../../models';
 import { APP_ID, ARRANGEMENT_ID } from '../../../constants/ids';
 
 export const createArrangement = () => {

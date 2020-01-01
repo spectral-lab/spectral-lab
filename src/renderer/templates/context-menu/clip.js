@@ -1,5 +1,5 @@
 // @flow
-import { dialogEventHub } from '../../modules';
+import { dialogEventHub } from '../../modules/container';
 import { INSPECT } from '../../../constants/dialog-types';
 import { CLIP } from '../../../constants/model-types';
 import { exportJson } from '../../usecases/jsonExport';

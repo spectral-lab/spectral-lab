@@ -9,7 +9,7 @@ import MidiExportDialogContainer from './MidiExportDialogContainer';
 import InspectDialogContainer from './InspectDialogContainer';
 import { INSPECT, MIDI_EXPORT } from '../../../constants/dialog-types';
 import Vue from 'vue';
-import { dialogEventHub } from '../../modules';
+import { dialogEventHub } from '../../modules/container';
 export default Vue.extend({
   components: {
     MidiExportDialogContainer,
