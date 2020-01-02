@@ -53,7 +53,7 @@
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?)$"
   },
   "build": {
-    "productName": "spectral-lab",
+    "productName": "Spectral Lab",
     "appId": "com.example.yourapp",
     "directories": {
       "output": "build"
