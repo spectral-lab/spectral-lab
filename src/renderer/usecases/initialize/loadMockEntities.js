@@ -1,7 +1,5 @@
-import { SET_ENTITIES } from '../../store/mutation-types';
-import mockEntities from '../../../../test/data/json/mockEntities';
-import { getStore } from '../../store';
+import { replaceEntitiesByProjectFile } from '../project';
 
 export const loadMockEntities = () => {
-  getStore().commit(SET_ENTITIES, mockEntities);
+  replaceEntitiesByProjectFile('./test/data/json/mockProjectFile.sl');
 };

@@ -1,1 +1,1 @@
-export const SET_ENTITIES = 'SET_ENTITIES';
+export const REPLACE_ENTITIES = 'REPLACE_ENTITIES';

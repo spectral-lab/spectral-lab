@@ -1,5 +1,6 @@
 export const ApplicationMenuAccelerator = {
   SaveProject: 'cmd+s',
+  OpenProject: 'cmd+o',
   NewProject: 'cmd+n',
   Quit: 'cmd+q',
   ExportMidi: 'cmd+shift+e'

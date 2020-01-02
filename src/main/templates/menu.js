@@ -1,6 +1,6 @@
 import { app } from 'electron';
 import ipcSender from '../modules/IpcSender';
-import { CREATE, DIALOG, NEW_PROJECT, SAVE_PROJECT } from '../../constants/event-types';
+import { CREATE, DIALOG, NEW_PROJECT, OPEN_PROJECT, SAVE_PROJECT } from '../../constants/event-types';
 import { MIDI_EXPORT } from '../../constants/dialog-types';
 import { CLIP, TRACK } from '../../constants/model-types';
 import { ApplicationMenuAccelerator } from '../../constants/key-bindings';
@@ -32,6 +32,13 @@ const file = {
       accelerator: ApplicationMenuAccelerator.NewProject,
       click: () => {
         ipcSender.send(NEW_PROJECT);
+      }
+    },
+    {
+      label: 'Open Project',
+      accelerator: ApplicationMenuAccelerator.OpenProject,
+      click: () => {
+        ipcSender.send(OPEN_PROJECT);
       }
     },
     {
