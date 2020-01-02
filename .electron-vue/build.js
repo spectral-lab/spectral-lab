@@ -1,14 +1,14 @@
 'use strict'
 
+
 process.env.NODE_ENV = 'production'
 
 const { say } = require('cfonts')
 const chalk = require('chalk')
 const del = require('del')
-const { spawn } = require('child_process')
 const webpack = require('webpack')
 const Multispinner = require('multispinner')
-
+const fs = require('fs-extra')
 
 const mainConfig = require('./webpack.main.config')
 const rendererConfig = require('./webpack.renderer.config')
@@ -33,6 +33,8 @@ function build () {
   greeting()
 
   del.sync(['dist/electron/*', '!.gitkeep'])
+
+  copyPackageJson();
 
   const tasks = ['main', 'renderer']
   const m = new Multispinner(tasks, {
@@ -129,4 +131,12 @@ function greeting () {
     })
   } else console.log(chalk.yellow.bold('\n  lets-build'))
   console.log()
+}
+
+function copyPackageJson () {
+  try {
+    fs.copySync('./package.json', './static/package.json');
+  }catch (err) {
+    console.error(err)
+  }
 }
