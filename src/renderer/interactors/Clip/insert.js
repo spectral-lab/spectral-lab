@@ -11,6 +11,7 @@ export const insertDefaultClip = async (parentTrackId: string, data?: Object): P
     data: Object.assign({
       id: clipId,
       trackId: parentTrackId,
+      name: 'clip',
       bars: range(4).map(i => generateBarData(i * ticksPerBar))
     }, data)
   });
