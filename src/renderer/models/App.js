@@ -12,6 +12,7 @@ export default class App extends BaseModel {
     return {
       id: this.attr(null, makeMandatory('id')),
       type: this.string(APP),
+      version: this.string(null),
       selectedZone: this.string(null, setHotkeysScope),
       pianoRoll: this.hasOne(PianoRoll, 'appId'),
       arrangement: this.hasOne(Arrangement, 'appId')
