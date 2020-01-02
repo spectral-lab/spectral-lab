@@ -27,23 +27,16 @@
       >
         Open
       </upload-button>
-      <icon-btn-with-tip
-        @click="handleClickBuild"
-        icon="build"
-        tip="Build a spectrogram of the source audio."
-      />
     </v-toolbar>
   </div>
 </template>
 
 <script>
 import UploadButton from 'vuetify-upload-button';
-import IconBtnWithTip from '../utils/IconBtnWithTip';
 
 export default {
   components: {
-    UploadButton,
-    IconBtnWithTip
+    UploadButton
   },
   props: {
     filepath: String,
@@ -62,9 +55,6 @@ export default {
     },
     handleClickPlay () {
       this.$emit('click-play');
-    },
-    handleClickBuild () {
-      this.$emit('click-build');
     }
   }
 };

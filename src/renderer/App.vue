@@ -12,7 +12,7 @@
 import AppLayout from './components/AppLayout';
 import Dialogs from './components/dialogs/Dialogs';
 import ContextMenu from './components/utils/ContextMenu';
-import { postMount } from './usecases/initialize';
+import { postMount } from './usecases/initialize/hooks';
 export default {
   name: 'App',
   components: {

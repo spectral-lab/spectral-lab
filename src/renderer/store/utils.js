@@ -1,8 +1,7 @@
 // @flow
 import VuexORM from '@vuex-orm/core';
-import * as models from '../models';
+import * as modelsToBeRegistered from '../models/modelsToBeRegistered';
 import hotkeys from 'hotkeys-js';
-import * as modelTypes from '../../constants/model-types';
 
 export const makeMandatory = (field: string) => (val: any): any => {
   if (val == null) {
@@ -18,8 +17,8 @@ export const setHotkeysScope = (zoneName: string): string => {
 
 export const initDatabase = (): any => {
   const database = new VuexORM.Database();
-  Object.values(modelTypes).forEach((modelName: any) =>
-    database.register(models[modelName])
-  );
+  Object.values(modelsToBeRegistered).forEach((model: any) => {
+    database.register(model);
+  });
   return database;
 };

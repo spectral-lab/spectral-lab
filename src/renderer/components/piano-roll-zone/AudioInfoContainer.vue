@@ -6,7 +6,6 @@
       :is-playing="isPlaying"
       @click-play="handleClickPlay"
       @file-update="handleFileUpdate"
-      @click-build="buildSpectrogram"
     />
   </div>
 </template>
@@ -70,6 +69,7 @@ export default Vue.extend({
           originalFilePath: filepath
         }
       });
+      await this.buildSpectrogram();
     },
     async buildSpectrogram () {
       if (!this.audioBuffer) return;

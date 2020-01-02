@@ -1780,13 +1780,13 @@
     lodash "^4.17.15"
     pretty "^2.0.0"
 
-"@vuex-orm/core@^0.32.0":
-  version "0.32.5"
-  resolved "https://registry.yarnpkg.com/@vuex-orm/core/-/core-0.32.5.tgz#bd018551273a81d106524a1a8a6fbed251bc79bf"
-  integrity sha512-8RU9OF1GrjKaylTnkH21iYrYioOVFlDpH09KLWTF//xppOiClquWJVfUb30na61eGn4rcwbeoHST3T/9r8w6RQ==
+"@vuex-orm/core@^0.34.1":
+  version "0.34.1"
+  resolved "https://registry.yarnpkg.com/@vuex-orm/core/-/core-0.34.1.tgz#2b096324d0c1151ab5ab3a40c174e8aa901c1c8e"
+  integrity sha512-AamNIvLuetNGVJ4vmjUoBHnS0Es4yj/AoxhTbinQ5OM+5qpijWjMHa1sCwlVNWRUuZp3fQ4NDSx5fKPTbArfGg==
   dependencies:
     normalizr "^3.4.1"
-    vuex "^3.1.1"
+    vuex "^3.1.2"
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
@@ -12637,7 +12637,7 @@ vuex-electron@^1.0.0:
     deepmerge "^2.1.1"
     electron-store "^2.0.0"
 
-vuex@^3.0.1, vuex@^3.1.1:
+vuex@^3.0.1, vuex@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.1.2.tgz#a2863f4005aa73f2587e55c3fadf3f01f69c7d4d"
   integrity sha512-ha3jNLJqNhhrAemDXcmMJMKf1Zu4sybMPr9KxJIuOpVcsDQlTBYLLladav2U+g1AvdYDG5Gs0xBTb0M5pXXYFQ==

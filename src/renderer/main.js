@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App';
 import store from './store';
-import { preMount } from './usecases/initialize';
+import { preMount } from './usecases/initialize/hooks';
 
 preMount();
 /* eslint-disable no-new */

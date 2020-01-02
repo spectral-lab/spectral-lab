@@ -14,3 +14,4 @@ export { default as Song } from './Song';
 export { default as PianoRoll } from './PianoRoll';
 export { default as Arrangement } from './Arrangement';
 export { default as App } from './App';
+export { default as Dialog } from './Dialog';
