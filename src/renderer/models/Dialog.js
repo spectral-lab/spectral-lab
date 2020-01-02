@@ -11,7 +11,7 @@ export default class Dialog extends BaseModel {
     return {
       id: this.attr(null, makeMandatory('id')),
       appId: this.attr(null, makeMandatory('appId')),
-      inDisplay: this.attr(null)
+      inDisplay: this.string(null).nullable()
     };
   }
 
