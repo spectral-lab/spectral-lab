@@ -1,8 +1,9 @@
 // @flow
 import { remote } from 'electron';
-import fs, { readJSONSync } from 'fs-extra';
+import { readJSONSync, writeJson } from 'fs-extra';
 import { getStore } from '../store';
 import { REPLACE_ENTITIES } from '../store/mutation-types';
+import { formatFilePath } from '../utils/helpers/formatFilePath';
 
 const { dialog } = remote;
 
@@ -19,7 +20,7 @@ export const saveProject = async (): Promise<void> => {
   const { filePath } = await dialog.showSaveDialog({
     message: 'Save your project'
   });
-  if (filePath) fs.writeJson(filePath, getStore().state.entities);
+  if (filePath) await writeJson(formatFilePath(filePath), getStore().state.entities);
 };
 
 export const newProject = (): void => {

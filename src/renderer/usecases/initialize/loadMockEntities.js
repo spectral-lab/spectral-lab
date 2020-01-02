@@ -1,5 +1,5 @@
 import { replaceEntitiesByProjectFile } from '../project';
 
 export const loadMockEntities = () => {
-  replaceEntitiesByProjectFile('./test/data/json/mockProjectFile.json');
+  replaceEntitiesByProjectFile('./test/data/json/mockProjectFile.sl');
 };
