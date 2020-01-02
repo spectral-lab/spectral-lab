@@ -1,9 +1,9 @@
 // @flow
 import { ipcRenderer } from 'electron';
-import { CREATE, DIALOG, NEW_PROJECT, SAVE_PROJECT } from '../../../constants/event-types';
+import { CREATE, DIALOG, NEW_PROJECT, OPEN_PROJECT, SAVE_PROJECT } from '../../../constants/event-types';
 import * as create from '../create';
 import { noCase } from 'change-case';
-import { newProject, saveProject } from '../project';
+import { newProject, openProject, saveProject } from '../project';
 import { openDialog } from '../../interactors/Dialog';
 import * as DialogTypes from '../../../constants/dialog-types';
 
@@ -20,6 +20,9 @@ export const listenIpc = () => {
   });
   ipcRenderer.on(NEW_PROJECT, () => {
     newProject();
+  });
+  ipcRenderer.on(OPEN_PROJECT, () => {
+    openProject();
   });
   ipcRenderer.on(SAVE_PROJECT, () => {
     saveProject();
