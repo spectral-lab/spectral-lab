@@ -67,6 +67,26 @@ export const keyBindingTemplate = {
     keys: RendererHotKeys.NoteShiftDown,
     keyHandler: () => noteShiftDown(1)
   },
+  noteNudgeLeft: {
+    scope: PIANO_ROLL,
+    keys: RendererHotKeys.NoteNudgeLeft,
+    keyHandler: () => noteShiftLeft(30)
+  },
+  noteNudgeRight: {
+    scope: PIANO_ROLL,
+    keys: RendererHotKeys.NoteNudgeRight,
+    keyHandler: () => noteShiftRight(30)
+  },
+  noteNudgeUp: {
+    scope: PIANO_ROLL,
+    keys: RendererHotKeys.NoteNudgeUp,
+    keyHandler: () => noteShiftUp(0.1)
+  },
+  noteNudgeDown: {
+    scope: PIANO_ROLL,
+    keys: RendererHotKeys.NoteNudgeDown,
+    keyHandler: () => noteShiftDown(0.1)
+  },
   deleteNotes: {
     scope: PIANO_ROLL,
     keys: RendererHotKeys.DeleteNotes,
