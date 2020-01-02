@@ -10,7 +10,7 @@ const { dialog } = remote;
 export const openProject = async (): Promise<void> => {
   const { filePaths } = await dialog.showOpenDialog({
     properties: ['openFile'],
-    filters: [{ name: 'Spectral Lab Project File', extensions: ['sl'] }],
+    filters: [{ name: 'Spectral Lab Project File', extensions: ['slp'] }],
     message: 'Select project file to open'
   });
   replaceEntitiesByProjectFile(filePaths[0]);
