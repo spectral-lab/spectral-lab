@@ -2,7 +2,7 @@
   <extract-notes-dialog
     ref="midiExportDialog"
     @click="handleClick"
-    @visibility="handleVisibility"
+    @visibility="close"
     :visible="visible"
   />
 </template>
@@ -11,28 +11,24 @@
 
 import ExtractNotesDialog from './ExtractNotesDialog';
 import { extractNotes } from '../../usecases/extractNotes';
+import { EXTRACT_NOTES } from '../../../constants/dialog-types';
+import { closeDialog, getDialogInDisplay } from '../../interactors/Dialog';
 export default {
   components: {
     ExtractNotesDialog
   },
-  data () {
-    return {
-      visible: false
-    };
+  computed: {
+    visible () {
+      return getDialogInDisplay() === EXTRACT_NOTES;
+    }
   },
   methods: {
-    open () {
-      if (this.visible === false) this.visible = true;
-    },
     close () {
-      if (this.visible === true) this.visible = false;
+      if (this.visible) closeDialog();
     },
     handleClick (options) {
       this.close();
       extractNotes(options);
-    },
-    handleVisibility (val) {
-      if (this.visible !== val) this.visible = val;
     }
   }
 };

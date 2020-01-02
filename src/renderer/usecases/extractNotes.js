@@ -6,15 +6,15 @@ import {
 } from '../utils/helpers/postImageUtils';
 import uid from 'uid';
 import { parsePointAsModulation, parsePointAsNoteOff, parsePointAsNoteOn } from '../utils/helpers/parsePoint';
-import { dialogEventHub } from '../modules/container';
 import { EXTRACT_NOTES } from '../../constants/dialog-types';
 import type { Degree, Sensitivity } from '../../types';
+import { openDialog } from '../interactors/Dialog';
 
 export const openExtractNotesDialog = () => {
   const spectrogram = Spectrogram.query().last();
   if (!spectrogram) return;
   if (spectrogram.times.length === 0) return;
-  dialogEventHub.emit(null, { type: EXTRACT_NOTES });
+  openDialog(EXTRACT_NOTES);
 };
 
 export const extractNotes = async (options: { degree: Degree, sensitivity: Sensitivity }) => {

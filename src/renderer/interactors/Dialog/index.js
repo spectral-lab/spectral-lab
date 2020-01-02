@@ -27,8 +27,15 @@ export const getDialogInDisplay = () => {
   return getDialogState().inDisplay;
 };
 
-export const openDialog = (options: { type: $Values<typeof DialogTypes>, context?: string, id?: string }): Promise<any> => {
+export const openDialog = (type: $Values<typeof DialogTypes>, options?: { contextType?: string, contextId?: string }): Promise<any> => {
   return updateDialog({
-    inDisplay: options
+    inDisplay: type,
+    ...options
+  });
+};
+
+export const closeDialog = () => {
+  return updateDialog({
+    inDisplay: null
   });
 };

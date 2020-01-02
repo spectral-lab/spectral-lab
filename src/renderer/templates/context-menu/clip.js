@@ -1,19 +1,18 @@
 // @flow
-import { dialogEventHub } from '../../modules/container';
 import { INSPECT } from '../../../constants/dialog-types';
 import { CLIP } from '../../../constants/model-types';
 import { exportJson } from '../../usecases/jsonExport';
 import { deleteClip, moveToSelectedTrack } from '../../interactors/Clip';
 import type { Option } from './types';
+import { openDialog } from '../../interactors/Dialog';
 
 export const clip: Option[] = [
   {
     label: 'Inspect',
     click ({ id }) {
-      dialogEventHub.emit(null, {
-        type: INSPECT,
-        context: CLIP,
-        id
+      openDialog(INSPECT, {
+        contextType: CLIP,
+        contextId: id
       });
     }
   },
