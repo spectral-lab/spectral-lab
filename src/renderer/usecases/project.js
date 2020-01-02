@@ -1,16 +1,18 @@
 // @flow
 import { remote } from 'electron';
-import fs from 'fs-extra';
+import fs, { readJSONSync } from 'fs-extra';
 import { getStore } from '../store';
+import { REPLACE_ENTITIES } from '../store/mutation-types';
+
 const { dialog } = remote;
 
 export const openProject = async (): Promise<void> => {
   const { filePaths } = await dialog.showOpenDialog({
     properties: ['openFile'],
     filters: [{ name: 'Spectral Lab Project File', extensions: ['sl'] }],
-    message: 'Open Project'
+    message: 'Select project file to open'
   });
-  console.log(filePaths);
+  replaceEntitiesByProjectFile(filePaths[0]);
 };
 
 export const saveProject = async (): Promise<void> => {
@@ -23,4 +25,8 @@ export const saveProject = async (): Promise<void> => {
 export const newProject = (): void => {
   // eslint-disable-next-line no-self-assign
   window.location.href = window.location.href;
+};
+export const replaceEntitiesByProjectFile = (path: string) => {
+  const entities = readJSONSync(path);
+  getStore().commit(REPLACE_ENTITIES, entities);
 };

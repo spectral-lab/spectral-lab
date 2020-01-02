@@ -1,7 +1,7 @@
-import { SET_ENTITIES } from './mutation-types';
+import { REPLACE_ENTITIES } from './mutation-types';
 
 export default {
-  [SET_ENTITIES] (state, entities) {
+  [REPLACE_ENTITIES] (state, entities) {
     state.entities = { ...entities };
   }
 };
