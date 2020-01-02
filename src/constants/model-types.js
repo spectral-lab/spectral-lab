@@ -13,3 +13,4 @@ export const SONG = 'Song';
 export const APP = 'App';
 export const PIANO_ROLL = 'PianoRoll';
 export const ARRANGEMENT = 'Arrangement';
+export const DIALOG = 'Dialog';
