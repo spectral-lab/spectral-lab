@@ -40,5 +40,11 @@ yarn run lint
 yarn run build
 ```
 
+## Additional Note
+- The server scripts are copied into `userData` directory on `ready` event of Electron app
+- On mac, the folder location is 
+  - /Users/Your Name/Library/Application Support/Electron
+  - /Users/Your Name/Library/Application Support/spectral-lab
+
 ## Overview of architecture
 ![Architecture](https://user-images.githubusercontent.com/31060964/62834483-55a59580-bc88-11e9-9a9e-08a88536795a.png)
