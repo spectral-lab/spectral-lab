@@ -5,8 +5,8 @@ import { Song } from '../../models';
 export const getSongData = (): Song => {
   return Song.query().whereId(SONG_ID).first();
 };
-export const createSong = (): void => {
-  Song.insert({
+export const createSong = (): Promise<any> => {
+  return Song.insert({
     data: {
       id: SONG_ID
     }

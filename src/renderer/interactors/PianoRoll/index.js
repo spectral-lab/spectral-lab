@@ -26,12 +26,13 @@ export const setPianoRollOpacityWillChange = async (val: boolean) => {
   });
 };
 
+// TODO: rename this as getPianoRollState
 export const getPianoRollData = () => {
   return PianoRoll.query().whereId(PIANO_ROLL_ID).first();
 };
 
-export const createPianoRoll = () => {
-  PianoRoll.insert({
+export const createPianoRoll = (): Promise<any> => {
+  return PianoRoll.insert({
     data: {
       id: PIANO_ROLL_ID,
       appId: APP_ID

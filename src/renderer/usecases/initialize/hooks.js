@@ -8,11 +8,11 @@ import Vue from 'vue';
 import { installVuetify } from './InstallVuetify';
 import { PIANO_ROLL } from '../../../constants/model-types';
 
-export const preMount = () => {
+export const preMount = async () => {
   if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
   Vue.config.productionTip = false;
   installVuetify();
-  insertInitialRecords();
+  await insertInitialRecords();
 };
 
 export const postMount = () => {

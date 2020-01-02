@@ -5,14 +5,18 @@ import {
   createSong, insertTrack, insertDefaultClip
 } from '../../interactors';
 import { createDialog } from '../../interactors/Dialog';
+import { getStore } from '../../store';
 
-export const insertInitialRecords = (): void => {
+export const insertInitialRecords = async () => {
+  getStore();
   const trackId = uid();
-  createApp();
-  createPianoRoll();
-  createArrangement();
-  createDialog();
-  createSong();
-  insertTrack({ id: trackId, selected: true });
-  insertDefaultClip(trackId, { selected: true });
+  await createApp();
+  await Promise.all([
+    createPianoRoll(),
+    createArrangement(),
+    createDialog()
+  ]);
+  await createSong();
+  await insertTrack({ id: trackId, selected: true });
+  await insertDefaultClip(trackId, { selected: true });
 };
