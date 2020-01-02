@@ -5,17 +5,23 @@ import VuexORM from '@vuex-orm/core';
 import { initDatabase } from './utils';
 import mutations from './mutations';
 
-Vue.use(Vuex);
+export const createStore = () => {
+  Vue.use(Vuex);
+  return new Vuex.Store({
+    strict: true,
+    state: {},
+    mutations,
+    plugins: [
+      process.env.NODE_ENV === 'development' && createLogger(),
+      VuexORM.install(initDatabase())
+    ].filter(v => v)
+  });
+};
 
-export const createStore = () => new Vuex.Store({
-  strict: true,
-  state: {},
-  mutations,
-  plugins: [
-    process.env.NODE_ENV === 'development' && createLogger(),
-    VuexORM.install(initDatabase())
-  ].filter(v => v)
-});
-
-export const store = createStore();
-export default store;
+export const getStore = (() => {
+  let store;
+  return () => {
+    if (!store) store = createStore();
+    return store;
+  };
+})();

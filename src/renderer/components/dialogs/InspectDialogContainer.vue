@@ -1,7 +1,7 @@
 <template>
   <div>
     <inspect-dialog
-      @visibility="handleVisibility"
+      @visibility="close"
       @change="handleChange"
       :title="title"
       :visible="visible"
@@ -17,17 +17,23 @@ import * as models from '../../models';
 import Vue from 'vue';
 import { templateGenerator } from '../../modules/container';
 import type { InspectDialogTemplate } from '../../modules/definitions/TemplateGenerator';
+import { closeDialog, getDialogInDisplay, getDialogState } from '../../interactors/Dialog';
+import { INSPECT } from '../../../constants/dialog-types';
 export default Vue.extend({
   components: {
     InspectDialog
   },
-  data () {
-    return {
-      visible: false,
-      target: null
-    };
-  },
   computed: {
+    visible () {
+      return getDialogInDisplay() === INSPECT;
+    },
+    target () {
+      const { contextId, contextType } = getDialogState();
+      return {
+        type: contextType,
+        id: contextId
+      };
+    },
     title (): string {
       if (this.target && this.target.type) return this.target.type;
       return 'Inspect';
@@ -38,15 +44,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    open ({ context, id }) {
-      if (this.visible === false) this.visible = true;
-      this.target = models[context].query().whereId(id).first();
-    },
     close () {
-      if (this.visible === true) this.visible = false;
-    },
-    handleVisibility (val) {
-      if (this.visible !== val) this.visible = val;
+      if (this.visible) closeDialog();
     },
     handleChange (data) {
       models[this.target.type].update({

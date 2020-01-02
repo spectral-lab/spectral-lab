@@ -4,9 +4,9 @@ import uid from 'uid';
 import { flatten } from 'lodash';
 import { insertInitialRecords } from '../../../src/renderer/usecases/initialize/insertInitialRecords';
 
-beforeEach(() => {
+beforeEach(async () => {
   createStore();
-  insertInitialRecords();
+  await insertInitialRecords();
 });
 
 describe('utils', () => {

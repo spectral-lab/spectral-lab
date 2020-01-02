@@ -2,7 +2,7 @@
   <midi-export-dialog
     ref="midiExportDialog"
     @click="handleClick"
-    @visibility="handleVisibility"
+    @visibility="close"
     :visible="visible"
   />
 </template>
@@ -12,21 +12,20 @@
 import MidiExportDialog from './MidiExportDialog';
 import { SELECTED_CLIPS } from '../../../constants/midi-export-options';
 import { exportSelectedClips } from '../../usecases/midiExport';
+import { closeDialog, getDialogInDisplay } from '../../interactors/Dialog';
+import { MIDI_EXPORT } from '../../../constants/dialog-types';
 export default {
   components: {
     MidiExportDialog
   },
-  data () {
-    return {
-      visible: false
-    };
+  computed: {
+    visible () {
+      return getDialogInDisplay() === MIDI_EXPORT;
+    }
   },
   methods: {
-    open () {
-      if (this.visible === false) this.visible = true;
-    },
     close () {
-      if (this.visible === true) this.visible = false;
+      if (this.visible) closeDialog();
     },
     handleClick (target) {
       this.close();
@@ -34,9 +33,6 @@ export default {
         case SELECTED_CLIPS: return exportSelectedClips();
         default: exportSelectedClips();
       }
-    },
-    handleVisibility (val) {
-      if (this.visible !== val) this.visible = val;
     }
   }
 };
