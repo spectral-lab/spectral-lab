@@ -16,7 +16,11 @@ export const RendererHotKeys = {
   NoteShiftRight: 'right',
   NoteShiftUp: 'up',
   NoteShiftDown: 'down',
-  DeleteNotes: 'clear,backspace,del,delete',
+  NoteNudgeLeft: 'option+left',
+  NoteNudgeRight: 'option+right',
+  NoteNudgeUp: 'option+up',
+  NoteNudgeDown: 'option+down',
+  DeleteNotes: 'backspace,del,delete',
   SwitchWindow: 'tab',
   SplitWindow: 'cmd+d'
 };
