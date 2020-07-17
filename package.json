@@ -101,7 +101,7 @@
     "hotkeys-js": "^3.6.11",
     "jzz": "^0.8.5",
     "jzz-midi-smf": "^1.2.7",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.19",
     "material-design-icons-iconfont": "^5.0.1",
     "pngjs": "^3.4.0",
     "svg.js": "^2.7.1",
