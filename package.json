@@ -96,7 +96,7 @@
     "decibels": "^2.0.0",
     "dsp.js-browser": "^1.0.1",
     "element-resize-detector": "^1.1.15",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "fs-extra": "^8.1.0",
     "hotkeys-js": "^3.6.11",
     "jzz": "^0.8.5",
